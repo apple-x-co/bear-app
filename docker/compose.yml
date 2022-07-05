@@ -1,0 +1,44 @@
+services:
+  web:
+    image: ghcr.io/buddying-inc/webserver-centos83:apache24-php81
+    container_name: bear-web
+    working_dir: /var/www/vhosts/localhost
+    volumes:
+      - type: bind
+        source: ../source/app
+        target: /var/www/vhosts/localhost
+        consistency: delegated
+      - type: bind
+        source: ./files/httpd/localhost.conf
+        target: /etc/httpd/conf.d/localhost.conf
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+    environment:
+      - PHP_XDEBUG=off
+      - COMPOSER_ALLOW_SUPERUSER=1
+
+  db:
+    image: ghcr.io/buddying-inc/mysql:57
+    container_name: bear-db
+    volumes:
+      - type: bind
+        source: ./.db
+        target: /var/lib/mysql
+        consistency: delegated
+      - type: bind
+        source: ./files/mysqld/db.sql
+        target: /docker-entrypoint-initdb.d/db.sql
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    environment:
+      - MYSQL_ROOT_PASSWORD=passw0rd
+      - MYSQL_DATABASE=bear_db
+      - MYSQL_USER=bear
+      - MYSQL_PASSWORD=passw0rd
+      - TZ=Asia/Tokyo
