@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page;
 
 use BEAR\Resource\ResourceObject;
+use MyVendor\MyProject\Annotation\BenchMark;
 use MyVendor\MyProject\MyLoggerInterface;
 
 class Index extends ResourceObject
@@ -19,6 +20,7 @@ class Index extends ResourceObject
     /**
      * @return static
      */
+    #[BenchMark]
     public function onGet(string $name = 'BEAR.Sunday'): static
     {
         $this->body = [
