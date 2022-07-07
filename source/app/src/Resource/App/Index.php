@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Resource\Page;
+namespace MyVendor\MyProject\Resource\App;
 
-use BEAR\Resource\Annotation\Embed;
 use BEAR\Resource\ResourceObject;
 use MyVendor\MyProject\Annotation\BenchMark;
 use MyVendor\MyProject\MyLoggerInterface;
@@ -14,14 +13,21 @@ class Index extends ResourceObject
     /** @var array{greeting: string} */
     public $body;
 
+    public function __construct(private MyLoggerInterface $logger)
+    {
+    }
+
     /**
-     * @Embed(rel="index", src="app://self/index{?name}")
+     * @return static
      */
+    #[BenchMark]
     public function onGet(string $name = 'BEAR.Sunday'): static
     {
-        $this->body += [
-            'name' => $name,
+        $this->body = [
+            'greeting' => 'Hello ' . $name,
         ];
+
+        $this->logger->log($name);
 
         return $this;
     }
