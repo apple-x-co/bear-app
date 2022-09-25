@@ -3,17 +3,17 @@
         {{= render ('page/common', []) }}
 
         {{ if ($this->hasSection('nav')): }}
-            <ul>
-                {{= getSection ('nav') }}
-            </ul>
+        <ul style="border: 1px solid #efefef;">
+            {{= getSection ('nav') }}
+        </ul>
         {{ endif }}
 
         {{= getContent() }}
 
         {{ if ($this->hasSection('foot')): }}
-            <ul>
-                {{= getSection ('foot') }}
-            </ul>
+        <ul style="border: 1px solid #efefef;">
+            {{= getSection ('foot') }}
+        </ul>
         {{ endif }}
     </body>
 </html>

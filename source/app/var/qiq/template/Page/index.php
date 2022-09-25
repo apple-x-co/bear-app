@@ -6,8 +6,6 @@ $this->setLayout('layout/base');
 <li>home / index</li>
 {{ endSection () }}
 
-Greeting: {{h $this->name }}
-
 {{ setSection ('foot') }}
 <li>home / index</li>
 {{ endSection () }}
@@ -19,3 +17,12 @@ Greeting: {{h $this->name }}
 {{ appendSection ('foot') }}
 <li>add</li>
 {{ endSection () }}
+
+<div style="border: 1px solid #dddddd;">
+    Greeting: {{h $this->name }}
+
+    <p>My List</p>
+    {{= render ('page/list', [
+    'items' => ['foo', 'bar', 'baz']
+    ]) }}
+</div>
