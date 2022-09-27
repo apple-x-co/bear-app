@@ -19,7 +19,8 @@ $this->setLayout('layout/base');
 {{ endSection () }}
 
 <div style="border: 1px solid #dddddd;">
-    Greeting: {{h $this->name }}
+    Greeting: {{h $this->name }}<br>
+    {{= hello('John') }}
 
     <p>My List</p>
     {{= render ('page/list', [
