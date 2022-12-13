@@ -14,8 +14,6 @@ class Form extends ResourceObject
 
     public function onGet(): static
     {
-        $this->body = [];
-
         return $this;
     }
 }
