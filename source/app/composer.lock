@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b87c3546f509e9c06fe2b590fcd4d8d1",
+    "content-hash": "140d9b154bd690a4d1fbd5e42c0b87c0",
     "packages": [
         {
             "name": "aura/cli",
@@ -3940,7 +3940,7 @@
         },
         {
             "name": "bear/api-doc",
-            "version": "1.x-dev",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.ApiDoc.git",
@@ -3978,7 +3978,6 @@
                 "koriym/attributes": "^1.0",
                 "phpunit/phpunit": "^9.5"
             },
-            "default-branch": true,
             "bin": [
                 "bin/apidoc"
             ],
@@ -6609,7 +6608,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "bear/api-doc": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
