@@ -11,7 +11,7 @@
                 </a>
                 <div class="relative hidden lg:flex items-center ml-auto">
                     <div class="flex items-center border-l border-slate-200 ml-6 pl-6 dark:border-slate-800">
-                        <a href="{{= $this->router->generate('/admin-page/logout', []) }}">
+                        <a href="{{= $this->router->generate('/admin/logout', []) }}">
                             {{= render ('partials/AdminPage/InlineIcon', ['name' => 'arrow-left-on-rectangle']) }}
                         </a>
                     </div>
@@ -29,7 +29,7 @@
             {{ setBlock ('body_nav') }}
             {{ $view = $this->getView() }}
             <p>
-                <a class="text-sm font-bold tracking-wider {{ if ($view == 'Page/AdminPage/Index'): }}text-lime-500{{ endif }}" href="{{= $this->router->generate('/admin-page/index', []) }}">HOME</a>
+                <a class="text-sm font-bold tracking-wider {{ if ($view == 'Page/AdminPage/Index'): }}text-sky-500{{ endif }}" href="{{= $this->router->generate('/admin/index', []) }}">HOME</a>
             </p>
             {{= getBlock () ~}}
         </nav>

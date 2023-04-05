@@ -24,7 +24,7 @@
 <section class="mt-10">
     <h3 class="font-bold border-b pb-2 mb-2">テキスト (装飾)</h3>
 
-    <p class="text-sm lg:text-base font-thin">下線<span class="underline decoration-8 decoration-lime-500/80 underline-offset-[-5px]">テキスト</span></p>
+    <p class="text-sm lg:text-base font-thin">下線<span class="underline decoration-8 decoration-sky-500/80 underline-offset-[-5px]">テキスト</span></p>
 </section>
 
 <section class="mt-10">
@@ -123,7 +123,7 @@
 
         <label class="block mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">送信ボタン</span>
-            <input type="submit" value="登録" class="py-2 px-3 bg-lime-500 text-white text-sm font-sans font-bold tracking-wider rounded-md shadow-lg shadow-lime-500/50 focus:outline-none">
+            <input type="submit" value="登録" class="py-2 px-3 bg-sky-500 text-white text-sm font-sans font-bold tracking-wider rounded-md shadow-lg shadow-sky-500/50 focus:outline-none">
         </label>
 
         <label class="block mt-5">
@@ -133,7 +133,7 @@
 
         <label class="block mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">無効ボタン</span>
-            <input type="button" value="キャンセル" class="py-2 px-3 bg-lime-500 text-white text-sm font-sans font-bold tracking-wider rounded-md shadow-lg shadow-lime-500/50 focus:outline-none disabled:text-white disabled:bg-slate-200 disabled:shadow-none" disabled="disabled">
+            <input type="button" value="キャンセル" class="py-2 px-3 bg-sky-500 text-white text-sm font-sans font-bold tracking-wider rounded-md shadow-lg shadow-sky-500/50 focus:outline-none disabled:text-white disabled:bg-slate-200 disabled:shadow-none" disabled="disabled">
         </label>
     </form>
 </section>
@@ -143,13 +143,13 @@
 
     <nav class="block leading-6 relative">
         <p>
-            <a class="text-sm font-bold tracking-wider text-lime-500" href="">HOME</a>
+            <a class="text-sm font-bold tracking-wider text-sky-500" href="">HOME</a>
         </p>
         <ul class="mt-5">
             <li>
                 <h5 class="font-sans font-bold text-sm tracking-wide mb-8 lg:mb-3">Title タイトル</h5>
                 <ul class="space-y-6 lg:space-y-2 border-l border-slate-200">
-                    <li><a href="" class="text-sm tracking-wide pl-4 -ml-px border-l font-bold text-lime-500 border-l border-current">メニュー1</a></li>
+                    <li><a href="" class="text-sm tracking-wide pl-4 -ml-px border-l font-bold text-sky-500 border-l border-current">メニュー1</a></li>
                     <li><a href="" class="text-sm tracking-wide pl-4 -ml-px border-l border-transparent hover:border-slate-400">メニュー2</a></li>
                     <li><a href="" class="text-sm tracking-wide pl-4 -ml-px border-l border-transparent hover:border-slate-400">メニュー3</a></li>
                 </ul>
