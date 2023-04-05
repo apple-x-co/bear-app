@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./source/app/Buddying.Cms
+        working-directory: ./source/app
 
     steps:
       - name: Checkout
