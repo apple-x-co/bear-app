@@ -22,6 +22,6 @@ class IndexTest extends TestCase
     {
         $ro = $this->resource->get('page://self/index', ['name' => 'BEAR.Sunday']);
         $this->assertSame(200, $ro->code);
-        $this->assertSame('Hello BEAR.Sunday', $ro->body['greeting']);
+        $this->assertSame('Hello BEAR.Sunday (page)', $ro->body['greeting']);
     }
 }

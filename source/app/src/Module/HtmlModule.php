@@ -4,16 +4,35 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
+use BEAR\Package\AbstractAppModule;
 use BEAR\QiqModule\QiqModule;
-use Ray\Di\AbstractModule;
+use MyVendor\MyProject\Form\AdminLoginForm;
+use MyVendor\MyProject\Form\UserLoginForm;
+use Ray\AuraSessionModule\AuraSessionModule;
+use Ray\WebFormModule\AuraInputModule;
+use Ray\WebFormModule\FormInterface;
 
-use function dirname;
-
-class HtmlModule extends AbstractModule
+class HtmlModule extends AbstractAppModule
 {
-    protected function configure()
+    protected function configure(): void
     {
-        $appDir = dirname(__DIR__, 2);
-        $this->install(new QiqModule($appDir . '/var/qiq/template'));
+        $this->install(new AuraSessionModule());
+        $this->install(new QiqModule($this->appMeta->appDir . '/var/qiq/template'));
+        $this->install(new AuraInputModule());
+        $this->install(new SessionAuthModule());
+        $this->install(new CaptchaModule());
+
+        $this->admin();
+        $this->user();
+    }
+
+    private function admin(): void
+    {
+        $this->bind(FormInterface::class)->annotatedWith('admin_login_form')->to(AdminLoginForm::class);
+    }
+
+    private function user(): void
+    {
+        $this->bind(FormInterface::class)->annotatedWith('user_login_form')->to(UserLoginForm::class);
     }
 }

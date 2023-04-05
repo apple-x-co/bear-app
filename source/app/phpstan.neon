@@ -3,3 +3,6 @@ parameters:
   paths:
     - src
     - tests
+    - ddd/core/src
+    - ddd/core/tests
+  checkGenericClassInNonGenericObjectType: false

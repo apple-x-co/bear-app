@@ -4,38 +4,60 @@
     "license": "proprietary",
     "description": "",
     "require": {
-        "php": "^8.1.0",
+        "php": "^8.2.0",
         "ext-json": "*",
+        "aura/auth": "^4.0",
+        "bear/aura-router-module": "^2.0",
+        "bear/devtools": "^1.0",
         "bear/dotenv": "^1.0",
         "bear/package": "^1.12.1",
         "bear/qiq-module": "^1.0",
         "bear/resource": "^1.16",
         "bear/sunday": "^1.5",
+        "koriym/env-json": "^0.1.0",
         "ray/aop": "^2.11",
-        "ray/di": "^2.13"
+        "ray/aura-session-module": "^1.2",
+        "ray/di": "^2.13",
+        "ray/identity-value-module": "^1.0",
+        "ray/media-query": "^0.10.2",
+        "ray/web-form-module": "^0.6.0"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.4",
-        "bear/devtools": "^1.0",
         "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-latest"
     },
     "autoload": {
         "psr-4": {
             "MyVendor\\MyProject\\": "src/",
-            "Qiq\\Helper\\": "var/qiq/helper/"
+            "Qiq\\Helper\\": "var/qiq/helper/",
+            "AppCore\\": [
+                "ddd/core/src/",
+                "ddd/core-deprecated/src/"
+            ]
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MyVendor\\MyProject\\": "tests/"
+            "MyVendor\\MyProject\\": "tests/",
+            "AppCore\\": [
+                "ddd/core/tests/",
+                "ddd/core-deprecated/tests/"
+            ]
         }
     },
     "scripts": {
         "post-update-cmd": "@setup",
         "post-install-cmd": "@composer bin all install --ansi",
         "setup": "php bin/setup.php",
-        "compile": "./vendor/bin/bear.compile 'MyVendor\\MyProject' prod-app ./",
+        "compile": [
+            "./vendor/bin/bear.compile 'MyVendor\\MyProject' cli-api-app ./",
+            "mv autoload.php autoload.cli-api-app.php; mv preload.php preload.cli-api-app.php",
+            "./vendor/bin/bear.compile 'MyVendor\\MyProject' prod-hal-api-app ./",
+            "mv autoload.php autoload.prod-hal-api-app.php; mv preload.php preload.prod-hal-api-app.php",
+            "./vendor/bin/bear.compile 'MyVendor\\MyProject' prod-html-app ./",
+            "mv preload.php preload.prod-html-app.php"
+        ],
         "doc": "./vendor/bin/apidoc",
         "test": "./vendor/bin/phpunit",
         "coverage": "php -dzend_extension=xdebug.so -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage",
@@ -51,7 +73,8 @@
         "sa": [
             "./vendor/bin/psalm --show-info=true",
             "./vendor/bin/phpstan analyse -c phpstan.neon",
-            "./vendor/bin/phpmd src text ./phpmd.xml"
+            "./vendor/bin/phpmd src text ./phpmd.xml",
+            "./vendor/bin/phpmd ddd/core/src text ./phpmd.xml"
         ],
         "tests": [
             "@cs",
@@ -91,7 +114,8 @@
         "sort-packages": true,
         "process-timeout": 0,
         "allow-plugins": {
-            "bamarni/composer-bin-plugin": true
+            "bamarni/composer-bin-plugin": true,
+            "aura/installer-default": true
         }
     }
 }

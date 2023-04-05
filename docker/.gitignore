@@ -1,2 +1,4 @@
-/.db
-/setup/initdb.sql
+.localstack/*
+!.localstack/.gitkeep
+.mysql/*
+!.mysql/.gitkeep

@@ -4,16 +4,26 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
+use BEAR\Package\AbstractAppModule;
+use BEAR\Package\Context\ProdModule as PackageProdModule;
 use BEAR\QiqModule\QiqErrorModule;
 use BEAR\QiqModule\QiqProdModule;
-use Ray\Di\AbstractModule;
+use BEAR\QueryRepository\CacheVersionModule;
+use BEAR\Resource\Module\OptionsMethodModule;
 
-class ProdModule extends AbstractModule
+use function time;
+
+class ProdModule extends AbstractAppModule
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this->install(new QiqErrorModule());
-        $appDir = dirname(__DIR__, 2);
-        $this->install(new QiqProdModule($appDir . '/var/tmp'));
+        $this->install(new QiqProdModule($this->appMeta->appDir . '/var/tmp'));
+
+        $this->install(new PackageProdModule());
+        $this->override(new OptionsMethodModule());
+        $this->install(new CacheVersionModule((string) time()));
+
+        // TODO: install memcached or redis
     }
 }
