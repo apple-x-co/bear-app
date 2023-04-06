@@ -71,9 +71,19 @@
             <input type="text" class="rounded w-full placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500" placeholder="プレースホルダー">
         </label>
 
+        <label class="block mt-5 relative">
+            <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500">テキストタイプ</span>
+            <input type="text" class="rounded w-full pt-7 placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500" placeholder="">
+        </label>
+
         <label class="block mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">テキストエリア</span>
             <textarea class="rounded w-full placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 leading-6 h-40" placeholder="プレースホルダー"></textarea>
+        </label>
+
+        <label class="block mt-5 relative">
+            <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500">テキストエリア</span>
+            <textarea class="rounded w-full pt-7 placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 leading-6 h-40" placeholder=""></textarea>
         </label>
 
         <label class="block mt-5">
@@ -82,10 +92,22 @@
             <script>flatpickr('.flatpickr1', {disableMobile: true});</script>
         </label>
 
+        <label class="block mt-5 relative">
+            <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500">日付</span>
+            <input type="text" class="flatpickr3 rounded w-full pt-7 placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500" placeholder="YYYY-MM-DD">
+            <script>flatpickr('.flatpickr3', {disableMobile: true});</script>
+        </label>
+
         <label class="block mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">日時</span>
             <input type="text" class="flatpickr2 rounded w-full placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500" placeholder="YYYY-MM-DD HH:MM">
             <script>flatpickr('.flatpickr2', {disableMobile: true, enableTime: true, dateFormat: "Y-m-d H:i"});</script>
+        </label>
+
+        <label class="block mt-5 relative">
+            <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500">日時</span>
+            <input type="text" class="flatpickr4 rounded w-full pt-7 placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500" placeholder="YYYY-MM-DD HH:MM">
+            <script>flatpickr('.flatpickr4', {disableMobile: true, enableTime: true, dateFormat: "Y-m-d H:i"});</script>
         </label>
 
         <div class="mt-5">
@@ -115,6 +137,15 @@
         <label class="block mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">選択（選択肢が6個以上）</span>
             <select class="rounded focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500">
+                <option>選択肢1</option>
+                <option>選択肢2</option>
+                <option>選択肢3</option>
+            </select>
+        </label>
+
+        <label class="block mt-5 relative">
+            <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500">選択（選択肢が6個以上）</span>
+            <select class="rounded pt-7 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500">
                 <option>選択肢1</option>
                 <option>選択肢2</option>
                 <option>選択肢3</option>
