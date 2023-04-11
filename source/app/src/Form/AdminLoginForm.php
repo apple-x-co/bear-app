@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Form;
 
 use Ray\WebFormModule\SetAntiCsrfTrait;
-use Ray\WebFormModule\SubmitInterface;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
  */
-class AdminLoginForm extends ExtendedForm implements SubmitInterface
+class AdminLoginForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
@@ -18,9 +17,10 @@ class AdminLoginForm extends ExtendedForm implements SubmitInterface
 
     public function init(): void
     {
+        $this->setName(self::FORM_NAME);
+
         /** @psalm-suppress UndefinedMethod */
-        $this->setName(self::FORM_NAME) /** @phpstan-ignore-line */
-             ->setField('username', 'text')
+        $this->setField('username', 'text')
              ->setAttribs([
                  'autofocus' => '',
                  'autocomplete' => 'email',
@@ -32,8 +32,7 @@ class AdminLoginForm extends ExtendedForm implements SubmitInterface
         $this->filter->useFieldMessage('username', 'Name must be alphabetic only.');
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setName(self::FORM_NAME) /** @phpstan-ignore-line */
-             ->setField('password', 'password')
+        $this->setField('password', 'password')
              ->setAttribs([
                  'autocomplete' => 'current-password',
                  'placeholder' => 'password',
@@ -44,8 +43,7 @@ class AdminLoginForm extends ExtendedForm implements SubmitInterface
         $this->filter->useFieldMessage('password', 'Name must be alphabetic only.');
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setName(self::FORM_NAME) /** @phpstan-ignore-line */
-             ->setField('login', 'submit')
+        $this->setField('login', 'submit')
              ->setAttribs(['tabindex' => 4]);
     }
 
