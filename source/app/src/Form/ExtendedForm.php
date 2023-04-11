@@ -7,10 +7,12 @@ namespace MyVendor\MyProject\Form;
 use Aura\Html\Helper\Input\AbstractInput;
 use Ray\WebFormModule\AbstractForm;
 use Ray\WebFormModule\AntiCsrf;
+use Ray\WebFormModule\SubmitInterface;
 
 use function array_merge;
+use function is_array;
 
-abstract class ExtendedForm extends AbstractForm
+abstract class ExtendedForm extends AbstractForm implements SubmitInterface
 {
     abstract protected function getFormName(): string;
 
@@ -25,6 +27,10 @@ abstract class ExtendedForm extends AbstractForm
     {
         $spec = $this->get($input);
         $spec['attribs'] = array_merge($spec['attribs'] ?? [], $attribs);
+
+        if ($spec['type'] === 'file' && is_array($spec['value']) && isset($spec['value']['tmp_name'])) {
+            $spec['value'] = null;
+        }
 
         /** @phpstan-ignore-next-line */
         return $this->helper->input($spec);
@@ -42,13 +48,21 @@ abstract class ExtendedForm extends AbstractForm
     {
         $formName = $this->getFormName();
 
-        $submit = $_POST[$formName] ?? [];
+        /** @var array<string, mixed> $posts */
+        $posts = $_POST[$formName] ?? [];
 
         if (isset($_POST[AntiCsrf::TOKEN_KEY])) {
             /** @psalm-suppress InvalidArrayOffset */
-            $submit[AntiCsrf::TOKEN_KEY] = $_POST[AntiCsrf::TOKEN_KEY];
+            $posts[AntiCsrf::TOKEN_KEY] = $_POST[AntiCsrf::TOKEN_KEY];
         }
 
-        return $submit;
+        if (isset($_FILES[$formName])) {
+            $files = (new NormalizeFiles())($_FILES);
+            if (! empty($files)) {
+                $posts = array_merge($posts, $files[$formName]);
+            }
+        }
+
+        return $posts;
     }
 }

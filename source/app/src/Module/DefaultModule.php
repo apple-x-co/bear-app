@@ -6,6 +6,7 @@ namespace MyVendor\MyProject\Module;
 
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
+use MyVendor\MyProject\Form\UploadFilesInterface;
 use MyVendor\MyProject\Session\SessionInterface;
 use Ray\Di\AbstractModule;
 use Ray\WebFormModule\FormInterface;
@@ -15,6 +16,8 @@ class DefaultModule extends AbstractModule
 {
     protected function configure(): void
     {
+        $this->bind(UploadFilesInterface::class)->toNull();
+
         $this->bind(SessionInterface::class)->toNull();
         $this->bind()->annotatedWith('qiq_template_dir')->toInstance('');
 
@@ -30,6 +33,7 @@ class DefaultModule extends AbstractModule
         $this->bind(AdminAuthenticatorInterface::class)->toNull();
 
         $this->bind(FormInterface::class)->annotatedWith('admin_login_form')->toNull();
+        $this->bind(FormInterface::class)->annotatedWith('admin_upload_demo_form')->toNull();
     }
 
     private function user(): void

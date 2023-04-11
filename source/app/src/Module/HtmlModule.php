@@ -7,7 +7,10 @@ namespace MyVendor\MyProject\Module;
 use BEAR\Package\AbstractAppModule;
 use BEAR\QiqModule\QiqModule;
 use MyVendor\MyProject\Form\AdminLoginForm;
+use MyVendor\MyProject\Form\AdminUploadDemoForm;
+use MyVendor\MyProject\Form\UploadFilesInterface;
 use MyVendor\MyProject\Form\UserLoginForm;
+use MyVendor\MyProject\Provider\UploadedFilesProvider;
 use Ray\AuraSessionModule\AuraSessionModule;
 use Ray\WebFormModule\AuraInputModule;
 use Ray\WebFormModule\FormInterface;
@@ -22,6 +25,8 @@ class HtmlModule extends AbstractAppModule
         $this->install(new SessionAuthModule());
         $this->install(new CaptchaModule());
 
+        $this->bind(UploadFilesInterface::class)->toProvider(UploadedFilesProvider::class);
+
         $this->admin();
         $this->user();
     }
@@ -29,6 +34,7 @@ class HtmlModule extends AbstractAppModule
     private function admin(): void
     {
         $this->bind(FormInterface::class)->annotatedWith('admin_login_form')->to(AdminLoginForm::class);
+        $this->bind(FormInterface::class)->annotatedWith('admin_upload_demo_form')->to(AdminUploadDemoForm::class);
     }
 
     private function user(): void
