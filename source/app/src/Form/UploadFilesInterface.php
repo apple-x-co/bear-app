@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Form;
 
-use Psr\Http\Message\UploadedFileInterface;
-
 interface UploadFilesInterface
 {
     /**
-     * @return array<UploadedFileInterface>
+     * @return array<string, mixed>
      */
-    public function getUploadedFiles(): array;
+    public function getUploadedFileMap(): array;
 }

@@ -12,6 +12,8 @@ use Ray\Di\Di\Named;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
+use function is_array;
+
 class UploadDemo extends AdminPage
 {
     public function __construct(
@@ -33,6 +35,11 @@ class UploadDemo extends AdminPage
         Input $uploadDemo,
         #[Assisted] ?UploadFilesInterface $uploadFiles = null,
     ): static {
+        $uploadedFileMap = $uploadFiles?->getUploadedFileMap();
+        if (is_array($uploadedFileMap) && ! empty($uploadedFileMap)) {
+            $this->body['uploadedUserFile'] = $uploadedFileMap['uploadDemo']['userFile'] ?? null;
+        }
+
         return $this;
     }
 

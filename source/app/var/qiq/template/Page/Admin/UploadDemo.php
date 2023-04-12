@@ -11,6 +11,12 @@
             {{= AdminFile($this->form, 'userFile') }}
             {{= AdminFormError($this->form, 'userFile') }}
         </label>
+        {{ if (isset($this->uploadedUserFile)): }}
+            <div class="block mt-5">
+                <p>Client file name: {{h $this->userFile->getClientFilename() }}</p>
+                <p>Size: {{= $this->uploadedUserFile->getSize() }}</p>
+            </div>
+        {{ endif }}
         <label class="block mt-5 text-center">
             {{= AdminSubmit($this->form, 'submit', ['value' => 'UPLOAD', 'data-submit-once' => '1']) }}
         </label>

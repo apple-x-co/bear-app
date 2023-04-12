@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Form;
 
-use Psr\Http\Message\UploadedFileInterface;
-
 class UploadFiles implements UploadFilesInterface
 {
     /**
-     * @param array<UploadedFileInterface> $uploadedFiles
+     * @param array<string, mixed> $uploadedFiles
      */
     public function __construct(
         private readonly array $uploadedFiles,
@@ -17,9 +15,9 @@ class UploadFiles implements UploadFilesInterface
     }
 
     /**
-     * @return array<UploadedFileInterface>
+     * @return array<string, mixed>
      */
-    public function getUploadedFiles(): array
+    public function getUploadedFileMap(): array
     {
         return $this->uploadedFiles;
     }
