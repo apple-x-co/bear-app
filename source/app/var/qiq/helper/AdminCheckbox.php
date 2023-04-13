@@ -20,7 +20,7 @@ class AdminCheckbox extends Helper
     ): AbstractInput {
         $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
 
-        $defaultAttribs = ['class' => '', 'label_class' => 'bb'];
+        $defaultAttribs = ['class' => ''];
 
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
