@@ -17,6 +17,14 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
     abstract protected function getFormName(): string;
 
     /**
+     * @return array<string, mixed>
+     */
+    public function getData(): array
+    {
+        return $this->getValue();
+    }
+
+    /**
      * @param array<string, mixed> $spec
      * @param array<string, mixed> $attribs
      */
