@@ -17,7 +17,7 @@ class AdminSubmit extends Helper
         array $attribs = []
     ): AbstractInput
     {
-        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);;
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
 
         $defaultAttribs = [
             'value' => 'Submit',
