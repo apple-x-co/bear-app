@@ -17,15 +17,11 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
     abstract protected function getFormName(): string;
 
     /**
-     * @param string               $input
+     * @param array<string, mixed> $spec
      * @param array<string, mixed> $attribs
-     *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-     * @phpstan-ignore-next-line
      */
-    public function input($input, array $attribs = []): AbstractInput
+    public function widget(array $spec, array $attribs = []): AbstractInput
     {
-        $spec = $this->get($input);
         $spec['attribs'] = array_merge($spec['attribs'] ?? [], $attribs);
 
         if ($spec['type'] === 'file' && is_array($spec['value']) && isset($spec['value']['tmp_name'])) {

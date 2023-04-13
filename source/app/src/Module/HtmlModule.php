@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\Module;
 use BEAR\Package\AbstractAppModule;
 use BEAR\QiqModule\QiqModule;
 use MyVendor\MyProject\Form\AdminLoginForm;
+use MyVendor\MyProject\Form\AdminMultipleDemoForm;
 use MyVendor\MyProject\Form\AdminUploadDemoForm;
 use MyVendor\MyProject\Form\UploadFilesInterface;
 use MyVendor\MyProject\Form\UserLoginForm;
@@ -35,6 +36,7 @@ class HtmlModule extends AbstractAppModule
     {
         $this->bind(FormInterface::class)->annotatedWith('admin_login_form')->to(AdminLoginForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_upload_demo_form')->to(AdminUploadDemoForm::class);
+        $this->bind(FormInterface::class)->annotatedWith('admin_multiple_demo_form')->to(AdminMultipleDemoForm::class);
     }
 
     private function user(): void

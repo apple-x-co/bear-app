@@ -11,6 +11,6 @@ class CsrfTokenField
 {
     public function __invoke(ExtendedForm $form): AbstractInput
     {
-        return $form->input('__csrf_token');
+        return $form->widget($form->get('__csrf_token'));
     }
 }
