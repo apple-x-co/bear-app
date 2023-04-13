@@ -13,9 +13,10 @@ class FieldsetDemo
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
      */
     public function __construct(
-        public readonly array $addresses,
+        public readonly string $agree,
         public readonly string $__csrf_token, // phpcs:ignore
         public readonly ?string $submit,
+        public readonly array $addresses = [],
     ) {
     }
 }

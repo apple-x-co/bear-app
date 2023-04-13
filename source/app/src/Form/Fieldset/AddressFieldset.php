@@ -13,9 +13,14 @@ class AddressFieldset extends Fieldset
 {
     public function init(): void
     {
-        $this->setField('zip');
-        $this->setField('state');
-        $this->setField('city');
-        $this->setField('street');
+        $this->setField('zip', 'text');
+        $this->setField('state', 'text');
+        $this->setField('city', 'text');
+        $this->setField('street', 'text');
+        $this->setField('houseType', 'radio')
+             ->setOptions([
+                 '1' => 'Single-family',
+                 '2' => 'Townhouse',
+             ]);
     }
 }

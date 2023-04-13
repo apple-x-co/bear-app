@@ -26,13 +26,8 @@
             {{= AdminSelect(form: $this->form, input: 'programmingLanguages') }}
             {{= AdminFormError(form: $this->form, input: 'programmingLanguages') }}
         </label>
-        <label class="block mt-5">
-            <span class="block text-sm font-sans font-normal text-slate-700">Agree</span>
-            {{= AdminSelect(form: $this->form, input: 'agree') }}
-            {{= AdminFormError(form: $this->form, input: 'agree') }}
-        </label>
         <label class="block mt-5 text-center">
-            {{= AdminSubmit(form: $this->form, input: 'submit', attribs: ['value' => 'UPLOAD', 'data-submit-once' => '1']) }}
+            {{= AdminSubmit(form: $this->form, input: 'submit', attribs: ['value' => 'SEND', 'data-submit-once' => '1']) }}
             {{= CsrfTokenField(form: $this->form) }}
         </label>
     </div>

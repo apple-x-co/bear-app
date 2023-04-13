@@ -16,7 +16,6 @@ class MultipleDemo
      */
     public function __construct(
         public readonly string $primaryLanguage,
-        public readonly string $agree,
         public readonly string $__csrf_token, // phpcs:ignore
         public readonly ?string $submit,
         public readonly array $fruits = [],

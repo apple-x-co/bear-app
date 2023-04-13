@@ -57,13 +57,6 @@ class AdminMultipleDemoForm extends ExtendedForm
                  ],
              ]);
 
-        $this->setField('agree', 'checkbox')
-             ->setAttribs([
-                 'value' => 'yes',
-                 'label' => 'YES',
-                 'value_unchecked' => 'no',
-             ]);
-
         /** @psalm-suppress UndefinedMethod */
         $this->setField('submit', 'submit')
              ->setAttribs(['tabindex' => 99]);
