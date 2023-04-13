@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use MyVendor\MyProject\Form\ExtendedForm;
-use MyVendor\MyProject\Input\Admin\MultipleDemo as Input;
+use MyVendor\MyProject\Input\Admin\FieldsetDemo as Input;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
 use Ray\WebFormModule\Annotation\FormValidation;
@@ -35,7 +35,7 @@ class FieldsetDemo extends AdminPage
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @FormValidation()
      */
-    public function onPost(Input $multipleDemo): static
+    public function onPost(Input $fieldsetDemo): static
     {
         return $this;
     }

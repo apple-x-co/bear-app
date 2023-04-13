@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Input\Admin;
 
-class MultipleDemo
+class FieldsetDemo
 {
     /**
      * @param array<int, array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null}> $addresses

@@ -17,7 +17,7 @@ class AdminFieldsetDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
-    private const FORM_NAME = 'multipleDemo';
+    private const FORM_NAME = 'fieldsetDemo';
 
     protected function getFormName(): string
     {
