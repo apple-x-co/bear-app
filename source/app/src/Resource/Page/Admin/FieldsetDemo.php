@@ -13,7 +13,7 @@ use Ray\WebFormModule\FormInterface;
 
 use function assert;
 
-class MultipleDemo extends AdminPage
+class FieldsetDemo extends AdminPage
 {
     public function __construct(
         #[Named('admin_multiple_demo_form')] protected readonly FormInterface $form,

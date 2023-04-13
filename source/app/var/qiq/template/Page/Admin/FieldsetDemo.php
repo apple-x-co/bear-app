@@ -1,6 +1,6 @@
 {{ extends ('layout/AdminPage/page') }}
 
-{{ setBlock ('title') }}Multiple Demo | {{ parentBlock () }}{{ endBlock () }}
+{{ setBlock ('title') }}Fieldset Demo | {{ parentBlock () }}{{ endBlock () }}
 
 {{ $this->navVisible = false }}
 {{ setBlock ('body_content') }}
