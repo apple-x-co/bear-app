@@ -59,6 +59,8 @@ class AdminFieldsetDemoForm extends ExtendedForm
                 return true;
             });
 
+        $this->setField('note', 'textarea');
+
         $this->setField('agree', 'checkbox')
              ->setAttribs([
                  'value' => 'yes',

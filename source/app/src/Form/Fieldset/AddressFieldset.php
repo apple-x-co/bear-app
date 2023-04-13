@@ -22,5 +22,15 @@ class AddressFieldset extends Fieldset
                  '1' => 'Single-family',
                  '2' => 'Townhouse',
              ]);
+        $this->setField('smartphones', 'select')
+             ->setAttribs(['multiple' => true])
+             ->setOptions([
+                 'iphone15' => 'iPhone 15',
+                 'iphone14' => 'iPhone 14',
+                 'iphone13' => 'iPhone 13',
+                 'iphone12' => 'iPhone 12',
+                 'iphone11' => 'iPhone 11',
+                 'iphoneX' => 'iPhone X',
+             ]);
     }
 }
