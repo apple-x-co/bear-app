@@ -6,8 +6,8 @@
 {{ setBlock ('body_content') }}
 <form method="post" enctype="multipart/form-data">
     <div class="mt-5">
-        <label class="block relative">
-            <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide">Image file</span>
+        <label class="block">
+            <span class="block text-sm font-thin text-slate-500 tracking-wide">Image file</span>
             {{= AdminFile(form: $this->form, input: 'userFile') }}
             {{= AdminFormError(form: $this->form, input: 'userFile') }}
         </label>
