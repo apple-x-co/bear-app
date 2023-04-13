@@ -6,7 +6,7 @@
 {{ setBlock ('body_content') }}
 <form method="post" enctype="multipart/form-data">
     <div class="mt-5">
-        {{ foreach ($this->form->getInput('addresses') as $address):  }}
+        {{ foreach ($this->form->addresses as $address):  }}
         <label class="block mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">Zip</span>
             {{= AdminInput(form: $this->form, input: 'zip', fieldset: $address) }}
