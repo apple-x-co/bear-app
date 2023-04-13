@@ -4,7 +4,7 @@
 
 {{ $this->navVisible = false }}
 {{ setBlock ('body_content') }}
-<form method="post" enctype="multipart/form-data">
+<form method="post">
     <div class="mt-5">
         {{ foreach ($this->form->addresses as $address):  }}
         <label class="block mt-5">
