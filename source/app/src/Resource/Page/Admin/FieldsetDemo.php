@@ -16,7 +16,7 @@ use function assert;
 class FieldsetDemo extends AdminPage
 {
     public function __construct(
-        #[Named('admin_multiple_demo_form')] protected readonly FormInterface $form,
+        #[Named('admin_fieldset_demo_form')] protected readonly FormInterface $form,
     ) {
         $this->body['form'] = $this->form;
     }

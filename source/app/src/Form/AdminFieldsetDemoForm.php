@@ -13,7 +13,7 @@ use stdClass;
 /**
  * @psalm-suppress PropertyNotSetInConstructor
  */
-class AdminMultipleDemoForm extends ExtendedForm
+class AdminFieldsetDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
