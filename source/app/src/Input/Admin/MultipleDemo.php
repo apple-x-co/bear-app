@@ -7,6 +7,10 @@ namespace MyVendor\MyProject\Input\Admin;
 class MultipleDemo
 {
     /**
+     * @param array<string> $fruits
+     * @param array<string> $languages
+     * @param array<string> $programmingLanguages
+     *
      * @psalm-suppress UndefinedAttributeClass
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
      */

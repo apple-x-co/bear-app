@@ -6,8 +6,8 @@ namespace MyVendor\MyProject\Module;
 
 use BEAR\Package\AbstractAppModule;
 use BEAR\QiqModule\QiqModule;
-use MyVendor\MyProject\Form\AdminLoginForm;
 use MyVendor\MyProject\Form\AdminFieldsetDemoForm;
+use MyVendor\MyProject\Form\AdminLoginForm;
 use MyVendor\MyProject\Form\AdminMultipleDemoForm;
 use MyVendor\MyProject\Form\AdminUploadDemoForm;
 use MyVendor\MyProject\Form\UploadFilesInterface;
@@ -17,6 +17,7 @@ use Ray\AuraSessionModule\AuraSessionModule;
 use Ray\WebFormModule\AuraInputModule;
 use Ray\WebFormModule\FormInterface;
 
+/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class HtmlModule extends AbstractAppModule
 {
     protected function configure(): void

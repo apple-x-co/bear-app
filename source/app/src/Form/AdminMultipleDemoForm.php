@@ -6,6 +6,9 @@ namespace MyVendor\MyProject\Form;
 
 use Ray\WebFormModule\SetAntiCsrfTrait;
 
+/**
+ * @psalm-suppress PropertyNotSetInConstructor
+ */
 class AdminMultipleDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
@@ -22,9 +25,6 @@ class AdminMultipleDemoForm extends ExtendedForm
         $this->setName(self::FORM_NAME);
 
         $this->setField('fruits', 'checkbox')
-             ->setAttribs([
-//                 'value_unchecked' => '',
-             ])
              ->setOptions([
                  '1' => 'Apple',
                  '2' => 'Orange',
@@ -38,18 +38,14 @@ class AdminMultipleDemoForm extends ExtendedForm
              ]);
 
         $this->setField('languages', 'select')
-            ->setAttribs([
-                'multiple' => true,
-            ])
+            ->setAttribs(['multiple' => true])
              ->setOptions([
                  'ja' => 'Japanese',
                  'en' => 'English',
              ]);
 
         $this->setField('programmingLanguages', 'select')
-             ->setAttribs([
-                 'multiple' => true,
-             ])
+             ->setAttribs(['multiple' => true])
              ->setOptions([
                  'backend' => [
                      'php' => 'PHP',
