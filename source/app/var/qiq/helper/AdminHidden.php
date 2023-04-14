@@ -8,25 +8,20 @@ use Aura\Html\Helper\Input\AbstractInput;
 use Aura\Input\Fieldset;
 use MyVendor\MyProject\Form\ExtendedForm;
 
-class AdminSubmit extends Helper
+use function array_merge;
+
+class AdminHidden extends Helper
 {
     public function __invoke(
         ExtendedForm $form,
         string $input,
         Fieldset $fieldset = null,
         array $attribs = []
-    ): AbstractInput
-    {
+    ): AbstractInput {
         $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+        $spec['type'] = 'hidden';
 
-        if (isset($attribs['value'])) {
-            $spec['value'] = $attribs['value'];
-        }
-
-        $defaultAttribs = [
-            'value' => 'Submit',
-            'class' => 'py-2 px-3 bg-sky-500 text-white text-sm font-sans font-bold tracking-wider rounded-md shadow-lg shadow-sky-500/50 focus:outline-none disabled:text-white disabled:bg-slate-200 disabled:shadow-none',
-        ];
+        $defaultAttribs = [];
 
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }

@@ -36,6 +36,7 @@ class DefaultModule extends AbstractModule
         $this->bind(FormInterface::class)->annotatedWith('admin_upload_demo_form')->toNull();
         $this->bind(FormInterface::class)->annotatedWith('admin_fieldset_demo_form')->toNull();
         $this->bind(FormInterface::class)->annotatedWith('admin_multiple_demo_form')->toNull();
+        $this->bind(FormInterface::class)->annotatedWith('admin_contact_demo_form')->toNull();
     }
 
     private function user(): void
