@@ -12,26 +12,32 @@
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">Zip</span>
                 {{= AdminInput(form: $this->form, input: 'zip', fieldset: $address) }}
+                {{= AdminFieldsetError(fieldset: $address, input: 'zip') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">State</span>
                 {{= AdminInput(form: $this->form, input: 'state', fieldset: $address) }}
+                {{= AdminFieldsetError(fieldset: $address, input: 'state') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">City</span>
                 {{= AdminInput(form: $this->form, input: 'city', fieldset: $address) }}
+                {{= AdminFieldsetError(fieldset: $address, input: 'city') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">Street</span>
                 {{= AdminInput(form: $this->form, input: 'street', fieldset: $address) }}
+                {{= AdminFieldsetError(fieldset: $address, input: 'street') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">House type</span>
                 {{= AdminRadio(form: $this->form, input: 'houseType', fieldset: $address) }}
+                {{= AdminFieldsetError(fieldset: $address, input: 'houseType') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">Smartphone you own</span>
                 {{= AdminRadio(form: $this->form, input: 'smartphones', fieldset: $address) }}
+                {{= AdminFieldsetError(fieldset: $address, input: 'smartphones') }}
             </label>
         </div>
         {{ endforeach }}

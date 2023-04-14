@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Form;
 
 use Aura\Html\Helper\Input\AbstractInput;
+use Aura\Input\Collection;
+use Aura\Input\Fieldset;
 use Ray\WebFormModule\AbstractForm;
 use Ray\WebFormModule\AntiCsrf;
 use Ray\WebFormModule\SubmitInterface;
 
 use function array_merge;
+use function assert;
 use function is_array;
 
 abstract class ExtendedForm extends AbstractForm implements SubmitInterface
@@ -38,6 +41,28 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
 
         /** @phpstan-ignore-next-line */
         return $this->helper->input($spec);
+    }
+
+    /**
+     * @param array<array-key, mixed> $data
+     */
+    public function apply(array $data): bool
+    {
+        $isValid = parent::apply($data);
+
+        foreach ($this->inputs as $input) {
+            if (! ($input instanceof Collection)) {
+                continue;
+            }
+
+            $fieldsetName = $input->name;
+            foreach ($this->$fieldsetName as $fieldset) {
+                assert($fieldset instanceof Fieldset);
+                $fieldset->filter();
+            }
+        }
+
+        return $isValid;
     }
 
     /**

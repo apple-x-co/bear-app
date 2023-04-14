@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Form;
 
 use Aura\Input\Builder;
-use Aura\Input\Filter;
 use MyVendor\MyProject\Form\Fieldset\AddressFieldset;
+use MyVendor\MyProject\Form\Fieldset\AddressFilter;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 use stdClass;
 
@@ -32,7 +32,7 @@ class AdminFieldsetDemoForm extends ExtendedForm
             'address' => static function () {
                 return new AddressFieldset(
                     new Builder(),
-                    new Filter(),
+                    new AddressFilter(),
                 );
             },
         ]);
@@ -43,20 +43,26 @@ class AdminFieldsetDemoForm extends ExtendedForm
         $this->filter
             ->validate('addresses')
             ->is('callback', static function (stdClass $subject, string $field) {
+                $isValid = true;
+
                 /** @var array<int, array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null}> $addresses */
                 $addresses = $subject->$field;
-
                 foreach ($addresses as $address) {
                     if (! isset($address['zip'], $address['state'], $address['city'], $address['street'])) {
-                        return false;
+                        $isValid = false;
+                        continue;
                     }
 
-                    if ($address['zip'] === '' || $address['state'] === '' || $address['city'] === '' || $address['street'] === '') {
-                        return false;
+                    $filter = new AddressFilter();
+                    $values = (object) $address;
+                    if ($filter->values($values)) {
+                        continue;
                     }
+
+                    $isValid = false;
                 }
 
-                return true;
+                return $isValid;
             });
 
         $this->setField('note', 'textarea');
