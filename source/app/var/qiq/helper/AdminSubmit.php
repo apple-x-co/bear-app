@@ -21,6 +21,7 @@ class AdminSubmit extends Helper
 
         if (isset($attribs['value'])) {
             $spec['value'] = $attribs['value'];
+            unset($attribs['value']);
         }
 
         $defaultAttribs = [
