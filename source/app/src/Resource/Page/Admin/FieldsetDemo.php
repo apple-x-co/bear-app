@@ -25,7 +25,7 @@ class FieldsetDemo extends AdminPage
     {
         assert($this->form instanceof ExtendedForm);
         $this->form->fill([
-            'addresses' => [[],[]],
+            'deliveries' => [[],[]],
         ]);
 
         return $this;

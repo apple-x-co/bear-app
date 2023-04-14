@@ -7,7 +7,8 @@ namespace MyVendor\MyProject\Input\Admin;
 class FieldsetDemo
 {
     /**
-     * @param array<int, array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null, houseType?: string|null, smartphones?: array<string>|null}> $addresses
+     * @param array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null, houseType?: string|null, smartphones?: array<string>|null}             $home
+     * @param array<int, array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null, houseType?: string|null, smartphones?: array<string>|null}> $deliveries
      *
      * @psalm-suppress UndefinedAttributeClass
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
@@ -17,7 +18,8 @@ class FieldsetDemo
         public readonly string $agree,
         public readonly string $__csrf_token, // phpcs:ignore
         public readonly ?string $submit,
-        public readonly array $addresses = [],
+        public readonly array $home = [],
+        public readonly array $deliveries = [],
     ) {
     }
 }

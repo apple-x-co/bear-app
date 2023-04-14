@@ -51,6 +51,11 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
         $isValid = parent::apply($data);
 
         foreach ($this->inputs as $input) {
+            if ($input instanceof Fieldset) {
+                $input->filter();
+                continue;
+            }
+
             if (! ($input instanceof Collection)) {
                 continue;
             }
