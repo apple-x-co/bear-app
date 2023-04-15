@@ -31,12 +31,12 @@
             <div class="mt-5">
                 <label class="block">
                     <span class="block text-sm font-sans font-normal text-slate-700">Username</span>
-                    {{= AdminInput(form: $this->form, input: 'username') }}
+                    {{= AdminText(form: $this->form, input: 'username') }}
                     {{= AdminFormError(form: $this->form, input: 'username') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">Password</span>
-                    {{= AdminInput(form: $this->form, input: 'password') }}
+                    {{= AdminText(form: $this->form, input: 'password') }}
                     {{= AdminFormError(form: $this->form, input: 'password') }}
                 </label>
                 <div class="ml-[-11px] lg:ml-0 mt-5 g-recaptcha" data-sitekey="{{= $this->gRecaptchaSiteKey }}" data-size="normal" data-tabindex="3" data-callback="gRecaptchaChecked" data-expired-callback="gRecaptchaExpired" data-error-callback="gRecaptchaError"></div>

@@ -12,22 +12,22 @@
             {{ $home = $this->form->home }}
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">Zip</span>
-                {{= AdminInput(form: $this->form, input: 'zip', fieldset: $home) }}
+                {{= AdminText(form: $this->form, input: 'zip', fieldset: $home) }}
                 {{= AdminFieldsetError(fieldset: $home, input: 'zip') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">State</span>
-                {{= AdminInput(form: $this->form, input: 'state', fieldset: $home) }}
+                {{= AdminText(form: $this->form, input: 'state', fieldset: $home) }}
                 {{= AdminFieldsetError(fieldset: $home, input: 'state') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">City</span>
-                {{= AdminInput(form: $this->form, input: 'city', fieldset: $home) }}
+                {{= AdminText(form: $this->form, input: 'city', fieldset: $home) }}
                 {{= AdminFieldsetError(fieldset: $home, input: 'city') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">Street</span>
-                {{= AdminInput(form: $this->form, input: 'street', fieldset: $home) }}
+                {{= AdminText(form: $this->form, input: 'street', fieldset: $home) }}
                 {{= AdminFieldsetError(fieldset: $home, input: 'street') }}
             </label>
             <label class="block mt-5">
@@ -50,22 +50,22 @@
                 <h2 class="inline-block text-xl sm:text-2xl font-extrabold text-slate-800 tracking-tight">delivery{{= $index + 1 }}</h2>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">Zip</span>
-                    {{= AdminInput(form: $this->form, input: 'zip', fieldset: $delivery) }}
+                    {{= AdminText(form: $this->form, input: 'zip', fieldset: $delivery) }}
                     {{= AdminFieldsetError(fieldset: $delivery, input: 'zip') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">State</span>
-                    {{= AdminInput(form: $this->form, input: 'state', fieldset: $delivery) }}
+                    {{= AdminText(form: $this->form, input: 'state', fieldset: $delivery) }}
                     {{= AdminFieldsetError(fieldset: $delivery, input: 'state') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">City</span>
-                    {{= AdminInput(form: $this->form, input: 'city', fieldset: $delivery) }}
+                    {{= AdminText(form: $this->form, input: 'city', fieldset: $delivery) }}
                     {{= AdminFieldsetError(fieldset: $delivery, input: 'city') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">Street</span>
-                    {{= AdminInput(form: $this->form, input: 'street', fieldset: $delivery) }}
+                    {{= AdminText(form: $this->form, input: 'street', fieldset: $delivery) }}
                     {{= AdminFieldsetError(fieldset: $delivery, input: 'street') }}
                 </label>
                 <label class="block mt-5">
@@ -84,7 +84,7 @@
 
         <label class="block mt-20">
             <span class="block text-sm font-sans font-normal text-slate-700">Note</span>
-            {{= AdminInput(form: $this->form, input: 'note') }}
+            {{= AdminText(form: $this->form, input: 'note') }}
             {{= AdminFormError(form: $this->form, input: 'note') }}
         </label>
         <label class="block mt-5">

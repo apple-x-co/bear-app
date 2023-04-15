@@ -10,7 +10,7 @@ use MyVendor\MyProject\Form\ExtendedForm;
 
 use function array_merge;
 
-class AdminInput extends Helper
+class AdminText extends Helper
 {
     public function __invoke(
         ExtendedForm $form,
