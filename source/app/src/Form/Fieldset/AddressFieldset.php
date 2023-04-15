@@ -13,7 +13,8 @@ class AddressFieldset extends Fieldset
 {
     public function init(): void
     {
-        $this->setField('zip', 'text');
+        $this->setField('zip', 'text')
+             ->setAttribs(['required' => 'required']);
         $this->setField('state', 'text');
         $this->setField('city', 'text');
         $this->setField('street', 'text');

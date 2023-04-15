@@ -12,7 +12,7 @@ class AdminFieldsetError extends Helper
 {
     public function __invoke(Fieldset $fieldset, string $input, string $tag = 'span', array $attr = []): string
     {
-        if ($fieldset->isSuccess()) {
+        if ($fieldset->isSuccess() !== false) {
             return '';
         }
 
