@@ -13,6 +13,7 @@
             {{= AdminHidden(form: $this->form, input: 'username') }}
         </label>
         <label class="block mt-5 text-center">
+            {{= AdminSubmit(form: $this->form, input: 'mode', attribs: ['value' => 'INPUT', 'data-submit-once' => '1']) }}
             {{= AdminSubmit(form: $this->form, input: 'mode', attribs: ['value' => 'COMPLETE', 'data-submit-once' => '1']) }}
             {{= CsrfTokenField(form: $this->form) }}
         </label>
