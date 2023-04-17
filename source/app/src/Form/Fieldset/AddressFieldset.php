@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Form\Fieldset;
 
-use Aura\Input\Fieldset;
+use MyVendor\MyProject\Form\ExtendedFieldset;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
  */
-class AddressFieldset extends Fieldset
+class AddressFieldset extends ExtendedFieldset
 {
     public function init(): void
     {

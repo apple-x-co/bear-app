@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qiq\Helper;
 
 use Aura\Html\Helper\Input\AbstractInput;
-use Aura\Input\Fieldset;
+use MyVendor\MyProject\Form\ExtendedFieldset;
 use MyVendor\MyProject\Form\ExtendedForm;
 
 use function array_merge;
@@ -15,7 +15,7 @@ class AdminSelect extends Helper
     public function __invoke(
         ExtendedForm $form,
         string $input,
-        Fieldset $fieldset = null,
+        ExtendedFieldset $fieldset = null,
         array $attribs = []
     ): AbstractInput {
         $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
