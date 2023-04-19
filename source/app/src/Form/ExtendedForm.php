@@ -12,6 +12,7 @@ use Ray\WebFormModule\AntiCsrf;
 use Ray\WebFormModule\SubmitInterface;
 
 use function array_merge;
+use function array_merge_recursive;
 use function assert;
 use function is_array;
 
@@ -93,7 +94,7 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
         if (isset($_FILES[$formName])) {
             $files = (new NormalizeFiles())($_FILES);
             if (! empty($files)) {
-                $posts = array_merge($posts, $files[$formName]);
+                $posts = array_merge_recursive($posts, $files[$formName]);
             }
         }
 
