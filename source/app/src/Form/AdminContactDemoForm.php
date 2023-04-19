@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\Form;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 
 /**
+ * @property string $mode
  * @psalm-suppress PropertyNotSetInConstructor
  */
 class AdminContactDemoForm extends ExtendedForm
