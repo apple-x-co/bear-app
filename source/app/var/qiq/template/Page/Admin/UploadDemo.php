@@ -8,19 +8,23 @@
     <div class="mt-5">
         <label class="block">
             <span class="block text-sm font-thin text-slate-500 tracking-wide">Image file</span>
-            {{= AdminFile(form: $this->form, input: 'userFile') }}
-            {{= AdminFormError(form: $this->form, input: 'userFile') }}
+            {{= AdminFile(form: $this->form, input: 'file') }}
+            {{= AdminFormError(form: $this->form, input: 'file') }}
         </label>
-        {{ if (isset($this->uploadedUserFile)): }}
+        {{ if (isset($this->uploadedFile)): }}
         <div class="block mt-5">
-            <p>Client file name: {{h $this->uploadedUserFile->getClientFilename() }}</p>
-            <p>Size: {{= $this->uploadedUserFile->getSize() }}</p>
+            <p class="font-bold">UploadedFileInterface</p>
+            <p>Client file name: {{h $this->uploadedFile->getClientFilename() }}</p>
+            <p>Client media type: {{h $this->uploadedFile->getClientMediaType() }}</p>
+            <p>Size: {{= $this->uploadedFile->getSize() }}</p>
         </div>
         {{ endif }}
-        {{ if (isset($this->userFile)): }}
+        {{ if (isset($this->file)): }}
         <div class="block mt-5">
-            <p>Client file name: {{h $this->userFile['name'] }}</p>
-            <p>Size: {{= $this->userFile['size'] }}</p>
+            <p class="font-bold">$_FILES</p>
+            <p>Name: {{h $this->file['name'] }}</p>
+            <p>Type: {{= $this->file['type'] }}</p>
+            <p>Size: {{= $this->file['size'] }}</p>
         </div>
         {{ endif }}
         <label class="block mt-5 text-center">

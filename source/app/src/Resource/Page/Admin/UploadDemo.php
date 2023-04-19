@@ -39,13 +39,13 @@ class UploadDemo extends AdminPage
     ): static {
         $uploadedFileMap = $uploadFiles?->getUploadedFileMap();
         if (is_array($uploadedFileMap) && ! empty($uploadedFileMap)) {
-            $this->body['uploadedUserFile'] = $uploadedFileMap['uploadDemo']['userFile'] ?? null;
+            $this->body['uploadedFile'] = $uploadedFileMap['uploadDemo']['file'] ?? null;
         }
 
         assert($this->form instanceof ExtendedForm);
         $data = $this->form->getData();
-        if (isset($data['userFile']) && is_array($data['userFile'])) {
-            $this->body['userFile'] = $data['userFile'];
+        if (isset($data['file']) && is_array($data['file'])) {
+            $this->body['file'] = $data['file'];
         }
 
         return $this;

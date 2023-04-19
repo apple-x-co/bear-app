@@ -23,7 +23,7 @@ class AdminUploadDemoForm extends ExtendedForm
         $this->setName(self::FORM_NAME);
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setField('userFile', 'file')
+        $this->setField('file', 'file')
              ->setAttribs([
                  'required' => 'required',
                  'tabindex' => 1,
@@ -31,7 +31,7 @@ class AdminUploadDemoForm extends ExtendedForm
         /** @psalm-suppress UndefinedMethod */
         /** @psalm-suppress TooManyArguments */
         $this->filter
-            ->validate('userFile')
+            ->validate('file')
             ->is('upload')
             ->is('callback', static function (stdClass $subject, string $field) {
                 $array = $subject->$field;
