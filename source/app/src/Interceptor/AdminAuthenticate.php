@@ -129,10 +129,11 @@ class AdminAuthenticate implements MethodInterceptor
             }
 
             $continue = $this->session->get('admin:continue', '');
+            $expire = (new DateTimeImmutable())->modify('+5 min')->getTimestamp();
             $this->session->set('admin:continue', '');
             $this->session->set('admin:protect:continue', '');
-            $this->session->set('admin:protect:locking', AdminPasswordLocking::Locked->name);
-            $this->session->set('admin:protect:expire', '0');
+            $this->session->set('admin:protect:locking', AdminPasswordLocking::Unlocked->name);
+            $this->session->set('admin:protect:expire', (string) $expire);
 
             $ro = $invocation->proceed();
             assert($ro instanceof ResourceObject);
