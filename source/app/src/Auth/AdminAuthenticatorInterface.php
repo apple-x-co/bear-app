@@ -10,6 +10,8 @@ interface AdminAuthenticatorInterface
 
     public function logout(): void;
 
+    public function verifyPassword(string $username, string $password): void;
+
     public function isValid(): bool;
 
     public function isExpired(): bool;
@@ -24,4 +26,6 @@ interface AdminAuthenticatorInterface
     public function getAuthRedirect(): string;
 
     public function getUnauthRedirect(): string;
+
+    public function getPasswordRedirect(): string;
 }

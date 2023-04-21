@@ -52,6 +52,7 @@ class AdminAuthenticatorProvider implements ProviderInterface
             $this->pdoPassword,
             '/admin/index',
             '/admin/login',
+            '/admin/password-confirm',
         );
     }
 }

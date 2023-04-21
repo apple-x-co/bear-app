@@ -26,6 +26,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         private readonly string $pdoPassword,
         private readonly string $authRedirect,
         private readonly string $unauthRedirect,
+        private readonly string $passwordRedirect
     ) {
     }
 
@@ -61,6 +62,12 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         $auth = $this->authFactory->newInstance();
         $logoutService = $this->authFactory->newLogoutService($this->getAdapter());
         $logoutService->forceLogout($auth);
+    }
+
+    public function verifyPassword(string $username, string $password): void
+    {
+        $pdoAdapter = $this->getAdapter();
+        $pdoAdapter->login(['username' => $username, 'password' => $password]);
     }
 
     private function resume(): Auth
@@ -103,5 +110,10 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
     public function getUnauthRedirect(): string
     {
         return $this->unauthRedirect;
+    }
+
+    public function getPasswordRedirect(): string
+    {
+        return $this->passwordRedirect;
     }
 }

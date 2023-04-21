@@ -7,6 +7,9 @@ namespace MyVendor\MyProject\Module;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\AdminLogin;
 use MyVendor\MyProject\Annotation\AdminLogout;
+use MyVendor\MyProject\Annotation\AdminPasswordLock;
+use MyVendor\MyProject\Annotation\AdminPasswordProtect;
+use MyVendor\MyProject\Annotation\AdminVerifyPassword;
 use MyVendor\MyProject\Annotation\UserGuard;
 use MyVendor\MyProject\Annotation\UserLogin;
 use MyVendor\MyProject\Annotation\UserLogout;
@@ -14,6 +17,7 @@ use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
 use MyVendor\MyProject\Interceptor\AdminAuthenticate;
 use MyVendor\MyProject\Interceptor\AdminAuthGuardian;
+use MyVendor\MyProject\Interceptor\AdminPasswordProtector;
 use MyVendor\MyProject\Interceptor\UserAuthenticate;
 use MyVendor\MyProject\Interceptor\UserAuthGuardian;
 use MyVendor\MyProject\Provider\AdminAuthenticatorProvider;
@@ -48,13 +52,13 @@ class SessionAuthModule extends AbstractModule
 
         $this->bindInterceptor(
             $this->matcher->subclassesOf(AdminPage::class),
-            $this->matcher->annotatedWith(AdminLogin::class),
-            [AdminAuthenticate::class],
-        );
-
-        $this->bindInterceptor(
-            $this->matcher->subclassesOf(AdminPage::class),
-            $this->matcher->annotatedWith(AdminLogout::class),
+            $this->matcher->logicalOr(
+                $this->matcher->logicalOr(
+                    $this->matcher->annotatedWith(AdminLogin::class),
+                    $this->matcher->annotatedWith(AdminLogout::class),
+                ),
+                $this->matcher->annotatedWith(AdminVerifyPassword::class),
+            ),
             [AdminAuthenticate::class],
         );
 
@@ -62,6 +66,15 @@ class SessionAuthModule extends AbstractModule
             $this->matcher->subclassesOf(AdminPage::class),
             $this->matcher->annotatedWith(AdminGuard::class),
             [AdminAuthGuardian::class],
+        );
+
+        $this->bindInterceptor(
+            $this->matcher->subclassesOf(AdminPage::class),
+            $this->matcher->logicalOr(
+                $this->matcher->annotatedWith(AdminPasswordProtect::class),
+                $this->matcher->annotatedWith(AdminPasswordLock::class)
+            ),
+            [AdminPasswordProtector::class],
         );
     }
 
