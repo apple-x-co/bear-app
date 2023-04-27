@@ -71,6 +71,9 @@ class AdminAuthenticate implements MethodInterceptor
         return $invocation->proceed();
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     private function login(MethodInvocation $invocation, string $onFailure): mixed
     {
         $args = $invocation->getNamedArguments();
@@ -79,8 +82,11 @@ class AdminAuthenticate implements MethodInterceptor
 
         if ($loginUser->isValid()) {
             try {
-                $this->authenticator->login($loginUser->username, $loginUser->password);
-                $this->logger->log('[logged] ' . $loginUser->username);
+                if ($loginUser->remember === 'yes') {
+                    $this->authenticator->rememberLogin($loginUser->username, $loginUser->password);
+                } else {
+                    $this->authenticator->login($loginUser->username, $loginUser->password);
+                }
             } catch (AuraUsernameMissing $usernameMissing) {
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],
@@ -127,6 +133,8 @@ class AdminAuthenticate implements MethodInterceptor
                     )
                 );
             }
+
+            $this->logger->log('[logged] ' . $loginUser->username);
 
             $continue = $this->session->get('admin:continue', '');
             $expire = (new DateTimeImmutable())->modify('+5 min')->getTimestamp();

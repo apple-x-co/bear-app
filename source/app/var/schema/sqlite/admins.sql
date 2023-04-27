@@ -1,4 +1,4 @@
-CREATE TABLE `administrators`
+CREATE TABLE `admins`
     (
         `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         `username` TEXT NOT NULL,

@@ -39,9 +39,14 @@
                     {{= AdminText(form: $this->form, input: 'password') }}
                     {{= AdminFormError(form: $this->form, input: 'password') }}
                 </label>
-                <div class="ml-[-11px] lg:ml-0 mt-5 g-recaptcha" data-sitekey="{{= $this->gRecaptchaSiteKey }}" data-size="normal" data-tabindex="3" data-callback="gRecaptchaChecked" data-expired-callback="gRecaptchaExpired" data-error-callback="gRecaptchaError"></div>
+                <label class="block mt-5 relative">
+                    <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide">Remember</span>
+                    {{= AdminCheckbox(form: $this->form, input: 'remember') }}
+                    {{= AdminFormError(form: $this->form, input: 'remember') }}
+                </label>
+                <div class="ml-[-11px] lg:ml-0 mt-5 g-recaptcha" data-sitekey="{{= $this->gRecaptchaSiteKey }}" data-size="normal" data-tabindex="4" data-callback="gRecaptchaChecked" data-expired-callback="gRecaptchaExpired" data-error-callback="gRecaptchaError"></div>
                 <label class="block mt-5 text-center">
-                    {{= AdminSubmit(form: $this->form, input: 'login', attribs: ['id' => 'login', 'value' => 'LOGIN', 'disabled' => 'disabled']) }}
+                    {{= AdminSubmit(form: $this->form, input: 'login', attribs: ['id' => 'login', 'value' => 'LOGIN', 'disabled' => 'disabled', 'data-submit-once' => '1']) }}
                     {{= CsrfTokenField(form: $this->form) }}
                 </label>
             </div>

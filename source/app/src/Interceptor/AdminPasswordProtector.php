@@ -18,6 +18,7 @@ use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
 use function assert;
+use function http_build_query;
 
 class AdminPasswordProtector implements MethodInterceptor
 {
@@ -58,7 +59,11 @@ class AdminPasswordProtector implements MethodInterceptor
 
         $uri = $ro->uri;
         $path = $this->router->generate($uri->path, $uri->query);
-        $this->session->set('admin:protect:continue', $path === false ? '' : $path);
+        if ($path === false) {
+            $path = $uri->path . (empty($uri->query) ? '' : '?' . http_build_query($uri->query));
+        }
+
+        $this->session->set('admin:protect:continue', $path);
 
         $ro->setRenderer(new NullRenderer());
         $ro->code = StatusCode::FOUND;

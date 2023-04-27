@@ -42,9 +42,16 @@ class AdminLoginForm extends ExtendedForm
         $this->filter->validate('password')->is('alnum');
         $this->filter->useFieldMessage('password', 'Name must be alphabetic only.');
 
+        $this->setField('remember', 'checkbox')
+             ->setAttribs([
+                 'value' => 'yes',
+                 'label' => 'YES',
+                 'value_unchecked' => 'no',
+             ]);
+
         /** @psalm-suppress UndefinedMethod */
         $this->setField('login', 'submit')
-             ->setAttribs(['tabindex' => 4]);
+             ->setAttribs(['tabindex' => 5]);
     }
 
     public function getFormName(): string

@@ -15,6 +15,7 @@ class LoginUser
     public function __construct(
         public readonly string $username,
         #[SensitiveParameter] public readonly string $password,
+        public readonly string $remember,
         public readonly string $__csrf_token, // phpcs:ignore
         public readonly ?string $login,
     ) {

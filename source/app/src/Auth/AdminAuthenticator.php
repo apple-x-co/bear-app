@@ -4,12 +4,23 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Auth;
 
+use AppCore\Domain\Admin\AdminRepositoryInterface;
+use AppCore\Domain\AdminToken\AdminToken;
+use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
+use AppCore\Domain\EncrypterInterface;
+use AppCore\Domain\SecureRandomInterface;
 use Aura\Auth\Adapter\PdoAdapter;
 use Aura\Auth\Auth;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Verifier\PasswordVerifier;
+use DateTimeImmutable;
+use MyVendor\MyProject\Query\AdminTokenRemoveByAdminIdInterface;
 use PDO;
 use SensitiveParameter;
+
+use function explode;
+use function setcookie;
+use function time;
 
 use const PASSWORD_BCRYPT;
 
@@ -18,7 +29,19 @@ use const PASSWORD_BCRYPT;
  */
 class AdminAuthenticator implements AdminAuthenticatorInterface
 {
+    private const REMEMBER_SEPARATOR = ':';
+
+    /**
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings(PHPMD.LongVariable)
+     */
     public function __construct(
+        private readonly AdminRepositoryInterface $adminRepository,
+        private readonly AdminTokenRepositoryInterface $adminTokenRepository,
+        private readonly AdminTokenRemoveByAdminIdInterface $adminTokenRemoveByAdminId,
+        private readonly EncrypterInterface $encrypter,
+        private readonly SecureRandomInterface $secureRandom,
+        private readonly string $rememberCookieName,
         private readonly AuthFactory $authFactory,
         private readonly int $sessionGcMaxlifetime,
         private readonly string $pdoDsn,
@@ -26,7 +49,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         private readonly string $pdoPassword,
         private readonly string $authRedirect,
         private readonly string $unauthRedirect,
-        private readonly string $passwordRedirect
+        private readonly string $passwordRedirect,
     ) {
     }
 
@@ -38,36 +61,96 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
             [
                 'username',
                 'password',
-                'id', // as UserData
+                'id', // as UserData[0]
             ],
-            'administrators',
-            'administrators.active = 1',
+            'admins',
+            'admins.active = 1',
         );
     }
 
-    public function login(
-        string $username,
-        #[SensitiveParameter] string $password
-    ): void {
+    public function login(string $username, #[SensitiveParameter] string $password): void
+    {
         $auth = $this->authFactory->newInstance();
         $loginService = $this->authFactory->newLoginService($this->getAdapter());
         $loginService->login(
             $auth,
             ['username' => $username, 'password' => $password],
         );
+
+        $userData = $this->getUserData();
+        $adminId = (int) $userData['id'];
+        $this->clearRemember($adminId);
     }
 
-    public function logout(): void
+    public function rememberLogin(string $username, #[SensitiveParameter] string $password): void
     {
         $auth = $this->authFactory->newInstance();
-        $logoutService = $this->authFactory->newLogoutService($this->getAdapter());
-        $logoutService->forceLogout($auth);
+        $loginService = $this->authFactory->newLoginService($this->getAdapter());
+        $loginService->login(
+            $auth,
+            ['username' => $username, 'password' => $password],
+        );
+
+        $userData = $this->getUserData();
+        $adminId = (int) $userData['id'];
+        $this->setUpRemember($adminId);
+    }
+
+    public function getRememberCookieName(): string
+    {
+        return $this->rememberCookieName;
+    }
+
+    public function continueLogin(#[SensitiveParameter] string $payload): bool
+    {
+        [$encrypted, $token] = explode(self::REMEMBER_SEPARATOR, $payload);
+
+        $adminToken = $this->adminTokenRepository->findByToken($token);
+        if ($adminToken === null) {
+            return false;
+        }
+
+        $decrypted = $this->encrypter->decrypt($encrypted);
+        if (
+            ($decrypted !== (string) $adminToken->adminId) ||
+            $adminToken->isExpired()
+        ) {
+            $this->clearRemember($adminToken->adminId);
+
+            return false;
+        }
+
+        $admin = $this->adminRepository->findById($adminToken->adminId);
+        $auth = $this->authFactory->newInstance();
+        $loginService = $this->authFactory->newLoginService($this->getAdapter());
+        /** @psalm-suppress InvalidArgument */
+        $loginService->forceLogin(
+            $auth,
+            $admin->username,
+            ['id' => $admin->id],
+        );
+
+        $this->clearRemember($adminToken->adminId);
+        $this->setUpRemember($adminToken->adminId);
+
+        return true;
     }
 
     public function verifyPassword(string $username, string $password): void
     {
         $pdoAdapter = $this->getAdapter();
         $pdoAdapter->login(['username' => $username, 'password' => $password]);
+    }
+
+    public function logout(): void
+    {
+        $userData = $this->getUserData();
+        $adminId = (int) $userData['id'];
+        $this->clearRemember($adminId);
+
+        $auth = $this->authFactory->newInstance();
+        $logoutService = $this->authFactory->newLogoutService($this->getAdapter());
+        $logoutService->forceLogout($auth);
     }
 
     private function resume(): Auth
@@ -115,5 +198,44 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
     public function getPasswordRedirect(): string
     {
         return $this->passwordRedirect;
+    }
+
+    private function setUpRemember(int $adminId): void
+    {
+        $token = $this->secureRandom->hmac($this->secureRandom->randomBytes(32));
+        $expireAt = (new DateTimeImmutable())->modify('+8 days');
+        $adminToken = new AdminToken(
+            $adminId,
+            $token,
+            $expireAt,
+        );
+        $this->adminTokenRepository->store($adminToken);
+
+        $encrypted = $this->encrypter->encrypt((string) $adminId);
+
+        setcookie(
+            $this->rememberCookieName,
+            $encrypted . self::REMEMBER_SEPARATOR . $token,
+            [
+                'expires' => $expireAt->getTimestamp(),
+                'path' => '/',
+                'httponly' => true,
+            ],
+        );
+    }
+
+    private function clearRemember(int $adminId): void
+    {
+        ($this->adminTokenRemoveByAdminId)($adminId);
+
+        setcookie(
+            $this->rememberCookieName,
+            '',
+            [
+                'expires' => time() - 1,
+                'path' => '/',
+                'httponly' => true,
+            ],
+        );
     }
 }

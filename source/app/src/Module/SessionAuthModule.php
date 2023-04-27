@@ -17,6 +17,7 @@ use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
 use MyVendor\MyProject\Interceptor\AdminAuthenticate;
 use MyVendor\MyProject\Interceptor\AdminAuthGuardian;
+use MyVendor\MyProject\Interceptor\AdminKeepAuthenticated;
 use MyVendor\MyProject\Interceptor\AdminPasswordProtector;
 use MyVendor\MyProject\Interceptor\UserAuthenticate;
 use MyVendor\MyProject\Interceptor\UserAuthGuardian;
@@ -62,10 +63,12 @@ class SessionAuthModule extends AbstractModule
             [AdminAuthenticate::class],
         );
 
+        $this->bind(AdminKeepAuthenticated::class); // 複数の Interceptor を渡すと Untargeted が発生するので事前に束縛をする
+        $this->bind(AdminAuthGuardian::class); // 複数の Interceptor を渡すと Untargeted が発生するので事前に束縛をする
         $this->bindInterceptor(
             $this->matcher->subclassesOf(AdminPage::class),
             $this->matcher->annotatedWith(AdminGuard::class),
-            [AdminAuthGuardian::class],
+            [AdminKeepAuthenticated::class, AdminAuthGuardian::class],
         );
 
         $this->bindInterceptor(

@@ -1,6 +1,6 @@
-CREATE TABLE `administrators`
+CREATE TABLE `admins`
     (
-        `id` INTEGER AUTO_INCREMENT NOT NULL,
+        `id` INTEGER UNSIGNED AUTO_INCREMENT NOT NULL,
         `username` VARCHAR(100) NOT NULL COMMENT 'ユーザー名',
         `password` VARCHAR(255) NOT NULL COMMENT 'パスワード',
         `active` SMALLINT UNSIGNED NOT NULL COMMENT 'アクティブ',
