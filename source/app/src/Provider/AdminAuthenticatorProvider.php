@@ -39,6 +39,7 @@ class AdminAuthenticatorProvider implements ProviderInterface
         #[Named('pdo_dsn')] private readonly string $pdoDsn,
         #[Named('pdo_username')] private readonly string $pdoUsername,
         #[Named('pdo_password')] private readonly string $pdoPassword,
+        #[Named('session_name')] private readonly string $sessionName,
     ) {
     }
 
@@ -57,7 +58,7 @@ class AdminAuthenticatorProvider implements ProviderInterface
         $authSegment = new Segment('BearApp\Admin');
         $authFactory = new AuthFactory($this->cookie, $authSession, $authSegment);
 
-        $rememberCookieName = 'admin:remember_' . sha1(static::class);
+        $rememberCookieName = $this->sessionName . ':admin:remember_' . sha1(static::class);
 
         return new AdminAuthenticator(
             $this->adminRepository,

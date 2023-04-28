@@ -30,6 +30,8 @@ use MyVendor\MyProject\Resource\Page\UserPage;
 use MyVendor\MyProject\Session\SessionInterface;
 use Ray\Di\AbstractModule;
 
+use function session_name;
+
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class SessionAuthModule extends AbstractModule
 {
@@ -41,6 +43,10 @@ class SessionAuthModule extends AbstractModule
         $this->bind()
              ->annotatedWith('cookie')
              ->toProvider(CookieProvider::class);
+
+        $this->bind()
+             ->annotatedWith('session_name')
+             ->toInstance(session_name());
 
         $this->admin();
         $this->user();
