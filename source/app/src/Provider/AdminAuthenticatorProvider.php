@@ -28,6 +28,7 @@ class AdminAuthenticatorProvider implements ProviderInterface
      * @param array<array-key, mixed> $cookie
      *
      * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         private readonly AdminRepositoryInterface $adminRepository,
