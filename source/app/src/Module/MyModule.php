@@ -12,9 +12,11 @@ use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\SecureRandom;
 use AppCore\Domain\SecureRandomInterface;
 use AppCore\Domain\Test\TestRepositoryInterface;
+use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
 use AppCore\Infrastructure\Persistence\AdminRepository;
 use AppCore\Infrastructure\Persistence\AdminTokenRepository;
 use AppCore\Infrastructure\Persistence\TestRepository;
+use AppCore\Infrastructure\Persistence\ThrottleRepository;
 use AppCore\Infrastructure\Shared\AdminLogger;
 use AppCore\Infrastructure\Shared\UserLogger;
 use Ray\Di\AbstractModule;
@@ -55,5 +57,6 @@ class MyModule extends AbstractModule
         $this->bind(AdminRepositoryInterface::class)->to(AdminRepository::class)->in(Scope::SINGLETON);
         $this->bind(AdminTokenRepositoryInterface::class)->to(AdminTokenRepository::class)->in(Scope::SINGLETON);
         $this->bind(TestRepositoryInterface::class)->to(TestRepository::class)->in(Scope::SINGLETON);
+        $this->bind(ThrottleRepositoryInterface::class)->to(ThrottleRepository::class)->in(Scope::SINGLETON);
     }
 }

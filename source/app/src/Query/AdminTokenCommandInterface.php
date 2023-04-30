@@ -9,6 +9,6 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminTokenCommandInterface
 {
-    #[DbQuery('admin_tokens_add')]
+    #[DbQuery('admin_token_add')]
     public function add(int $adminId, string $token, DateTimeImmutable $expireAt, ?DateTimeImmutable $createdAt = null): void;
 }

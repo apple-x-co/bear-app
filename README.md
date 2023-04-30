@@ -2,6 +2,10 @@
 
 ![SCREENSHOT.png](SCREENSHOT.png)
 
+## Framework, Library
+
+### Backend
+
 * Framework / [BEAR.Sunday](https://github.com/bearsunday/BEAR.Sunday)
 * Template Engine / [Qiq](https://github.com/qiqphp/qiq)
 * Form / [Aura.Input](https://github.com/auraphp/Aura.Input), [Aura.Filter](https://github.com/auraphp/Aura.Filter)
@@ -13,13 +17,34 @@
 * DI / [Ray.Di](https://github.com/ray-di/Ray.Di)
 * Env / [env-json](https://github.com/koriym/Koriym.EnvJson)
 
-## Form demo
+### Frontend
+
+* CSS / [tailwindcss](https://tailwindcss.com/)
+* JavaScript bundler / [Deno](https://deno.com/)
+
+## Form sample
 
 * [Contact](http://localhost/admin/contact-demo)
 * [Fieldset](http://localhost/admin/fieldset-demo)
-* [Login](http://localhost/admin/login)
-  * Password confirm
-  * Remember me
-  * Google reCAPTCHA
 * [Multiple](http://localhost/admin/multiple-demo)
 * [Upload](http://localhost/admin/upload-demo)
+
+## Login
+
+[Demo](http://localhost/admin/login)
+
+### Features
+
+* ID & password
+* Remember me
+
+### Security
+
+* Google reCAPTCHA v2
+* Account Lock
+* Password confirm
+* Schedule: Password change
+* Schedule: E-mail authentication
+* Schedule: E-mail notification
+* Schedule: Password reminder
+* Schedule: Ban common passwords (priority:Low)

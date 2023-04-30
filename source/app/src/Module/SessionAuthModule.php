@@ -54,6 +54,8 @@ class SessionAuthModule extends AbstractModule
 
     public function admin(): void
     {
+        $this->bind()->annotatedWith('admin_auth_max_attempts')->toInstance(10);
+        $this->bind()->annotatedWith('admin_auth_attempt_interval')->toInstance('30 minutes');
         $this->bind(AdminAuthenticatorInterface::class)
              ->toProvider(AdminAuthenticatorProvider::class);
 

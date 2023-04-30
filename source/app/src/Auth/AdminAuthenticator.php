@@ -9,14 +9,19 @@ use AppCore\Domain\AdminToken\AdminToken;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
 use AppCore\Domain\EncrypterInterface;
 use AppCore\Domain\SecureRandomInterface;
+use AppCore\Domain\Throttle\Throttle;
+use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
 use Aura\Auth\Adapter\PdoAdapter;
 use Aura\Auth\Auth;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Verifier\PasswordVerifier;
+use DateInterval;
 use DateTimeImmutable;
 use MyVendor\MyProject\Query\AdminTokenRemoveByAdminIdInterface;
+use MyVendor\MyProject\Query\ThrottleRemoveByKeyInterface;
 use PDO;
 use SensitiveParameter;
+use Throwable;
 
 use function explode;
 use function setcookie;
@@ -26,6 +31,8 @@ use const PASSWORD_BCRYPT;
 
 /**
  * Admin認証基盤
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class AdminAuthenticator implements AdminAuthenticatorInterface
 {
@@ -39,10 +46,14 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         private readonly AdminRepositoryInterface $adminRepository,
         private readonly AdminTokenRepositoryInterface $adminTokenRepository,
         private readonly AdminTokenRemoveByAdminIdInterface $adminTokenRemoveByAdminId,
+        private readonly ThrottleRepositoryInterface $throttleRepository,
+        private readonly ThrottleRemoveByKeyInterface $throttleRemoveByKey,
         private readonly EncrypterInterface $encrypter,
         private readonly SecureRandomInterface $secureRandom,
         private readonly string $rememberCookieName,
         private readonly AuthFactory $authFactory,
+        private readonly int $authMaxAttempts,
+        private readonly string $authAttemptInterval,
         private readonly int $sessionGcMaxlifetime,
         private readonly string $pdoDsn,
         private readonly string $pdoUsername,
@@ -68,28 +79,51 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         );
     }
 
-    public function login(string $username, #[SensitiveParameter] string $password): void
+    public function login(string $username, #[SensitiveParameter] string $password, ?string $remoteIp = null): void
     {
+        $throttle = $this->getAvailableThrottle($username, $remoteIp);
+
         $auth = $this->authFactory->newInstance();
         $loginService = $this->authFactory->newLoginService($this->getAdapter());
-        $loginService->login(
-            $auth,
-            ['username' => $username, 'password' => $password],
-        );
+        try {
+            $loginService->login(
+                $auth,
+                ['username' => $username, 'password' => $password],
+            );
+        } catch (Throwable $throwable) {
+            $this->throttleRepository->store($throttle->countUp($remoteIp));
+
+            throw $throwable;
+        }
+
+        $this->clearThrottles($throttle->throttleKey);
 
         $userData = $this->getUserData();
         $adminId = (int) $userData['id'];
         $this->clearRemember($adminId);
     }
 
-    public function rememberLogin(string $username, #[SensitiveParameter] string $password): void
-    {
+    public function rememberLogin(
+        string $username,
+        #[SensitiveParameter] string $password,
+        ?string $remoteIp = null,
+    ): void {
+        $throttle = $this->getAvailableThrottle($username, $remoteIp);
+
         $auth = $this->authFactory->newInstance();
         $loginService = $this->authFactory->newLoginService($this->getAdapter());
-        $loginService->login(
-            $auth,
-            ['username' => $username, 'password' => $password],
-        );
+        try {
+            $loginService->login(
+                $auth,
+                ['username' => $username, 'password' => $password],
+            );
+        } catch (Throwable $throwable) {
+            $this->throttleRepository->store($throttle->countUp($remoteIp));
+
+            throw $throwable;
+        }
+
+        $this->clearThrottles($throttle->throttleKey);
 
         $userData = $this->getUserData();
         $adminId = (int) $userData['id'];
@@ -198,6 +232,35 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
     public function getPasswordRedirect(): string
     {
         return $this->passwordRedirect;
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
+    private function getAvailableThrottle(string $username, ?string $remoteIp = null): Throttle
+    {
+        $throttle = $this->throttleRepository->findByThrottleKey($username);
+        if ($throttle === null) {
+            return new Throttle(
+                $username,
+                $remoteIp ?? '',
+                0,
+                $this->authMaxAttempts,
+                $this->authAttemptInterval,
+                (new DateTimeImmutable())->add(DateInterval::createFromDateString($this->authAttemptInterval)),
+            );
+        }
+
+        if ($throttle->isExceeded()) {
+            throw new MaxAttemptsExceeded();
+        }
+
+        return $throttle;
+    }
+
+    private function clearThrottles(string $throttleKey): void
+    {
+        ($this->throttleRemoveByKey)($throttleKey);
     }
 
     private function setUpRemember(int $adminId): void

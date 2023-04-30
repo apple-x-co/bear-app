@@ -8,11 +8,13 @@ use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
 use AppCore\Domain\EncrypterInterface;
 use AppCore\Domain\SecureRandomInterface;
+use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Session\Segment;
 use Aura\Auth\Session\Session;
 use MyVendor\MyProject\Auth\AdminAuthenticator;
 use MyVendor\MyProject\Query\AdminTokenRemoveByAdminIdInterface;
+use MyVendor\MyProject\Query\ThrottleRemoveByKeyInterface;
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
@@ -34,6 +36,8 @@ class AdminAuthenticatorProvider implements ProviderInterface
         private readonly AdminRepositoryInterface $adminRepository,
         private readonly AdminTokenRepositoryInterface $adminTokenRepository,
         private readonly AdminTokenRemoveByAdminIdInterface $adminTokenRemoveByAdminId,
+        private readonly ThrottleRepositoryInterface $throttleRepository,
+        private readonly ThrottleRemoveByKeyInterface $throttleRemoveByKey,
         private readonly EncrypterInterface $encrypter,
         private readonly SecureRandomInterface $secureRandom,
         #[Named('cookie')] private readonly array $cookie,
@@ -41,6 +45,8 @@ class AdminAuthenticatorProvider implements ProviderInterface
         #[Named('pdo_username')] private readonly string $pdoUsername,
         #[Named('pdo_password')] private readonly string $pdoPassword,
         #[Named('session_name')] private readonly string $sessionName,
+        #[Named('admin_auth_max_attempts')] private readonly int $authMaxAttempts,
+        #[Named('admin_auth_attempt_interval')] private readonly string $authAttemptInterval,
     ) {
     }
 
@@ -65,10 +71,14 @@ class AdminAuthenticatorProvider implements ProviderInterface
             $this->adminRepository,
             $this->adminTokenRepository,
             $this->adminTokenRemoveByAdminId,
+            $this->throttleRepository,
+            $this->throttleRemoveByKey,
             $this->encrypter,
             $this->secureRandom,
             $rememberCookieName,
             $authFactory,
+            $this->authMaxAttempts,
+            $this->authAttemptInterval,
             (int) ini_get('session.gc_maxlifetime'),
             $this->pdoDsn,
             $this->pdoUsername,

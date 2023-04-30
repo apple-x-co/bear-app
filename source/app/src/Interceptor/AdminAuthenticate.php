@@ -19,6 +19,7 @@ use MyVendor\MyProject\Annotation\AdminLogout;
 use MyVendor\MyProject\Annotation\AdminVerifyPassword;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\AdminPasswordLocking;
+use MyVendor\MyProject\Auth\MaxAttemptsExceeded;
 use MyVendor\MyProject\Auth\MultipleMatches;
 use MyVendor\MyProject\Auth\PasswordIncorrect;
 use MyVendor\MyProject\Auth\PasswordMissing;
@@ -30,6 +31,7 @@ use MyVendor\MyProject\Session\SessionInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\Di\Di\Named;
+use Throwable;
 
 use function assert;
 use function call_user_func;
@@ -73,6 +75,7 @@ class AdminAuthenticate implements MethodInterceptor
 
     /**
      * @SuppressWarnings(PHPMD.ElseExpression)
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function login(MethodInvocation $invocation, string $onFailure): mixed
     {
@@ -80,56 +83,36 @@ class AdminAuthenticate implements MethodInterceptor
         $loginUser = $args['loginUser'] ?? null;
         assert($loginUser instanceof LoginUser);
 
+        $remoteIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? null;
+
         if ($loginUser->isValid()) {
             try {
                 if ($loginUser->remember === 'yes') {
-                    $this->authenticator->rememberLogin($loginUser->username, $loginUser->password);
+                    $this->authenticator->rememberLogin($loginUser->username, $loginUser->password, $remoteIp);
                 } else {
-                    $this->authenticator->login($loginUser->username, $loginUser->password);
+                    $this->authenticator->login($loginUser->username, $loginUser->password, $remoteIp);
                 }
-            } catch (AuraUsernameMissing $usernameMissing) {
+            } catch (Throwable $throwable) {
+                $class = match ($throwable::class) {
+                    AuraUsernameMissing::class => UsernameMissing::class,
+                    AuraPasswordMissing::class => PasswordMissing::class,
+                    AuraUsernameNotFound::class => UsernameNotFound::class,
+                    AuraMultipleMatches::class => MultipleMatches::class,
+                    AuraPasswordIncorrect::class => PasswordIncorrect::class,
+                    MaxAttemptsExceeded::class => MaxAttemptsExceeded::class,
+                    default => null,
+                };
+
+                if ($class === null) {
+                    throw $throwable;
+                }
+
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],
-                    new UsernameMissing(
-                        $usernameMissing->getMessage(),
-                        $usernameMissing->getCode(),
-                        $usernameMissing->getPrevious()
-                    )
-                );
-            } catch (AuraPasswordMissing $passwordMissing) {
-                return call_user_func(
-                    [$invocation->getThis(), $onFailure],
-                    new PasswordMissing(
-                        $passwordMissing->getMessage(),
-                        $passwordMissing->getCode(),
-                        $passwordMissing->getPrevious()
-                    )
-                );
-            } catch (AuraUsernameNotFound $usernameNotFound) {
-                return call_user_func(
-                    [$invocation->getThis(), $onFailure],
-                    new UsernameNotFound(
-                        $usernameNotFound->getMessage(),
-                        $usernameNotFound->getCode(),
-                        $usernameNotFound->getPrevious()
-                    )
-                );
-            } catch (AuraMultipleMatches $multipleMatches) {
-                return call_user_func(
-                    [$invocation->getThis(), $onFailure],
-                    new MultipleMatches(
-                        $multipleMatches->getMessage(),
-                        $multipleMatches->getCode(),
-                        $multipleMatches->getPrevious()
-                    )
-                );
-            } catch (AuraPasswordIncorrect $passwordIncorrect) {
-                return call_user_func(
-                    [$invocation->getThis(), $onFailure],
-                    new PasswordIncorrect(
-                        $passwordIncorrect->getMessage(),
-                        $passwordIncorrect->getCode(),
-                        $passwordIncorrect->getPrevious()
+                    new $class(
+                        $throwable->getMessage(),
+                        $throwable->getCode(),
+                        $throwable->getPrevious()
                     )
                 );
             }
