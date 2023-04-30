@@ -28,6 +28,7 @@ use MyVendor\MyProject\Auth\UsernameNotFound;
 use MyVendor\MyProject\Input\Admin\LoginUser;
 use MyVendor\MyProject\Input\Admin\UserPassword;
 use MyVendor\MyProject\Session\SessionInterface;
+use MyVendor\MyProject\Throttle\LoginThrottleInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\Di\Di\Named;
@@ -47,6 +48,7 @@ class AdminAuthenticate implements MethodInterceptor
     public function __construct(
         private readonly AdminAuthenticatorInterface $authenticator,
         #[Named('admin')] private readonly LoggerInterface $logger,
+        #[Named('admin')] private readonly LoginThrottleInterface $loginThrottle,
         private readonly SessionInterface $session,
     ) {
     }
@@ -83,14 +85,19 @@ class AdminAuthenticate implements MethodInterceptor
         $loginUser = $args['loginUser'] ?? null;
         assert($loginUser instanceof LoginUser);
 
-        $remoteIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? null;
-
         if ($loginUser->isValid()) {
+            if ($this->loginThrottle->isExceeded($loginUser->username)) {
+                return call_user_func(
+                    [$invocation->getThis(), $onFailure],
+                    new MaxAttemptsExceeded(),
+                );
+            }
+
             try {
                 if ($loginUser->remember === 'yes') {
-                    $this->authenticator->rememberLogin($loginUser->username, $loginUser->password, $remoteIp);
+                    $this->authenticator->rememberLogin($loginUser->username, $loginUser->password);
                 } else {
-                    $this->authenticator->login($loginUser->username, $loginUser->password, $remoteIp);
+                    $this->authenticator->login($loginUser->username, $loginUser->password);
                 }
             } catch (Throwable $throwable) {
                 $class = match ($throwable::class) {
@@ -99,13 +106,15 @@ class AdminAuthenticate implements MethodInterceptor
                     AuraUsernameNotFound::class => UsernameNotFound::class,
                     AuraMultipleMatches::class => MultipleMatches::class,
                     AuraPasswordIncorrect::class => PasswordIncorrect::class,
-                    MaxAttemptsExceeded::class => MaxAttemptsExceeded::class,
                     default => null,
                 };
 
                 if ($class === null) {
                     throw $throwable;
                 }
+
+                $remoteIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
+                $this->loginThrottle->countUp($loginUser->username, $remoteIp);
 
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],
@@ -118,6 +127,8 @@ class AdminAuthenticate implements MethodInterceptor
             }
 
             $this->logger->log('[logged] ' . $loginUser->username);
+
+            $this->loginThrottle->clear($loginUser->username);
 
             $continue = $this->session->get('admin:continue', '');
             $expire = (new DateTimeImmutable())->modify('+5 min')->getTimestamp();

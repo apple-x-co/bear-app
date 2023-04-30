@@ -6,9 +6,9 @@ namespace MyVendor\MyProject\Auth;
 
 interface AdminAuthenticatorInterface
 {
-    public function login(string $username, string $password, ?string $remoteIp = null): void;
+    public function login(string $username, string $password): void;
 
-    public function rememberLogin(string $username, string $password, ?string $remoteIp = null): void;
+    public function rememberLogin(string $username, string $password): void;
 
     public function getRememberCookieName(): string;
 

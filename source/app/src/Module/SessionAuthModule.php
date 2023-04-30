@@ -28,6 +28,8 @@ use MyVendor\MyProject\Provider\UserAuthenticatorProvider;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use MyVendor\MyProject\Resource\Page\UserPage;
 use MyVendor\MyProject\Session\SessionInterface;
+use MyVendor\MyProject\Throttle\AdminLoginThrottle;
+use MyVendor\MyProject\Throttle\LoginThrottleInterface;
 use Ray\Di\AbstractModule;
 
 use function session_name;
@@ -56,17 +58,24 @@ class SessionAuthModule extends AbstractModule
     {
         $this->bind()->annotatedWith('admin_auth_max_attempts')->toInstance(10);
         $this->bind()->annotatedWith('admin_auth_attempt_interval')->toInstance('30 minutes');
+        $this->bind(LoginThrottleInterface::class)
+             ->annotatedWith('admin')
+             ->to(AdminLoginThrottle::class);
+
         $this->bind(AdminAuthenticatorInterface::class)
              ->toProvider(AdminAuthenticatorProvider::class);
 
         $this->bindInterceptor(
             $this->matcher->subclassesOf(AdminPage::class),
-            $this->matcher->logicalOr(
+            $this->matcher->logicalAnd(
+                $this->matcher->startsWith('onPost'),
                 $this->matcher->logicalOr(
-                    $this->matcher->annotatedWith(AdminLogin::class),
-                    $this->matcher->annotatedWith(AdminLogout::class),
+                    $this->matcher->logicalOr(
+                        $this->matcher->annotatedWith(AdminLogin::class),
+                        $this->matcher->annotatedWith(AdminLogout::class),
+                    ),
+                    $this->matcher->annotatedWith(AdminVerifyPassword::class),
                 ),
-                $this->matcher->annotatedWith(AdminVerifyPassword::class),
             ),
             [AdminAuthenticate::class],
         );

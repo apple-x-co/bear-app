@@ -61,11 +61,11 @@ class Throttle
     /**
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public function countUp(?string $remoteIp = null): Throttle
+    public function countUp(string $remoteIp): Throttle
     {
         return new self(
             $this->throttleKey,
-            $remoteIp ?? $this->remoteIp,
+            $remoteIp,
             $this->iterationCount + 1,
             $this->maxAttempts,
             $this->interval,
