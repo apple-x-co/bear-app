@@ -26,7 +26,7 @@ use function getenv;
 use function random_bytes;
 
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
-class MyModule extends AbstractModule
+class BaseModule extends AbstractModule
 {
     protected function configure(): void
     {

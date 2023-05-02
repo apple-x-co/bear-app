@@ -61,7 +61,7 @@ class AppModule extends AbstractAppModule
             )
         );
 
-        $this->install(new MyModule());
+        $this->install(new BaseModule());
 
         $this->install(new PackageModule());
 
