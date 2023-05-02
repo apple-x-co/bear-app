@@ -9,12 +9,12 @@ use AppCore\Domain\AdminToken\AdminToken;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
 use AppCore\Domain\EncrypterInterface;
 use AppCore\Domain\SecureRandomInterface;
+use AppCore\Infrastructure\Query\AdminTokenRemoveByAdminIdInterface;
 use Aura\Auth\Adapter\PdoAdapter;
 use Aura\Auth\Auth;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Verifier\PasswordVerifier;
 use DateTimeImmutable;
-use MyVendor\MyProject\Query\AdminTokenRemoveByAdminIdInterface;
 use PDO;
 use SensitiveParameter;
 

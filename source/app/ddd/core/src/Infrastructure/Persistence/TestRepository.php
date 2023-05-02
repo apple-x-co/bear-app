@@ -8,9 +8,9 @@ use AppCore\Domain\Pagination;
 use AppCore\Domain\Test\Test;
 use AppCore\Domain\Test\TestNotFoundException;
 use AppCore\Domain\Test\TestRepositoryInterface;
-use MyVendor\MyProject\Entity\TestEntity;
-use MyVendor\MyProject\Query\TestCommandInterface;
-use MyVendor\MyProject\Query\TestQueryInterface;
+use AppCore\Infrastructure\Entity\TestEntity;
+use AppCore\Infrastructure\Query\TestCommandInterface;
+use AppCore\Infrastructure\Query\TestQueryInterface;
 
 readonly class TestRepository implements TestRepositoryInterface
 {

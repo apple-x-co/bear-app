@@ -6,9 +6,9 @@ namespace AppCore\Infrastructure\Persistence;
 
 use AppCore\Domain\Throttle\Throttle;
 use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
-use MyVendor\MyProject\Entity\ThrottleEntity;
-use MyVendor\MyProject\Query\ThrottleCommandInterface;
-use MyVendor\MyProject\Query\ThrottleQueryInterface;
+use AppCore\Infrastructure\Entity\ThrottleEntity;
+use AppCore\Infrastructure\Query\ThrottleCommandInterface;
+use AppCore\Infrastructure\Query\ThrottleQueryInterface;
 
 class ThrottleRepository implements ThrottleRepositoryInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Query;
+namespace AppCore\Infrastructure\Query;
 
 use DateTimeImmutable;
 use Ray\MediaQuery\Annotation\DbQuery;

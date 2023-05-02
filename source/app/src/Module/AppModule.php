@@ -47,7 +47,7 @@ class AppModule extends AbstractAppModule
 
         $this->install(
             new MediaQueryModule(
-                Queries::fromDir($this->appMeta->appDir . '/src/Query'),
+                Queries::fromDir($this->appMeta->appDir . '/ddd/core/src/Infrastructure/Query'),
                 [new DbQueryConfig($this->appMeta->appDir . '/var/sql')]
             )
         );

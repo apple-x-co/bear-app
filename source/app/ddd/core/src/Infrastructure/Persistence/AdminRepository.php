@@ -7,8 +7,8 @@ namespace AppCore\Infrastructure\Persistence;
 use AppCore\Domain\Admin\Admin;
 use AppCore\Domain\Admin\AdminNotFoundException;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
-use MyVendor\MyProject\Entity\AdminEntity;
-use MyVendor\MyProject\Query\AdminQueryInterface;
+use AppCore\Infrastructure\Entity\AdminEntity;
+use AppCore\Infrastructure\Query\AdminQueryInterface;
 
 class AdminRepository implements AdminRepositoryInterface
 {

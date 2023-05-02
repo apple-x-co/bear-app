@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Query;
+namespace AppCore\Infrastructure\Query;
 
-use MyVendor\MyProject\Entity\TestEntity;
-use MyVendor\MyProject\Entity\TestEntityFactory;
+use AppCore\Infrastructure\Entity\TestEntity;
+use AppCore\Infrastructure\Entity\TestEntityFactory;
 use Ray\MediaQuery\Annotation\DbQuery;
 use Ray\MediaQuery\Annotation\Pager;
 use Ray\MediaQuery\Pages;

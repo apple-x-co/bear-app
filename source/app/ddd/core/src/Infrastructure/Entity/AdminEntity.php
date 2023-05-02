@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Entity;
+namespace AppCore\Infrastructure\Entity;
 
 use DateTimeImmutable;
 use Ray\MediaQuery\CamelCaseTrait;

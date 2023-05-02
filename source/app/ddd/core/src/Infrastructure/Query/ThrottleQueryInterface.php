@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Query;
+namespace AppCore\Infrastructure\Query;
 
-use MyVendor\MyProject\Entity\ThrottleEntity;
-use MyVendor\MyProject\Entity\ThrottleEntityFactory;
+use AppCore\Infrastructure\Entity\ThrottleEntity;
+use AppCore\Infrastructure\Entity\ThrottleEntityFactory;
 use Ray\MediaQuery\Annotation\DbQuery;
 
 interface ThrottleQueryInterface

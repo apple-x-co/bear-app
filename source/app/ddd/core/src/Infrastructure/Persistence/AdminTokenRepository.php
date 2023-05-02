@@ -6,9 +6,9 @@ namespace AppCore\Infrastructure\Persistence;
 
 use AppCore\Domain\AdminToken\AdminToken;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
-use MyVendor\MyProject\Entity\AdminTokenEntity;
-use MyVendor\MyProject\Query\AdminTokenCommandInterface;
-use MyVendor\MyProject\Query\AdminTokenQueryInterface;
+use AppCore\Infrastructure\Entity\AdminTokenEntity;
+use AppCore\Infrastructure\Query\AdminTokenCommandInterface;
+use AppCore\Infrastructure\Query\AdminTokenQueryInterface;
 
 class AdminTokenRepository implements AdminTokenRepositoryInterface
 {

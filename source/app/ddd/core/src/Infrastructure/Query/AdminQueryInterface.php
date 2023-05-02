@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Query;
+namespace AppCore\Infrastructure\Query;
 
-use MyVendor\MyProject\Entity\AdminEntity;
-use MyVendor\MyProject\Entity\AdminEntityFactory;
+use AppCore\Infrastructure\Entity\AdminEntity;
+use AppCore\Infrastructure\Entity\AdminEntityFactory;
 use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminQueryInterface

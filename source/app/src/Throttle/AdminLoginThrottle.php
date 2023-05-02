@@ -6,9 +6,9 @@ namespace MyVendor\MyProject\Throttle;
 
 use AppCore\Domain\Throttle\Throttle;
 use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
+use AppCore\Infrastructure\Query\ThrottleRemoveByKeyInterface;
 use DateInterval;
 use DateTimeImmutable;
-use MyVendor\MyProject\Query\ThrottleRemoveByKeyInterface;
 use Ray\Di\Di\Named;
 
 /**

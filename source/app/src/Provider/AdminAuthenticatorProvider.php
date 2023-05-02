@@ -8,11 +8,11 @@ use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
 use AppCore\Domain\EncrypterInterface;
 use AppCore\Domain\SecureRandomInterface;
+use AppCore\Infrastructure\Query\AdminTokenRemoveByAdminIdInterface;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Session\Segment;
 use Aura\Auth\Session\Session;
 use MyVendor\MyProject\Auth\AdminAuthenticator;
-use MyVendor\MyProject\Query\AdminTokenRemoveByAdminIdInterface;
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 

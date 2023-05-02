@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Query;
+namespace AppCore\Infrastructure\Query;
 
-use MyVendor\MyProject\Entity\AdminTokenEntity;
-use MyVendor\MyProject\Entity\AdminTokenEntityFactory;
+use AppCore\Infrastructure\Entity\AdminTokenEntity;
+use AppCore\Infrastructure\Entity\AdminTokenEntityFactory;
 use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminTokenQueryInterface
