@@ -40,7 +40,7 @@
                     {{= AdminFormError(form: $this->form, input: 'password') }}
                 </label>
                 <label class="block mt-5 relative">
-                    <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide">Remember</span>
+                    <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">Remember</span>
                     {{= AdminCheckbox(form: $this->form, input: 'remember') }}
                     {{= AdminFormError(form: $this->form, input: 'remember') }}
                 </label>

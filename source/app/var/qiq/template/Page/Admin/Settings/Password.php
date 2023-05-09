@@ -14,17 +14,17 @@
             {{ endif }}
             <div class="mt-5">
                 <label class="block mt-5 relative">
-                    <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide">Old password</span>
+                    <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">Old password</span>
                     {{= AdminText(form: $this->form, input: 'oldPassword') }}
                     {{= AdminFormError(form: $this->form, input: 'oldPassword') }}
                 </label>
                 <label class="block mt-5 relative">
-                    <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide">New password</span>
+                    <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">New password</span>
                     {{= AdminText(form: $this->form, input: 'password') }}
                     {{= AdminFormError(form: $this->form, input: 'password') }}
                 </label>
                 <label class="block mt-5 relative">
-                    <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide">Confirm new password</span>
+                    <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">Confirm new password</span>
                     {{= AdminText(form: $this->form, input: 'passwordConfirmation') }}
                     {{= AdminFormError(form: $this->form, input: 'passwordConfirmation') }}
                 </label>

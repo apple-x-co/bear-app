@@ -11,7 +11,7 @@
             {{ endif }}
             <div class="mt-5">
                 <label class="block mt-5 relative">
-                    <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide">Password</span>
+                    <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">Password</span>
                     {{= AdminText(form: $this->form, input: 'password') }}
                     {{= AdminFormError(form: $this->form, input: 'password') }}
                 </label>
