@@ -12,7 +12,7 @@ class Logout extends AdminPage
 {
     #[AdminGuard]
     #[AdminLogout]
-    public function onGet(): static
+    public function onPost(): static
     {
         $this->renderer = null;
 

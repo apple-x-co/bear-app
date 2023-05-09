@@ -25,8 +25,8 @@ use MyVendor\MyProject\Auth\PasswordIncorrect;
 use MyVendor\MyProject\Auth\PasswordMissing;
 use MyVendor\MyProject\Auth\UsernameMissing;
 use MyVendor\MyProject\Auth\UsernameNotFound;
-use MyVendor\MyProject\Input\Admin\LoginUser;
-use MyVendor\MyProject\Input\Admin\UserPassword;
+use MyVendor\MyProject\Input\Admin\LoginUser as InputLoginUser;
+use MyVendor\MyProject\Input\Admin\UserPassword as InputUserPassword;
 use MyVendor\MyProject\Session\SessionInterface;
 use MyVendor\MyProject\Throttle\LoginThrottleInterface;
 use Ray\Aop\MethodInterceptor;
@@ -83,7 +83,7 @@ class AdminAuthenticate implements MethodInterceptor
     {
         $args = $invocation->getNamedArguments();
         $loginUser = $args['loginUser'] ?? null;
-        assert($loginUser instanceof LoginUser);
+        assert($loginUser instanceof InputLoginUser);
 
         if ($loginUser->isValid()) {
             if ($this->loginThrottle->isExceeded($loginUser->username)) {
@@ -184,7 +184,7 @@ class AdminAuthenticate implements MethodInterceptor
     {
         $args = $invocation->getNamedArguments();
         $userPassword = $args['userPassword'] ?? null;
-        assert($userPassword instanceof UserPassword);
+        assert($userPassword instanceof InputUserPassword);
 
         $userName = $this->authenticator->getUserName();
 

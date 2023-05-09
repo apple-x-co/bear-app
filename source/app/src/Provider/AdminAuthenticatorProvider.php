@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\Provider;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
 use AppCore\Domain\EncrypterInterface;
+use AppCore\Domain\PasswordHasherInterface;
 use AppCore\Domain\SecureRandomInterface;
 use AppCore\Infrastructure\Query\AdminTokenRemoveByAdminIdInterface;
 use Aura\Auth\AuthFactory;
@@ -35,6 +36,7 @@ class AdminAuthenticatorProvider implements ProviderInterface
         private readonly AdminTokenRepositoryInterface $adminTokenRepository,
         private readonly AdminTokenRemoveByAdminIdInterface $adminTokenRemoveByAdminId,
         private readonly EncrypterInterface $encrypter,
+        private readonly PasswordHasherInterface $passwordHasher,
         private readonly SecureRandomInterface $secureRandom,
         #[Named('cookie')] private readonly array $cookie,
         #[Named('pdo_dsn')] private readonly string $pdoDsn,
@@ -66,6 +68,7 @@ class AdminAuthenticatorProvider implements ProviderInterface
             $this->adminTokenRepository,
             $this->adminTokenRemoveByAdminId,
             $this->encrypter,
+            $this->passwordHasher,
             $this->secureRandom,
             $rememberCookieName,
             $authFactory,

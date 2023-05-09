@@ -12,6 +12,7 @@ class AdminEntityFactory
         int $id,
         string $username,
         string $password,
+        string $displayName,
         int $active,
         string $createdAt,
         string $updatedAt
@@ -20,6 +21,7 @@ class AdminEntityFactory
             $id,
             $username,
             $password,
+            $displayName,
             $active,
             new DateTimeImmutable($createdAt),
             new DateTimeImmutable($updatedAt),

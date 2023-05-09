@@ -41,10 +41,12 @@
 ### Security
 
 * Google reCAPTCHA v2
-* Account Lock
-* Password confirm
-* Schedule: Password change
-* Schedule: E-mail authentication
-* Schedule: E-mail notification
-* Schedule: Password reminder
-* Schedule: Ban common passwords (priority:Low)
+* Account lock after consecutive failures
+* Password confirm when important page visit
+* Email notification after password change
+
+
+* _Schedule: E-mail authentication_
+* _Schedule: E-mail notification_
+* _Schedule: Password reminder_
+* _Schedule: Ban common passwords (priority:Low)_

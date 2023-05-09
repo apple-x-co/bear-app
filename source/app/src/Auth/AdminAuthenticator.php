@@ -8,6 +8,7 @@ use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\AdminToken\AdminToken;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
 use AppCore\Domain\EncrypterInterface;
+use AppCore\Domain\PasswordHasherInterface;
 use AppCore\Domain\SecureRandomInterface;
 use AppCore\Infrastructure\Query\AdminTokenRemoveByAdminIdInterface;
 use Aura\Auth\Adapter\PdoAdapter;
@@ -21,8 +22,6 @@ use SensitiveParameter;
 use function explode;
 use function setcookie;
 use function time;
-
-use const PASSWORD_BCRYPT;
 
 /**
  * Admin認証基盤
@@ -42,6 +41,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         private readonly AdminTokenRepositoryInterface $adminTokenRepository,
         private readonly AdminTokenRemoveByAdminIdInterface $adminTokenRemoveByAdminId,
         private readonly EncrypterInterface $encrypter,
+        private readonly PasswordHasherInterface $passwordHasher,
         private readonly SecureRandomInterface $secureRandom,
         private readonly string $rememberCookieName,
         private readonly AuthFactory $authFactory,
@@ -59,11 +59,12 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
     {
         return $this->authFactory->newPdoAdapter(
             new PDO($this->pdoDsn, $this->pdoUsername, $this->pdoPassword),
-            new PasswordVerifier(PASSWORD_BCRYPT),
+            new PasswordVerifier($this->passwordHasher->hashType()),
             [
                 'username',
                 'password',
                 'id', // as UserData[0]
+                'display_name', // as UserData[1]
             ],
             'admins',
             'admins.active = 1',
@@ -79,8 +80,11 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
             ['username' => $username, 'password' => $password],
         );
 
-        $userData = $this->getUserData();
-        $adminId = (int) $userData['id'];
+        $adminId = $this->getUserId();
+        if ($adminId === null) {
+            return;
+        }
+
         $this->clearRemember($adminId);
     }
 
@@ -93,8 +97,11 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
             ['username' => $username, 'password' => $password],
         );
 
-        $userData = $this->getUserData();
-        $adminId = (int) $userData['id'];
+        $adminId = $this->getUserId();
+        if ($adminId === null) {
+            return;
+        }
+
         $this->setUpRemember($adminId);
     }
 
@@ -146,9 +153,10 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
 
     public function logout(): void
     {
-        $userData = $this->getUserData();
-        $adminId = (int) $userData['id'];
-        $this->clearRemember($adminId);
+        $adminId = $this->getUserId();
+        if ($adminId !== null) {
+            $this->clearRemember($adminId);
+        }
 
         $auth = $this->authFactory->newInstance();
         $logoutService = $this->authFactory->newLogoutService($this->getAdapter());
@@ -177,6 +185,23 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
     public function getUserName(): ?string
     {
         return $this->authFactory->newInstance()->getUserName();
+    }
+
+    public function getDisplayName(): ?string
+    {
+        $userData = $this->getUserData();
+
+        return $userData['display_name'] ?? null;
+    }
+
+    public function getUserId(): ?int
+    {
+        $userData = $this->getUserData();
+        if (isset($userData['id'])) {
+            return (int) $userData['id'];
+        }
+
+        return null;
     }
 
     /**

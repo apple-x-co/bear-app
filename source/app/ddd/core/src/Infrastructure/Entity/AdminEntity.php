@@ -15,6 +15,7 @@ class AdminEntity
         public readonly int $id,
         public readonly string $username,
         public readonly string $password,
+        public readonly string $displayName,
         public readonly int $active,
         public readonly DateTimeImmutable $createdAt,
         public readonly DateTimeImmutable $updatedAt,

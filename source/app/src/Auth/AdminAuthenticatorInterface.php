@@ -24,8 +24,14 @@ interface AdminAuthenticatorInterface
 
     public function getUserName(): ?string;
 
+    public function getUserId(): ?int;
+
+    public function getDisplayName(): ?string;
+
     /**
-     * @return array<string, scalar>
+     * @return array{id?: string, display_name?: string}
+     *
+     * @internal
      */
     public function getUserData(): array;
 

@@ -11,6 +11,7 @@ use MyVendor\MyProject\Form\AdminFieldsetDemoForm;
 use MyVendor\MyProject\Form\AdminLoginForm;
 use MyVendor\MyProject\Form\AdminMultipleDemoForm;
 use MyVendor\MyProject\Form\AdminPasswordConfirmForm;
+use MyVendor\MyProject\Form\AdminPasswordUpdateForm;
 use MyVendor\MyProject\Form\AdminUpload2DemoForm;
 use MyVendor\MyProject\Form\AdminUploadDemoForm;
 use MyVendor\MyProject\Form\UploadFilesInterface;
@@ -41,6 +42,7 @@ class HtmlModule extends AbstractAppModule
     {
         $this->bind(FormInterface::class)->annotatedWith('admin_login_form')->to(AdminLoginForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_password_confirm_form')->to(AdminPasswordConfirmForm::class);
+        $this->bind(FormInterface::class)->annotatedWith('admin_password_update_form')->to(AdminPasswordUpdateForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_upload_demo_form')->to(AdminUploadDemoForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_upload2_demo_form')->to(AdminUpload2DemoForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_fieldset_demo_form')->to(AdminFieldsetDemoForm::class);
