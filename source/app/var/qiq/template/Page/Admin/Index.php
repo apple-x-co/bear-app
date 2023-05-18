@@ -1,7 +1,7 @@
-{{ extends ('layout/AdminPage/page') }}
+{{ extends ('layout/Admin/page') }}
 
 {{ setBlock ('title') }}INDEX | {{ parentBlock () }}{{ endBlock () }}
 
 {{ setBlock ('body_content') }}
-<a href="markup">Markup</a>
+<p><a href="markup">Markup</a></p>
 {{ endBlock () }}

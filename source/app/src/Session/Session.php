@@ -23,13 +23,13 @@ class Session implements SessionInterface
         return $this->segment->get($key, $alt);
     }
 
-    public function setFlash(string $key, string $val): void
+    public function setFlashMessage(string $val): void
     {
-        $this->segment->setFlash($key, $val);
+        $this->segment->setFlash('message', $val);
     }
 
-    public function getFlash(string $key, ?string $alt = null): mixed
+    public function getFlashMessage(?string $alt = null): mixed
     {
-        return $this->segment->getFlash($key, $alt);
+        return $this->segment->getFlash('message', $alt);
     }
 }

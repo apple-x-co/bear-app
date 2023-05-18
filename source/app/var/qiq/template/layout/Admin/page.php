@@ -1,4 +1,4 @@
-{{ extends ('layout/AdminPage/base') }}
+{{ extends ('layout/Admin/base') }}
 
 {{ setBlock ('body') }}
 <header class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 bg-white/70 supports-backdrop-blur:bg-white/60">
@@ -11,9 +11,11 @@
                 </a>
                 <div class="relative hidden lg:flex items-center ml-auto">
                     <div class="flex items-center border-l border-slate-200 ml-6 pl-6 dark:border-slate-800">
-                        <a href="{{= $this->router->generate('/admin/logout', []) }}">
-                            {{= render ('partials/AdminPage/InlineIcon', ['name' => 'arrow-left-on-rectangle']) }}
-                        </a>
+                        <form method="post" action="/admin/logout">
+                            <button>
+                                {{= render ('partials/Admin/InlineIcon', ['name' => 'arrow-left-on-rectangle']) }}
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -29,7 +31,7 @@
             {{ setBlock ('body_nav') }}
             {{ $view = $this->getView() }}
             <p>
-                <a class="text-sm font-bold tracking-wider {{ if ($view == 'Page/AdminPage/Index'): }}text-sky-500{{ endif }}" href="{{= $this->router->generate('/admin/index', []) }}">HOME</a>
+                <a class="text-sm font-bold tracking-wider {{ if ($view == 'Page/Admin/Index'): }}text-lime-500{{ endif }}" href="/admin/index">HOME</a>
             </p>
             {{= getBlock () ~}}
         </nav>

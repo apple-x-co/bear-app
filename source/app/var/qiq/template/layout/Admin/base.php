@@ -24,7 +24,7 @@
     <script src="/admin/js/index.js"></script>
     {{= getBlock () ~}}
 </head>
-<body class="bg-slate-50 text-slate-700 selection:bg-fuchsia-300 selection:text-fuchsia-900">
+<body class="bg-slate-50 text-slate-700 tracking-wide selection:bg-fuchsia-300 selection:text-fuchsia-900">
 {{ setBlock ('body') }}{{= getBlock () ~}}
 </body>
 </html>

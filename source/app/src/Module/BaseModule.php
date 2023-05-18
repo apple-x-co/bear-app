@@ -57,7 +57,8 @@ class BaseModule extends AbstractModule
         $this->core();
         $this->language();
         $this->logger();
-        $this->mailer();
+        $this->url();
+        $this->email();
         $this->repository();
 
         // TODO: AWS SKD の設定などはここで行う。ステージング環境や本番環境で必要な設定は ProdModule で行う。
@@ -66,38 +67,43 @@ class BaseModule extends AbstractModule
     private function core(): void
     {
         $this->bind()->annotatedWith('encrypt_pass')->toInstance((string) getenv('ENCRYPT_PASS'));
-        $this->bind(EncrypterInterface::class)->to(Encrypter::class)->in(Scope::SINGLETON);
+        $this->bind(EncrypterInterface::class)->to(Encrypter::class)->in(Scope::SINGLETON)->in(Scope::SINGLETON);
 
         $this->bind()->annotatedWith('hash_salt')->toInstance(random_bytes(32));
-        $this->bind(SecureRandomInterface::class)->to(SecureRandom::class)->in(Scope::SINGLETON);
+        $this->bind(SecureRandomInterface::class)->to(SecureRandom::class)->in(Scope::SINGLETON)->in(Scope::SINGLETON);
 
-        $this->bind(PasswordHasherInterface::class)->to(PasswordHasher::class)->in(Scope::SINGLETON);
-
-        $this->bind()->annotatedWith('address_admin_email')->toInstance(getenv('ADMIN_EMAIL_ADDRESS'));
-        $this->bind()->annotatedWith('address_admin_name')->toInstance('ADMINISTRATOR');
-        $this->bind(AddressInterface::class)
-             ->annotatedWith('admin')
-             ->toConstructor(Address::class, [
-                 'email' => 'address_admin_email',
-                 'name' => 'address_admin_name',
-             ])
-             ->in(Scope::SINGLETON);
+        $this->bind(PasswordHasherInterface::class)->to(PasswordHasher::class)->in(Scope::SINGLETON)->in(Scope::SINGLETON);
     }
 
     public function language(): void
     {
         $this->bind()->annotatedWith('lang_dir')->toInstance($this->langDir);
-        $this->bind(LanguageInterface::class)->toProvider(LanguageProvider::class);
+        $this->bind(LanguageInterface::class)->toProvider(LanguageProvider::class)->in(Scope::SINGLETON);
     }
 
     private function logger(): void
     {
-        $this->bind(LoggerInterface::class)->annotatedWith('admin')->to(AdminLogger::class);
-        $this->bind(LoggerInterface::class)->annotatedWith('user')->to(UserLogger::class);
+        $this->bind(LoggerInterface::class)->annotatedWith('admin')->to(AdminLogger::class)->in(Scope::SINGLETON);
+        $this->bind(LoggerInterface::class)->annotatedWith('user')->to(UserLogger::class)->in(Scope::SINGLETON);
     }
 
-    private function mailer(): void
+    private function url(): void
     {
+        $this->bind()->annotatedWith('admin_base_url')->toInstance(getenv('ADMIN_BASE_URL'));
+    }
+
+    private function email(): void
+    {
+        $this->bind()->annotatedWith('admin_address_email')->toInstance(getenv('ADMIN_EMAIL_ADDRESS'));
+        $this->bind()->annotatedWith('admin_address_name')->toInstance('ADMINISTRATOR');
+        $this->bind(AddressInterface::class)
+             ->annotatedWith('admin')
+             ->toConstructor(Address::class, [
+                 'email' => 'admin_address_email',
+                 'name' => 'admin_address_name',
+             ])
+             ->in(Scope::SINGLETON);
+
         $this->bind()->annotatedWith('smtp_hostname')->toInstance(getenv('SMTP_HOST'));
         $this->bind()->annotatedWith('smtp_port')->toInstance((int) getenv('SMTP_PORT'));
         $this->bind()->annotatedWith('smtp_username')->toInstance(getenv('SMTP_USER'));
@@ -115,7 +121,7 @@ class BaseModule extends AbstractModule
                  'options' => 'smtp_options',
              ])
              ->in(Scope::SINGLETON);
-        $this->bind(PHPMailer::class)->toProvider(PhpMailerProvider::class);
+        $this->bind(PHPMailer::class)->toProvider(PhpMailerProvider::class)->in(Scope::SINGLETON);
         $this->bind()->annotatedWith('email_html_dir')
              ->toInstance(rtrim($this->emailDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'html');
         $this->bind()->annotatedWith('email_subject_dir')

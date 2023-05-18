@@ -80,7 +80,7 @@ class Email
         return $this->emailFormat;
     }
 
-    public function setFrom(?AddressInterface $from): Email
+    public function setFrom(?AddressInterface $from): self
     {
         $clone = clone $this;
         $clone->from = $from;
@@ -91,7 +91,7 @@ class Email
     /**
      * @param array<AddressInterface> $to
      */
-    public function setTo(array $to): Email
+    public function setTo(array $to): self
     {
         $clone = clone $this;
         $clone->to = $to;
@@ -102,7 +102,7 @@ class Email
     /**
      * @param array<AddressInterface> $replayTo
      */
-    public function setReplayTo(array $replayTo): Email
+    public function setReplayTo(array $replayTo): self
     {
         $clone = clone $this;
         $clone->replayTo = $replayTo;
@@ -113,7 +113,7 @@ class Email
     /**
      * @param array<AddressInterface> $cc
      */
-    public function setCc(array $cc): Email
+    public function setCc(array $cc): self
     {
         $clone = clone $this;
         $clone->cc = $cc;
@@ -124,7 +124,7 @@ class Email
     /**
      * @param array<AddressInterface> $bcc
      */
-    public function setBcc(array $bcc): Email
+    public function setBcc(array $bcc): self
     {
         $clone = clone $this;
         $clone->bcc = $bcc;
@@ -132,7 +132,7 @@ class Email
         return $clone;
     }
 
-    public function setTemplate(?string $template): Email
+    public function setTemplate(?string $template): self
     {
         $clone = clone $this;
         $clone->templateId = $template;
@@ -143,7 +143,7 @@ class Email
     /**
      * @param array<string, mixed> $templateVars
      */
-    public function setTemplateVars(array $templateVars): Email
+    public function setTemplateVars(array $templateVars): self
     {
         $clone = clone $this;
         $clone->templateVars = $templateVars;
@@ -151,7 +151,7 @@ class Email
         return $clone;
     }
 
-    public function setEmailFormat(Format $emailFormat): Email
+    public function setEmailFormat(Format $emailFormat): self
     {
         $clone = clone $this;
         $clone->emailFormat = $emailFormat;

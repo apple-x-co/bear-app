@@ -22,7 +22,7 @@ class GoogleRecaptchaV2Verification implements MethodInterceptor
     private const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
 
     public function __construct(
-        #[Named('g_recaptcha_secret_key')] private readonly string $secretKey,
+        #[Named('google_recaptcha_secret_key')] private readonly string $secretKey,
     ) {
     }
 

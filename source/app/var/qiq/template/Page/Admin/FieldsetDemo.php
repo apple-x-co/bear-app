@@ -1,4 +1,4 @@
-{{ extends ('layout/AdminPage/page') }}
+{{ extends ('layout/Admin/page') }}
 
 {{ setBlock ('title') }}Fieldset Demo | {{ parentBlock () }}{{ endBlock () }}
 

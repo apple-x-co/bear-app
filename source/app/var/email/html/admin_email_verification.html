@@ -1,0 +1,9 @@
+<p><?= $displayName ?> さま</p>
+<p>
+    Eメールアドレスの確認<br>
+    <a href="<?= $adminBaseUrl . $verificationPathName ?>"><?= $adminBaseUrl . $verificationPathName ?></a><br>
+</p>
+<p>
+    有効期限<br>
+    <?= $expiresAt->format('Y-m-d H:i:s') ?>
+</p>

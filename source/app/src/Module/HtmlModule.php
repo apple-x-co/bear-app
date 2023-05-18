@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\Module;
 use BEAR\Package\AbstractAppModule;
 use BEAR\QiqModule\QiqModule;
 use MyVendor\MyProject\Form\AdminContactDemoForm;
+use MyVendor\MyProject\Form\AdminEmailCreateForm;
 use MyVendor\MyProject\Form\AdminFieldsetDemoForm;
 use MyVendor\MyProject\Form\AdminLoginForm;
 use MyVendor\MyProject\Form\AdminMultipleDemoForm;
@@ -41,6 +42,7 @@ class HtmlModule extends AbstractAppModule
     private function admin(): void
     {
         $this->bind(FormInterface::class)->annotatedWith('admin_login_form')->to(AdminLoginForm::class);
+        $this->bind(FormInterface::class)->annotatedWith('admin_email_create_form')->to(AdminEmailCreateForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_password_confirm_form')->to(AdminPasswordConfirmForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_password_update_form')->to(AdminPasswordUpdateForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_upload_demo_form')->to(AdminUploadDemoForm::class);

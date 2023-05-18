@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Admin;
 
+use AppCore\Domain\RemovalTrait;
 use DateTimeImmutable;
 
 class AdminEmail
 {
+    use RemovalTrait;
+
     public function __construct(
         public readonly int $adminId,
         public readonly string $emailAddress,
-        public readonly ?DateTimeImmutable $verifiedAt,
+        public readonly ?DateTimeImmutable $verifiedAt = null,
         public readonly ?DateTimeImmutable $createdAt = null,
         public readonly ?DateTimeImmutable $updatedAt = null,
         public readonly ?int $id = null,
@@ -25,7 +28,7 @@ class AdminEmail
         ?DateTimeImmutable $verifiedAt,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt,
-    ): AdminEmail {
+    ): self {
         return new self(
             $adminId,
             $emailAddress,
@@ -33,6 +36,18 @@ class AdminEmail
             $createdAt,
             $updatedAt,
             $id,
+        );
+    }
+
+    public function verified(): self
+    {
+        return new self(
+            $this->adminId,
+            $this->emailAddress,
+            new DateTimeImmutable(),
+            $this->createdAt,
+            $this->updatedAt,
+            $this->id,
         );
     }
 }

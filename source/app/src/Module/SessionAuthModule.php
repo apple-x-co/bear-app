@@ -31,6 +31,7 @@ use MyVendor\MyProject\Session\SessionInterface;
 use MyVendor\MyProject\Throttle\AdminLoginThrottle;
 use MyVendor\MyProject\Throttle\LoginThrottleInterface;
 use Ray\Di\AbstractModule;
+use Ray\Di\Scope;
 
 use function session_name;
 
@@ -40,7 +41,8 @@ class SessionAuthModule extends AbstractModule
     protected function configure(): void
     {
         $this->bind(SessionInterface::class)
-             ->toProvider(SessionProvider::class);
+             ->toProvider(SessionProvider::class)
+             ->in(Scope::SINGLETON);
 
         $this->bind()
              ->annotatedWith('cookie')
@@ -63,7 +65,8 @@ class SessionAuthModule extends AbstractModule
              ->to(AdminLoginThrottle::class);
 
         $this->bind(AdminAuthenticatorInterface::class)
-             ->toProvider(AdminAuthenticatorProvider::class);
+             ->toProvider(AdminAuthenticatorProvider::class)
+             ->in(Scope::SINGLETON);
 
         $this->bindInterceptor(
             $this->matcher->subclassesOf(AdminPage::class),
@@ -101,7 +104,8 @@ class SessionAuthModule extends AbstractModule
     public function user(): void
     {
         $this->bind(UserAuthenticatorInterface::class)
-             ->toProvider(UserAuthenticatorProvider::class);
+             ->toProvider(UserAuthenticatorProvider::class)
+             ->in(Scope::SINGLETON);
 
         $this->bindInterceptor(
             $this->matcher->subclassesOf(UserPage::class),

@@ -1,4 +1,4 @@
-{{ extends ('layout/AdminPage/base') }}
+{{ extends ('layout/Admin/base') }}
 
 {{ setBlock ('head_scripts') }}
     {{ parentBlock () }}
@@ -23,10 +23,10 @@
 
         <form method="post">
             {{ if (isset($this->authError) && $this->authError): }}
-                {{= render ('partials/AdminPage/AlertError', ['text' => 'Authentication error']) }}
+                {{= render ('partials/Admin/AlertError', ['text' => 'Authentication error']) }}
             {{ endif }}
             {{ if (isset($this->recaptchaError) && $this->recaptchaError): }}
-                {{= render ('partials/AdminPage/AlertError', ['text' => 'CAPTCHA error']) }}
+                {{= render ('partials/Admin/AlertError', ['text' => 'CAPTCHA error']) }}
             {{ endif }}
             <div class="mt-5">
                 <label class="block">
@@ -44,7 +44,7 @@
                     {{= AdminCheckbox(form: $this->form, input: 'remember') }}
                     {{= AdminFormError(form: $this->form, input: 'remember') }}
                 </label>
-                <div class="ml-[-11px] lg:ml-0 mt-5 g-recaptcha" data-sitekey="{{= $this->gRecaptchaSiteKey }}" data-size="normal" data-tabindex="4" data-callback="gRecaptchaChecked" data-expired-callback="gRecaptchaExpired" data-error-callback="gRecaptchaError"></div>
+                <div class="ml-[-11px] lg:ml-0 mt-5 g-recaptcha" data-sitekey="{{= $this->googleRecaptchaSiteKey }}" data-size="normal" data-tabindex="4" data-callback="gRecaptchaChecked" data-expired-callback="gRecaptchaExpired" data-error-callback="gRecaptchaError"></div>
                 <label class="block mt-5 text-center">
                     {{= AdminSubmit(form: $this->form, input: 'login', attribs: ['id' => 'login', 'value' => 'LOGIN', 'disabled' => 'disabled', 'data-submit-once' => '1']) }}
                     {{= CsrfTokenField(form: $this->form) }}

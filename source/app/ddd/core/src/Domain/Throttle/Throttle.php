@@ -32,7 +32,7 @@ class Throttle
         DateTimeImmutable $expireAt,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt,
-    ): Throttle {
+    ): self {
         return new self(
             $throttleKey,
             $remoteIp,
@@ -61,7 +61,7 @@ class Throttle
     /**
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public function countUp(string $remoteIp): Throttle
+    public function countUp(string $remoteIp): self
     {
         return new self(
             $this->throttleKey,

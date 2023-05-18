@@ -1,4 +1,4 @@
-{{ extends ('layout/AdminPage/page') }}
+{{ extends ('layout/Admin/page') }}
 
 {{ setBlock ('title') }}MARKUP | {{ parentBlock () }}{{ endBlock () }}
 
@@ -30,30 +30,93 @@
 <section class="mt-10">
     <h3 class="font-bold border-b pb-2 mb-2">アイコン</h3>
 
-    {{= render ('partials/AdminPage/InlineIcon', ['name' => 'exclamation-circle']) }}
-    {{= render ('partials/AdminPage/InlineIcon', ['name' => 'exclamation-triangle']) }}
-    {{= render ('partials/AdminPage/InlineIcon', ['name' => 'shield-exclamation']) }}
-    {{= render ('partials/AdminPage/InlineIcon', ['name' => 'arrow-left-on-rectangle']) }}
+    {{= render ('partials/Admin/InlineIcon', ['name' => 'exclamation-circle']) }}
+    {{= render ('partials/Admin/InlineIcon', ['name' => 'exclamation-triangle']) }}
+    {{= render ('partials/Admin/InlineIcon', ['name' => 'shield-exclamation']) }}
+    {{= render ('partials/Admin/InlineIcon', ['name' => 'arrow-left-on-rectangle']) }}
 </section>
 
 <section class="mt-10">
     <h3 class="font-bold border-b pb-2 mb-2">見出し1</h3>
 
-    {{= render ('partials/AdminPage/Heading1', ['title' => 'Title タイトル']) }}
+    {{= render ('partials/Admin/Heading1', ['title' => 'Title タイトル']) }}
 </section>
 
 <section class="mt-10">
     <h3 class="font-bold border-b pb-2 mb-2">見出し2</h3>
 
-    {{= render ('partials/AdminPage/Heading2', ['title' => 'Title タイトル', 'subtitle' => 'Subtitle サブタイトル']) }}
+    {{= render ('partials/Admin/Heading2', ['title' => 'Title タイトル', 'subtitle' => 'Subtitle サブタイトル']) }}
+</section>
+
+<section class="mt-10">
+    <h3 class="font-bold border-b pb-2 mb-2">テーブル</h3>
+
+    <table class="table-auto w-full border-collapse border border-slate-400 rounded-3xl">
+        <caption class="text-sm caption-bottom">
+            Table 3.1: Professional wrestlers and their signature moves.
+        </caption>
+        <thead class="bg-slate-100">
+        <tr>
+            <th class="border border-slate-300 p-4 text-sm lg:text-base">Song</th>
+            <th class="border border-slate-300 p-4 text-sm lg:text-base">Artist</th>
+            <th class="border border-slate-300 p-4 text-sm lg:text-base">Year</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="border border-slate-300 p-4 text-sm lg:text-base">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
+            <td class="border border-slate-300 p-4 text-sm lg:text-base">Malcolm Lockyer</td>
+            <td class="border border-slate-300 p-4 text-sm lg:text-base">1961</td>
+        </tr>
+        <tr>
+            <td class="border border-slate-300 p-4 text-sm lg:text-base">Witchy Woman</td>
+            <td class="border border-slate-300 p-4 text-sm lg:text-base">The Eagles</td>
+            <td class="border border-slate-300 p-4 text-sm lg:text-base">1972</td>
+        </tr>
+        <tr>
+            <td class="border border-slate-300 p-4 text-sm lg:text-base">Shining Star</td>
+            <td class="border border-slate-300 p-4 text-sm lg:text-base">Earth, Wind, and Fire</td>
+            <td class="border border-slate-300 p-4 text-sm lg:text-base">1975</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="mt-10">
+    <h3 class="font-bold border-b pb-2 mb-2">リスト</h3>
+
+    <div class="border border-slate-300 rounded-2xl">
+        <ul>
+            <li class="border-b border-slate-300 p-4">
+                <p class="text-xs lg:text-sm font-bold">見出し</p>
+                <p class="text-xs lg:text-sm">テキスト テキスト テキスト</p>
+            </li>
+            <li class="border-b border-slate-300 p-4">
+                <p class="text-xs lg:text-sm font-bold">見出し</p>
+                <p class="text-xs lg:text-sm">テキスト テキスト テキスト</p>
+            </li>
+            <li class="flex gap-2 p-4">
+                <div class="flex-none">
+                    {{= render ('partials/Admin/InlineIcon', ['name' => 'bell-alert']) }}
+                </div>
+                <div class="flex-1 col-span-3">
+                    <p class="text-xs lg:text-sm font-bold">見出し</p>
+                    <p class="text-xs lg:text-sm">テキスト テキスト テキスト</p>
+                </div>
+                <div class="flex-none text-right">
+                    <input type="submit" value="実行" class="py-1 px-2 bg-lime-500 text-white text-sm font-sans font-bold tracking-wider rounded-md shadow-lg shadow-lime-500/50 focus:outline-none">
+                </div>
+            </li>
+        </ul>
+    </div>
 </section>
 
 <section class="mt-10">
     <h3 class="font-bold border-b pb-2 mb-2">アラート</h3>
 
-    {{= render ('partials/AdminPage/AlertInformation', ['text' => 'Information']) }}
-    {{= render ('partials/AdminPage/AlertWarning', ['text' => 'Warning']) }}
-    {{= render ('partials/AdminPage/AlertError', ['text' => 'Error']) }}
+    {{= render ('partials/Admin/AlertInformation', ['text' => 'Information']) }}
+    {{= render ('partials/Admin/AlertWarning', ['text' => 'Warning']) }}
+    {{= render ('partials/Admin/AlertError', ['text' => 'Error']) }}
 </section>
 
 <section class="mt-10">

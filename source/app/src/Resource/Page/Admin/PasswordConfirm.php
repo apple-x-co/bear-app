@@ -7,7 +7,7 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\AdminVerifyPassword;
 use MyVendor\MyProject\Auth\AuthenticationException;
-use MyVendor\MyProject\Input\Admin\UserPassword;
+use MyVendor\MyProject\Input\Admin\UserPasswordInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
 use Ray\WebFormModule\Annotation\FormValidation;
@@ -33,7 +33,7 @@ class PasswordConfirm extends AdminPage
      */
     #[AdminGuard]
     #[AdminVerifyPassword]
-    public function onPost(UserPassword $userPassword): static
+    public function onPost(UserPasswordInput $userPassword): static
     {
         // password confirm success !!
 

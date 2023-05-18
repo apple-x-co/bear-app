@@ -23,7 +23,7 @@ class AdminToken
         string $token,
         DateTimeImmutable $expireAt,
         DateTimeImmutable $createdAt,
-    ): AdminToken {
+    ): self {
         return new self(
             $adminId,
             $token,

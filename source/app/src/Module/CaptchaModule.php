@@ -16,8 +16,8 @@ class CaptchaModule extends AbstractModule
 {
     protected function configure(): void
     {
-        $this->bind()->annotatedWith('g_recaptcha_site_key')->toInstance((string) getenv('GOOGLE_RECAPTCHA_SITE_KEY'));
-        $this->bind()->annotatedWith('g_recaptcha_secret_key')->toInstance((string) getenv('GOOGLE_RECAPTCHA_SECRET_KEY'));
+        $this->bind()->annotatedWith('google_recaptcha_site_key')->toInstance((string) getenv('GOOGLE_RECAPTCHA_SITE_KEY'));
+        $this->bind()->annotatedWith('google_recaptcha_secret_key')->toInstance((string) getenv('GOOGLE_RECAPTCHA_SECRET_KEY'));
 
         $this->bindInterceptor(
             $this->matcher->subclassesOf(ResourceObject::class),

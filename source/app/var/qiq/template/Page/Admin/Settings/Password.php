@@ -1,16 +1,13 @@
-{{ extends ('layout/AdminPage/base') }}
+{{ extends ('layout/Admin/settings') }}
 
 {{ setBlock ('body') }}
 <div class="h-[100svh] grid place-content-center">
     <div class="relative w-80 md:w-96 h-min p-5 md:p-8 rounded-xl bg-white shadow-[0_1px_3px_rgba(15,23,42,0.03),0_1px_2px_rgba(15,23,42,0.06)] ring-1 ring-slate-600/[0.04]">
-        <h2 class="text-xl text-center tracking-widest font-sans font-bold">PASSWORD</h2>
+        <h2 class="text-xl text-center tracking-widest font-sans font-bold">Password</h2>
 
         <form method="post">
             {{ if (isset($this->authError) && $this->authError): }}
-            {{= render ('partials/AdminPage/AlertError', ['text' => 'Authentication error']) }}
-            {{ endif }}
-            {{ if (isset($this->information)): }}
-            {{= render ('partials/AdminPage/AlertInformation', ['text' => $this->information]) }}
+            {{= render ('partials/Admin/AlertError', ['text' => 'Authentication error']) }}
             {{ endif }}
             <div class="mt-5">
                 <label class="block mt-5 relative">

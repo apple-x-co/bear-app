@@ -25,8 +25,8 @@ use MyVendor\MyProject\Auth\PasswordIncorrect;
 use MyVendor\MyProject\Auth\PasswordMissing;
 use MyVendor\MyProject\Auth\UsernameMissing;
 use MyVendor\MyProject\Auth\UsernameNotFound;
-use MyVendor\MyProject\Input\Admin\LoginUser as InputLoginUser;
-use MyVendor\MyProject\Input\Admin\UserPassword as InputUserPassword;
+use MyVendor\MyProject\Input\Admin\LoginUserInput;
+use MyVendor\MyProject\Input\Admin\UserPasswordInput;
 use MyVendor\MyProject\Session\SessionInterface;
 use MyVendor\MyProject\Throttle\LoginThrottleInterface;
 use Ray\Aop\MethodInterceptor;
@@ -82,11 +82,11 @@ class AdminAuthenticate implements MethodInterceptor
     private function login(MethodInvocation $invocation, string $onFailure): mixed
     {
         $args = $invocation->getNamedArguments();
-        $loginUser = $args['loginUser'] ?? null;
-        assert($loginUser instanceof InputLoginUser);
+        $input = $args['loginUser'] ?? null;
+        assert($input instanceof LoginUserInput);
 
-        if ($loginUser->isValid()) {
-            if ($this->loginThrottle->isExceeded($loginUser->username)) {
+        if ($input->isValid()) {
+            if ($this->loginThrottle->isExceeded($input->username)) {
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],
                     new MaxAttemptsExceeded(),
@@ -94,10 +94,10 @@ class AdminAuthenticate implements MethodInterceptor
             }
 
             try {
-                if ($loginUser->remember === 'yes') {
-                    $this->authenticator->rememberLogin($loginUser->username, $loginUser->password);
+                if ($input->remember === 'yes') {
+                    $this->authenticator->rememberLogin($input->username, $input->password);
                 } else {
-                    $this->authenticator->login($loginUser->username, $loginUser->password);
+                    $this->authenticator->login($input->username, $input->password);
                 }
             } catch (Throwable $throwable) {
                 $class = match ($throwable::class) {
@@ -114,7 +114,7 @@ class AdminAuthenticate implements MethodInterceptor
                 }
 
                 $remoteIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
-                $this->loginThrottle->countUp($loginUser->username, $remoteIp);
+                $this->loginThrottle->countUp($input->username, $remoteIp);
 
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],
@@ -126,9 +126,9 @@ class AdminAuthenticate implements MethodInterceptor
                 );
             }
 
-            $this->logger->log('[logged] ' . $loginUser->username);
+            $this->logger->log('[logged] ' . $input->username);
 
-            $this->loginThrottle->clear($loginUser->username);
+            $this->loginThrottle->clear($input->username);
 
             $continue = $this->session->get('admin:continue', '');
             $expire = (new DateTimeImmutable())->modify('+5 min')->getTimestamp();
@@ -183,8 +183,8 @@ class AdminAuthenticate implements MethodInterceptor
     private function verifyPassword(MethodInvocation $invocation, string $onFailure): mixed
     {
         $args = $invocation->getNamedArguments();
-        $userPassword = $args['userPassword'] ?? null;
-        assert($userPassword instanceof InputUserPassword);
+        $input = $args['userPassword'] ?? null;
+        assert($input instanceof UserPasswordInput);
 
         $userName = $this->authenticator->getUserName();
 
@@ -192,7 +192,7 @@ class AdminAuthenticate implements MethodInterceptor
             try {
                 $this->authenticator->verifyPassword(
                     $userName,
-                    $userPassword->password,
+                    $input->password,
                 );
             } catch (AuraPasswordIncorrect $passwordIncorrect) {
                 return call_user_func(

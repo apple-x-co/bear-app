@@ -8,7 +8,7 @@ use MyVendor\MyProject\Annotation\AdminLogin;
 use MyVendor\MyProject\Annotation\GoogleRecaptchaV2;
 use MyVendor\MyProject\Auth\AuthenticationException;
 use MyVendor\MyProject\Captcha\RecaptchaException;
-use MyVendor\MyProject\Input\Admin\LoginUser;
+use MyVendor\MyProject\Input\Admin\LoginUserInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
 use Ray\WebFormModule\Annotation\FormValidation;
@@ -33,7 +33,7 @@ class Login extends AdminPage
      */
     #[GoogleRecaptchaV2]
     #[AdminLogin]
-    public function onPost(LoginUser $loginUser): static
+    public function onPost(LoginUserInput $loginUser): static
     {
         // login success !!
 

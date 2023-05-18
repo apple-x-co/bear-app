@@ -10,7 +10,7 @@ class Index extends ResourceObject
 {
     public function onGet(): static
     {
-        $this->body['HELLO'] = 'UserApi';
+        $this->body['HELLO'] = 'User';
 
         return $this;
     }

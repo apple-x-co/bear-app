@@ -12,11 +12,13 @@ use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\PasswordHasherInterface;
 use AppCore\Infrastructure\Query\AdminPasswordUpdateInterface;
+use Koriym\HttpConstants\ResponseHeader;
+use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\AuthenticationException;
 use MyVendor\MyProject\Auth\PasswordIncorrect;
-use MyVendor\MyProject\Input\Admin\UpdatePassword;
+use MyVendor\MyProject\Input\Admin\UpdatePasswordInput;
 use MyVendor\MyProject\Lang\LanguageInterface;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
@@ -51,7 +53,7 @@ class Password extends AdminPage
      * @FormValidation()
      */
     #[AdminGuard]
-    public function onPost(UpdatePassword $updatePassword): static
+    public function onPost(UpdatePasswordInput $updatePassword): static
     {
         $userName = $this->adminAuthenticator->getUserName();
         $adminId = $this->adminAuthenticator->getUserId();
@@ -79,19 +81,22 @@ class Password extends AdminPage
         $admin = $this->adminRepository->findById($adminId);
         foreach ($admin->emails as $adminEmail) {
             try {
-                $email = (new Email())
-                    ->setFrom($this->adminAddress)
-                    ->setTo([new Address($adminEmail->emailAddress, $admin->username)])
-                    ->setTemplate('admin_password_updated')
-                    ->setTemplateVars(['displayName' => $this->adminAuthenticator->getDisplayName()]);
-
-                $this->transport->send($email);
+                $this->transport->send(
+                    (new Email())
+                        ->setFrom($this->adminAddress)
+                        ->setTo([new Address($adminEmail->emailAddress, $admin->username)])
+                        ->setTemplate('admin_password_updated')
+                        ->setTemplateVars(['displayName' => $admin->displayName])
+                );
             } catch (Throwable $throwable) {
                 $this->logger->log((string) $throwable);
             }
         }
 
-        $this->body['information'] = $this->language->get('message:admin:password_updated');
+        $this->renderer = null;
+        $this->session->setFlashMessage($this->language->get('message:admin:password_updated'));
+        $this->code = StatusCode::SEE_OTHER;
+        $this->headers = [ResponseHeader::LOCATION => '/admin/settings/index']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
 
         return $this;
     }

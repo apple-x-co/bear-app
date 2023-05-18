@@ -136,7 +136,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         $loginService->forceLogin(
             $auth,
             $admin->username,
-            ['id' => $admin->id],
+            ['id' => $admin->id, 'display_name' => $admin->displayName],
         );
 
         $this->clearRemember($adminToken->adminId);

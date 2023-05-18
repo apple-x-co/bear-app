@@ -10,14 +10,19 @@ use AppCore\Domain\Admin\AdminNotFoundException;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Infrastructure\Entity\AdminEmailEntity;
 use AppCore\Infrastructure\Entity\AdminEntity;
+use AppCore\Infrastructure\Query\AdminCommandInterface;
+use AppCore\Infrastructure\Query\AdminEmailCommandInterface;
 use AppCore\Infrastructure\Query\AdminEmailQueryInterface;
 use AppCore\Infrastructure\Query\AdminQueryInterface;
+use DateTimeImmutable;
 
 use function array_reduce;
 
 class AdminRepository implements AdminRepositoryInterface
 {
     public function __construct(
+        private readonly AdminCommandInterface $adminCommand,
+        private readonly AdminEmailCommandInterface $adminEmailCommand,
         private readonly AdminEmailQueryInterface $adminEmailQuery,
         private readonly AdminQueryInterface $adminQuery,
     ) {
@@ -69,5 +74,56 @@ class AdminRepository implements AdminRepositoryInterface
             $adminEntity->createdAt,
             $adminEntity->updatedAt,
         );
+    }
+
+    public function store(Admin $admin): void
+    {
+        if ($admin->id === null) {
+            $array = $this->adminCommand->add(
+                $admin->username,
+                $admin->password,
+                $admin->displayName,
+                $admin->active ? 1 : 0,
+            );
+
+            foreach ($admin->emails as $email) {
+                $this->adminEmailCommand->add(
+                    $array['id'],
+                    $email->emailAddress,
+                );
+            }
+
+            return;
+        }
+
+        $this->adminCommand->update(
+            $admin->id,
+            $admin->username,
+            $admin->displayName,
+            $admin->active ? 1 : 0,
+        );
+
+        foreach ($admin->emails as $email) {
+            if ($email->id === null) {
+                $this->adminEmailCommand->add(
+                    $admin->id,
+                    $email->emailAddress
+                );
+
+                continue;
+            }
+
+            if ($email->isRemoval()) {
+                $this->adminEmailCommand->delete($email->id);
+
+                continue;
+            }
+
+            if (! ($email->verifiedAt instanceof DateTimeImmutable)) {
+                continue;
+            }
+
+            $this->adminEmailCommand->verified($email->id, $email->verifiedAt);
+        }
     }
 }

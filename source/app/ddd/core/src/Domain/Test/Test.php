@@ -19,7 +19,7 @@ readonly class Test
         string $id,
         string $title,
         DateTimeImmutable $dateCreated,
-    ): Test {
+    ): self {
         return new self(
             $id,
             $title,
