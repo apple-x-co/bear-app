@@ -44,9 +44,7 @@
 * Account lock after consecutive failures
 * Password confirm when important page visit
 * Email notification after password change
-
-
-* _Schedule: E-mail authentication_
-* _Schedule: E-mail notification_
+* Email authentication
+* Email notification when add email address
 * _Schedule: Password reminder_
 * _Schedule: Ban common passwords (priority:Low)_
