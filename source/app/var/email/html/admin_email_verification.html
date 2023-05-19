@@ -1,9 +1,6 @@
 <p><?= $displayName ?> さま</p>
 <p>
-    Eメールアドレスの確認<br>
+    以下のURLからEメールアドレスの確認を行なってください。<br>
     <a href="<?= $adminBaseUrl . $verificationPathName ?>"><?= $adminBaseUrl . $verificationPathName ?></a><br>
-</p>
-<p>
-    有効期限<br>
-    <?= $expiresAt->format('Y-m-d H:i:s') ?>
+    URLの有効期限は <?= $expiresAt->format('Y-m-d H:i:s') ?> です。
 </p>

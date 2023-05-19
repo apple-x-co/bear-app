@@ -1,7 +1,5 @@
 <?= $displayName ?> さま
 
-Eメールアドレスの確認
+以下のURLからEメールアドレスの確認を行なってください。
 <?= $adminBaseUrl . $verificationPathName . PHP_EOL ?>
-
-有効期限
-<?= $expiresAt->format('Y-m-d H:i:s') . PHP_EOL ?>
+URLの有効期限は <?= $expiresAt->format('Y-m-d H:i:s') ?> です。

@@ -46,5 +46,5 @@
 * Email notification after password change
 * Email authentication
 * Email notification when add email address
-* _Schedule: Password reminder_
+* Password reset
 * _Schedule: Ban common passwords (priority:Low)_

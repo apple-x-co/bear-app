@@ -10,6 +10,8 @@ interface SessionInterface
 
     public function get(string $key, ?string $alt = null): mixed;
 
+    public function remove(string $key): void;
+
     public function setFlashMessage(string $val): void;
 
     public function getFlashMessage(?string $alt = null): mixed;

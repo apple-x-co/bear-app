@@ -23,6 +23,11 @@ class Session implements SessionInterface
         return $this->segment->get($key, $alt);
     }
 
+    public function remove(string $key): void
+    {
+        $this->segment->set($key, null);
+    }
+
     public function setFlashMessage(string $val): void
     {
         $this->segment->setFlash('message', $val);

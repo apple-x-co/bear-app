@@ -14,4 +14,9 @@ interface SecureRandomInterface
      * @param int<1, max> $length
      */
     public function randomBytes(int $length): string;
+
+    /**
+     * @param int<1, max> $length
+     */
+    public function randomNumbers(int $length): int;
 }

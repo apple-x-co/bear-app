@@ -12,4 +12,7 @@ interface AdminQueryInterface
 {
     #[DbQuery('admin_item', type: 'row', factory: AdminEntityFactory::class)]
     public function item(int $id): ?AdminEntity;
+
+    #[DbQuery('admin_item_by_email', type: 'row', factory: AdminEntityFactory::class)]
+    public function itemByEmailAddress(string $emailAddress): ?AdminEntity;
 }

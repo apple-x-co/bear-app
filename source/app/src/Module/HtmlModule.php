@@ -9,9 +9,11 @@ use BEAR\QiqModule\QiqModule;
 use MyVendor\MyProject\Form\AdminContactDemoForm;
 use MyVendor\MyProject\Form\AdminEmailCreateForm;
 use MyVendor\MyProject\Form\AdminFieldsetDemoForm;
+use MyVendor\MyProject\Form\AdminForgotPasswordForm;
 use MyVendor\MyProject\Form\AdminLoginForm;
 use MyVendor\MyProject\Form\AdminMultipleDemoForm;
 use MyVendor\MyProject\Form\AdminPasswordConfirmForm;
+use MyVendor\MyProject\Form\AdminPasswordResetForm;
 use MyVendor\MyProject\Form\AdminPasswordUpdateForm;
 use MyVendor\MyProject\Form\AdminUpload2DemoForm;
 use MyVendor\MyProject\Form\AdminUploadDemoForm;
@@ -41,9 +43,11 @@ class HtmlModule extends AbstractAppModule
 
     private function admin(): void
     {
-        $this->bind(FormInterface::class)->annotatedWith('admin_login_form')->to(AdminLoginForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_email_create_form')->to(AdminEmailCreateForm::class);
+        $this->bind(FormInterface::class)->annotatedWith('admin_forgot_password_form')->to(AdminForgotPasswordForm::class);
+        $this->bind(FormInterface::class)->annotatedWith('admin_login_form')->to(AdminLoginForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_password_confirm_form')->to(AdminPasswordConfirmForm::class);
+        $this->bind(FormInterface::class)->annotatedWith('admin_password_reset_form')->to(AdminPasswordResetForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_password_update_form')->to(AdminPasswordUpdateForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_upload_demo_form')->to(AdminUploadDemoForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_upload2_demo_form')->to(AdminUpload2DemoForm::class);

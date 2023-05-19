@@ -96,7 +96,7 @@ class Emails extends AdminPage
                     'displayName' => $admin->displayName,
                     'expiresAt' => $verifyEmailSignature->expiresAt,
                     'adminBaseUrl' => $this->adminBaseUrl,
-                    'verificationPathName' => $this->router->generate('/admin/email/verify', ['signature' => $encrypted]),
+                    'verificationPathName' => $this->router->generate('/admin/email-verify', ['signature' => $encrypted]),
                 ])
         );
 

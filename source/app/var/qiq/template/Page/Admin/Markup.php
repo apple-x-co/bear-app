@@ -168,9 +168,14 @@
         </label>
 
         <label class="block mt-5 relative">
-            <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500">日時</span>
+            <span class="block top-2 left-3 text-sm font-thin text-slate-500">日時</span>
             <input type="text" class="flatpickr4 rounded w-full pt-7 placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500" placeholder="YYYY-MM-DD HH:MM">
             <script>flatpickr('.flatpickr4', {disableMobile: true, enableTime: true, dateFormat: "Y-m-d H:i"});</script>
+        </label>
+
+        <label class="block mt-5 relative">
+            <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">ファイルタイプ</span>
+            <input type="file" class="rounded w-full p-3 pt-7 bg-white border border-[#6b7280] placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500" placeholder="">
         </label>
 
         <div class="mt-5">
@@ -228,6 +233,13 @@
         <label class="block mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">無効ボタン</span>
             <input type="button" value="キャンセル" class="py-2 px-3 bg-sky-500 text-white text-sm font-sans font-bold tracking-wider rounded-md shadow-lg shadow-sky-500/50 focus:outline-none disabled:text-white disabled:bg-slate-200 disabled:shadow-none" disabled="disabled">
+        </label>
+
+        <label class="block mt-5">
+            <span class="block text-sm font-sans font-normal text-slate-700">削除ボタン</span>
+            <button type="submit" value="キャンセル" class="text-rose-500 focus:outline-none">
+                {{= render ('partials/Admin/InlineIcon', ['name' => 'trash']) }}
+            </button>
         </label>
     </form>
 </section>

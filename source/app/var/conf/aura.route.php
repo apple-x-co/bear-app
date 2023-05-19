@@ -17,7 +17,8 @@ $map->attach('/admin', '/admin', static function (\Aura\Router\Map $map) {
     ]);
 
 
-    $map->route('/email/verify', '/email/verify/{signature}')->tokens(['signature' => '.+']);
+    $map->route('/email-verify', '/email-verify/{signature}')->tokens(['signature' => '.+']);
+    $map->route('/reset-password', '/reset-password/{signature}')->tokens(['signature' => '.+']);
     $map->route('/settings/emails/delete', '/settings/emails/{id}/delete');
 });
 

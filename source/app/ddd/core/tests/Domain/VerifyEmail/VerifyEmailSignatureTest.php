@@ -28,7 +28,7 @@ class VerifyEmailSignatureTest extends TestCase
         );
     }
 
-    public function testUnserialize(): void
+    public function testDeserialize(): void
     {
         date_default_timezone_set('Asia/Tokyo');
 

@@ -32,9 +32,11 @@ class DefaultModule extends AbstractModule
     {
         $this->bind(AdminAuthenticatorInterface::class)->toNull();
 
-        $this->bind(FormInterface::class)->annotatedWith('admin_login_form')->toNull();
         $this->bind(FormInterface::class)->annotatedWith('admin_email_create_form')->toNull();
+        $this->bind(FormInterface::class)->annotatedWith('admin_forgot_password_form')->toNull();
+        $this->bind(FormInterface::class)->annotatedWith('admin_login_form')->toNull();
         $this->bind(FormInterface::class)->annotatedWith('admin_password_confirm_form')->toNull();
+        $this->bind(FormInterface::class)->annotatedWith('admin_password_reset_form')->toNull();
         $this->bind(FormInterface::class)->annotatedWith('admin_password_update_form')->toNull();
         $this->bind(FormInterface::class)->annotatedWith('admin_upload_demo_form')->toNull();
         $this->bind(FormInterface::class)->annotatedWith('admin_upload2_demo_form')->toNull();
