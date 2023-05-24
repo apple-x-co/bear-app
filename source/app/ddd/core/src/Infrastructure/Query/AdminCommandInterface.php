@@ -12,7 +12,7 @@ interface AdminCommandInterface
     /**
      * @return array{id: int}
      */
-    #[DbQuery('admin_add')]
+    #[DbQuery('admin_add', 'row')]
     public function add(
         string $username,
         string $password,

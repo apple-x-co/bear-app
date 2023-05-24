@@ -31,8 +31,8 @@
 {{ endif }}
 
 <form method="post">
-    <label class="block mt-5 relative">
-        <span class="absolute block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">Email</span>
+    <label class="block mt-5">
+        <span class="block text-sm font-sans font-normal text-slate-700 select-none">Email</span>
         {{= AdminText(form: $this->form, input: 'emailAddress') }}
         {{= AdminFormError(form: $this->form, input: 'emailAddress') }}
     </label>

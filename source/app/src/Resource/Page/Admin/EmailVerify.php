@@ -6,15 +6,15 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use AppCore\Domain\Admin\AdminEmail;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
-use AppCore\Domain\EncrypterInterface;
+use AppCore\Domain\Admin\EmailWebSignature;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Domain\VerifyEmail\ExpiredSignatureException;
-use AppCore\Domain\VerifyEmail\VerifyEmailSignature;
-use AppCore\Domain\VerifyEmail\WrongEmailVerifyException;
+use AppCore\Domain\WebSignature\ExpiredSignatureException;
+use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use AppCore\Domain\WebSignature\WrongEmailVerifyException;
 use DateTimeImmutable;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -28,19 +28,19 @@ use Ray\Di\Di\Named;
 use Throwable;
 
 use function array_reduce;
-use function urldecode;
 
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class EmailVerify extends AdminPage
 {
+    /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
         #[Named('admin')] private readonly AddressInterface $adminAddress,
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
         private readonly AdminRepositoryInterface $adminRepository,
-        private readonly EncrypterInterface $encrypter,
         private readonly LanguageInterface $language,
         #[Named('admin')] private readonly LoggerInterface $logger,
         #[Named('SMTP')] private readonly TransportInterface $transport,
+        private readonly WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
     }
 
@@ -50,17 +50,18 @@ class EmailVerify extends AdminPage
     #[Transactional]
     public function onGet(string $signature): static
     {
-        $adminId = (int) $this->adminAuthenticator->getUserId();
-        $admin = $this->adminRepository->findById($adminId);
-
-        $decrypted = $this->encrypter->decrypt(urldecode($signature));
-        $verifyEmailSignature = VerifyEmailSignature::deserialize($decrypted);
-
+        $emailWebSignature = $this->webSignatureEncrypter->decrypt($signature, EmailWebSignature::class);
         $now = new DateTimeImmutable();
-        if ($verifyEmailSignature->expiresAt < $now) {
+        if ($emailWebSignature->expiresAt < $now) {
             throw new ExpiredSignatureException();
         }
 
+        $adminId = (int) $this->adminAuthenticator->getUserId();
+        if ($adminId !== $emailWebSignature->adminId) {
+            throw new WrongEmailVerifyException();
+        }
+
+        $admin = $this->adminRepository->findById($adminId);
         $emailAddressMap = array_reduce(
             $admin->emails,
             static function (array $carry, AdminEmail $item) {
@@ -70,20 +71,19 @@ class EmailVerify extends AdminPage
             },
             []
         );
-
-        if ($adminId !== $verifyEmailSignature->id || ! isset($emailAddressMap[$verifyEmailSignature->address])) {
+        if (! isset($emailAddressMap[$emailWebSignature->address])) {
             throw new WrongEmailVerifyException();
         }
 
         $this->adminRepository->store(
-            $admin->markEmailAsVerified($verifyEmailSignature->address)
+            $admin->markEmailAsVerified($emailWebSignature->address)
         );
 
         try {
             $this->transport->send(
                 (new Email())
                     ->setFrom($this->adminAddress)
-                    ->setTo([new Address($verifyEmailSignature->address)])
+                    ->setTo([new Address($emailWebSignature->address)])
                     ->setTemplate('admin_email_verified')
                     ->setTemplateVars([
                         'displayName' => $admin->displayName,

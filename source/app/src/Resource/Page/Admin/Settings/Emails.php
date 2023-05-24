@@ -6,14 +6,13 @@ namespace MyVendor\MyProject\Resource\Page\Admin\Settings;
 
 use AppCore\Domain\Admin\AdminEmail;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
-use AppCore\Domain\EncrypterInterface;
+use AppCore\Domain\Admin\EmailWebSignature;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Domain\SecureRandomInterface;
-use AppCore\Domain\VerifyEmail\VerifyEmailSignature;
+use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
 use DateTimeImmutable;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -36,17 +35,17 @@ use function array_reduce;
  */
 class Emails extends AdminPage
 {
+    /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
         #[Named('admin')] private readonly AddressInterface $adminAddress,
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
         #[Named('admin_base_url')] private readonly string $adminBaseUrl,
         private readonly AdminRepositoryInterface $adminRepository,
-        private readonly EncrypterInterface $encrypter,
         #[Named('admin_email_create_form')] protected readonly FormInterface $form,
         private readonly LanguageInterface $language,
         #[Named('admin')] private readonly LoggerInterface $logger,
-        private readonly SecureRandomInterface $secureRandom,
         #[Named('SMTP')] private readonly TransportInterface $transport,
+        private readonly WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
         $this->body['form'] = $this->form;
     }
@@ -71,22 +70,17 @@ class Emails extends AdminPage
     {
         $adminId = (int) $this->adminAuthenticator->getUserId();
         $admin = $this->adminRepository->findById($adminId);
-
-        $admin = $admin->addEmail(
-            new AdminEmail(
-                $adminId,
-                $createEmail->emailAddress,
-            )
-        );
+        $admin = $admin->addEmail(new AdminEmail($createEmail->emailAddress));
         $this->adminRepository->store($admin);
 
-        $verifyEmailSignature = new VerifyEmailSignature(
-            $this->secureRandom->randomBytes(5),
-            (new DateTimeImmutable())->modify('+10 minutes'),
+        $expiresAt = (new DateTimeImmutable())->modify('+10 minutes');
+        $emailWebSignature = new EmailWebSignature(
             $adminId,
+            $expiresAt,
             $createEmail->emailAddress,
         );
-        $encrypted = $this->encrypter->encrypt($verifyEmailSignature->serialize());
+        $encrypted = $this->webSignatureEncrypter->encrypt($emailWebSignature);
+
         $this->transport->send(
             (new Email())
                 ->setFrom($this->adminAddress)
@@ -94,7 +88,7 @@ class Emails extends AdminPage
                 ->setTemplate('admin_email_verification')
                 ->setTemplateVars([
                     'displayName' => $admin->displayName,
-                    'expiresAt' => $verifyEmailSignature->expiresAt,
+                    'expiresAt' => $expiresAt,
                     'adminBaseUrl' => $this->adminBaseUrl,
                     'verificationPathName' => $this->router->generate('/admin/email-verify', ['signature' => $encrypted]),
                 ])
@@ -130,7 +124,7 @@ class Emails extends AdminPage
                     ->setTemplate('admin_email_created')
                     ->setTemplateVars([
                         'displayName' => $admin->displayName,
-                        'emailAddress' => $verifyEmailSignature->address,
+                        'emailAddress' => $createEmail->emailAddress,
                     ])
             );
         } catch (Throwable $throwable) {

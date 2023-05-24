@@ -20,6 +20,7 @@ use AppCore\Domain\SecureRandom;
 use AppCore\Domain\SecureRandomInterface;
 use AppCore\Domain\Test\TestRepositoryInterface;
 use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
+use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
 use AppCore\Infrastructure\Persistence\AdminRepository;
 use AppCore\Infrastructure\Persistence\AdminTokenRepository;
 use AppCore\Infrastructure\Persistence\TestRepository;
@@ -27,6 +28,7 @@ use AppCore\Infrastructure\Persistence\ThrottleRepository;
 use AppCore\Infrastructure\Shared\AdminLogger;
 use AppCore\Infrastructure\Shared\SmtpMail;
 use AppCore\Infrastructure\Shared\UserLogger;
+use AppCore\Infrastructure\Shared\WebSignatureEncrypter;
 use MyVendor\MyProject\Lang\LanguageInterface;
 use MyVendor\MyProject\Provider\LanguageProvider;
 use MyVendor\MyProject\Provider\PhpMailerProvider;
@@ -67,12 +69,14 @@ class BaseModule extends AbstractModule
     private function core(): void
     {
         $this->bind()->annotatedWith('encrypt_pass')->toInstance((string) getenv('ENCRYPT_PASS'));
-        $this->bind(EncrypterInterface::class)->to(Encrypter::class)->in(Scope::SINGLETON)->in(Scope::SINGLETON);
+        $this->bind(EncrypterInterface::class)->to(Encrypter::class)->in(Scope::SINGLETON);
 
         $this->bind()->annotatedWith('hash_salt')->toInstance(random_bytes(32));
-        $this->bind(SecureRandomInterface::class)->to(SecureRandom::class)->in(Scope::SINGLETON)->in(Scope::SINGLETON);
+        $this->bind(SecureRandomInterface::class)->to(SecureRandom::class)->in(Scope::SINGLETON);
 
-        $this->bind(PasswordHasherInterface::class)->to(PasswordHasher::class)->in(Scope::SINGLETON)->in(Scope::SINGLETON);
+        $this->bind(PasswordHasherInterface::class)->to(PasswordHasher::class)->in(Scope::SINGLETON);
+
+        $this->bind(WebSignatureEncrypterInterface::class)->to(WebSignatureEncrypter::class)->in(Scope::SINGLETON);
     }
 
     public function language(): void

@@ -9,13 +9,16 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminEmailCommandInterface
 {
-    #[DbQuery('admin_email_add')]
+    /**
+     * @return array{id: int}
+     */
+    #[DbQuery('admin_email_add', 'row')]
     public function add(
         int $adminId,
         string $emailAddress,
         ?DateTimeImmutable $createdAt = null,
         ?DateTimeImmutable $updatedAt = null,
-    ): void;
+    ): array;
 
     #[DbQuery('admin_email_verified')]
     public function verified(int $id, DateTimeImmutable $verifiedAt, ?DateTimeImmutable $updatedAt = null): void;

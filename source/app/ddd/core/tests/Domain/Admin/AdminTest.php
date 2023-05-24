@@ -16,7 +16,7 @@ class AdminTest extends TestCase
             'password',
             'Example',
             true,
-            [new AdminEmail(0, 'test@example.com')],
+            [new AdminEmail('test@example.com')],
         ))->markEmailAsVerified('test@example.com');
 
         $this->assertInstanceOf(DateTimeImmutable::class, $admin->emails[0]->verifiedAt);
@@ -30,14 +30,14 @@ class AdminTest extends TestCase
             'Example',
             true,
             [],
-        ))->addEmail(new AdminEmail(0, 'test@example.com'));
+        ))->addEmail(new AdminEmail('test@example.com'));
 
         $this->assertCount(1, $admin->emails);
     }
 
     public function testRemoveEmail(): void
     {
-        $adminEmail = new AdminEmail(0, 'test@example.com', null, null, null, 1);
+        $adminEmail = new AdminEmail('test@example.com', null, null, null, 1, 1);
         $admin = (new Admin(
             'test',
             'password',

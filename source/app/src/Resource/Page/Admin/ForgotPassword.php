@@ -5,18 +5,22 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use AppCore\Domain\Admin\AdminRepositoryInterface;
-use AppCore\Domain\EncrypterInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Domain\ResetPassword\ResetPasswordSignature;
 use AppCore\Domain\SecureRandomInterface;
+use AppCore\Domain\WebSignature\WebSignature;
+use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use AppCore\Infrastructure\Query\VerificationCodeCommandInterface;
 use DateTimeImmutable;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
+use MyVendor\MyProject\Annotation\GoogleRecaptchaV2;
+use MyVendor\MyProject\Captcha\RecaptchaException;
 use MyVendor\MyProject\Input\Admin\ForgotPasswordInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
+use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
@@ -24,13 +28,16 @@ use Ray\WebFormModule\FormInterface;
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class ForgotPassword extends AdminPage
 {
+    /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
         #[Named('admin')] private readonly AddressInterface $adminAddress,
+        #[Named('admin_base_url')] private readonly string $adminBaseUrl,
         private readonly AdminRepositoryInterface $adminRepository,
-        private readonly EncrypterInterface $encrypter,
         #[Named('admin_forgot_password_form')] protected readonly FormInterface $form,
         private readonly SecureRandomInterface $secureRandom,
         #[Named('SMTP')] private readonly TransportInterface $transport,
+        private readonly VerificationCodeCommandInterface $verificationCodeCommand,
+        private readonly WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
         $this->body['form'] = $this->form;
     }
@@ -42,19 +49,16 @@ class ForgotPassword extends AdminPage
 
     /**
      * @FormValidation()
+     * @Transactional()
      * @SuppressWarnings(PHPMD.LongVariable)
      */
+    #[GoogleRecaptchaV2]
     public function onPost(ForgotPasswordInput $forgotPassword): static
     {
-        $resetPasswordSignature = new ResetPasswordSignature(
-            $this->secureRandom->randomBytes(5),
-            (new DateTimeImmutable())->modify('+10 minutes'),
-            $forgotPassword->emailAddress,
-        );
-        $encrypted = $this->encrypter->encrypt($resetPasswordSignature->serialize());
+        $expiresAt = (new DateTimeImmutable())->modify('+10 minutes');
         $code = $this->secureRandom->randomNumbers(12);
-        $admin = $this->adminRepository->findByEmailAddress($resetPasswordSignature->address);
 
+        $admin = $this->adminRepository->findByEmailAddress($forgotPassword->emailAddress);
         if ($admin !== null) {
             $this->transport->send(
                 (new Email())
@@ -63,23 +67,44 @@ class ForgotPassword extends AdminPage
                     ->setTemplate('admin_password_forgot')
                     ->setTemplateVars([
                         'displayName' => $admin->displayName,
-                        'expiresAt' => $resetPasswordSignature->expiresAt,
+                        'expiresAt' => $expiresAt,
                         'code' => $code,
                     ])
             );
         }
 
-        $this->session->set('admin:password:code', (string) $code);
+        $webSignature = new WebSignature(
+            $expiresAt,
+            $forgotPassword->emailAddress,
+        );
+        $encrypted = $this->webSignatureEncrypter->encrypt($webSignature);
+
+        $array = $this->verificationCodeCommand->add(
+            $forgotPassword->emailAddress,
+            $this->adminBaseUrl . (string) $this->router->generate('/admin/reset-password', ['signature' => $encrypted]),
+            (string) $code,
+            $expiresAt,
+        );
 
         $this->renderer = null;
         $this->code = StatusCode::SEE_OTHER;
-        $this->headers = [ResponseHeader::LOCATION => (string) $this->router->generate('/admin/reset-password', ['signature' => $encrypted])]; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
+        $this->headers = [ResponseHeader::LOCATION => (string) $this->router->generate('/admin/code-verify', ['uuid' => $array['uuid']])]; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
 
         return $this;
     }
 
     public function onPostValidationFailed(): static
     {
+        return $this;
+    }
+
+    /**
+     * @param array<RecaptchaException> $recaptchaExceptions
+     */
+    public function onPostGoogleRecaptchaV2Failed(array $recaptchaExceptions): static
+    {
+        $this->body['recaptchaError'] = ! empty($recaptchaExceptions);
+
         return $this;
     }
 }

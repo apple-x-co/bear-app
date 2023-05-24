@@ -20,18 +20,6 @@ class AdminPasswordResetForm extends ExtendedForm
         $this->setName(self::FORM_NAME);
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setField('code', 'text')
-             ->setAttribs([
-                 'autofocus' => '',
-                 'autocomplete' => '',
-                 'placeholder' => '',
-                 'required' => 'required',
-                 'tabindex' => 1,
-             ]);
-        $this->filter->validate('code')->is('int');
-        $this->filter->useFieldMessage('code', 'Code must be integer only.');
-
-        /** @psalm-suppress UndefinedMethod */
         $this->setField('password', 'password')
              ->setAttribs([
                  'autocomplete' => 'current-password',

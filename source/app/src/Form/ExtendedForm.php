@@ -16,6 +16,7 @@ use function array_merge_recursive;
 use function assert;
 use function is_array;
 
+/** @SuppressWarnings(PHPMD.NumberOfChildren) */
 abstract class ExtendedForm extends AbstractForm implements SubmitInterface
 {
     abstract protected function getFormName(): string;

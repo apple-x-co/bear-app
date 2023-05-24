@@ -90,21 +90,35 @@ class AdminRepository implements AdminRepositoryInterface
 
     public function store(Admin $admin): void
     {
-        if ($admin->id === null) {
-            $array = $this->adminCommand->add(
-                $admin->username,
-                $admin->password,
-                $admin->displayName,
-                $admin->active ? 1 : 0,
+        $admin->id === null ? $this->insert($admin) : $this->update($admin);
+    }
+
+    private function insert(Admin $admin): void
+    {
+        $array = $this->adminCommand->add(
+            $admin->username,
+            $admin->password,
+            $admin->displayName,
+            $admin->active ? 1 : 0,
+        );
+
+        foreach ($admin->emails as $email) {
+            $array = $this->adminEmailCommand->add(
+                $array['id'],
+                $email->emailAddress,
             );
 
-            foreach ($admin->emails as $email) {
-                $this->adminEmailCommand->add(
-                    $array['id'],
-                    $email->emailAddress,
-                );
+            if (! ($email->verifiedAt instanceof DateTimeImmutable)) {
+                continue;
             }
 
+            $this->adminEmailCommand->verified($array['id'], $email->verifiedAt);
+        }
+    }
+
+    private function update(Admin $admin): void
+    {
+        if ($admin->id === null) {
             return;
         }
 

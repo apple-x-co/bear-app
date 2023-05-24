@@ -30,17 +30,18 @@
             {{ endif }}
             <div class="mt-5">
                 <label class="block">
-                    <span class="block text-sm font-sans font-normal text-slate-700">Username</span>
+                    <span class="block text-sm font-sans font-normal text-slate-700 select-none">Username</span>
                     {{= AdminText(form: $this->form, input: 'username') }}
                     {{= AdminFormError(form: $this->form, input: 'username') }}
                 </label>
                 <label class="block mt-5">
-                    <span class="block text-sm font-sans font-normal text-slate-700">Password</span>
+                    <span class="block text-sm font-sans font-normal text-slate-700 select-none">Password</span>
                     {{= AdminText(form: $this->form, input: 'password') }}
                     {{= AdminFormError(form: $this->form, input: 'password') }}
                 </label>
-                <label class="block mt-5 relative">
-                    <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">Remember</span>
+                <p class="text-sm text-right mt-1"><a href="/admin/forgot-password">Forgot password?</a></p>
+                <label class="block mt-5">
+                    <span class="block top-2 left-3 text-sm font-normal text-slate-700 tracking-wide select-none">Remember</span>
                     {{= AdminCheckbox(form: $this->form, input: 'remember') }}
                     {{= AdminFormError(form: $this->form, input: 'remember') }}
                 </label>
@@ -53,5 +54,6 @@
         </form>
         <div class="absolute top-full right-0 w-full h-px rounded-full max-w-sm bg-gradient-to-r from-transparent from-10% via-purple-500 to-transparent drop-shadow-xl"></div>
     </div>
+    <p class="text-sm text-center mt-2"><a href="/admin/join">Create an account</a></p>
 </div>
 {{ endBlock () }}

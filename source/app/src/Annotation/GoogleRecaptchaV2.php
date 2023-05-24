@@ -10,7 +10,7 @@ use Attribute;
 class GoogleRecaptchaV2
 {
     public function __construct(
-        public readonly string $onFailure = 'onPostGRecaptchaV2Failed',
+        public readonly string $onFailure = 'onPostGoogleRecaptchaV2Failed',
     ) {
     }
 }

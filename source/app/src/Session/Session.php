@@ -23,7 +23,7 @@ class Session implements SessionInterface
         return $this->segment->get($key, $alt);
     }
 
-    public function remove(string $key): void
+    public function reset(string $key): void
     {
         $this->segment->set($key, null);
     }

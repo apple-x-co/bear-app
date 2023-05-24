@@ -11,7 +11,7 @@ class AdminEmailTest extends TestCase
 {
     public function testVerified(): void
     {
-        $adminEmail = (new AdminEmail(0, 'test@example.com'))->verified();
+        $adminEmail = (new AdminEmail('test@example.com'))->verified();
 
         $this->assertInstanceOf(DateTimeImmutable::class, $adminEmail->verifiedAt);
     }

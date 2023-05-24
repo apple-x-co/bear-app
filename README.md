@@ -29,14 +29,33 @@
 * [Multiple](http://localhost/admin/multiple-demo)
 * [Upload](http://localhost/admin/upload-demo)
 
-## Login
+## Demo
 
-[Demo](http://localhost/admin/login)
+http://localhost/admin/login
+
+```mermaid
+graph TD;
+  Login-->Index;
+  Index-->Settings/Index;
+  Settings/Index-->Settings/Emails;
+  Settings/Emails-->EmailVerify;
+  Settings/Index-->Settings/Password;
+  Login-->ForgotPassword;
+  ForgotPassword-->CodeVerify;
+  CodeVerify-->ResetPassword;
+  Login-->Join;
+  Join-->CodeVerify;
+  CodeVerify-->SignUp;
+  Index-->PasswordLock;
+  PasswordLock-->Markup;
+```
 
 ### Features
 
-* ID & password
+* ID & password login
 * Remember me
+* Reset password
+* Create account
 
 ### Security
 

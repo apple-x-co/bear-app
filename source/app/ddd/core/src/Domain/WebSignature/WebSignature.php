@@ -2,40 +2,38 @@
 
 declare(strict_types=1);
 
-namespace AppCore\Domain\ResetPassword;
+namespace AppCore\Domain\WebSignature;
 
 use DateTimeImmutable;
 
 use function serialize;
 use function unserialize;
 
-class ResetPasswordSignature
+class WebSignature implements WebSignatureInterface
 {
     public function __construct(
-        private readonly string $random,
         public readonly DateTimeImmutable $expiresAt,
         public readonly string $address,
     ) {
     }
 
-    public function serialize(): string
+    public function serialize(string $random): string
     {
         return serialize([
-            '_' => $this->random,
+            '_' => $random,
             'timestamp' => $this->expiresAt->getTimestamp(),
             'address' => $this->address,
         ]);
     }
 
-    public static function deserialize(string $data): self
+    public static function deserialize(string $string): self
     {
-        $array = unserialize($data, ['allowed_classes' => false, 'max_depth' => 1]);
+        $array = unserialize($string, ['allowed_classes' => false, 'max_depth' => 1]);
         if (! isset($array['_'], $array['timestamp'], $array['address'])) {
             throw new InvalidSignatureException();
         }
 
         return new self(
-            $array['_'],
             (new DateTimeImmutable())->setTimestamp($array['timestamp']),
             $array['address'],
         );

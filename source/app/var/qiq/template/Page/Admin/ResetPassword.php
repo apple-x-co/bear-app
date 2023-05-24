@@ -7,13 +7,8 @@
 
         <form method="post">
             <div class="mt-5">
-                <label class="block mt-5 relative">
-                    <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">Code</span>
-                    {{= AdminText(form: $this->form, input: 'code') }}
-                    {{= AdminFormError(form: $this->form, input: 'code') }}
-                </label>
-                <label class="block mt-5 relative">
-                    <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">New password</span>
+                <label class="block mt-5">
+                    <span class="block text-sm font-sans font-normal text-slate-700 select-none">New password</span>
                     {{= AdminText(form: $this->form, input: 'password') }}
                     {{= AdminFormError(form: $this->form, input: 'password') }}
                 </label>

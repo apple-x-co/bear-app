@@ -58,7 +58,7 @@ class Login extends AdminPage
     /**
      * @param array<RecaptchaException> $recaptchaExceptions
      */
-    public function onPostGRecaptchaV2Failed(array $recaptchaExceptions): static
+    public function onPostGoogleRecaptchaV2Failed(array $recaptchaExceptions): static
     {
         $this->body['recaptchaError'] = ! empty($recaptchaExceptions);
 

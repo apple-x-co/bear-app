@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppCore\Domain\VerifyEmail;
+namespace AppCore\Domain\WebSignature;
 
 use AppCore\Exception\RuntimeException;
 

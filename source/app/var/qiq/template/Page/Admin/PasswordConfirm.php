@@ -10,8 +10,8 @@
                 {{= render ('partials/Admin/AlertError', ['text' => 'Authentication error']) }}
             {{ endif }}
             <div class="mt-5">
-                <label class="block mt-5 relative">
-                    <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">Password</span>
+                <label class="block mt-5">
+                    <span class="block top-2 left-3 text-sm font-normal text-slate-700 tracking-wide select-none">Password</span>
                     {{= AdminText(form: $this->form, input: 'password') }}
                     {{= AdminFormError(form: $this->form, input: 'password') }}
                 </label>

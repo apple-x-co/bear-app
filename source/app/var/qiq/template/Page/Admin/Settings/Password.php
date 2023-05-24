@@ -10,18 +10,18 @@
             {{= render ('partials/Admin/AlertError', ['text' => 'Authentication error']) }}
             {{ endif }}
             <div class="mt-5">
-                <label class="block mt-5 relative">
-                    <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">Old password</span>
+                <label class="block mt-5">
+                    <span class="block top-2 left-3 text-sm font-normal text-slate-700 tracking-wide select-none">Old password</span>
                     {{= AdminText(form: $this->form, input: 'oldPassword') }}
                     {{= AdminFormError(form: $this->form, input: 'oldPassword') }}
                 </label>
-                <label class="block mt-5 relative">
-                    <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">New password</span>
+                <label class="block mt-5">
+                    <span class="block top-2 left-3 text-sm font-normal text-slate-700 tracking-wide select-none">New password</span>
                     {{= AdminText(form: $this->form, input: 'password') }}
                     {{= AdminFormError(form: $this->form, input: 'password') }}
                 </label>
-                <label class="block mt-5 relative">
-                    <span class="block top-2 left-3 text-sm font-thin text-slate-500 tracking-wide select-none">Confirm new password</span>
+                <label class="block mt-5">
+                    <span class="block top-2 left-3 text-sm font-normal text-slate-700 tracking-wide select-none">Confirm new password</span>
                     {{= AdminText(form: $this->form, input: 'passwordConfirmation') }}
                     {{= AdminFormError(form: $this->form, input: 'passwordConfirmation') }}
                 </label>
