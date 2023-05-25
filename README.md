@@ -66,4 +66,5 @@ graph TD;
 * Email authentication
 * Email notification when add email address
 * Password reset
+* Throttling
 * _Schedule: Ban common passwords (priority:Low)_
