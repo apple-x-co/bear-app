@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
-use AppCore\Domain\Admin\AdminRepositoryInterface;
+use AppCore\Domain\Hasher\PasswordHasherInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Domain\PasswordHasherInterface;
 use AppCore\Domain\WebSignature\ExpiredSignatureException;
 use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
 use AppCore\Infrastructure\Query\AdminPasswordUpdateInterface;
+use AppCore\Infrastructure\Query\AdminQueryInterface;
 use DateTimeImmutable;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -23,6 +23,7 @@ use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
+use Throwable;
 
 use function assert;
 
@@ -32,7 +33,7 @@ class ResetPassword extends AdminPage
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
         #[Named('admin')] private readonly AddressInterface $adminAddress,
-        private readonly AdminRepositoryInterface $adminRepository,
+        private readonly AdminQueryInterface $adminQuery,
         private readonly AdminPasswordUpdateInterface $adminPasswordUpdate,
         #[Named('admin_password_reset_form')] protected readonly FormInterface $form,
         private readonly PasswordHasherInterface $passwordHasher,
@@ -45,7 +46,19 @@ class ResetPassword extends AdminPage
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function onGet(string $signature): static
     {
-        $webSignature = $this->webSignatureEncrypter->decrypt($signature);
+        try {
+            $webSignature = $this->webSignatureEncrypter->decrypt($signature);
+        } catch (Throwable) {
+            $this->session->set('error:message', 'message:admin:reset_password:decrypt_error');
+            $this->session->set('error:returnName', 'Forgot password');
+            $this->session->set('error:returnUrl', '/admin/forgot-password');
+            $this->renderer = null;
+            $this->code = StatusCode::SEE_OTHER;
+            $this->headers = [ResponseHeader::LOCATION => '/admin/error'];
+
+            return $this;
+        }
+
         $now = new DateTimeImmutable();
         if ($webSignature->expiresAt < $now) {
             throw new ExpiredSignatureException();
@@ -70,8 +83,8 @@ class ResetPassword extends AdminPage
             throw new ExpiredSignatureException();
         }
 
-        $admin = $this->adminRepository->findByEmailAddress($webSignature->address);
-        if ($admin === null || $admin->id === null) {
+        $adminEntity = $this->adminQuery->itemByEmailAddress($webSignature->address);
+        if ($adminEntity === null) {
             $this->renderer = null;
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = [ResponseHeader::LOCATION => '/admin/login']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
@@ -79,13 +92,13 @@ class ResetPassword extends AdminPage
             return $this;
         }
 
-        ($this->adminPasswordUpdate)($admin->id, $this->passwordHasher->hash($resetPassword->password));
+        ($this->adminPasswordUpdate)($adminEntity->id, $this->passwordHasher->hash($resetPassword->password));
         $this->transport->send(
             (new Email())
                 ->setFrom($this->adminAddress)
                 ->setTo([new Address($webSignature->address)])
                 ->setTemplate('admin_password_reset')
-                ->setTemplateVars(['displayName' => $admin->displayName])
+                ->setTemplateVars(['displayName' => $adminEntity->displayName])
         );
 
         $this->renderer = null;

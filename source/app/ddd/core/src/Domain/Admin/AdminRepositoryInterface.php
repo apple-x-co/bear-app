@@ -8,7 +8,5 @@ interface AdminRepositoryInterface
 {
     public function findById(int $id): Admin;
 
-    public function findByEmailAddress(string $emailAddress): ?Admin;
-
     public function store(Admin $admin): void;
 }

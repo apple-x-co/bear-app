@@ -14,6 +14,7 @@
                 </label>
                 <label class="block mt-5 text-center">
                     {{= AdminHidden(form: $this->form, input: 'signature') }}
+                    {{= AdminFormError(form: $this->form, input: 'signature') }}
                     {{= AdminSubmit(form: $this->form, input: 'continue', attribs: ['value' => 'CONTINUE', 'data-submit-once' => '1']) }}
                     {{= CsrfTokenField(form: $this->form) }}
                 </label>

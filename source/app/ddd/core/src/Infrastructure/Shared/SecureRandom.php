@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AppCore\Domain;
+namespace AppCore\Infrastructure\Shared;
 
+use AppCore\Domain\SecureRandom\SecureRandomInterface;
 use Ray\Di\Di\Named;
 
 use function hash;

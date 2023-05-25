@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Domain;
 
+use AppCore\Infrastructure\Shared\Encrypter;
 use PHPUnit\Framework\TestCase;
 
 class EncrypterTest extends TestCase

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Shared;
 
-use AppCore\Domain\EncrypterInterface;
-use AppCore\Domain\SecureRandomInterface;
+use AppCore\Domain\Encrypter\EncrypterInterface;
+use AppCore\Domain\SecureRandom\SecureRandomInterface;
 use AppCore\Domain\WebSignature\WebSignature;
 use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
 use AppCore\Domain\WebSignature\WebSignatureInterface;

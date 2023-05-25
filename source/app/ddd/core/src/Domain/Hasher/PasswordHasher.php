@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppCore\Domain;
+namespace AppCore\Domain\Hasher;
 
 use function password_hash;
 

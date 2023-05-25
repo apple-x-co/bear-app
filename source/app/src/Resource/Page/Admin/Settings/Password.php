@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page\Admin\Settings;
 
 use AppCore\Domain\Admin\AdminRepositoryInterface;
+use AppCore\Domain\Hasher\PasswordHasherInterface;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Domain\PasswordHasherInterface;
 use AppCore\Infrastructure\Query\AdminPasswordUpdateInterface;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;

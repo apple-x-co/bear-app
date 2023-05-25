@@ -7,11 +7,11 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 use AppCore\Domain\Admin\Admin;
 use AppCore\Domain\Admin\AdminEmail;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
+use AppCore\Domain\Hasher\PasswordHasherInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Domain\PasswordHasherInterface;
 use AppCore\Domain\WebSignature\ExpiredSignatureException;
 use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
 use DateTimeImmutable;
@@ -24,6 +24,7 @@ use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
+use Throwable;
 
 use function assert;
 
@@ -44,7 +45,19 @@ class SignUp extends AdminPage
 
     public function onGet(string $signature): static
     {
-        $webSignature = $this->webSignatureEncrypter->decrypt($signature);
+        try {
+            $webSignature = $this->webSignatureEncrypter->decrypt($signature);
+        } catch (Throwable) {
+            $this->session->set('error:message', 'message:admin:sign_up:decrypt_error');
+            $this->session->set('error:returnName', 'Join');
+            $this->session->set('error:returnUrl', '/admin/join');
+            $this->renderer = null;
+            $this->code = StatusCode::SEE_OTHER;
+            $this->headers = [ResponseHeader::LOCATION => '/admin/error'];
+
+            return $this;
+        }
+
         $now = new DateTimeImmutable();
         if ($webSignature->expiresAt < $now) {
             throw new ExpiredSignatureException();

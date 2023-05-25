@@ -8,6 +8,7 @@ use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
 use MyVendor\MyProject\Form\UploadFilesInterface;
 use MyVendor\MyProject\Session\SessionInterface;
+use MyVendor\MyProject\Throttle\ThrottleInterface;
 use Ray\Di\AbstractModule;
 use Ray\WebFormModule\FormInterface;
 
@@ -23,6 +24,8 @@ class DefaultModule extends AbstractModule
 
         $this->bind()->annotatedWith('google_recaptcha_site_key')->toInstance('');
         $this->bind()->annotatedWith('google_recaptcha_secret_key')->toInstance('');
+
+        $this->bind(ThrottleInterface::class)->toNull();
 
         $this->admin();
         $this->user();

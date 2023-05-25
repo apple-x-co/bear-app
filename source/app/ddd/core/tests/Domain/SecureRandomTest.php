@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Domain;
 
+use AppCore\Infrastructure\Shared\SecureRandom;
 use PHPUnit\Framework\TestCase;
 
 use function random_bytes;

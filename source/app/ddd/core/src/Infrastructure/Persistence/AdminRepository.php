@@ -40,18 +40,6 @@ class AdminRepository implements AdminRepositoryInterface
         return $this->entityToModel($adminEntity, $adminEmailEntities);
     }
 
-    public function findByEmailAddress(string $emailAddress): ?Admin
-    {
-        $adminEntity = $this->adminQuery->itemByEmailAddress($emailAddress);
-        if ($adminEntity === null) {
-            return null;
-        }
-
-        $adminEmailEntities = $this->adminEmailQuery->list($adminEntity->id);
-
-        return $this->entityToModel($adminEntity, $adminEmailEntities);
-    }
-
     /**
      * @param array<AdminEmailEntity> $adminEmailEntities
      *

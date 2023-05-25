@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace AppCore\Domain;
+namespace AppCore\Infrastructure\Shared;
 
+use AppCore\Domain\Encrypter\EncrypterException;
+use AppCore\Domain\Encrypter\EncrypterInterface;
 use Ray\Di\Di\Named;
 
 use function base64_decode;

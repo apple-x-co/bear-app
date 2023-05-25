@@ -6,9 +6,9 @@ namespace MyVendor\MyProject\Provider;
 
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
-use AppCore\Domain\EncrypterInterface;
-use AppCore\Domain\PasswordHasherInterface;
-use AppCore\Domain\SecureRandomInterface;
+use AppCore\Domain\Encrypter\EncrypterInterface;
+use AppCore\Domain\Hasher\PasswordHasherInterface;
+use AppCore\Domain\SecureRandom\SecureRandomInterface;
 use AppCore\Infrastructure\Query\AdminTokenRemoveByAdminIdInterface;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Session\Segment;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppCore\Domain;
+namespace AppCore\Domain\Encrypter;
 
 interface EncrypterInterface
 {

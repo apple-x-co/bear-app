@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Form;
 
+use AppCore\Infrastructure\Query\AdminQueryInterface;
+use Ray\Di\Di\Inject;
 use Ray\WebFormModule\SetAntiCsrfTrait;
+use stdClass;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
@@ -14,6 +17,14 @@ class AdminEmailCreateForm extends ExtendedForm
     use SetAntiCsrfTrait;
 
     private const FORM_NAME = 'createEmail';
+
+    private AdminQueryInterface $adminQuery;
+
+    #[Inject]
+    public function setAdminQuery(AdminQueryInterface $adminQuery): void
+    {
+        $this->adminQuery = $adminQuery;
+    }
 
     public function init(): void
     {
@@ -28,7 +39,13 @@ class AdminEmailCreateForm extends ExtendedForm
                  'required' => 'required',
                  'tabindex' => 1,
              ]);
-        $this->filter->validate('emailAddress')->is('email');
+        /** @psalm-suppress TooManyArguments */
+        $this->filter
+            ->validate('emailAddress')
+            ->is('email')
+            ->is('callback', function (stdClass $subject, string $field) {
+                return $this->adminQuery->itemByEmailAddress($subject->$field) === null;
+            });
         $this->filter->useFieldMessage('emailAddress', 'Email address must be email only.');
 
         /** @psalm-suppress UndefinedMethod */

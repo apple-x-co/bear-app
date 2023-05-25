@@ -31,10 +31,12 @@ class AdminPasswordResetForm extends ExtendedForm
         $this->filter->useFieldMessage('password', 'Name must be alphabetic only.');
 
         /** @psalm-suppress UndefinedMethod */
+        $this->setField('signature', 'hidden');
+        $this->filter->validate('signature')->isNotBlank()->is('string');
+
+        /** @psalm-suppress UndefinedMethod */
         $this->setField('continue', 'submit')
              ->setAttribs(['tabindex' => 3]);
-
-        $this->setField('signature', 'hidden');
     }
 
     public function getFormName(): string

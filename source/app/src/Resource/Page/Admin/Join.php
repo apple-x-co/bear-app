@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
-use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Domain\SecureRandomInterface;
+use AppCore\Domain\SecureRandom\SecureRandomInterface;
 use AppCore\Domain\WebSignature\WebSignature;
 use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use AppCore\Infrastructure\Query\AdminQueryInterface;
 use AppCore\Infrastructure\Query\VerificationCodeCommandInterface;
 use DateTimeImmutable;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\GoogleRecaptchaV2;
+use MyVendor\MyProject\Annotation\RateLimiter;
 use MyVendor\MyProject\Captcha\RecaptchaException;
 use MyVendor\MyProject\Input\Admin\JoinInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
@@ -31,7 +32,7 @@ class Join extends AdminPage
     public function __construct(
         #[Named('admin')] private readonly AddressInterface $adminAddress,
         #[Named('admin_base_url')] private readonly string $adminBaseUrl,
-        private readonly AdminRepositoryInterface $adminRepository,
+        private readonly AdminQueryInterface $adminQuery,
         #[Named('admin_join_form')] protected readonly FormInterface $form,
         private readonly SecureRandomInterface $secureRandom,
         #[Named('SMTP')] private readonly TransportInterface $transport,
@@ -50,13 +51,14 @@ class Join extends AdminPage
      * @FormValidation()
      */
     #[GoogleRecaptchaV2]
+    #[RateLimiter]
     public function onPost(JoinInput $join): static
     {
         $expiresAt = (new DateTimeImmutable())->modify('+10 minutes');
         $code = $this->secureRandom->randomNumbers(12);
 
-        $admin = $this->adminRepository->findByEmailAddress($join->emailAddress);
-        if ($admin === null) {
+        $adminEntity = $this->adminQuery->itemByEmailAddress($join->emailAddress);
+        if ($adminEntity === null) {
             $this->transport->send(
                 (new Email())
                     ->setFrom($this->adminAddress)

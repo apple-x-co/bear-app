@@ -28,8 +28,6 @@ use MyVendor\MyProject\Provider\UserAuthenticatorProvider;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use MyVendor\MyProject\Resource\Page\UserPage;
 use MyVendor\MyProject\Session\SessionInterface;
-use MyVendor\MyProject\Throttle\AdminLoginThrottle;
-use MyVendor\MyProject\Throttle\LoginThrottleInterface;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
@@ -60,9 +58,6 @@ class SessionAuthModule extends AbstractModule
     {
         $this->bind()->annotatedWith('admin_auth_max_attempts')->toInstance(10);
         $this->bind()->annotatedWith('admin_auth_attempt_interval')->toInstance('30 minutes');
-        $this->bind(LoginThrottleInterface::class)
-             ->annotatedWith('admin')
-             ->to(AdminLoginThrottle::class);
 
         $this->bind(AdminAuthenticatorInterface::class)
              ->toProvider(AdminAuthenticatorProvider::class)

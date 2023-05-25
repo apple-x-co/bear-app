@@ -37,6 +37,7 @@ class HtmlModule extends AbstractAppModule
         $this->install(new AuraInputModule());
         $this->install(new SessionAuthModule());
         $this->install(new CaptchaModule());
+        $this->install(new ThrottlingModule());
 
         $this->bind(UploadFilesInterface::class)->toProvider(UploadedFilesProvider::class);
 

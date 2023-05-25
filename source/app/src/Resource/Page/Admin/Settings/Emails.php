@@ -70,6 +70,7 @@ class Emails extends AdminPage
     {
         $adminId = (int) $this->adminAuthenticator->getUserId();
         $admin = $this->adminRepository->findById($adminId);
+
         $admin = $admin->addEmail(new AdminEmail($createEmail->emailAddress));
         $this->adminRepository->store($admin);
 

@@ -28,7 +28,7 @@ use MyVendor\MyProject\Auth\UsernameNotFound;
 use MyVendor\MyProject\Input\Admin\LoginUserInput;
 use MyVendor\MyProject\Input\Admin\UserPasswordInput;
 use MyVendor\MyProject\Session\SessionInterface;
-use MyVendor\MyProject\Throttle\LoginThrottleInterface;
+use MyVendor\MyProject\Throttle\ThrottleInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\Di\Di\Named;
@@ -37,6 +37,7 @@ use Throwable;
 use function assert;
 use function call_user_func;
 use function is_string;
+use function sha1;
 
 /**
  * Admin認証
@@ -46,10 +47,12 @@ use function is_string;
 class AdminAuthenticate implements MethodInterceptor
 {
     public function __construct(
+        #[Named('admin_auth_attempt_interval')] private readonly string $attemptInterval,
         private readonly AdminAuthenticatorInterface $authenticator,
         #[Named('admin')] private readonly LoggerInterface $logger,
-        #[Named('admin')] private readonly LoginThrottleInterface $loginThrottle,
+        #[Named('admin_auth_max_attempts')] private readonly int $maxAttempts,
         private readonly SessionInterface $session,
+        private readonly ThrottleInterface $throttle,
     ) {
     }
 
@@ -86,7 +89,9 @@ class AdminAuthenticate implements MethodInterceptor
         assert($input instanceof LoginUserInput);
 
         if ($input->isValid()) {
-            if ($this->loginThrottle->isExceeded($input->username)) {
+            $throttleKey = sha1($input->username);
+
+            if ($this->throttle->isExceeded($throttleKey)) {
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],
                     new MaxAttemptsExceeded(),
@@ -114,7 +119,7 @@ class AdminAuthenticate implements MethodInterceptor
                 }
 
                 $remoteIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
-                $this->loginThrottle->countUp($input->username, $remoteIp);
+                $this->throttle->countUp($throttleKey, $remoteIp, $this->attemptInterval, $this->maxAttempts);
 
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],
@@ -128,7 +133,7 @@ class AdminAuthenticate implements MethodInterceptor
 
             $this->logger->log('[logged] ' . $input->username);
 
-            $this->loginThrottle->clear($input->username);
+            $this->throttle->clear($throttleKey);
 
             $continue = $this->session->get('admin:continue', '');
             $expire = (new DateTimeImmutable())->modify('+5 min')->getTimestamp();
