@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Form;
 
 use AppCore\Infrastructure\Query\AdminQueryInterface;
+use AppCore\Infrastructure\Query\BadPasswordQueryInterface;
 use Ray\Di\Di\Inject;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 use stdClass;
 
-/**
- * @psalm-suppress PropertyNotSetInConstructor
- */
+/** @psalm-suppress PropertyNotSetInConstructor */
 class AdminSignUpForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
@@ -19,11 +18,18 @@ class AdminSignUpForm extends ExtendedForm
     private const FORM_NAME = 'signUp';
 
     private AdminQueryInterface $adminQuery;
+    private BadPasswordQueryInterface $badPasswordQuery;
 
     #[Inject]
     public function setAdminQuery(AdminQueryInterface $adminQuery): void
     {
         $this->adminQuery = $adminQuery;
+    }
+
+    #[Inject]
+    public function setBadPasswordQuery(BadPasswordQueryInterface $badPasswordQuery): void
+    {
+        $this->badPasswordQuery = $badPasswordQuery;
     }
 
     public function init(): void
@@ -67,9 +73,21 @@ class AdminSignUpForm extends ExtendedForm
                  'placeholder' => '',
                  'required' => 'required',
                  'tabindex' => 3,
+                 'minlength' => 8,
+                 'maxlength' => 20,
+                 'pattern' => '^[\x20-\x7E]+$', // ASCII 文字列
+                 'title' => '新しいパスワードは8文字以上20文字以下の英数字記号で入力してください',
              ]);
-        $this->filter->validate('password')->is('alnum');
-        $this->filter->useFieldMessage('password', 'Name must be alphabetic only.');
+        /** @psalm-suppress TooManyArguments */
+        $this->filter
+            ->validate('password')
+            ->is('alnum')
+            ->is('strlenBetween', 8, 20)
+            ->isNot('equalToField', 'username')
+            ->is('callback', function (stdClass $subject, string $field) {
+                return $this->badPasswordQuery->item($subject->$field) === null;
+            });
+        $this->filter->useFieldMessage('password', '新しいパスワードは8文字以上20文字以下の英数字記号で入力してください');
 
         /** @psalm-suppress UndefinedMethod */
         $this->setField('signature', 'hidden');

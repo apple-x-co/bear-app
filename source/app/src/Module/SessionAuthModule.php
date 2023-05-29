@@ -66,7 +66,7 @@ class SessionAuthModule extends AbstractModule
         $this->bindInterceptor(
             $this->matcher->subclassesOf(AdminPage::class),
             $this->matcher->logicalAnd(
-                $this->matcher->startsWith('onPost'),
+                $this->matcher->startsWith('on'),
                 $this->matcher->logicalOr(
                     $this->matcher->logicalOr(
                         $this->matcher->annotatedWith(AdminLogin::class),

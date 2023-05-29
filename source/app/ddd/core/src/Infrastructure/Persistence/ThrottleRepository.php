@@ -28,9 +28,7 @@ class ThrottleRepository implements ThrottleRepositoryInterface
         return $this->entityToModel($entity);
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     */
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     private function entityToModel(ThrottleEntity $entity): Throttle
     {
         return Throttle::reconstruct(

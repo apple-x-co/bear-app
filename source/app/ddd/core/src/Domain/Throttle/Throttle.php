@@ -58,9 +58,7 @@ class Throttle
         return $this->expireAt < $now;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     */
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function countUp(string $remoteIp): self
     {
         return new self(

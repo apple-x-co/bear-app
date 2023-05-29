@@ -60,9 +60,7 @@ readonly class TestRepository implements TestRepositoryInterface
         );
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     */
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     private function entityToModel(TestEntity $entity): Test
     {
         return Test::reconstruct(

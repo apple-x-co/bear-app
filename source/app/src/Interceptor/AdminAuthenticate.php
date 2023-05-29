@@ -152,6 +152,8 @@ class AdminAuthenticate implements MethodInterceptor
                     $this->authenticator->getAuthRedirect() . '?logged' :
                     $continue,
             ];
+            $ro->view = '';
+            $ro->body = [];
 
             return $ro;
         }
@@ -162,6 +164,8 @@ class AdminAuthenticate implements MethodInterceptor
         $ro->setRenderer(new NullRenderer());
         $ro->code = StatusCode::FOUND;
         $ro->headers = ['Location' => $this->authenticator->getUnauthRedirect() . '?parameter_error'];
+        $ro->view = '';
+        $ro->body = [];
 
         return $ro;
     }
@@ -173,14 +177,16 @@ class AdminAuthenticate implements MethodInterceptor
         $this->session->set('admin:protect:locking', AdminPasswordLocking::Locked->name);
         $this->session->set('admin:protect:expire', '0');
 
-        $this->authenticator->logout();
-
         $ro = $invocation->proceed();
         assert($ro instanceof ResourceObject);
+
+        $this->authenticator->logout();
 
         $ro->setRenderer(new NullRenderer());
         $ro->code = StatusCode::FOUND;
         $ro->headers = ['Location' => $this->authenticator->getUnauthRedirect() . '?logged_out'];
+        $ro->view = '';
+        $ro->body = [];
 
         return $ro;
     }
@@ -226,6 +232,8 @@ class AdminAuthenticate implements MethodInterceptor
                     $this->authenticator->getAuthRedirect() :
                     $continue,
             ];
+            $ro->view = '';
+            $ro->body = [];
 
             return $ro;
         }

@@ -29,6 +29,8 @@ use AppCore\Infrastructure\Shared\SecureRandom;
 use AppCore\Infrastructure\Shared\SmtpMail;
 use AppCore\Infrastructure\Shared\UserLogger;
 use AppCore\Infrastructure\Shared\WebSignatureEncrypter;
+use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\ClientInterface as HttpClientInterface;
 use MyVendor\MyProject\Lang\LanguageInterface;
 use MyVendor\MyProject\Provider\LanguageProvider;
 use MyVendor\MyProject\Provider\PhpMailerProvider;
@@ -63,6 +65,7 @@ class BaseModule extends AbstractModule
         $this->email();
         $this->repository();
 
+        $this->http();
         // TODO: AWS SKD の設定などはここで行う。ステージング環境や本番環境で必要な設定は ProdModule で行う。
     }
 
@@ -141,5 +144,10 @@ class BaseModule extends AbstractModule
         $this->bind(AdminTokenRepositoryInterface::class)->to(AdminTokenRepository::class)->in(Scope::SINGLETON);
         $this->bind(TestRepositoryInterface::class)->to(TestRepository::class)->in(Scope::SINGLETON);
         $this->bind(ThrottleRepositoryInterface::class)->to(ThrottleRepository::class)->in(Scope::SINGLETON);
+    }
+
+    private function http(): void
+    {
+        $this->bind(HttpClientInterface::class)->to(HttpClient::class);
     }
 }

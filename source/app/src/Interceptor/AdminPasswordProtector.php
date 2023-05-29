@@ -60,7 +60,11 @@ class AdminPasswordProtector implements MethodInterceptor
         $uri = $ro->uri;
         $path = $this->router->generate($uri->path, $uri->query);
         if ($path === false) {
-            $path = $uri->path . (empty($uri->query) ? '' : '?' . http_build_query($uri->query));
+            $path = $uri->path;
+        }
+
+        if ($uri->method === 'get') {
+            $path = empty($uri->query) ? '' : '?' . http_build_query($uri->query);
         }
 
         $this->session->set('admin:protect:continue', $path);
@@ -68,6 +72,8 @@ class AdminPasswordProtector implements MethodInterceptor
         $ro->setRenderer(new NullRenderer());
         $ro->code = StatusCode::FOUND;
         $ro->headers = ['Location' => $this->authenticator->getPasswordRedirect()];
+        $ro->view = '';
+        $ro->body = [];
 
         return $ro;
     }

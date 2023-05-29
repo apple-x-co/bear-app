@@ -129,6 +129,8 @@ class UserAuthenticate implements MethodInterceptor
                     $this->authenticator->getAuthRedirect() . '?logged' :
                     $continue,
             ];
+            $ro->view = '';
+            $ro->body = [];
 
             return $ro;
         }
@@ -139,6 +141,8 @@ class UserAuthenticate implements MethodInterceptor
         $ro->setRenderer(new NullRenderer());
         $ro->code = StatusCode::FOUND;
         $ro->headers = ['Location' => $this->authenticator->getUnauthRedirect() . '?parameter_error'];
+        $ro->view = '';
+        $ro->body = [];
 
         return $ro;
     }
@@ -153,6 +157,8 @@ class UserAuthenticate implements MethodInterceptor
         $ro->setRenderer(new NullRenderer());
         $ro->code = StatusCode::FOUND;
         $ro->headers = ['Location' => $this->authenticator->getUnauthRedirect() . '?logged_out'];
+        $ro->view = '';
+        $ro->body = [];
 
         return $ro;
     }

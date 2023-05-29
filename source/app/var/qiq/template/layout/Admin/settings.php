@@ -48,6 +48,11 @@
                                 Password
                             </a>
                         </li>
+                        <li>
+                            <a href="/admin/settings/delete" class="text-sm tracking-wide pl-4 -ml-px border-l {{ if ($view == 'Page/Admin/Settings/Delete'): }}font-bold text-lime-500 border-l border-current{{ else: }}border-transparent hover:border-slate-400{{ endif }}">
+                                Delete
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

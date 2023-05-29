@@ -61,13 +61,13 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
             new PDO($this->pdoDsn, $this->pdoUsername, $this->pdoPassword),
             new PasswordVerifier($this->passwordHasher->hashType()),
             [
-                'username',
-                'password',
-                'id', // as UserData[0]
-                'display_name', // as UserData[1]
+                'admins.username',
+                'admins.password',
+                'admins.id', // as UserData[0]
+                'admins.display_name', // as UserData[1]
             ],
-            'admins',
-            'admins.active = 1',
+            'admins LEFT JOIN admin_deletes ON admins.id = admin_deletes.admin_id',
+            'admins.active = 1 AND admin_deletes.admin_id IS NULL',
         );
     }
 

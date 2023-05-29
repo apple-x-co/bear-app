@@ -4,16 +4,25 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Form;
 
+use AppCore\Infrastructure\Query\BadPasswordQueryInterface;
+use Ray\Di\Di\Inject;
 use Ray\WebFormModule\SetAntiCsrfTrait;
+use stdClass;
 
-/**
- * @psalm-suppress PropertyNotSetInConstructor
- */
+/** @psalm-suppress PropertyNotSetInConstructor */
 class AdminPasswordUpdateForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
     private const FORM_NAME = 'updatePassword';
+
+    private BadPasswordQueryInterface $badPasswordQuery;
+
+    #[Inject]
+    public function setBadPasswordQuery(BadPasswordQueryInterface $badPasswordQuery): void
+    {
+        $this->badPasswordQuery = $badPasswordQuery;
+    }
 
     public function init(): void
     {
@@ -55,7 +64,10 @@ class AdminPasswordUpdateForm extends ExtendedForm
             ->isNotBlank()
             ->is('alnum')
             ->is('strlenBetween', 8, 20)
-            ->isNot('equalToField', 'oldPassword');
+            ->isNot('equalToField', 'oldPassword')
+            ->is('callback', function (stdClass $subject, string $field) {
+                return $this->badPasswordQuery->item($subject->$field) === null;
+            });
         $this->filter->useFieldMessage('password', '新しいパスワードは8文字以上20文字以下の英数字記号で入力してください');
 
         /** @psalm-suppress UndefinedMethod */

@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Module;
 
 use BEAR\Package\AbstractAppModule;
+use BEAR\QiqModule\QiqErrorModule;
 use BEAR\QiqModule\QiqModule;
+use BEAR\Resource\RenderInterface;
 use MyVendor\MyProject\Form\AdminCodeVerifyForm;
 use MyVendor\MyProject\Form\AdminContactDemoForm;
+use MyVendor\MyProject\Form\AdminDeleteForm;
 use MyVendor\MyProject\Form\AdminEmailCreateForm;
 use MyVendor\MyProject\Form\AdminFieldsetDemoForm;
 use MyVendor\MyProject\Form\AdminForgotPasswordForm;
@@ -23,6 +26,7 @@ use MyVendor\MyProject\Form\AdminUploadDemoForm;
 use MyVendor\MyProject\Form\UploadFilesInterface;
 use MyVendor\MyProject\Form\UserLoginForm;
 use MyVendor\MyProject\Provider\UploadedFilesProvider;
+use MyVendor\MyProject\Renderer\QiqErrorPageRenderer;
 use Ray\AuraSessionModule\AuraSessionModule;
 use Ray\WebFormModule\AuraInputModule;
 use Ray\WebFormModule\FormInterface;
@@ -34,6 +38,8 @@ class HtmlModule extends AbstractAppModule
     {
         $this->install(new AuraSessionModule());
         $this->install(new QiqModule($this->appMeta->appDir . '/var/qiq/template'));
+        $this->bind(RenderInterface::class)->annotatedWith('error_page')->to(QiqErrorPageRenderer::class);
+        $this->install(new QiqErrorModule('Debug'));
         $this->install(new AuraInputModule());
         $this->install(new SessionAuthModule());
         $this->install(new CaptchaModule());
@@ -48,6 +54,7 @@ class HtmlModule extends AbstractAppModule
     private function admin(): void
     {
         $this->bind(FormInterface::class)->annotatedWith('admin_code_verify_form')->to(AdminCodeVerifyForm::class);
+        $this->bind(FormInterface::class)->annotatedWith('admin_delete_form')->to(AdminDeleteForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_email_create_form')->to(AdminEmailCreateForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_forgot_password_form')->to(AdminForgotPasswordForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_join_form')->to(AdminJoinForm::class);

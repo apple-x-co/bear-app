@@ -46,6 +46,8 @@ class AdminAuthGuardian implements MethodInterceptor
                 $this->authenticator->getUnauthRedirect() . '?expired' :
                 $this->authenticator->getUnauthRedirect() . '?unauthenticated',
         ];
+        $ro->view = '';
+        $ro->body = [];
 
         return $ro;
     }
