@@ -6,13 +6,13 @@ namespace AppCore\Infrastructure\Shared;
 
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\Email;
-use AppCore\Domain\Mail\FileRender;
-use AppCore\Domain\Mail\InvalidArgumentException;
+use AppCore\Domain\Mail\TemplateNotFoundException;
+use AppCore\Domain\Mail\TemplateRenderer;
 use AppCore\Domain\Mail\TransportInterface;
 use PHPMailer\PHPMailer\PHPMailer;
 use Ray\Di\Di\Named;
 
-use function is_string;
+use function is_readable;
 
 use const DIRECTORY_SEPARATOR;
 
@@ -28,11 +28,6 @@ class SmtpMail implements TransportInterface
 
     public function send(Email $email): void
     {
-        $templateId = $email->getTemplateId();
-        if (! is_string($templateId)) {
-            throw new InvalidArgumentException('templateId');
-        }
-
         $mailer = $this->mailer;
         $mailer->clearAllRecipients();
 
@@ -50,32 +45,60 @@ class SmtpMail implements TransportInterface
         }
 
         foreach ($email->getCc() as $cc) {
-            $mailer->addReplyTo($cc->getEmail(), $cc->getName() ?? '');
+            $mailer->addCC($cc->getEmail(), $cc->getName() ?? '');
         }
 
         foreach ($email->getBcc() as $bcc) {
-            $mailer->addReplyTo($bcc->getEmail(), $bcc->getName() ?? '');
+            $mailer->addBCC($bcc->getEmail(), $bcc->getName() ?? '');
         }
 
-        $subject = $this->subjectDir . DIRECTORY_SEPARATOR . $templateId . '.txt';
-        $mailer->Subject = (new FileRender())($subject, $email->getTemplateVars()); // phpcs:ignore
-
         $format = $email->getEmailFormat();
+        $subject = $email->getSubject();
+        $text = $email->getText();
+        $html = $email->getHtml();
+
+        $templateId = $email->getTemplateId();
+        if ($templateId !== null) {
+            $subject = $this->renderTemplate(
+                $this->subjectDir . DIRECTORY_SEPARATOR . $templateId . '.txt',
+                $email->getTemplateVars(),
+            );
+            $text = $this->renderTemplate(
+                $this->textDir . DIRECTORY_SEPARATOR . $templateId . '.txt',
+                $email->getTemplateVars(),
+            );
+            $html = $format->isHtml() ? $this->renderTemplate(
+                $this->htmlDir . DIRECTORY_SEPARATOR . $templateId . '.html',
+                $email->getTemplateVars(),
+            ) : null;
+        }
+
         if ($format->isHtml()) {
             $mailer->isHTML();
-            $text = $this->textDir . DIRECTORY_SEPARATOR . $templateId . '.txt';
-            $html = $this->htmlDir . DIRECTORY_SEPARATOR . $templateId . '.html';
-            $mailer->Body = (new FileRender())($html, $email->getTemplateVars()); // phpcs:ignore
-            $mailer->AltBody = (new FileRender())($text, $email->getTemplateVars()); // phpcs:ignore
+            $mailer->Subject = $subject ?? ''; // phpcs:ignore
+            $mailer->Body = $html ?? ''; // phpcs:ignore
+            $mailer->AltBody = $text ?? ''; // phpcs:ignore
             $mailer->send();
 
             return;
         }
 
         $mailer->isHTML(false);
-        $text = $this->textDir . DIRECTORY_SEPARATOR . $templateId . '.txt';
-        $mailer->Body = (new FileRender())($text, $email->getTemplateVars()); // phpcs:ignore
+        $mailer->Subject = $subject ?? ''; // phpcs:ignore
+        $mailer->Body = $text ?? ''; // phpcs:ignore
         $mailer->AltBody = ''; // phpcs:ignore
         $mailer->send();
+    }
+
+    /**
+     * @param array<string, mixed> $vars
+     */
+    private function renderTemplate(string $filePath, array $vars = []): string
+    {
+        if (! is_readable($filePath)) {
+            throw new TemplateNotFoundException($filePath);
+        }
+
+        return (new TemplateRenderer())($filePath, $vars); // phpcs:ignore
     }
 }

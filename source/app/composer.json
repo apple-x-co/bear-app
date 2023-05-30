@@ -52,8 +52,8 @@
         "post-install-cmd": "@composer bin all install --ansi",
         "setup": "php bin/setup.php",
         "compile": [
-            "./vendor/bin/bear.compile 'MyVendor\\MyProject' cli-api-app ./",
-            "mv autoload.php autoload.cli-api-app.php; mv preload.php preload.cli-api-app.php",
+            "./vendor/bin/bear.compile 'MyVendor\\MyProject' cli-command-app ./",
+            "mv autoload.php autoload.cli-command-app.php; mv preload.php preload.cli-command-app.php",
             "./vendor/bin/bear.compile 'MyVendor\\MyProject' prod-hal-api-app ./",
             "mv autoload.php autoload.prod-hal-api-app.php; mv preload.php preload.prod-hal-api-app.php",
             "./vendor/bin/bear.compile 'MyVendor\\MyProject' prod-html-app ./",

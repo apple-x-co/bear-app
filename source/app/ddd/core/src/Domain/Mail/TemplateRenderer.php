@@ -16,7 +16,7 @@ use function ob_start;
 
 use const EXTR_SKIP;
 
-class FileRender
+class TemplateRenderer
 {
     /**
      * @param array<string, mixed> $vars

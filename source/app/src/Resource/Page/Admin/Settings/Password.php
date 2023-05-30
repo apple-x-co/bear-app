@@ -85,7 +85,7 @@ class Password extends AdminPage
                     (new Email())
                         ->setFrom($this->adminAddress)
                         ->setTo([new Address($adminEmail->emailAddress, $admin->username)])
-                        ->setTemplate('admin_password_updated')
+                        ->setTemplateId('admin_password_updated')
                         ->setTemplateVars(['displayName' => $admin->displayName])
                 );
             } catch (Throwable $throwable) {

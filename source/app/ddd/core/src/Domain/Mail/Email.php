@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Mail;
 
+use DateTimeImmutable;
+
 class Email
 {
     private ?AddressInterface $from = null;
@@ -19,11 +21,15 @@ class Email
 
     /** @var array<AddressInterface> */
     private array $bcc = [];
+    private ?string $subject = null;
+    private ?string $text = null;
+    private ?string $html = null;
     private ?string $templateId = null;
 
     /** @var array<string, mixed> */
     private array $templateVars = [];
     private Format $emailFormat = Format::Both;
+    private ?DateTimeImmutable $scheduleAt = null;
 
     public function getFrom(): ?AddressInterface
     {
@@ -62,6 +68,21 @@ class Email
         return $this->bcc;
     }
 
+    public function getSubject(): ?string
+    {
+        return $this->subject;
+    }
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function getHtml(): ?string
+    {
+        return $this->html;
+    }
+
     public function getTemplateId(): ?string
     {
         return $this->templateId;
@@ -78,6 +99,11 @@ class Email
     public function getEmailFormat(): Format
     {
         return $this->emailFormat;
+    }
+
+    public function getScheduleAt(): ?DateTimeImmutable
+    {
+        return $this->scheduleAt;
     }
 
     public function setFrom(?AddressInterface $from): self
@@ -132,10 +158,34 @@ class Email
         return $clone;
     }
 
-    public function setTemplate(?string $template): self
+    public function setSubject(?string $subject): self
     {
         $clone = clone $this;
-        $clone->templateId = $template;
+        $clone->subject = $subject;
+
+        return $clone;
+    }
+
+    public function setText(?string $text): self
+    {
+        $clone = clone $this;
+        $clone->text = $text;
+
+        return $clone;
+    }
+
+    public function setHtml(?string $html): self
+    {
+        $clone = clone $this;
+        $clone->html = $html;
+
+        return $clone;
+    }
+
+    public function setTemplateId(?string $templateId): self
+    {
+        $clone = clone $this;
+        $clone->templateId = $templateId;
 
         return $clone;
     }
@@ -155,6 +205,14 @@ class Email
     {
         $clone = clone $this;
         $clone->emailFormat = $emailFormat;
+
+        return $clone;
+    }
+
+    public function setScheduleAt(?DateTimeImmutable $scheduleAt): self
+    {
+        $clone = clone $this;
+        $clone->scheduleAt = $scheduleAt;
 
         return $clone;
     }

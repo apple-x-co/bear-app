@@ -63,7 +63,7 @@ class Join extends AdminPage
                 (new Email())
                     ->setFrom($this->adminAddress)
                     ->setTo([new Address($join->emailAddress)])
-                    ->setTemplate('admin_join')
+                    ->setTemplateId('admin_join')
                     ->setTemplateVars([
                         'expiresAt' => $expiresAt,
                         'code' => $code,

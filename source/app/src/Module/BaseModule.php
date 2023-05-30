@@ -25,6 +25,7 @@ use AppCore\Infrastructure\Persistence\TestRepository;
 use AppCore\Infrastructure\Persistence\ThrottleRepository;
 use AppCore\Infrastructure\Shared\AdminLogger;
 use AppCore\Infrastructure\Shared\Encrypter;
+use AppCore\Infrastructure\Shared\QueueMail;
 use AppCore\Infrastructure\Shared\SecureRandom;
 use AppCore\Infrastructure\Shared\SmtpMail;
 use AppCore\Infrastructure\Shared\UserLogger;
@@ -129,6 +130,7 @@ class BaseModule extends AbstractModule
              ])
              ->in(Scope::SINGLETON);
         $this->bind(PHPMailer::class)->toProvider(PhpMailerProvider::class)->in(Scope::SINGLETON);
+
         $this->bind()->annotatedWith('email_html_dir')
              ->toInstance(rtrim($this->emailDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'html');
         $this->bind()->annotatedWith('email_subject_dir')
@@ -136,6 +138,7 @@ class BaseModule extends AbstractModule
         $this->bind()->annotatedWith('email_text_dir')
              ->toInstance(rtrim($this->emailDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'text');
         $this->bind(TransportInterface::class)->annotatedWith('SMTP')->to(SmtpMail::class)->in(Scope::SINGLETON);
+        $this->bind(TransportInterface::class)->annotatedWith('queue')->to(QueueMail::class)->in(Scope::SINGLETON);
     }
 
     private function repository(): void

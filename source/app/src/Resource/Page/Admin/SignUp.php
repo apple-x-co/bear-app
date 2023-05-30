@@ -37,7 +37,8 @@ class SignUp extends AdminPage
         private readonly AdminRepositoryInterface $adminRepository,
         #[Named('admin_sign_up_form')] protected readonly FormInterface $form,
         private readonly PasswordHasherInterface $passwordHasher,
-        #[Named('SMTP')] private readonly TransportInterface $transport,
+        #[Named('SMTP')] private readonly TransportInterface $smtpTransport,
+        #[Named('queue')] private readonly TransportInterface $queueTransport,
         private readonly WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
         $this->body['form'] = $this->form;
@@ -90,11 +91,21 @@ class SignUp extends AdminPage
         );
         $this->adminRepository->store($admin);
 
-        $this->transport->send(
+        $this->queueTransport->send(
             (new Email())
                 ->setFrom($this->adminAddress)
-                ->setTo([new Address($webSignature->address)])
-                ->setTemplate('admin_sign_up')
+                ->setTo([new Address($webSignature->address, $signUp->displayName)])
+                ->setTemplateId('admin_welcome')
+                ->setTemplateVars(['displayName' => $signUp->displayName])
+                ->setScheduleAt(new DateTimeImmutable())
+        );
+
+        $this->smtpTransport->send(
+            (new Email())
+                ->setFrom($this->adminAddress)
+                ->setTo([new Address($webSignature->address, $signUp->displayName)])
+                ->setTemplateId('admin_sign_up')
+                ->setTemplateVars(['displayName' => $signUp->displayName])
         );
 
         $this->renderer = null;

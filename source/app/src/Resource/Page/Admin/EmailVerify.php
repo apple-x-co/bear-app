@@ -84,7 +84,7 @@ class EmailVerify extends AdminPage
                 (new Email())
                     ->setFrom($this->adminAddress)
                     ->setTo([new Address($emailWebSignature->address)])
-                    ->setTemplate('admin_email_verified')
+                    ->setTemplateId('admin_email_verified')
                     ->setTemplateVars([
                         'displayName' => $admin->displayName,
                     ])

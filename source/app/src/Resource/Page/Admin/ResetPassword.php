@@ -97,7 +97,7 @@ class ResetPassword extends AdminPage
             (new Email())
                 ->setFrom($this->adminAddress)
                 ->setTo([new Address($webSignature->address)])
-                ->setTemplate('admin_password_reset')
+                ->setTemplateId('admin_password_reset')
                 ->setTemplateVars(['displayName' => $adminEntity->displayName])
         );
 

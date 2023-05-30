@@ -65,7 +65,7 @@ class ForgotPassword extends AdminPage
             (new Email())
                 ->setFrom($this->adminAddress)
                 ->setTo([new Address($forgotPassword->emailAddress)])
-                ->setTemplate('admin_password_forgot')
+                ->setTemplateId('admin_password_forgot')
                 ->setTemplateVars([
                     'displayName' => $adminEntity?->displayName,
                     'expiresAt' => $expiresAt,

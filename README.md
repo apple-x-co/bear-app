@@ -56,6 +56,8 @@ graph TD;
 * Remember me
 * Reset password
 * Create account
+* Delete account
+* Email (immediately or schedule)
 
 ### Security
 
@@ -65,6 +67,10 @@ graph TD;
 * Email notification after password change
 * Email authentication
 * Email notification when add email address
-* Password reset
 * Throttling
-* _Schedule: Ban common passwords (priority:Low)_
+* Ban common passwords
+
+### Command
+
+* Import bad passwords
+* Send scheduled email

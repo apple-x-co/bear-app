@@ -70,7 +70,7 @@ class Delete extends AdminPage
                     (new Email())
                         ->setFrom($this->adminAddress)
                         ->setTo([new Address($adminEmail->emailAddress, $admin->username)])
-                        ->setTemplate('admin_deleted')
+                        ->setTemplateId('admin_deleted')
                         ->setTemplateVars(['displayName' => $admin->displayName])
                 );
             } catch (Throwable $throwable) {

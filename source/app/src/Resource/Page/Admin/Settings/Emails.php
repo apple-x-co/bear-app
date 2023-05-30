@@ -86,7 +86,7 @@ class Emails extends AdminPage
             (new Email())
                 ->setFrom($this->adminAddress)
                 ->setTo([new Address($createEmail->emailAddress)])
-                ->setTemplate('admin_email_verification')
+                ->setTemplateId('admin_email_verification')
                 ->setTemplateVars([
                     'displayName' => $admin->displayName,
                     'expiresAt' => $expiresAt,
@@ -122,7 +122,7 @@ class Emails extends AdminPage
                 (new Email())
                     ->setFrom($this->adminAddress)
                     ->setTo($notifyAddresses)
-                    ->setTemplate('admin_email_created')
+                    ->setTemplateId('admin_email_created')
                     ->setTemplateVars([
                         'displayName' => $admin->displayName,
                         'emailAddress' => $createEmail->emailAddress,
