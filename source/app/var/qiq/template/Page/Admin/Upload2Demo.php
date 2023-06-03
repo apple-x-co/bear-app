@@ -27,7 +27,7 @@
         <label class="block">
             <span class="block text-sm font-thin text-slate-500 tracking-wide">Image file</span>
             {{ $fileset = $this->form->fileset }}
-            {{= AdminFile(form: $this->form, fieldset: $fileset, input: 'file') }}
+            {{h AdminFile(form: $this->form, fieldset: $fileset, input: 'file') }}
             {{ $clientFileName = $fileset->clientFileName }}
             {{ if ($clientFileName !== null): }}
             <span class="block text-sm">選択中のファイル：{{h $clientFileName }}</span>

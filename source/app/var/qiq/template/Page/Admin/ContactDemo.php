@@ -22,7 +22,7 @@
     <div class="mt-5">
         <label class="block">
             <span class="block text-sm font-thin text-slate-500 tracking-wide">Username</span>
-            {{= AdminText(form: $this->form, input: 'username') }}
+            {{h AdminText(form: $this->form, input: 'username') }}
             {{= AdminFormError(form: $this->form, input: 'username') }}
         </label>
         <label class="block mt-5 text-center">
