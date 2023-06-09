@@ -17,8 +17,8 @@
     {{ setBlock ('head_scripts') }}
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    {{ $isUseGRecaptchaV2 = isset($this->useGRecaptcha) ? $this->useGRecaptcha : false }}
-    {{ if ($isUseGRecaptchaV2): }}
+    {{ $isUseGoogleRecaptchaV2 = isset($useGoogleRecaptcha) ? $useGoogleRecaptcha : false }}
+    {{ if ($isUseGoogleRecaptchaV2): }}
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     {{ endif }}
     <script src="/admin/js/index.js"></script>

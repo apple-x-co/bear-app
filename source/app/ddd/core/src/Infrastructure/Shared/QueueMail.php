@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace AppCore\Infrastructure\Shared;
 
 use AppCore\Domain\Mail\Email;
+use AppCore\Domain\Mail\EmailDir;
 use AppCore\Domain\Mail\InvalidArgumentException;
 use AppCore\Domain\Mail\RecipientType;
 use AppCore\Domain\Mail\TemplateNotFoundException;
-use AppCore\Domain\Mail\TemplateRenderer;
+use AppCore\Domain\Mail\TemplateRendererInterface;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Infrastructure\Query\EmailCommandInterface;
 use AppCore\Infrastructure\Query\EmailRecipientCommandInterface;
-use Ray\Di\Di\Named;
 
 use function is_readable;
 use function is_string;
@@ -24,10 +24,9 @@ class QueueMail implements TransportInterface
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
         private readonly EmailCommandInterface $emailCommand,
+        #[EmailDir] private string $emailDir,
         private readonly EmailRecipientCommandInterface $emailRecipientCommand,
-        #[Named('email_html_dir')] private readonly string $htmlDir,
-        #[Named('email_subject_dir')] private readonly string $subjectDir,
-        #[Named('email_text_dir')] private readonly string $textDir,
+        private readonly TemplateRendererInterface $templateRenderer,
     ) {
     }
 
@@ -49,17 +48,21 @@ class QueueMail implements TransportInterface
             throw new InvalidArgumentException('"ScheduleAt" must be not null');
         }
 
+        $subjectDir = $this->emailDir . DIRECTORY_SEPARATOR . 'subject' . DIRECTORY_SEPARATOR;
+        $textDir = $this->emailDir . DIRECTORY_SEPARATOR . 'text' . DIRECTORY_SEPARATOR;
+        $htmlDir = $this->emailDir . DIRECTORY_SEPARATOR . 'html' . DIRECTORY_SEPARATOR;
+
         $subject = $this->renderTemplate(
-            $this->subjectDir . DIRECTORY_SEPARATOR . $templateId . '.txt',
+            $subjectDir . $templateId . '.txt',
             $email->getTemplateVars(),
         );
         $text = $this->renderTemplate(
-            $this->textDir . DIRECTORY_SEPARATOR . $templateId . '.txt',
+            $textDir . $templateId . '.txt',
             $email->getTemplateVars(),
         );
         $format = $email->getEmailFormat();
         $html = $format->isHtml() ? $this->renderTemplate(
-            $this->htmlDir . DIRECTORY_SEPARATOR . $templateId . '.html',
+            $htmlDir . $templateId . '.html',
             $email->getTemplateVars(),
         ) : null;
 
@@ -119,6 +122,6 @@ class QueueMail implements TransportInterface
             throw new TemplateNotFoundException($filePath);
         }
 
-        return (new TemplateRenderer())($filePath, $vars); // phpcs:ignore
+        return ($this->templateRenderer)($filePath, $vars); // phpcs:ignore
     }
 }

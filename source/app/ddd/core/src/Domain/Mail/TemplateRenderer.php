@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AppCore\Domain\Mail;
 
 use DateTimeImmutable;
+use Ray\Di\Di\Named;
 use Throwable;
 
 use function extract;
@@ -16,8 +17,13 @@ use function ob_start;
 
 use const EXTR_SKIP;
 
-class TemplateRenderer
+class TemplateRenderer implements TemplateRendererInterface
 {
+    public function __construct(
+        #[Named('service_name')] private readonly string $serviceName
+    ) {
+    }
+
     /**
      * @param array<string, mixed> $vars
      */
@@ -27,6 +33,7 @@ class TemplateRenderer
             return '';
         }
 
+        $vars['_serviceName'] = $this->serviceName;
         $vars['_now'] = new DateTimeImmutable();
 
         try {

@@ -2,20 +2,18 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Resource\App\Cli;
+namespace MyVendor\MyProject\Resource\Command;
 
 use AppCore\Infrastructure\Query\BadPasswordCommandInterface;
 use BEAR\Resource\ResourceObject;
 use GuzzleHttp\ClientInterface;
+use Ray\AuraSqlModule\Annotation\Transactional;
 use Throwable;
 
 use function explode;
 
 use const PHP_EOL;
 
-/**
- * php ./bin/cli.php post app://self/cli/import-bad-passwords
- */
 class ImportBadPasswords extends ResourceObject
 {
     private const URL = 'https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/500-worst-passwords.txt';
@@ -26,8 +24,23 @@ class ImportBadPasswords extends ResourceObject
     ) {
     }
 
-    /** @SuppressWarnings(PHPMD.EmptyCatchBlock) */
+    /**
+     * php ./bin/command.php post /import-bad-password
+     */
     public function onPost(): static
+    {
+        $this->body['passwords'] = $this->execute();
+
+        return $this;
+    }
+
+    /**
+     * @return array<string>
+     *
+     * @Transactional()
+     * @SuppressWarnings(PHPMD.EmptyCatchBlock)
+     */
+    protected function execute(): array
     {
         $response = $this->client->request('GET', self::URL);
         $content = $response->getBody()->getContents();
@@ -44,8 +57,6 @@ class ImportBadPasswords extends ResourceObject
             }
         }
 
-        $this->body['passwords'] = $array;
-
-        return $this;
+        return $array;
     }
 }

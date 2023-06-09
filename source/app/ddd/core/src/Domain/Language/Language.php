@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Lang;
+namespace AppCore\Domain\Language;
 
 use function preg_replace;
 use function str_replace;

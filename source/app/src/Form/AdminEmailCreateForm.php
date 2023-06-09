@@ -9,9 +9,7 @@ use Ray\Di\Di\Inject;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 use stdClass;
 
-/**
- * @psalm-suppress PropertyNotSetInConstructor
- */
+/** @psalm-suppress PropertyNotSetInConstructor */
 class AdminEmailCreateForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
@@ -38,6 +36,7 @@ class AdminEmailCreateForm extends ExtendedForm
                  'placeholder' => '',
                  'required' => 'required',
                  'tabindex' => 1,
+                 'title' => '有効なメールアドレスを入力してください',
              ]);
         /** @psalm-suppress TooManyArguments */
         $this->filter
@@ -46,7 +45,7 @@ class AdminEmailCreateForm extends ExtendedForm
             ->is('callback', function (stdClass $subject, string $field) {
                 return $this->adminQuery->itemByEmailAddress($subject->$field) === null;
             });
-        $this->filter->useFieldMessage('emailAddress', 'Email address must be email only.');
+        $this->filter->useFieldMessage('emailAddress', '有効なメールアドレスを入力してください');
 
         /** @psalm-suppress UndefinedMethod */
         $this->setField('create', 'submit')

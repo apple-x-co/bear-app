@@ -6,18 +6,18 @@
         <h2 class="text-xl text-center tracking-widest font-sans font-bold">Password</h2>
 
         <form method="post">
-            {{ if (isset($this->authError) && $this->authError): }}
-                {{= render ('partials/Admin/AlertError', ['text' => 'Authentication error']) }}
+            {{ if (isset($authError) && $authError): }}
+                {{= render('partials/Admin/AlertError', ['text' => 'Authentication error']) }}
             {{ endif }}
             <div class="mt-5">
                 <label class="block mt-5">
                     <span class="block top-2 left-3 text-sm font-normal text-slate-700 tracking-wide select-none">Password</span>
-                    {{= AdminText(form: $this->form, input: 'password') }}
-                    {{= AdminFormError(form: $this->form, input: 'password') }}
+                    {{= adminText(form: $form, input: 'password') }}
+                    {{= adminFormError(form: $form, input: 'password') }}
                 </label>
                 <label class="block mt-5 text-center">
-                    {{= AdminSubmit(form: $this->form, input: 'continue', attribs: ['value' => 'CONTINUE', 'data-submit-once' => '1']) }}
-                    {{= CsrfTokenField(form: $this->form) }}
+                    {{= adminSubmit(form: $form, input: 'continue', attribs: ['value' => 'CONTINUE', 'data-submit-once' => '1']) }}
+                    {{= csrfTokenField(form: $form) }}
                 </label>
             </div>
         </form>

@@ -9,24 +9,24 @@
             <div class="mt-5">
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700 select-none">Display name</span>
-                    {{= AdminText(form: $this->form, input: 'displayName') }}
-                    {{= AdminFormError(form: $this->form, input: 'displayName') }}
+                    {{= adminText(form: $form, input: 'displayName') }}
+                    {{= adminFormError(form: $form, input: 'displayName') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700 select-none">Username</span>
-                    {{= AdminText(form: $this->form, input: 'username') }}
-                    {{= AdminFormError(form: $this->form, input: 'username') }}
+                    {{= adminText(form: $form, input: 'username') }}
+                    {{= adminFormError(form: $form, input: 'username') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700 select-none">Password</span>
-                    {{= AdminText(form: $this->form, input: 'password') }}
-                    {{= AdminFormError(form: $this->form, input: 'password') }}
+                    {{= adminText(form: $form, input: 'password') }}
+                    {{= adminFormError(form: $form, input: 'password') }}
                 </label>
                 <label class="block mt-5 text-center">
-                    {{= AdminHidden(form: $this->form, input: 'signature') }}
-                    {{= AdminFormError(form: $this->form, input: 'signature') }}
-                    {{= AdminSubmit(form: $this->form, input: 'continue', attribs: ['value' => 'CONTINUE', 'data-submit-once' => '1']) }}
-                    {{= CsrfTokenField(form: $this->form) }}
+                    {{= adminHidden(form: $form, input: 'signature') }}
+                    {{= adminFormError(form: $form, input: 'signature') }}
+                    {{= adminSubmit(form: $form, input: 'continue', attribs: ['value' => 'CONTINUE', 'data-submit-once' => '1']) }}
+                    {{= csrfTokenField(form: $form) }}
                 </label>
             </div>
         </form>

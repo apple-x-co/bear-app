@@ -1,5 +1,5 @@
 <?php
-assert($this instanceof Qiq);
+/** @var Qiq\Engine&Qiq\Helper\Html\HtmlHelpers $this */
 $this->setLayout('layout/base');
 ?>
-Greeting: {{h $this->greeting }}
+Greeting: {{h $greeting }}

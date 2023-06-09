@@ -2,7 +2,7 @@
 
 {{ setBlock ('title') }}MARKUP | {{ parentBlock () }}{{ endBlock () }}
 
-{{ $this->navVisible = false }}
+{{ $this->addData(['navVisible' => false]) }}
 {{ setBlock ('body_content') }}
 <section>
     <h3 class="font-bold border-b pb-2 mb-2">テキスト (太さ)</h3>
@@ -30,22 +30,22 @@
 <section class="mt-10">
     <h3 class="font-bold border-b pb-2 mb-2">アイコン</h3>
 
-    {{= render ('partials/Admin/InlineIcon', ['name' => 'exclamation-circle']) }}
-    {{= render ('partials/Admin/InlineIcon', ['name' => 'exclamation-triangle']) }}
-    {{= render ('partials/Admin/InlineIcon', ['name' => 'shield-exclamation']) }}
-    {{= render ('partials/Admin/InlineIcon', ['name' => 'arrow-left-on-rectangle']) }}
+    {{= render('partials/Admin/InlineIcon', ['name' => 'exclamation-circle']) }}
+    {{= render('partials/Admin/InlineIcon', ['name' => 'exclamation-triangle']) }}
+    {{= render('partials/Admin/InlineIcon', ['name' => 'shield-exclamation']) }}
+    {{= render('partials/Admin/InlineIcon', ['name' => 'arrow-left-on-rectangle']) }}
 </section>
 
 <section class="mt-10">
     <h3 class="font-bold border-b pb-2 mb-2">見出し1</h3>
 
-    {{= render ('partials/Admin/Heading1', ['title' => 'Title タイトル']) }}
+    {{= render('partials/Admin/Heading1', ['title' => 'Title タイトル']) }}
 </section>
 
 <section class="mt-10">
     <h3 class="font-bold border-b pb-2 mb-2">見出し2</h3>
 
-    {{= render ('partials/Admin/Heading2', ['title' => 'Title タイトル', 'subtitle' => 'Subtitle サブタイトル']) }}
+    {{= render('partials/Admin/Heading2', ['title' => 'Title タイトル', 'subtitle' => 'Subtitle サブタイトル']) }}
 </section>
 
 <section class="mt-10">
@@ -97,7 +97,7 @@
             </li>
             <li class="flex gap-2 p-4">
                 <div class="flex-none">
-                    {{= render ('partials/Admin/InlineIcon', ['name' => 'bell-alert']) }}
+                    {{= render('partials/Admin/InlineIcon', ['name' => 'bell-alert']) }}
                 </div>
                 <div class="flex-1 col-span-3">
                     <p class="text-xs lg:text-sm font-bold">見出し</p>
@@ -114,9 +114,9 @@
 <section class="mt-10">
     <h3 class="font-bold border-b pb-2 mb-2">アラート</h3>
 
-    {{= render ('partials/Admin/AlertInformation', ['text' => 'Information']) }}
-    {{= render ('partials/Admin/AlertWarning', ['text' => 'Warning']) }}
-    {{= render ('partials/Admin/AlertError', ['text' => 'Error']) }}
+    {{= render('partials/Admin/AlertInformation', ['text' => 'Information']) }}
+    {{= render('partials/Admin/AlertWarning', ['text' => 'Warning']) }}
+    {{= render('partials/Admin/AlertError', ['text' => 'Error']) }}
 </section>
 
 <section class="mt-10">
@@ -238,7 +238,7 @@
         <label class="block mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">削除ボタン</span>
             <button type="submit" value="キャンセル" class="text-rose-500 focus:outline-none">
-                {{= render ('partials/Admin/InlineIcon', ['name' => 'trash']) }}
+                {{= render('partials/Admin/InlineIcon', ['name' => 'trash']) }}
             </button>
         </label>
     </form>

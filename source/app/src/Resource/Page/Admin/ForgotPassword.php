@@ -13,6 +13,8 @@ use AppCore\Domain\WebSignature\WebSignature;
 use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
 use AppCore\Infrastructure\Query\AdminQueryInterface;
 use AppCore\Infrastructure\Query\VerificationCodeCommandInterface;
+use BEAR\Resource\NullRenderer;
+use BEAR\Sunday\Extension\Router\RouterInterface;
 use DateTimeImmutable;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -37,6 +39,7 @@ class ForgotPassword extends AdminPage
         #[Named('admin_forgot_password_form')] protected readonly FormInterface $form,
         private readonly SecureRandomInterface $secureRandom,
         #[Named('SMTP')] private readonly TransportInterface $transport,
+        private readonly RouterInterface $router,
         private readonly VerificationCodeCommandInterface $verificationCodeCommand,
         private readonly WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
@@ -86,7 +89,7 @@ class ForgotPassword extends AdminPage
             $expiresAt,
         );
 
-        $this->renderer = null;
+        $this->renderer = new NullRenderer();
         $this->code = StatusCode::SEE_OTHER;
         $this->headers = [ResponseHeader::LOCATION => (string) $this->router->generate('/admin/code-verify', ['uuid' => $array['uuid']])]; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
 

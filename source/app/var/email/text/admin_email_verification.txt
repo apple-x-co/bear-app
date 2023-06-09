@@ -1,5 +1,10 @@
 <?= $displayName ?> さま
 
-以下のURLからEメールアドレスの確認を行なってください。
+追加したメールアドレスを有効にするまであと一歩です。
+以下のURLからメールアドレスの確認を行なってください。
 <?= $adminBaseUrl . $verificationPathName . PHP_EOL ?>
 URLの有効期限は <?= $expiresAt->format('Y-m-d H:i:s') ?> です。
+
+もし心当たりがない場合、申し訳ありませんがこのメールを無視してください。
+
+<?= $_serviceName ?>

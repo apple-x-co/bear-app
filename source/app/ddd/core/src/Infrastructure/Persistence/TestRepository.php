@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Persistence;
 
-use AppCore\Domain\Pagination;
 use AppCore\Domain\Test\Test;
 use AppCore\Domain\Test\TestNotFoundException;
 use AppCore\Domain\Test\TestRepositoryInterface;
 use AppCore\Infrastructure\Entity\TestEntity;
 use AppCore\Infrastructure\Query\TestCommandInterface;
 use AppCore\Infrastructure\Query\TestQueryInterface;
+use AppCore\Infrastructure\Shared\Pagination;
 
 readonly class TestRepository implements TestRepositoryInterface
 {

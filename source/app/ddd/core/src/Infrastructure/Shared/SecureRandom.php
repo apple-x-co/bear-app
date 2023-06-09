@@ -7,11 +7,15 @@ namespace AppCore\Infrastructure\Shared;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
 use Ray\Di\Di\Named;
 
+use function base64_encode;
 use function hash;
 use function hash_hmac;
+use function pack;
 use function random_bytes;
 use function random_int;
+use function rtrim;
 use function str_repeat;
+use function strtr;
 
 class SecureRandom implements SecureRandomInterface
 {
@@ -23,6 +27,11 @@ class SecureRandom implements SecureRandomInterface
     public function hash(string $data, string $algo = 'sha256'): string
     {
         return hash($algo, $data);
+    }
+
+    public function shortHash(string $data, string $algo = 'crc32'): string
+    {
+        return strtr(rtrim(base64_encode(pack('H*', hash($algo, $data))), '='), '+/', '-_');
     }
 
     public function hmac(string $data, string $algo = 'sha256'): string

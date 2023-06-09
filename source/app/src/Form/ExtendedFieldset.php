@@ -6,9 +6,7 @@ namespace MyVendor\MyProject\Form;
 
 use Aura\Input\Fieldset;
 
-/**
- * @psalm-suppress PropertyNotSetInConstructor
- */
+/** @psalm-suppress PropertyNotSetInConstructor */
 class ExtendedFieldset extends Fieldset
 {
     /** @var array<array-key, array<string>>|null */

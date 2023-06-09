@@ -2,33 +2,33 @@
 
 {{ setBlock ('title') }}Multiple Demo | {{ parentBlock () }}{{ endBlock () }}
 
-{{ $this->navVisible = false }}
+{{ $this->addData(['navVisible' => false]) }}
 {{ setBlock ('body_content') }}
 <form method="post">
     <div class="mt-5">
         <label class="block">
             <span class="block text-sm font-sans font-normal text-slate-700">Fruits</span>
-            {{= AdminCheckbox(form: $this->form, input: 'fruits') }}
-            {{= AdminFormError(form: $this->form, input: 'fruits') }}
+            {{= adminCheckBox(form: $form, input: 'fruits') }}
+            {{= adminFormError(form: $form, input: 'fruits') }}
         </label>
         <label class="block mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">Primary languages</span>
-            {{= AdminSelect(form: $this->form, input: 'primaryLanguage') }}
-            {{= AdminFormError(form: $this->form, input: 'primaryLanguage') }}
+            {{= adminSelect(form: $form, input: 'primaryLanguage') }}
+            {{= adminFormError(form: $form, input: 'primaryLanguage') }}
         </label>
         <label class="block mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">Available Languages</span>
-            {{= AdminSelect(form: $this->form, input: 'languages') }}
-            {{= AdminFormError(form: $this->form, input: 'languages') }}
+            {{= adminSelect(form: $form, input: 'languages') }}
+            {{= adminFormError(form: $form, input: 'languages') }}
         </label>
         <label class="block mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">Programming Languages</span>
-            {{= AdminSelect(form: $this->form, input: 'programmingLanguages') }}
-            {{= AdminFormError(form: $this->form, input: 'programmingLanguages') }}
+            {{= adminSelect(form: $form, input: 'programmingLanguages') }}
+            {{= adminFormError(form: $form, input: 'programmingLanguages') }}
         </label>
         <label class="block mt-5 text-center">
-            {{= AdminSubmit(form: $this->form, input: 'submit', attribs: ['value' => 'SEND', 'data-submit-once' => '1']) }}
-            {{= CsrfTokenField(form: $this->form) }}
+            {{= adminSubmit(form: $form, input: 'submit', attribs: ['value' => 'SEND', 'data-submit-once' => '1']) }}
+            {{= csrfTokenField(form: $form) }}
         </label>
     </div>
 </form>

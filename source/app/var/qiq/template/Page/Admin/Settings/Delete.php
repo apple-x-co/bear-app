@@ -8,12 +8,13 @@
         <form method="post">
             <div class="mt-5">
                 <label class="block mt-5 text-center">
-                    {{= AdminSubmit(form: $this->form, input: 'continue', attribs: ['value' => 'Delete your account', 'data-submit-once' => '1']) }}
-                    {{= CsrfTokenField(form: $this->form) }}
+                    {{= adminSubmit(form: $form, input: 'continue', attribs: ['value' => 'Delete your account', 'data-submit-once' => '1']) }}
+                    {{= csrfTokenField(form: $form) }}
                 </label>
             </div>
         </form>
         <div class="absolute top-full right-0 w-full h-px rounded-full max-w-sm bg-gradient-to-r from-transparent from-10% via-purple-500 to-transparent drop-shadow-xl"></div>
     </div>
+    <p class="text-sm text-center mt-2"><a href="{{= url('/admin/settings/') }}">Back</a></p>
 </div>
 {{ endBlock () }}

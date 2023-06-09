@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Module;
 
 use BEAR\Package\AbstractAppModule;
-use BEAR\QiqModule\QiqErrorModule;
-use BEAR\QiqModule\QiqModule;
-use BEAR\Resource\RenderInterface;
 use MyVendor\MyProject\Form\AdminCodeVerifyForm;
 use MyVendor\MyProject\Form\AdminContactDemoForm;
 use MyVendor\MyProject\Form\AdminDeleteForm;
@@ -26,7 +23,10 @@ use MyVendor\MyProject\Form\AdminUploadDemoForm;
 use MyVendor\MyProject\Form\UploadFilesInterface;
 use MyVendor\MyProject\Form\UserLoginForm;
 use MyVendor\MyProject\Provider\UploadedFilesProvider;
-use MyVendor\MyProject\Renderer\QiqErrorPageRenderer;
+use MyVendor\MyProject\TemplateEngine\QiqCustomHelpers;
+use MyVendor\MyProject\TemplateEngine\QiqErrorModule;
+use MyVendor\MyProject\TemplateEngine\QiqModule;
+use Qiq\Helpers;
 use Ray\AuraSessionModule\AuraSessionModule;
 use Ray\WebFormModule\AuraInputModule;
 use Ray\WebFormModule\FormInterface;
@@ -37,9 +37,9 @@ class HtmlModule extends AbstractAppModule
     protected function configure(): void
     {
         $this->install(new AuraSessionModule());
-        $this->install(new QiqModule($this->appMeta->appDir . '/var/qiq/template'));
-        $this->bind(RenderInterface::class)->annotatedWith('error_page')->to(QiqErrorPageRenderer::class);
-        $this->install(new QiqErrorModule('Debug'));
+        $this->bind(Helpers::class)->to(QiqCustomHelpers::class);
+        $this->install(new QiqModule([$this->appMeta->appDir . '/var/qiq/template']));
+        $this->install(new QiqErrorModule('DebugTrace'));
         $this->install(new AuraInputModule());
         $this->install(new SessionAuthModule());
         $this->install(new CaptchaModule());

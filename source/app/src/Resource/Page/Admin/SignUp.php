@@ -14,6 +14,7 @@ use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\WebSignature\ExpiredSignatureException;
 use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use BEAR\Resource\NullRenderer;
 use DateTimeImmutable;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -52,7 +53,7 @@ class SignUp extends AdminPage
             $this->session->set('error:message', 'message:admin:sign_up:decrypt_error');
             $this->session->set('error:returnName', 'Join');
             $this->session->set('error:returnUrl', '/admin/join');
-            $this->renderer = null;
+            $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = [ResponseHeader::LOCATION => '/admin/error'];
 
@@ -108,7 +109,7 @@ class SignUp extends AdminPage
                 ->setTemplateVars(['displayName' => $signUp->displayName])
         );
 
-        $this->renderer = null;
+        $this->renderer = new NullRenderer();
         $this->code = StatusCode::SEE_OTHER;
         $this->headers = [ResponseHeader::LOCATION => '/admin/login']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
 

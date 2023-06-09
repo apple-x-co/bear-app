@@ -1,5 +1,5 @@
 <?php
-assert($this instanceof Qiq);
+assert($this instanceof \Qiq\Template);
 $this->setLayout('layout/base');
 ?>
 <div class="max-w-7xl mx-auto px-0 lg:px-8 pt-5 flex flex-row grow">
@@ -11,7 +11,7 @@ $this->setLayout('layout/base');
                         <h2 class="text-xl text-center tracking-widest font-sans font-bold text-rose-500">Error</h2>
 
                         <div class="mt-5 text-center">
-                            <p class="text-rose-500 font-semibold">{{= $this->code }}: {{= $this->message }}</p>
+                            <p class="text-rose-500 font-semibold">{{h $code }}: {{h $message }}</p>
                         </div>
                     </div>
                 </div>

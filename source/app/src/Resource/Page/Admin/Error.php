@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
+use AppCore\Domain\Language\LanguageInterface;
+use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
-use MyVendor\MyProject\Lang\LanguageInterface;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 
 class Error extends AdminPage
@@ -27,7 +28,7 @@ class Error extends AdminPage
         $this->session->reset('error:returnUrl');
 
         if ($message === null) {
-            $this->renderer = null;
+            $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = [ResponseHeader::LOCATION => '/admin/index'];
 

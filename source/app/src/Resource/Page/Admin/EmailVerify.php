@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 use AppCore\Domain\Admin\AdminEmail;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\Admin\EmailWebSignature;
+use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
@@ -15,12 +16,12 @@ use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\WebSignature\ExpiredSignatureException;
 use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
 use AppCore\Domain\WebSignature\WrongEmailVerifyException;
+use BEAR\Resource\NullRenderer;
 use DateTimeImmutable;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
-use MyVendor\MyProject\Lang\LanguageInterface;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\AuraSqlModule\Annotation\WriteConnection;
@@ -93,7 +94,7 @@ class EmailVerify extends AdminPage
             $this->logger->log((string) $throwable);
         }
 
-        $this->renderer = null;
+        $this->renderer = new NullRenderer();
         $this->session->setFlashMessage($this->language->get('message:admin:email_verified'));
         $this->code = StatusCode::SEE_OTHER;
         $this->headers = [ResponseHeader::LOCATION => '/admin/settings/index']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない

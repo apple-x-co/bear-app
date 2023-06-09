@@ -2,81 +2,81 @@
 
 {{ setBlock ('title') }}Fieldset Demo | {{ parentBlock () }}{{ endBlock () }}
 
-{{ $this->navVisible = false }}
+{{ $this->addData(['navVisible' => false]) }}
 {{ setBlock ('body_content') }}
 <form method="post">
     <div class="mt-5">
         <div class="mt-5">
             <h2 class="inline-block text-xl sm:text-2xl font-extrabold text-slate-800 tracking-tight">Home</h2>
-            {{= AdminFormError(form: $this->form, input: 'home') }}
-            {{ $home = $this->form->home }}
+            {{= adminFormError(form: $form, input: 'home') }}
+            {{ $home = $form->home }}
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">Zip</span>
-                {{= AdminText(form: $this->form, input: 'zip', fieldset: $home) }}
-                {{= AdminFieldsetError(fieldset: $home, input: 'zip') }}
+                {{= adminText(form: $form, input: 'zip', fieldset: $home) }}
+                {{= adminFieldsetError(fieldset: $home, input: 'zip') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">State</span>
-                {{= AdminText(form: $this->form, input: 'state', fieldset: $home) }}
-                {{= AdminFieldsetError(fieldset: $home, input: 'state') }}
+                {{= adminText(form: $form, input: 'state', fieldset: $home) }}
+                {{= adminFieldsetError(fieldset: $home, input: 'state') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">City</span>
-                {{= AdminText(form: $this->form, input: 'city', fieldset: $home) }}
-                {{= AdminFieldsetError(fieldset: $home, input: 'city') }}
+                {{= adminText(form: $form, input: 'city', fieldset: $home) }}
+                {{= adminFieldsetError(fieldset: $home, input: 'city') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">Street</span>
-                {{= AdminText(form: $this->form, input: 'street', fieldset: $home) }}
-                {{= AdminFieldsetError(fieldset: $home, input: 'street') }}
+                {{= adminText(form: $form, input: 'street', fieldset: $home) }}
+                {{= adminFieldsetError(fieldset: $home, input: 'street') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">House type</span>
-                {{= AdminRadio(form: $this->form, input: 'houseType', fieldset: $home) }}
-                {{= AdminFieldsetError(fieldset: $home, input: 'houseType') }}
+                {{= adminRadio(form: $form, input: 'houseType', fieldset: $home) }}
+                {{= adminFieldsetError(fieldset: $home, input: 'houseType') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">Smartphone you own</span>
-                {{= AdminRadio(form: $this->form, input: 'smartphones', fieldset: $home) }}
-                {{= AdminFieldsetError(fieldset: $home, input: 'smartphones') }}
+                {{= adminRadio(form: $form, input: 'smartphones', fieldset: $home) }}
+                {{= adminFieldsetError(fieldset: $home, input: 'smartphones') }}
             </label>
         </div>
 
         <div class="mt-5">
             <h2 class="inline-block text-xl sm:text-2xl font-extrabold text-slate-800 tracking-tight">Deliveries</h2>
-            {{= AdminFormError(form: $this->form, input: 'deliveries') }}
-            {{ foreach ($this->form->deliveries as $index => $delivery):  }}
+            {{= adminFormError(form: $form, input: 'deliveries') }}
+            {{ foreach ($form->deliveries as $index => $delivery):  }}
             <div class="mt-5">
                 <h2 class="inline-block text-xl sm:text-2xl font-extrabold text-slate-800 tracking-tight">delivery{{= $index + 1 }}</h2>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">Zip</span>
-                    {{= AdminText(form: $this->form, input: 'zip', fieldset: $delivery) }}
-                    {{= AdminFieldsetError(fieldset: $delivery, input: 'zip') }}
+                    {{= adminText(form: $form, input: 'zip', fieldset: $delivery) }}
+                    {{= adminFieldsetError(fieldset: $delivery, input: 'zip') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">State</span>
-                    {{= AdminText(form: $this->form, input: 'state', fieldset: $delivery) }}
-                    {{= AdminFieldsetError(fieldset: $delivery, input: 'state') }}
+                    {{= adminText(form: $form, input: 'state', fieldset: $delivery) }}
+                    {{= adminFieldsetError(fieldset: $delivery, input: 'state') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">City</span>
-                    {{= AdminText(form: $this->form, input: 'city', fieldset: $delivery) }}
-                    {{= AdminFieldsetError(fieldset: $delivery, input: 'city') }}
+                    {{= adminText(form: $form, input: 'city', fieldset: $delivery) }}
+                    {{= adminFieldsetError(fieldset: $delivery, input: 'city') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">Street</span>
-                    {{= AdminText(form: $this->form, input: 'street', fieldset: $delivery) }}
-                    {{= AdminFieldsetError(fieldset: $delivery, input: 'street') }}
+                    {{= adminText(form: $form, input: 'street', fieldset: $delivery) }}
+                    {{= adminFieldsetError(fieldset: $delivery, input: 'street') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">House type</span>
-                    {{= AdminRadio(form: $this->form, input: 'houseType', fieldset: $delivery) }}
-                    {{= AdminFieldsetError(fieldset: $delivery, input: 'houseType') }}
+                    {{= adminRadio(form: $form, input: 'houseType', fieldset: $delivery) }}
+                    {{= adminFieldsetError(fieldset: $delivery, input: 'houseType') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">Smartphone you own</span>
-                    {{= AdminRadio(form: $this->form, input: 'smartphones', fieldset: $delivery) }}
-                    {{= AdminFieldsetError(fieldset: $delivery, input: 'smartphones') }}
+                    {{= adminRadio(form: $form, input: 'smartphones', fieldset: $delivery) }}
+                    {{= adminFieldsetError(fieldset: $delivery, input: 'smartphones') }}
                 </label>
             </div>
             {{ endforeach }}
@@ -84,17 +84,17 @@
 
         <label class="block mt-20">
             <span class="block text-sm font-sans font-normal text-slate-700">Note</span>
-            {{= AdminText(form: $this->form, input: 'note') }}
-            {{= AdminFormError(form: $this->form, input: 'note') }}
+            {{= adminText(form: $form, input: 'note') }}
+            {{= adminFormError(form: $form, input: 'note') }}
         </label>
         <label class="block mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">Agree</span>
-            {{= AdminSelect(form: $this->form, input: 'agree') }}
-            {{= AdminFormError(form: $this->form, input: 'agree') }}
+            {{= adminSelect(form: $form, input: 'agree') }}
+            {{= adminFormError(form: $form, input: 'agree') }}
         </label>
         <label class="block mt-5 text-center">
-            {{= AdminSubmit(form: $this->form, input: 'submit', attribs: ['value' => 'SEND', 'data-submit-once' => '1']) }}
-            {{= CsrfTokenField(form: $this->form) }}
+            {{= adminSubmit(form: $form, input: 'submit', attribs: ['value' => 'SEND', 'data-submit-once' => '1']) }}
+            {{= csrfTokenField(form: $form) }}
         </label>
     </div>
 </form>

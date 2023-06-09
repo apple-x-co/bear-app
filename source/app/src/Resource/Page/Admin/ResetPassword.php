@@ -13,6 +13,7 @@ use AppCore\Domain\WebSignature\ExpiredSignatureException;
 use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
 use AppCore\Infrastructure\Query\AdminPasswordUpdateInterface;
 use AppCore\Infrastructure\Query\AdminQueryInterface;
+use BEAR\Resource\NullRenderer;
 use DateTimeImmutable;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -52,7 +53,7 @@ class ResetPassword extends AdminPage
             $this->session->set('error:message', 'message:admin:reset_password:decrypt_error');
             $this->session->set('error:returnName', 'Forgot password');
             $this->session->set('error:returnUrl', '/admin/forgot-password');
-            $this->renderer = null;
+            $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = [ResponseHeader::LOCATION => '/admin/error'];
 
@@ -85,7 +86,7 @@ class ResetPassword extends AdminPage
 
         $adminEntity = $this->adminQuery->itemByEmailAddress($webSignature->address);
         if ($adminEntity === null) {
-            $this->renderer = null;
+            $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = [ResponseHeader::LOCATION => '/admin/login']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
 
@@ -101,7 +102,7 @@ class ResetPassword extends AdminPage
                 ->setTemplateVars(['displayName' => $adminEntity->displayName])
         );
 
-        $this->renderer = null;
+        $this->renderer = new NullRenderer();
         $this->code = StatusCode::SEE_OTHER;
         $this->headers = [ResponseHeader::LOCATION => '/admin/login']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
 

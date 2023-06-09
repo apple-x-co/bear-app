@@ -37,7 +37,8 @@ class Throttling implements MethodInterceptor
         $key = sha1($uri . '|' . $remoteIp);
 
         if ($this->throttle->isExceeded($key)) {
-            $ro->view = null;
+            $ro->view = '';
+            $ro->body = [];
             $ro->code = self::TOO_MANY_REQUESTS;
             $ro->headers = [];
 

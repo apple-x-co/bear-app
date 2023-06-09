@@ -7,19 +7,21 @@ namespace MyVendor\MyProject\Resource\Page\Admin\Settings;
 use AppCore\Domain\Admin\AdminEmail;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\Admin\EmailWebSignature;
+use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use BEAR\Resource\NullRenderer;
+use BEAR\Sunday\Extension\Router\RouterInterface;
 use DateTimeImmutable;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Input\Admin\CreateEmailInput;
-use MyVendor\MyProject\Lang\LanguageInterface;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
@@ -45,6 +47,7 @@ class Emails extends AdminPage
         private readonly LanguageInterface $language,
         #[Named('admin')] private readonly LoggerInterface $logger,
         #[Named('SMTP')] private readonly TransportInterface $transport,
+        private readonly RouterInterface $router,
         private readonly WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
         $this->body['form'] = $this->form;
@@ -109,7 +112,7 @@ class Emails extends AdminPage
             [],
         );
         if (empty($notifyAddresses)) {
-            $this->renderer = null;
+            $this->renderer = new NullRenderer();
             $this->session->setFlashMessage($this->language->get('message:admin:email_created'));
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = [ResponseHeader::LOCATION => '/admin/settings/index']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
@@ -132,7 +135,7 @@ class Emails extends AdminPage
             $this->logger->log((string) $throwable);
         }
 
-        $this->renderer = null;
+        $this->renderer = new NullRenderer();
         $this->session->setFlashMessage($this->language->get('message:admin:email_created'));
         $this->code = StatusCode::SEE_OTHER;
         $this->headers = [ResponseHeader::LOCATION => '/admin/settings/index']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない

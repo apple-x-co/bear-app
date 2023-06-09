@@ -6,9 +6,7 @@ namespace MyVendor\MyProject\Form;
 
 use Ray\WebFormModule\SetAntiCsrfTrait;
 
-/**
- * @psalm-suppress PropertyNotSetInConstructor
- */
+/** @psalm-suppress PropertyNotSetInConstructor */
 class UserLoginForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
@@ -23,28 +21,42 @@ class UserLoginForm extends ExtendedForm
         $this->setField('username', 'text')
              ->setAttribs([
                  'autofocus' => '',
-                 'autocomplete' => 'email',
-                 'placeholder' => 'username',
+                 'autocomplete' => 'username',
+                 'placeholder' => '',
                  'required' => 'required',
                  'tabindex' => 1,
+                 'title' => '有効なユーザー名を入力してください',
              ]);
         $this->filter->validate('username')->is('alnum');
-        $this->filter->useFieldMessage('username', 'Name must be alphabetic only.');
+        $this->filter->useFieldMessage('username', '有効なユーザー名を入力してください');
 
         /** @psalm-suppress UndefinedMethod */
         $this->setField('password', 'password')
              ->setAttribs([
                  'autocomplete' => 'current-password',
-                 'placeholder' => 'password',
+                 'placeholder' => '',
                  'required' => 'required',
                  'tabindex' => 2,
+                 'title' => '有効なパスワードを入力してください',
              ]);
-        $this->filter->validate('password')->is('alnum');
-        $this->filter->useFieldMessage('password', 'Name must be alphabetic only.');
+        /** @psalm-suppress TooManyArguments */
+        $this->filter
+            ->validate('password')
+            ->is('string')
+            ->is('regex', '/^[A-Za-z0-9!@#$%^&*]+$/i');
+        $this->filter->useFieldMessage('password', '有効なパスワードを入力してください');
+
+        $this->setField('remember', 'checkbox')
+             ->setAttribs([
+                 'tabindex' => 3,
+                 'value' => 'yes',
+                 'label' => 'YES',
+                 'value_unchecked' => 'no',
+             ]);
 
         /** @psalm-suppress UndefinedMethod */
         $this->setField('login', 'submit')
-             ->setAttribs(['tabindex' => 4]);
+             ->setAttribs(['tabindex' => 5]);
     }
 
     public function getFormName(): string

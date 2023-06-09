@@ -9,18 +9,19 @@
             <div class="mt-5">
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700 select-none">New password</span>
-                    {{= AdminText(form: $this->form, input: 'password') }}
-                    {{= AdminFormError(form: $this->form, input: 'password') }}
+                    {{= adminText(form: $form, input: 'password') }}
+                    {{= adminFormError(form: $form, input: 'password') }}
                 </label>
                 <label class="block mt-5 text-center">
-                    {{= AdminHidden(form: $this->form, input: 'signature') }}
-                    {{= AdminFormError(form: $this->form, input: 'signature') }}
-                    {{= AdminSubmit(form: $this->form, input: 'continue', attribs: ['value' => 'CONTINUE', 'data-submit-once' => '1']) }}
-                    {{= CsrfTokenField(form: $this->form) }}
+                    {{= adminHidden(form: $form, input: 'signature') }}
+                    {{= adminFormError(form: $form, input: 'signature') }}
+                    {{= adminSubmit(form: $form, input: 'continue', attribs: ['value' => 'CONTINUE', 'data-submit-once' => '1']) }}
+                    {{= csrfTokenField(form: $form) }}
                 </label>
             </div>
         </form>
         <div class="absolute top-full right-0 w-full h-px rounded-full max-w-sm bg-gradient-to-r from-transparent from-10% via-purple-500 to-transparent drop-shadow-xl"></div>
     </div>
+    <p class="text-sm text-center mt-2"><a href="{{= url('/admin/login') }}">Already have an account?</a></p>
 </div>
 {{ endBlock () }}

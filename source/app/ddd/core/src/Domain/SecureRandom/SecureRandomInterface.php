@@ -8,6 +8,8 @@ interface SecureRandomInterface
 {
     public function hash(string $data, string $algo = 'sha256'): string;
 
+    public function shortHash(string $data, string $algo = 'crc32'): string;
+
     public function hmac(string $data, string $algo = 'sha256'): string;
 
     /**

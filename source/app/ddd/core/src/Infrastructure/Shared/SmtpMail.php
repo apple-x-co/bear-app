@@ -6,11 +6,11 @@ namespace AppCore\Infrastructure\Shared;
 
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\Email;
+use AppCore\Domain\Mail\EmailDir;
 use AppCore\Domain\Mail\TemplateNotFoundException;
-use AppCore\Domain\Mail\TemplateRenderer;
+use AppCore\Domain\Mail\TemplateRendererInterface;
 use AppCore\Domain\Mail\TransportInterface;
 use PHPMailer\PHPMailer\PHPMailer;
-use Ray\Di\Di\Named;
 
 use function is_readable;
 
@@ -19,15 +19,18 @@ use const DIRECTORY_SEPARATOR;
 class SmtpMail implements TransportInterface
 {
     public function __construct(
+        #[EmailDir] private string $emailDir,
         private readonly PHPMailer $mailer,
-        #[Named('email_html_dir')] private readonly string $htmlDir,
-        #[Named('email_subject_dir')] private readonly string $subjectDir,
-        #[Named('email_text_dir')] private readonly string $textDir,
+        private readonly TemplateRendererInterface $templateRenderer,
     ) {
     }
 
     public function send(Email $email): void
     {
+        $subjectDir = $this->emailDir . DIRECTORY_SEPARATOR . 'subject' . DIRECTORY_SEPARATOR;
+        $textDir = $this->emailDir . DIRECTORY_SEPARATOR . 'text' . DIRECTORY_SEPARATOR;
+        $htmlDir = $this->emailDir . DIRECTORY_SEPARATOR . 'html' . DIRECTORY_SEPARATOR;
+
         $mailer = $this->mailer;
         $mailer->clearAllRecipients();
 
@@ -60,15 +63,15 @@ class SmtpMail implements TransportInterface
         $templateId = $email->getTemplateId();
         if ($templateId !== null) {
             $subject = $this->renderTemplate(
-                $this->subjectDir . DIRECTORY_SEPARATOR . $templateId . '.txt',
+                $subjectDir . $templateId . '.txt',
                 $email->getTemplateVars(),
             );
             $text = $this->renderTemplate(
-                $this->textDir . DIRECTORY_SEPARATOR . $templateId . '.txt',
+                $textDir . $templateId . '.txt',
                 $email->getTemplateVars(),
             );
             $html = $format->isHtml() ? $this->renderTemplate(
-                $this->htmlDir . DIRECTORY_SEPARATOR . $templateId . '.html',
+                $htmlDir . $templateId . '.html',
                 $email->getTemplateVars(),
             ) : null;
         }
@@ -99,6 +102,6 @@ class SmtpMail implements TransportInterface
             throw new TemplateNotFoundException($filePath);
         }
 
-        return (new TemplateRenderer())($filePath, $vars); // phpcs:ignore
+        return ($this->templateRenderer)($filePath, $vars); // phpcs:ignore
     }
 }

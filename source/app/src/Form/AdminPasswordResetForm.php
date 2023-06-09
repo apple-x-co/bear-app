@@ -34,21 +34,22 @@ class AdminPasswordResetForm extends ExtendedForm
                  'autocomplete' => 'current-password',
                  'placeholder' => '',
                  'required' => 'required',
-                 'tabindex' => 2,
+                 'tabindex' => 1,
                  'minlength' => 8,
                  'maxlength' => 20,
                  'pattern' => '^[\x20-\x7E]+$', // ASCII 文字列
-                 'title' => '新しいパスワードは8文字以上20文字以下の英数字記号で入力してください',
+                 'title' => '新しいパスワードは8文字以上20文字以下の英数字記号(!@#$%^&*)で入力してください',
              ]);
         /** @psalm-suppress TooManyArguments */
         $this->filter
             ->validate('password')
-            ->is('alnum')
+            ->is('string')
+            ->is('regex', '/^[A-Za-z0-9!@#$%^&*]+$/i')
             ->is('strlenBetween', 8, 20)
             ->is('callback', function (stdClass $subject, string $field) {
                 return $this->badPasswordQuery->item($subject->$field) === null;
             });
-        $this->filter->useFieldMessage('password', '新しいパスワードは8文字以上20文字以下の英数字記号で入力してください');
+        $this->filter->useFieldMessage('password', '新しいパスワードは8文字以上20文字以下の英数字記号(!@#$%^&*)で入力してください');
 
         /** @psalm-suppress UndefinedMethod */
         $this->setField('signature', 'hidden');

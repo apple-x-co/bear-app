@@ -6,11 +6,11 @@
         <h2 class="text-xl text-center tracking-widest font-sans font-bold text-rose-500">Error</h2>
 
         <div class="mt-5">
-            <p class="text-rose-500 font-semibold">{{= $this->message }}</p>
+            <p class="text-rose-500 font-semibold">{{h $message }}</p>
         </div>
-        {{ if ($this->returnUrl !== null): }}
+        {{ if ($returnUrl !== null): }}
         <div class="mt-5 text-center">
-            <a href="{{= $this->returnUrl }}" class="font-bold">return "{{= $this->returnName }}"</a>
+            <a href="{{a $returnUrl }}" class="font-bold">return "{{h $returnName }}"</a>
         </div>
         {{ endif }}
     </div>

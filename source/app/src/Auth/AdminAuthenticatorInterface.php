@@ -40,4 +40,6 @@ interface AdminAuthenticatorInterface
     public function getUnauthRedirect(): string;
 
     public function getPasswordRedirect(): string;
+
+    public function getIdentity(): AdminIdentity;
 }

@@ -6,9 +6,7 @@ namespace MyVendor\MyProject\Form;
 
 use Ray\WebFormModule\SetAntiCsrfTrait;
 
-/**
- * @psalm-suppress PropertyNotSetInConstructor
- */
+/** @psalm-suppress PropertyNotSetInConstructor */
 class AdminCodeVerifyForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
@@ -20,18 +18,21 @@ class AdminCodeVerifyForm extends ExtendedForm
         $this->setName(self::FORM_NAME);
 
         $this->setField('uuid', 'hidden');
+        $this->filter->validate('uuid')->is('string');
 
         /** @psalm-suppress UndefinedMethod */
         $this->setField('code', 'text')
              ->setAttribs([
                  'autofocus' => '',
-                 'autocomplete' => '',
+                 'autocomplete' => 'one-time-code',
                  'placeholder' => '',
                  'required' => 'required',
                  'tabindex' => 1,
+                 'pattern' => '^\d+$',
+                 'title' => 'メールに記載されたコードを入力してください',
              ]);
         $this->filter->validate('code')->is('int');
-        $this->filter->useFieldMessage('code', 'Code must be integer only.');
+        $this->filter->useFieldMessage('code', 'メールに記載されたコードを入力してください');
 
         /** @psalm-suppress UndefinedMethod */
         $this->setField('continue', 'submit')

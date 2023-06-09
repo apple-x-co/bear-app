@@ -6,32 +6,33 @@
         <h2 class="text-xl text-center tracking-widest font-sans font-bold">Password</h2>
 
         <form method="post">
-            {{ if (isset($this->authError) && $this->authError): }}
-            {{= render ('partials/Admin/AlertError', ['text' => 'Authentication error']) }}
+            {{ if (isset($authError) && $authError): }}
+            {{= render('partials/Admin/AlertError', ['text' => 'Authentication error']) }}
             {{ endif }}
             <div class="mt-5">
                 <label class="block mt-5">
                     <span class="block top-2 left-3 text-sm font-normal text-slate-700 tracking-wide select-none">Old password</span>
-                    {{= AdminText(form: $this->form, input: 'oldPassword') }}
-                    {{= AdminFormError(form: $this->form, input: 'oldPassword') }}
+                    {{= adminText(form: $form, input: 'oldPassword') }}
+                    {{= adminFormError(form: $form, input: 'oldPassword') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block top-2 left-3 text-sm font-normal text-slate-700 tracking-wide select-none">New password</span>
-                    {{= AdminText(form: $this->form, input: 'password') }}
-                    {{= AdminFormError(form: $this->form, input: 'password') }}
+                    {{= adminText(form: $form, input: 'password') }}
+                    {{= adminFormError(form: $form, input: 'password') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block top-2 left-3 text-sm font-normal text-slate-700 tracking-wide select-none">Confirm new password</span>
-                    {{= AdminText(form: $this->form, input: 'passwordConfirmation') }}
-                    {{= AdminFormError(form: $this->form, input: 'passwordConfirmation') }}
+                    {{= adminText(form: $form, input: 'passwordConfirmation') }}
+                    {{= adminFormError(form: $form, input: 'passwordConfirmation') }}
                 </label>
                 <label class="block mt-5 text-center">
-                    {{= AdminSubmit(form: $this->form, input: 'update', attribs: ['value' => 'Update password', 'data-submit-once' => '1']) }}
-                    {{= CsrfTokenField(form: $this->form) }}
+                    {{= adminSubmit(form: $form, input: 'update', attribs: ['value' => 'Update password', 'data-submit-once' => '1']) }}
+                    {{= csrfTokenField(form: $form) }}
                 </label>
             </div>
         </form>
         <div class="absolute top-full right-0 w-full h-px rounded-full max-w-sm bg-gradient-to-r from-transparent from-10% via-purple-500 to-transparent drop-shadow-xl"></div>
     </div>
+    <p class="text-sm text-center mt-2"><a href="{{= url('/admin/settings/') }}">Back</a></p>
 </div>
 {{ endBlock () }}

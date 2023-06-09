@@ -13,7 +13,7 @@
                     <div class="flex items-center border-l border-slate-200 ml-6 pl-6 dark:border-slate-800">
                         <form method="post" action="/admin/logout">
                             <button>
-                                {{= render ('partials/Admin/InlineIcon', ['name' => 'arrow-left-on-rectangle']) }}
+                                {{= render('partials/Admin/InlineIcon', ['name' => 'arrow-left-on-rectangle']) }}
                             </button>
                         </form>
                     </div>
@@ -24,12 +24,12 @@
     {{= getBlock () ~}}
 </header>
 <div class="max-w-7xl mx-auto px-0 lg:px-8 pt-5 flex flex-row grow">
-    {{ $isNavVisible = isset($this->navVisible) ? $this->navVisible : true }}
+    {{ $isNavVisible = isset($navVisible) ? $navVisible : true }}
     {{ if ($isNavVisible): }}
     <div class="hidden lg:block lg:w-72 lg:overflow-y-auto">
         <nav class="block leading-6 relative">
             {{ setBlock ('body_nav') }}
-            {{ $view = $this->getView() }}
+            {{ $viewName = $this->getView() }}
             <p>
                 <a class="text-sm font-bold tracking-wider {{ if ($view == 'Page/Admin/Index'): }}text-lime-500{{ endif }}" href="/admin/index">HOME</a>
             </p>

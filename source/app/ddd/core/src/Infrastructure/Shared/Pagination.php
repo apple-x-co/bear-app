@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppCore\Domain;
+namespace AppCore\Infrastructure\Shared;
 
 use Ray\MediaQuery\Pages;
 use Ray\MediaQuery\PagesInterface;

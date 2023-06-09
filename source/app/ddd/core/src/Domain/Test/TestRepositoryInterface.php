@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Test;
 
-use AppCore\Domain\Pagination;
+use AppCore\Infrastructure\Shared\Pagination;
 
 interface TestRepositoryInterface
 {

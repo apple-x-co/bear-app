@@ -9,11 +9,16 @@ use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
 use AppCore\Domain\Encrypter\EncrypterInterface;
 use AppCore\Domain\Hasher\PasswordHasher;
 use AppCore\Domain\Hasher\PasswordHasherInterface;
+use AppCore\Domain\Language\LangDir;
+use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\EmailConfig;
 use AppCore\Domain\Mail\EmailConfigInterface;
+use AppCore\Domain\Mail\EmailDir;
+use AppCore\Domain\Mail\TemplateRenderer;
+use AppCore\Domain\Mail\TemplateRendererInterface;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
 use AppCore\Domain\Test\TestRepositoryInterface;
@@ -32,7 +37,6 @@ use AppCore\Infrastructure\Shared\UserLogger;
 use AppCore\Infrastructure\Shared\WebSignatureEncrypter;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
-use MyVendor\MyProject\Lang\LanguageInterface;
 use MyVendor\MyProject\Provider\LanguageProvider;
 use MyVendor\MyProject\Provider\PhpMailerProvider;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -42,9 +46,6 @@ use Ray\Di\Scope;
 use function getenv;
 use function parse_str;
 use function random_bytes;
-use function rtrim;
-
-use const DIRECTORY_SEPARATOR;
 
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class BaseModule extends AbstractModule
@@ -72,6 +73,8 @@ class BaseModule extends AbstractModule
 
     private function core(): void
     {
+        $this->bind()->annotatedWith('service_name')->toInstance((string) getenv('SERVICE_NAME'));
+
         $this->bind()->annotatedWith('encrypt_pass')->toInstance((string) getenv('ENCRYPT_PASS'));
         $this->bind(EncrypterInterface::class)->to(Encrypter::class)->in(Scope::SINGLETON);
 
@@ -85,7 +88,7 @@ class BaseModule extends AbstractModule
 
     public function language(): void
     {
-        $this->bind()->annotatedWith('lang_dir')->toInstance($this->langDir);
+        $this->bind()->annotatedWith(LangDir::class)->toInstance($this->langDir);
         $this->bind(LanguageInterface::class)->toProvider(LanguageProvider::class)->in(Scope::SINGLETON);
     }
 
@@ -131,14 +134,11 @@ class BaseModule extends AbstractModule
              ->in(Scope::SINGLETON);
         $this->bind(PHPMailer::class)->toProvider(PhpMailerProvider::class)->in(Scope::SINGLETON);
 
-        $this->bind()->annotatedWith('email_html_dir')
-             ->toInstance(rtrim($this->emailDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'html');
-        $this->bind()->annotatedWith('email_subject_dir')
-             ->toInstance(rtrim($this->emailDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'subject');
-        $this->bind()->annotatedWith('email_text_dir')
-             ->toInstance(rtrim($this->emailDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'text');
+        $this->bind()->annotatedWith(EmailDir::class)->toInstance($this->emailDir);
         $this->bind(TransportInterface::class)->annotatedWith('SMTP')->to(SmtpMail::class)->in(Scope::SINGLETON);
         $this->bind(TransportInterface::class)->annotatedWith('queue')->to(QueueMail::class)->in(Scope::SINGLETON);
+
+        $this->bind(TemplateRendererInterface::class)->to(TemplateRenderer::class)->in(Scope::SINGLETON);
     }
 
     private function repository(): void

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Resource\App\Cli;
+namespace MyVendor\MyProject\Resource\Command;
 
 use AppCore\Infrastructure\Query\AdminDeleteCommandInterface;
 use AppCore\Infrastructure\Query\AdminDeleteQueryInterface;
@@ -10,9 +10,6 @@ use BEAR\Resource\ResourceObject;
 use DateTimeImmutable;
 use Ray\AuraSqlModule\Annotation\Transactional;
 
-/**
- * php ./bin/cli.php post app://self/cli/delete-admins
- */
 class DeleteAdmins extends ResourceObject
 {
     public function __construct(
@@ -21,6 +18,9 @@ class DeleteAdmins extends ResourceObject
     ) {
     }
 
+    /**
+     * php ./bin/command.php post /delete-admins
+     */
     public function onPost(): static
     {
         $adminDeletes = $this->adminDeleteQuery->list();

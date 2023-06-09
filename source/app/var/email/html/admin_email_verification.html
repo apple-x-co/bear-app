@@ -1,6 +1,12 @@
 <p><?= $displayName ?> さま</p>
+
 <p>
-    以下のURLからEメールアドレスの確認を行なってください。<br>
+    追加したメールアドレスを有効にするまであと一歩です。<br>
+    以下のURLからメールアドレスの確認を行なってください。<br>
     <a href="<?= $adminBaseUrl . $verificationPathName ?>"><?= $adminBaseUrl . $verificationPathName ?></a><br>
     URLの有効期限は <?= $expiresAt->format('Y-m-d H:i:s') ?> です。
 </p>
+
+<p>もし心当たりがない場合、申し訳ありませんがこのメールを無視してください。</p>
+
+<p><?= $_serviceName ?></p>

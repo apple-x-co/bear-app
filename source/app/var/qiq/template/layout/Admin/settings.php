@@ -13,7 +13,7 @@
                     <div class="flex items-center border-l border-slate-200 ml-6 pl-6 dark:border-slate-800">
                         <form method="post" action="/admin/logout">
                             <button>
-                                {{= render ('partials/Admin/InlineIcon', ['name' => 'arrow-left-on-rectangle']) }}
+                                {{= render('partials/Admin/InlineIcon', ['name' => 'arrow-left-on-rectangle']) }}
                             </button>
                         </form>
                     </div>
@@ -24,16 +24,16 @@
     {{= getBlock () ~}}
 </header>
 <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-5 flex flex-row">
-    {{= render ('partials/Admin/InlineIcon', ['name' => 'user-circle']) }}
-    <p class="text-base lg:text-xl font-extrabold ml-1">{{= $this->authenticator->getDisplayName() }}</p>
+    {{= render('partials/Admin/InlineIcon', ['name' => 'user-circle']) }}
+    <p class="text-base lg:text-xl font-extrabold ml-1">{{h admin()->displayName }}</p>
 </div>
 <div class="max-w-7xl mx-auto px-0 lg:px-8 pt-5 flex flex-row grow">
-    {{ $isNavVisible = isset($this->navVisible) ? $this->navVisible : true }}
+    {{ $isNavVisible = isset($navVisible) ? $navVisible : true }}
     {{ if ($isNavVisible): }}
     <div class="hidden lg:block lg:w-72 lg:overflow-y-auto">
         <nav class="block leading-6 relative">
             {{ setBlock ('body_nav') }}
-            {{ $view = $this->getView() }}
+            {{ $viewName = $this->getView() }}
             <ul>
                 <li>
                     <h5 class="font-sans font-bold text-sm tracking-wide mb-8 lg:mb-3">Settings</h5>

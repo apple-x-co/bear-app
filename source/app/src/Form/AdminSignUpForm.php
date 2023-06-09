@@ -40,7 +40,7 @@ class AdminSignUpForm extends ExtendedForm
         $this->setField('displayName', 'text')
              ->setAttribs([
                  'autofocus' => '',
-                 'autocomplete' => '',
+                 'autocomplete' => 'nickname',
                  'placeholder' => '',
                  'required' => 'required',
                  'tabindex' => 1,
@@ -51,8 +51,7 @@ class AdminSignUpForm extends ExtendedForm
         /** @psalm-suppress UndefinedMethod */
         $this->setField('username', 'text')
              ->setAttribs([
-                 'autofocus' => '',
-                 'autocomplete' => '',
+                 'autocomplete' => 'username',
                  'placeholder' => '',
                  'required' => 'required',
                  'tabindex' => 2,
@@ -81,7 +80,8 @@ class AdminSignUpForm extends ExtendedForm
         /** @psalm-suppress TooManyArguments */
         $this->filter
             ->validate('password')
-            ->is('alnum')
+            ->is('string')
+            ->is('regex', '/^[A-Za-z0-9!@#$%^&*]+$/i')
             ->is('strlenBetween', 8, 20)
             ->isNot('equalToField', 'username')
             ->is('callback', function (stdClass $subject, string $field) {

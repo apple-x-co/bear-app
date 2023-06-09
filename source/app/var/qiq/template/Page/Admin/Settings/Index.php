@@ -4,8 +4,8 @@
 
 {{ setBlock ('body_content') }}
 
-{{ if ($flashMessage = $this->session->getFlashMessage()): }}
-{{= render ('partials/Admin/AlertInformation', ['text' => $flashMessage]) }}
+{{ if ($message = $this->flashMessage()): }}
+{{= render('partials/Admin/AlertInformation', ['text' => $message]) }}
 {{ endif }}
 
 {{ endBlock () }}

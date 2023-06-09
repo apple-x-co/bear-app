@@ -11,11 +11,11 @@
         "bear/devtools": "^1.0",
         "bear/dotenv": "^1.0",
         "bear/package": "^1.12.1",
-        "bear/qiq-module": "^1.0",
         "bear/resource": "^1.16",
         "bear/sunday": "^1.5",
         "koriym/env-json": "^0.1.0",
         "phpmailer/phpmailer": "^6.8",
+        "qiq/qiq": "^2.0",
         "ray/aop": "^2.11",
         "ray/aura-session-module": "^1.2",
         "ray/di": "^2.13",
@@ -31,7 +31,6 @@
     "autoload": {
         "psr-4": {
             "MyVendor\\MyProject\\": "src/",
-            "Qiq\\Helper\\": "var/qiq/helper/",
             "AppCore\\": [
                 "ddd/core/src/",
                 "ddd/core-deprecated/src/"

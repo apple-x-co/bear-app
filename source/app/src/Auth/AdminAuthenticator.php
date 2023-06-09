@@ -19,7 +19,10 @@ use DateTimeImmutable;
 use PDO;
 use SensitiveParameter;
 
+use function assert;
 use function explode;
+use function is_int;
+use function is_string;
 use function setcookie;
 use function time;
 
@@ -263,6 +266,23 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
                 'path' => '/',
                 'httponly' => true,
             ],
+        );
+    }
+
+    public function getIdentity(): AdminIdentity
+    {
+        $auth = $this->authFactory->newInstance();
+        if (! $auth->isValid()) {
+            throw new UnauthorizedException();
+        }
+
+        $userData = $auth->getUserData();
+        assert(isset($userData['id']) && is_int($userData['id']));
+        assert(isset($userData['display_name']) && is_string($userData['display_name']));
+
+        return new AdminIdentity(
+            $userData['id'],
+            $userData['display_name'],
         );
     }
 }

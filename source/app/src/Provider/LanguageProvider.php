@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Provider;
 
-use MyVendor\MyProject\Lang\Language;
-use Ray\Di\Di\Named;
+use AppCore\Domain\Language\LangDir;
+use AppCore\Domain\Language\Language;
 use Ray\Di\ProviderInterface;
 
 class LanguageProvider implements ProviderInterface
 {
     public function __construct(
-        #[Named('lang_dir')] private readonly string $langDir,
+        #[LangDir] private readonly string $langDir,
     ) {
     }
 

@@ -36,6 +36,7 @@ class AdminJoinForm extends ExtendedForm
                  'placeholder' => '',
                  'required' => 'required',
                  'tabindex' => 1,
+                 'title' => '有効なメールアドレスを入力してください',
              ]);
         /** @psalm-suppress TooManyArguments */
         $this->filter
@@ -44,11 +45,11 @@ class AdminJoinForm extends ExtendedForm
             ->is('callback', function (stdClass $subject, string $field) {
                 return $this->adminQuery->itemByEmailAddress($subject->$field) === null;
             });
-        $this->filter->useFieldMessage('emailAddress', 'Email address must be email only.');
+        $this->filter->useFieldMessage('emailAddress', '有効なメールアドレスを入力してください');
 
         /** @psalm-suppress UndefinedMethod */
         $this->setField('continue', 'submit')
-             ->setAttribs(['tabindex' => 2]);
+             ->setAttribs(['tabindex' => 3]);
     }
 
     public function getFormName(): string

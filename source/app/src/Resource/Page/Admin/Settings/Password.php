@@ -6,12 +6,14 @@ namespace MyVendor\MyProject\Resource\Page\Admin\Settings;
 
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\Hasher\PasswordHasherInterface;
+use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Infrastructure\Query\AdminPasswordUpdateInterface;
+use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
@@ -19,7 +21,6 @@ use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\AuthenticationException;
 use MyVendor\MyProject\Auth\PasswordIncorrect;
 use MyVendor\MyProject\Input\Admin\UpdatePasswordInput;
-use MyVendor\MyProject\Lang\LanguageInterface;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
 use Ray\WebFormModule\Annotation\FormValidation;
@@ -93,7 +94,7 @@ class Password extends AdminPage
             }
         }
 
-        $this->renderer = null;
+        $this->renderer = new NullRenderer();
         $this->session->setFlashMessage($this->language->get('message:admin:password_updated'));
         $this->code = StatusCode::SEE_OTHER;
         $this->headers = [ResponseHeader::LOCATION => '/admin/settings/index']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない

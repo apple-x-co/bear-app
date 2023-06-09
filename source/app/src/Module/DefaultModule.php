@@ -9,6 +9,7 @@ use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
 use MyVendor\MyProject\Form\UploadFilesInterface;
 use MyVendor\MyProject\Session\SessionInterface;
 use MyVendor\MyProject\Throttle\ThrottleInterface;
+use Qiq\Helpers;
 use Ray\Di\AbstractModule;
 use Ray\WebFormModule\FormInterface;
 
@@ -20,7 +21,10 @@ class DefaultModule extends AbstractModule
         $this->bind(UploadFilesInterface::class)->toNull();
 
         $this->bind(SessionInterface::class)->toNull();
-        $this->bind()->annotatedWith('qiq_template_dir')->toInstance('');
+
+        $this->bind()->annotatedWith('qiq_extension')->toInstance('.php');
+        $this->bind()->annotatedWith('qiq_paths')->toInstance([]);
+        $this->bind(Helpers::class)->to(Helpers::class);
 
         $this->bind()->annotatedWith('google_recaptcha_site_key')->toInstance('');
         $this->bind()->annotatedWith('google_recaptcha_secret_key')->toInstance('');

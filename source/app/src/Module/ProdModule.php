@@ -6,10 +6,10 @@ namespace MyVendor\MyProject\Module;
 
 use BEAR\Package\AbstractAppModule;
 use BEAR\Package\Context\ProdModule as PackageProdModule;
-use BEAR\QiqModule\QiqErrorModule;
-use BEAR\QiqModule\QiqProdModule;
 use BEAR\QueryRepository\CacheVersionModule;
 use BEAR\Resource\Module\OptionsMethodModule;
+use MyVendor\MyProject\TemplateEngine\QiqErrorModule;
+use MyVendor\MyProject\TemplateEngine\QiqProdModule;
 
 use function time;
 

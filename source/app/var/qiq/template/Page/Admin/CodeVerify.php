@@ -9,13 +9,13 @@
             <div class="mt-5">
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700 select-none">Code</span>
-                    {{= AdminText(form: $this->form, input: 'code') }}
-                    {{= AdminFormError(form: $this->form, input: 'code') }}
+                    {{= adminText(form: $form, input: 'code') }}
+                    {{= adminFormError(form: $form, input: 'code') }}
                 </label>
                 <label class="block mt-5 text-center">
-                    {{= AdminHidden(form: $this->form, input: 'uuid') }}
-                    {{= AdminSubmit(form: $this->form, input: 'continue', attribs: ['value' => 'CONTINUE', 'data-submit-once' => '1']) }}
-                    {{= CsrfTokenField(form: $this->form) }}
+                    {{= adminHidden(form: $form, input: 'uuid') }}
+                    {{= adminSubmit(form: $form, input: 'continue', attribs: ['value' => 'CONTINUE', 'data-submit-once' => '1']) }}
+                    {{= csrfTokenField(form: $form) }}
                 </label>
             </div>
         </form>

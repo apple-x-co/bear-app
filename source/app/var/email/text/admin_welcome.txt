@@ -1,3 +1,5 @@
 <?= $displayName ?> さま
 
 ようこそ!
+
+<?= $_serviceName ?>

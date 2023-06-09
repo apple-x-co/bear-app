@@ -6,6 +6,7 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use AppCore\Infrastructure\Query\VerificationCodeCommandInterface;
 use AppCore\Infrastructure\Query\VerificationCodeQueryInterface;
+use BEAR\Resource\NullRenderer;
 use DateTimeImmutable;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -34,7 +35,7 @@ class CodeVerify extends AdminPage
     {
         $verificationCode = $this->verificationCodeQuery->itemByUuid($uuid);
         if ($verificationCode === null) {
-            $this->renderer = null;
+            $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = [ResponseHeader::LOCATION => '/admin/login']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
 
@@ -53,7 +54,7 @@ class CodeVerify extends AdminPage
      */
     public function onPost(CodeVerifyInput $codeVerify): static
     {
-        $this->renderer = null;
+        $this->renderer = new NullRenderer();
         $this->code = StatusCode::SEE_OTHER;
 
         $verificationCode = $this->verificationCodeQuery->itemByUuid($codeVerify->uuid);
