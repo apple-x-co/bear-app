@@ -44,7 +44,7 @@ use function sha1;
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class AdminAuthenticate implements MethodInterceptor
+class AdminAuthentication implements MethodInterceptor
 {
     public function __construct(
         #[Named('admin_auth_attempt_interval')] private readonly string $attemptInterval,

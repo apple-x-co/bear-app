@@ -24,4 +24,6 @@ interface UserAuthenticatorInterface
     public function getAuthRedirect(): string;
 
     public function getUnauthRedirect(): string;
+
+    public function getIdentity(): UserIdentity;
 }

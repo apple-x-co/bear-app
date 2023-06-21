@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Provider;
 
 use AppCore\Domain\Admin\AdminRepositoryInterface;
+use AppCore\Domain\AdminPermission\AdminPermissionRepositoryInterface;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
 use AppCore\Domain\Encrypter\EncrypterInterface;
 use AppCore\Domain\Hasher\PasswordHasherInterface;
@@ -32,6 +33,7 @@ class AdminAuthenticatorProvider implements ProviderInterface
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
+        private readonly AdminPermissionRepositoryInterface $adminPermissionRepository,
         private readonly AdminRepositoryInterface $adminRepository,
         private readonly AdminTokenRepositoryInterface $adminTokenRepository,
         private readonly AdminTokenRemoveByAdminIdInterface $adminTokenRemoveByAdminId,
@@ -64,6 +66,7 @@ class AdminAuthenticatorProvider implements ProviderInterface
         $rememberCookieName = $this->sessionName . ':admin:remember_' . sha1(static::class);
 
         return new AdminAuthenticator(
+            $this->adminPermissionRepository,
             $this->adminRepository,
             $this->adminTokenRepository,
             $this->adminTokenRemoveByAdminId,

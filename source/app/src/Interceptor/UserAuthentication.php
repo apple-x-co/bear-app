@@ -35,7 +35,7 @@ use function call_user_func;
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class UserAuthenticate implements MethodInterceptor
+class UserAuthentication implements MethodInterceptor
 {
     public function __construct(
         private readonly SessionInterface $session,

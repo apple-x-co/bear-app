@@ -70,6 +70,10 @@ graph TD;
 * Throttling
 * Ban common passwords
 
+### Authorization
+
+* control with resource & permission
+
 ### Command
 
 * Import bad passwords

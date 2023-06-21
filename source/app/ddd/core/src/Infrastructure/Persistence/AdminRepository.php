@@ -90,9 +90,11 @@ class AdminRepository implements AdminRepositoryInterface
             $admin->active ? 1 : 0,
         );
 
+        $adminId = $array['id'];
+
         foreach ($admin->emails as $email) {
             $array = $this->adminEmailCommand->add(
-                $array['id'],
+                $adminId,
                 $email->emailAddress,
             );
 
@@ -102,6 +104,8 @@ class AdminRepository implements AdminRepositoryInterface
 
             $this->adminEmailCommand->verified($array['id'], $email->verifiedAt);
         }
+
+        $admin->setNewId($adminId);
     }
 
     private function update(Admin $admin): void

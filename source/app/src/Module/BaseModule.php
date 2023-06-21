@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Module;
 
 use AppCore\Domain\Admin\AdminRepositoryInterface;
+use AppCore\Domain\AdminPermission\AdminPermissionRepositoryInterface;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
 use AppCore\Domain\Encrypter\EncrypterInterface;
+use AppCore\Domain\Encrypter\EncryptPass;
 use AppCore\Domain\Hasher\PasswordHasher;
 use AppCore\Domain\Hasher\PasswordHasherInterface;
 use AppCore\Domain\Language\LangDir;
@@ -21,9 +23,11 @@ use AppCore\Domain\Mail\TemplateRenderer;
 use AppCore\Domain\Mail\TemplateRendererInterface;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
+use AppCore\Domain\ServiceName;
 use AppCore\Domain\Test\TestRepositoryInterface;
 use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
 use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use AppCore\Infrastructure\Persistence\AdminPermissionRepository;
 use AppCore\Infrastructure\Persistence\AdminRepository;
 use AppCore\Infrastructure\Persistence\AdminTokenRepository;
 use AppCore\Infrastructure\Persistence\TestRepository;
@@ -68,14 +72,15 @@ class BaseModule extends AbstractModule
         $this->repository();
 
         $this->http();
+
         // TODO: AWS SKD の設定などはここで行う。ステージング環境や本番環境で必要な設定は ProdModule で行う。
     }
 
     private function core(): void
     {
-        $this->bind()->annotatedWith('service_name')->toInstance((string) getenv('SERVICE_NAME'));
+        $this->bind()->annotatedWith(ServiceName::class)->toInstance((string) getenv('SERVICE_NAME'));
 
-        $this->bind()->annotatedWith('encrypt_pass')->toInstance((string) getenv('ENCRYPT_PASS'));
+        $this->bind()->annotatedWith(EncryptPass::class)->toInstance((string) getenv('ENCRYPT_PASS'));
         $this->bind(EncrypterInterface::class)->to(Encrypter::class)->in(Scope::SINGLETON);
 
         $this->bind()->annotatedWith('hash_salt')->toInstance(random_bytes(32));
@@ -143,6 +148,7 @@ class BaseModule extends AbstractModule
 
     private function repository(): void
     {
+        $this->bind(AdminPermissionRepositoryInterface::class)->to(AdminPermissionRepository::class)->in(Scope::SINGLETON);
         $this->bind(AdminRepositoryInterface::class)->to(AdminRepository::class)->in(Scope::SINGLETON);
         $this->bind(AdminTokenRepositoryInterface::class)->to(AdminTokenRepository::class)->in(Scope::SINGLETON);
         $this->bind(TestRepositoryInterface::class)->to(TestRepository::class)->in(Scope::SINGLETON);

@@ -10,16 +10,18 @@ use MyVendor\MyProject\Annotation\AdminLogout;
 use MyVendor\MyProject\Annotation\AdminPasswordLock;
 use MyVendor\MyProject\Annotation\AdminPasswordProtect;
 use MyVendor\MyProject\Annotation\AdminVerifyPassword;
+use MyVendor\MyProject\Annotation\RequiredPermission;
 use MyVendor\MyProject\Annotation\UserGuard;
 use MyVendor\MyProject\Annotation\UserLogin;
 use MyVendor\MyProject\Annotation\UserLogout;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
-use MyVendor\MyProject\Interceptor\AdminAuthenticate;
+use MyVendor\MyProject\Interceptor\AdminAuthentication;
 use MyVendor\MyProject\Interceptor\AdminAuthGuardian;
+use MyVendor\MyProject\Interceptor\AdminAuthorization;
 use MyVendor\MyProject\Interceptor\AdminKeepAuthenticated;
 use MyVendor\MyProject\Interceptor\AdminPasswordProtector;
-use MyVendor\MyProject\Interceptor\UserAuthenticate;
+use MyVendor\MyProject\Interceptor\UserAuthentication;
 use MyVendor\MyProject\Interceptor\UserAuthGuardian;
 use MyVendor\MyProject\Provider\AdminAuthenticatorProvider;
 use MyVendor\MyProject\Provider\CookieProvider;
@@ -75,7 +77,7 @@ class SessionAuthModule extends AbstractModule
                     $this->matcher->annotatedWith(AdminVerifyPassword::class),
                 ),
             ),
-            [AdminAuthenticate::class],
+            [AdminAuthentication::class],
         );
 
         $this->bind(AdminKeepAuthenticated::class); // 複数の Interceptor を渡すと Untargeted が発生するので事前に束縛をする
@@ -94,6 +96,12 @@ class SessionAuthModule extends AbstractModule
             ),
             [AdminPasswordProtector::class],
         );
+
+        $this->bindInterceptor(
+            $this->matcher->subclassesOf(AdminPage::class),
+            $this->matcher->annotatedWith(RequiredPermission::class),
+            [AdminAuthorization::class],
+        );
     }
 
     public function user(): void
@@ -105,13 +113,13 @@ class SessionAuthModule extends AbstractModule
         $this->bindInterceptor(
             $this->matcher->subclassesOf(UserPage::class),
             $this->matcher->annotatedWith(UserLogin::class),
-            [UserAuthenticate::class],
+            [UserAuthentication::class],
         );
 
         $this->bindInterceptor(
             $this->matcher->subclassesOf(UserPage::class),
             $this->matcher->annotatedWith(UserLogout::class),
-            [UserAuthenticate::class],
+            [UserAuthentication::class],
         );
 
         $this->bindInterceptor(

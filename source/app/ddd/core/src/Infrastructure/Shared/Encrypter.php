@@ -6,7 +6,7 @@ namespace AppCore\Infrastructure\Shared;
 
 use AppCore\Domain\Encrypter\EncrypterException;
 use AppCore\Domain\Encrypter\EncrypterInterface;
-use Ray\Di\Di\Named;
+use AppCore\Domain\Encrypter\EncryptPass;
 
 use function base64_decode;
 use function base64_encode;
@@ -31,7 +31,7 @@ class Encrypter implements EncrypterInterface
     private const CIPHER_OPTION = 0;
 
     public function __construct(
-        #[Named('encrypt_pass')] private readonly string $pass,
+        #[EncryptPass] private readonly string $pass,
     ) {
     }
 

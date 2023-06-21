@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin\Settings;
 
+use AppCore\Domain\AccessControl\Permission;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Mail\Address;
@@ -15,6 +16,7 @@ use DateTimeImmutable;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\AdminLogout;
 use MyVendor\MyProject\Annotation\AdminPasswordProtect;
+use MyVendor\MyProject\Annotation\RequiredPermission;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Input\Admin\DeleteInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
@@ -41,6 +43,7 @@ class Delete extends AdminPage
 
     #[AdminGuard]
     #[AdminPasswordProtect]
+    #[RequiredPermission('Settings', Permission::Read)]
     public function onGet(): static
     {
         return $this;

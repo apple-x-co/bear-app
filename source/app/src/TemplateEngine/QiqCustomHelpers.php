@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\TemplateEngine;
 
+use AppCore\Domain\AccessControl\Permission;
 use Aura\Html\Helper\Input\AbstractInput;
 use BEAR\Sunday\Extension\Router\RouterInterface;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
@@ -34,6 +35,14 @@ class QiqCustomHelpers extends HtmlHelpers
     public function admin(): AdminIdentity
     {
         return $this->adminAuthenticator->getIdentity();
+    }
+
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    public function isAllowed(string $resourceName, string $permission): bool
+    {
+        $requirePermission = Permission::from($permission);
+
+        return $this->adminAuthenticator->getAccessControl()->isAllowed($resourceName, $requirePermission);
     }
 
     /**

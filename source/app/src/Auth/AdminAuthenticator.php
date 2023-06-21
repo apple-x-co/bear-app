@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Auth;
 
+use AppCore\Domain\AccessControl\Access;
+use AppCore\Domain\AccessControl\AccessControl;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
+use AppCore\Domain\AdminPermission\AdminPermission;
+use AppCore\Domain\AdminPermission\AdminPermissionRepositoryInterface;
 use AppCore\Domain\AdminToken\AdminToken;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
 use AppCore\Domain\Encrypter\EncrypterInterface;
@@ -19,6 +23,7 @@ use DateTimeImmutable;
 use PDO;
 use SensitiveParameter;
 
+use function array_reduce;
 use function assert;
 use function explode;
 use function is_int;
@@ -40,6 +45,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
      * @SuppressWarnings(PHPMD.LongVariable)
      */
     public function __construct(
+        private readonly AdminPermissionRepositoryInterface $adminPermissionRepository,
         private readonly AdminRepositoryInterface $adminRepository,
         private readonly AdminTokenRepositoryInterface $adminTokenRepository,
         private readonly AdminTokenRemoveByAdminIdInterface $adminTokenRemoveByAdminId,
@@ -283,6 +289,31 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         return new AdminIdentity(
             $userData['id'],
             $userData['display_name'],
+        );
+    }
+
+    public function getAccessControl(): AccessControl
+    {
+        $identity = $this->getIdentity();
+
+        $adminPermissions = $this->adminPermissionRepository->findByAdminId($identity->id);
+        if (empty($adminPermissions)) {
+            return new AccessControl();
+        }
+
+        return array_reduce(
+            $adminPermissions,
+            static function (AccessControl $carry, AdminPermission $item) {
+                return match ($item->access) {
+                    Access::Allow => $carry
+                        ->addResource($item->resourceName)
+                        ->allow($item->resourceName, $item->permission),
+                    Access::Deny => $carry
+                        ->addResource($item->resourceName)
+                        ->deny($item->resourceName, $item->permission)
+                };
+            },
+            new AccessControl(),
         );
     }
 }

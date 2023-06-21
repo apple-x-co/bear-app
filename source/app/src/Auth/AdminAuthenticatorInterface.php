@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Auth;
 
+use AppCore\Domain\AccessControl\AccessControl;
+
 interface AdminAuthenticatorInterface
 {
     public function login(string $username, string $password): void;
@@ -42,4 +44,6 @@ interface AdminAuthenticatorInterface
     public function getPasswordRedirect(): string;
 
     public function getIdentity(): AdminIdentity;
+
+    public function getAccessControl(): AccessControl;
 }

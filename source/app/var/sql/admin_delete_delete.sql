@@ -8,6 +8,10 @@ DELETE
  WHERE `admin_id` = :adminId;
 
 DELETE
+  FROM `admin_permissions`
+ WHERE `admin_id` = :adminId;
+
+DELETE
   FROM `admin_tokens`
  WHERE `admin_id` = :adminId;
 

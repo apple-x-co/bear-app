@@ -10,6 +10,8 @@ use function array_reduce;
 
 class Admin
 {
+    private ?int $newId = null;
+
     /**
      * @param array<AdminEmail> $emails
      */
@@ -126,5 +128,15 @@ class Admin
             $this->createdAt,
             $this->updatedAt
         );
+    }
+
+    public function getNewId(): ?int
+    {
+        return $this->newId;
+    }
+
+    public function setNewId(?int $newId): void
+    {
+        $this->newId = $newId;
     }
 }

@@ -11,6 +11,10 @@ use Aura\Auth\Verifier\PasswordVerifier;
 use PDO;
 use SensitiveParameter;
 
+use function assert;
+use function is_int;
+use function is_string;
+
 use const PASSWORD_BCRYPT;
 
 /**
@@ -35,9 +39,10 @@ class UserAuthenticator implements UserAuthenticatorInterface
             new PDO($this->pdoDsn, $this->pdoUsername, $this->pdoPassword),
             new PasswordVerifier(PASSWORD_BCRYPT),
             [
-                'username',
-                'password',
-                'id', // as UserData
+                'users.username',
+                'users.password',
+                'users.id', // as UserData[0]
+                'users.display_name', // as UserData[1]
             ],
             'users',
             'users.active = 1',
@@ -103,5 +108,22 @@ class UserAuthenticator implements UserAuthenticatorInterface
     public function getUnauthRedirect(): string
     {
         return $this->unauthRedirect;
+    }
+
+    public function getIdentity(): UserIdentity
+    {
+        $auth = $this->authFactory->newInstance();
+        if (! $auth->isValid()) {
+            throw new UnauthorizedException();
+        }
+
+        $userData = $auth->getUserData();
+        assert(isset($userData['id']) && is_int($userData['id']));
+        assert(isset($userData['display_name']) && is_string($userData['display_name']));
+
+        return new UserIdentity(
+            $userData['id'],
+            $userData['display_name'],
+        );
     }
 }

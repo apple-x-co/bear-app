@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Mail;
 
+use AppCore\Domain\ServiceName;
 use DateTimeImmutable;
-use Ray\Di\Di\Named;
 use Throwable;
 
 use function extract;
@@ -20,7 +20,7 @@ use const EXTR_SKIP;
 class TemplateRenderer implements TemplateRendererInterface
 {
     public function __construct(
-        #[Named('service_name')] private readonly string $serviceName
+        #[ServiceName] private readonly string $serviceName
     ) {
     }
 
