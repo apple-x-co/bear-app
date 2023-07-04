@@ -4,6 +4,20 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
+use AppCore\Application\Admin\CreateAdminEmailUseCase;
+use AppCore\Application\Admin\CreateAdminUseCase;
+use AppCore\Application\Admin\DeleteAdminEmailUseCase;
+use AppCore\Application\Admin\DeleteAdminUseCase;
+use AppCore\Application\Admin\ForgotAdminPasswordUseCase;
+use AppCore\Application\Admin\GetAdminUseCase;
+use AppCore\Application\Admin\GetForgotAdminPasswordUseCase;
+use AppCore\Application\Admin\GetJoinedAdminUseCase;
+use AppCore\Application\Admin\JoinAdminUserCase;
+use AppCore\Application\Admin\ResetAdminPasswordUseCase;
+use AppCore\Application\Admin\UpdateAdminPasswordUseCase;
+use AppCore\Application\Admin\VerifyAdminEmailUseCase;
+use AppCore\Application\GetVerificationCodeUseCase;
+use AppCore\Application\VerifyVerificationCodeUseCase;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\AdminPermission\AdminPermissionRepositoryInterface;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
@@ -70,6 +84,7 @@ class BaseModule extends AbstractModule
         $this->url();
         $this->email();
         $this->repository();
+        $this->usecase();
 
         $this->http();
 
@@ -153,6 +168,24 @@ class BaseModule extends AbstractModule
         $this->bind(AdminTokenRepositoryInterface::class)->to(AdminTokenRepository::class)->in(Scope::SINGLETON);
         $this->bind(TestRepositoryInterface::class)->to(TestRepository::class)->in(Scope::SINGLETON);
         $this->bind(ThrottleRepositoryInterface::class)->to(ThrottleRepository::class)->in(Scope::SINGLETON);
+    }
+
+    private function usecase(): void
+    {
+        $this->bind(CreateAdminEmailUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(CreateAdminUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(DeleteAdminEmailUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(DeleteAdminUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(ForgotAdminPasswordUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(GetAdminUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(GetForgotAdminPasswordUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(GetJoinedAdminUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(GetVerificationCodeUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(JoinAdminUserCase::class)->in(Scope::SINGLETON);
+        $this->bind(ResetAdminPasswordUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(UpdateAdminPasswordUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(VerifyAdminEmailUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(VerifyVerificationCodeUseCase::class)->in(Scope::SINGLETON);
     }
 
     private function http(): void

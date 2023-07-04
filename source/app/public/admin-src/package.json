@@ -1,0 +1,15 @@
+{
+  "name": "admin-src",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup --config rollup.config.js --configPlugin @rollup/plugin-terser"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.3",
+    "rollup": "^3.26.0"
+  }
+}

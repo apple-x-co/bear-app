@@ -4,22 +4,11 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
-use AppCore\Domain\AccessControl\Access;
-use AppCore\Domain\AccessControl\Permission;
-use AppCore\Domain\Admin\Admin;
-use AppCore\Domain\Admin\AdminEmail;
-use AppCore\Domain\Admin\AdminRepositoryInterface;
-use AppCore\Domain\AdminPermission\AdminPermission;
-use AppCore\Domain\AdminPermission\AdminPermissionRepositoryInterface;
-use AppCore\Domain\Hasher\PasswordHasherInterface;
-use AppCore\Domain\Mail\Address;
-use AppCore\Domain\Mail\AddressInterface;
-use AppCore\Domain\Mail\Email;
-use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Domain\WebSignature\ExpiredSignatureException;
-use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use AppCore\Application\Admin\CreateAdminInputData;
+use AppCore\Application\Admin\CreateAdminUseCase;
+use AppCore\Application\Admin\GetJoinedAdminInputData;
+use AppCore\Application\Admin\GetJoinedAdminUseCase;
 use BEAR\Resource\NullRenderer;
-use DateTimeImmutable;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Form\ExtendedForm;
@@ -32,21 +21,14 @@ use Ray\WebFormModule\FormInterface;
 use Throwable;
 
 use function assert;
-use function is_int;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class SignUp extends AdminPage
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        #[Named('admin')] private readonly AddressInterface $adminAddress,
-        private readonly AdminPermissionRepositoryInterface $adminPermissionRepository,
-        private readonly AdminRepositoryInterface $adminRepository,
+        private readonly CreateAdminUseCase $createAdminUseCase,
+        private readonly GetJoinedAdminUseCase $getJoinedAdminUseCase,
         #[Named('admin_sign_up_form')] protected readonly FormInterface $form,
-        private readonly PasswordHasherInterface $passwordHasher,
-        #[Named('SMTP')] private readonly TransportInterface $smtpTransport,
-        #[Named('queue')] private readonly TransportInterface $queueTransport,
-        private readonly WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
         $this->body['form'] = $this->form;
     }
@@ -54,7 +36,9 @@ class SignUp extends AdminPage
     public function onGet(string $signature): static
     {
         try {
-            $webSignature = $this->webSignatureEncrypter->decrypt($signature);
+            $this->getJoinedAdminUseCase->execute(
+                new GetJoinedAdminInputData($signature),
+            );
         } catch (Throwable) {
             $this->session->set('error:message', 'message:admin:sign_up:decrypt_error');
             $this->session->set('error:returnName', 'Join');
@@ -64,11 +48,6 @@ class SignUp extends AdminPage
             $this->headers = [ResponseHeader::LOCATION => '/admin/error'];
 
             return $this;
-        }
-
-        $now = new DateTimeImmutable();
-        if ($webSignature->expiresAt < $now) {
-            throw new ExpiredSignatureException();
         }
 
         assert($this->form instanceof ExtendedForm);
@@ -83,50 +62,13 @@ class SignUp extends AdminPage
      */
     public function onPost(SignUpInput $signUp): static
     {
-        $webSignature = $this->webSignatureEncrypter->decrypt($signUp->signature);
-        $now = new DateTimeImmutable();
-        if ($webSignature->expiresAt < $now) {
-            throw new ExpiredSignatureException();
-        }
-
-        $admin = new Admin(
-            $signUp->username,
-            $this->passwordHasher->hash($signUp->password),
-            $signUp->displayName,
-            true,
-            [new AdminEmail($webSignature->address, new DateTimeImmutable())],
-        );
-        $this->adminRepository->store($admin);
-
-        $adminId = $admin->getNewId();
-        if (is_int($adminId)) {
-            foreach (AdminPermission::DEFAULT_RESOURCE_NAMES as $resourceName) {
-                $this->adminPermissionRepository->store(
-                    new AdminPermission(
-                        $adminId,
-                        Access::Allow,
-                        $resourceName,
-                        Permission::Read,
-                    )
-                );
-            }
-        }
-
-        $this->queueTransport->send(
-            (new Email())
-                ->setFrom($this->adminAddress)
-                ->setTo([new Address($webSignature->address, $signUp->displayName)])
-                ->setTemplateId('admin_welcome')
-                ->setTemplateVars(['displayName' => $signUp->displayName])
-                ->setScheduleAt(new DateTimeImmutable())
-        );
-
-        $this->smtpTransport->send(
-            (new Email())
-                ->setFrom($this->adminAddress)
-                ->setTo([new Address($webSignature->address, $signUp->displayName)])
-                ->setTemplateId('admin_sign_up')
-                ->setTemplateVars(['displayName' => $signUp->displayName])
+        $this->createAdminUseCase->execute(
+            new CreateAdminInputData(
+                $signUp->username,
+                $signUp->displayName,
+                $signUp->password,
+                $signUp->signature,
+            )
         );
 
         $this->renderer = new NullRenderer();

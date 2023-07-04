@@ -10,7 +10,7 @@ use DateTimeImmutable;
 
 class AdminPermission
 {
-    public const DEFAULT_RESOURCE_NAMES = ['Settings'];
+    public const DEFAULT_RESOURCE_NAMES = ['settings'];
 
     public function __construct(
         public readonly int $adminId,

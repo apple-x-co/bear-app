@@ -12,7 +12,7 @@ use MyVendor\MyProject\Resource\Page\AdminPage;
 class Index extends AdminPage
 {
     #[AdminGuard]
-    #[RequiredPermission('Settings', Permission::Read)]
+    #[RequiredPermission('settings', Permission::Read)]
     public function onGet(): static
     {
         return $this;

@@ -62,9 +62,9 @@ class AdminPermissionRepository implements AdminPermissionRepositoryInterface
     {
         $this->adminPermissionCommand->add(
             $adminPermission->adminId,
-            $adminPermission->access->name,
+            $adminPermission->access->value,
             $adminPermission->resourceName,
-            $adminPermission->permission->name,
+            $adminPermission->permission->value,
         );
     }
 

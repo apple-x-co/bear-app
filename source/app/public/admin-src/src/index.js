@@ -1,6 +1,3 @@
-// @ts-check
-/// <reference lib="dom"/>
-
 (function () {
     window.addEventListener('DOMContentLoaded', (event) => {
         (function () {

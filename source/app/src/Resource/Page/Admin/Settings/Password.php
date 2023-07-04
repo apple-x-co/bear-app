@@ -4,16 +4,10 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin\Settings;
 
+use AppCore\Application\Admin\UpdateAdminPasswordInputData;
+use AppCore\Application\Admin\UpdateAdminPasswordUseCase;
 use AppCore\Domain\AccessControl\Permission;
-use AppCore\Domain\Admin\AdminRepositoryInterface;
-use AppCore\Domain\Hasher\PasswordHasherInterface;
 use AppCore\Domain\Language\LanguageInterface;
-use AppCore\Domain\LoggerInterface;
-use AppCore\Domain\Mail\Address;
-use AppCore\Domain\Mail\AddressInterface;
-use AppCore\Domain\Mail\Email;
-use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Infrastructure\Query\AdminPasswordUpdateInterface;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -32,22 +26,18 @@ use Throwable;
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class Password extends AdminPage
 {
+    /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        #[Named('admin')] private readonly AddressInterface $adminAddress,
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
-        private readonly AdminRepositoryInterface $adminRepository,
-        private readonly AdminPasswordUpdateInterface $adminPasswordUpdate,
         #[Named('admin_password_update_form')] protected readonly FormInterface $form,
         private readonly LanguageInterface $language,
-        private readonly PasswordHasherInterface $passwordHasher,
-        #[Named('admin')] private readonly LoggerInterface $logger,
-        #[Named('SMTP')] private readonly TransportInterface $transport,
+        private readonly UpdateAdminPasswordUseCase $updateAdminPasswordUseCase,
     ) {
         $this->body['form'] = $this->form;
     }
 
     #[AdminGuard]
-    #[RequiredPermission('Settings', Permission::Read)]
+    #[RequiredPermission('settings', Permission::Read)]
     public function onGet(): static
     {
         return $this;
@@ -80,22 +70,13 @@ class Password extends AdminPage
             );
         }
 
-        ($this->adminPasswordUpdate)($adminId, $this->passwordHasher->hash($updatePassword->password));
-
-        $admin = $this->adminRepository->findById($adminId);
-        foreach ($admin->emails as $adminEmail) {
-            try {
-                $this->transport->send(
-                    (new Email())
-                        ->setFrom($this->adminAddress)
-                        ->setTo([new Address($adminEmail->emailAddress, $admin->username)])
-                        ->setTemplateId('admin_password_updated')
-                        ->setTemplateVars(['displayName' => $admin->displayName])
-                );
-            } catch (Throwable $throwable) {
-                $this->logger->log((string) $throwable);
-            }
-        }
+        $this->updateAdminPasswordUseCase->execute(
+            new UpdateAdminPasswordInputData(
+                $adminId,
+                $userName,
+                $updatePassword->password,
+            )
+        );
 
         $this->renderer = new NullRenderer();
         $this->session->setFlashMessage($this->language->get('message:admin:password_updated'));
