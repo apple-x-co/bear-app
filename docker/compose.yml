@@ -20,7 +20,7 @@ services:
     environment:
       - PHP_XDEBUG=off
       - COMPOSER_ALLOW_SUPERUSER=1
-      - LOCAL_MODE=1
+      - APP_ENV=local
 
   mysql:
     image: ghcr.io/buddying-inc/mysql:80
