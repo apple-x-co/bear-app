@@ -20,7 +20,7 @@
 ### Frontend
 
 * CSS / [tailwindcss](https://tailwindcss.com/)
-* JavaScript bundler / [Deno](https://deno.com/)
+* JavaScript bundler / [Rllup](https://rollupjs.org)
 
 ## Form sample
 

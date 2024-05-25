@@ -21,7 +21,7 @@
     {{ if ($isUseGoogleRecaptchaV2): }}
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     {{ endif }}
-    <script src="/admin/js/index.js"></script>
+    <script src="/admin/js/index.min.js"></script>
     {{= getBlock () ~}}
 </head>
 <body class="bg-slate-50 text-slate-700 tracking-wide selection:bg-fuchsia-300 selection:text-fuchsia-900">
