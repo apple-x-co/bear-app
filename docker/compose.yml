@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   web:
     image: ghcr.io/buddying-inc/webserver-amzn2:apache24-php82

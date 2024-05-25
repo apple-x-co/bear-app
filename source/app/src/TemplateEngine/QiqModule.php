@@ -8,6 +8,7 @@ use BEAR\Resource\RenderInterface;
 use Qiq\Catalog;
 use Qiq\Compiler;
 use Qiq\Compiler\QiqCompiler;
+use Qiq\Engine;
 use Qiq\Helper\Html\HtmlHelpers;
 use Qiq\Helpers;
 use Qiq\Template;
@@ -26,13 +27,8 @@ class QiqModule extends AbstractModule
 
     protected function configure(): void
     {
-        $this->bind(Template::class)->toConstructor(
-            Template::class,
-            [
-                'paths' => 'qiq_paths',
-                'extension' => 'qiq_extension',
-            ],
-        );
+        $this->bind(Template::class)->in(Scope::SINGLETON);
+        $this->bind(Engine::class)->to(Template::class)->in(Scope::SINGLETON);
         $this->bind(Catalog::class)->toConstructor(
             Catalog::class,
             [
@@ -40,11 +36,11 @@ class QiqModule extends AbstractModule
                 'extension' => 'qiq_extension',
             ],
         );
-        $this->bind(Helpers::class)->to(HtmlHelpers::class);
         $this->bind()->annotatedWith('qiq_cache_path')->toInstance(null);
         $this->bind()->annotatedWith('qiq_extension')->toInstance('.php');
         $this->bind()->annotatedWith('qiq_paths')->toInstance($this->paths);
         $this->bind(RenderInterface::class)->to(QiqRenderer::class)->in(Scope::SINGLETON);
+        $this->bind(Helpers::class)->to(HtmlHelpers::class);
         $this->bind(Compiler::class)->to(QiqCompiler::class);
     }
 }
