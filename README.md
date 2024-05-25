@@ -20,7 +20,7 @@
 ### Frontend
 
 * CSS / [tailwindcss](https://tailwindcss.com/)
-* JavaScript bundler / [Rllup](https://rollupjs.org)
+* JavaScript bundler / [Rollup](https://rollupjs.org)
 
 ## Form sample
 
