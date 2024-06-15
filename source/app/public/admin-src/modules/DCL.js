@@ -1,4 +1,4 @@
-function initDCL () {
+export function initDCL () {
   document.addEventListener('DOMContentLoaded', () => {
     setupSubmitOnce();
   });
@@ -26,5 +26,3 @@ function setupSubmitOnce () {
     });
   });
 }
-
-initDCL();

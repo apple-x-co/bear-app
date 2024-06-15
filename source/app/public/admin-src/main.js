@@ -1,1 +1,3 @@
-import './modules/global';
+import { initDCL } from './modules/DCL';
+
+initDCL();

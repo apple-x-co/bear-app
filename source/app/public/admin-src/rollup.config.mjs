@@ -4,11 +4,11 @@ export default {
     input: 'main.js',
     output: [
         {
-            file: 'output/index.js',
+            file: '../admin/js/index.js',
             format: 'esm',
         },
         {
-            file: 'output/index.min.js',
+            file: '../admin/js/index.min.js',
             format: 'esm',
             plugins: [terser()],
         }
