@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\TemplateEngine;
 
-use AppCore\Domain\AccessControl\Permission;
 use Aura\Html\Helper\Input\AbstractInput;
 use BEAR\Sunday\Extension\Router\RouterInterface;
-use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
-use MyVendor\MyProject\Auth\AdminIdentity;
 use MyVendor\MyProject\Form\ExtendedFieldset;
 use MyVendor\MyProject\Form\ExtendedForm;
-use MyVendor\MyProject\Session\SessionInterface;
 use Qiq\Helper\Html\HtmlHelpers;
 use Ray\Di\Di\Named;
 
@@ -24,30 +20,14 @@ class QiqCustomHelpers extends HtmlHelpers
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        private readonly AdminAuthenticatorInterface $adminAuthenticator,
-        #[Named('google_recaptcha_site_key')] private readonly string $googleRecaptchaSiteKey,
+        #[Named('google_recaptcha_site_key')]
+        private readonly string $googleRecaptchaSiteKey,
         private readonly RouterInterface $router,
-        private readonly SessionInterface $session,
     ) {
         parent::__construct(null);
     }
 
-    public function admin(): AdminIdentity
-    {
-        return $this->adminAuthenticator->getIdentity();
-    }
-
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
-    public function isAllowed(string $resourceName, string $permission): bool
-    {
-        $requirePermission = Permission::from($permission);
-
-        return $this->adminAuthenticator->getAccessControl()->isAllowed($resourceName, $requirePermission);
-    }
-
-    /**
-     * @param array<string, string> $attribs
-     */
+    /** @param array<string, string> $attribs */
     public function adminCheckBox(
         ExtendedForm $form,
         string $input,
@@ -61,9 +41,7 @@ class QiqCustomHelpers extends HtmlHelpers
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
 
-    /**
-     * @param array<string, string> $attribs
-     */
+    /** @param array<string, string> $attribs */
     public function adminFieldsetError(
         ExtendedFieldset $fieldset,
         string $input,
@@ -86,9 +64,7 @@ class QiqCustomHelpers extends HtmlHelpers
         );
     }
 
-    /**
-     * @param array<string, string> $attribs
-     */
+    /** @param array<string, string> $attribs */
     public function adminFile(
         ExtendedForm $form,
         string $input,
@@ -102,9 +78,7 @@ class QiqCustomHelpers extends HtmlHelpers
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
 
-    /**
-     * @param array<string, string> $attribs
-     */
+    /** @param array<string, string> $attribs */
     public function adminFormError(ExtendedForm $form, string $input, string $tag = 'span', array $attribs = []): string
     {
         $message = $form->error($input);
@@ -123,9 +97,7 @@ class QiqCustomHelpers extends HtmlHelpers
         );
     }
 
-    /**
-     * @param array<string, string> $attribs
-     */
+    /** @param array<string, string> $attribs */
     public function adminHidden(
         ExtendedForm $form,
         string $input,
@@ -140,9 +112,7 @@ class QiqCustomHelpers extends HtmlHelpers
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
 
-    /**
-     * @param array<string, string> $attribs
-     */
+    /** @param array<string, string> $attribs */
     public function adminRadio(
         ExtendedForm $form,
         string $input,
@@ -156,9 +126,7 @@ class QiqCustomHelpers extends HtmlHelpers
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
 
-    /**
-     * @param array<string, string> $attribs
-     */
+    /** @param array<string, string> $attribs */
     public function adminSelect(
         ExtendedForm $form,
         string $input,
@@ -172,9 +140,7 @@ class QiqCustomHelpers extends HtmlHelpers
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
 
-    /**
-     * @param array<string, string> $attribs
-     */
+    /** @param array<string, string> $attribs */
     public function adminText(
         ExtendedForm $form,
         string $input,
@@ -188,9 +154,7 @@ class QiqCustomHelpers extends HtmlHelpers
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
 
-    /**
-     * @param array<string, string> $attribs
-     */
+    /** @param array<string, string> $attribs */
     public function adminTextArea(
         ExtendedForm $form,
         string $input,
@@ -204,9 +168,7 @@ class QiqCustomHelpers extends HtmlHelpers
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
 
-    /**
-     * @param array<string, string> $attribs
-     */
+    /** @param array<string, string> $attribs */
     public function adminSubmit(
         ExtendedForm $form,
         string $input,
@@ -226,11 +188,6 @@ class QiqCustomHelpers extends HtmlHelpers
         ];
 
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
-    }
-
-    public function flashMessage(): ?string
-    {
-        return $this->session->getFlashMessage();
     }
 
     public function googleRecaptchaSiteKey(): string

@@ -11,6 +11,7 @@ use Ray\Di\Di\Inject;
 /** @SuppressWarnings(PHPMD.NumberOfChildren) */
 class AdminPage extends ResourceObject
 {
+    // TODO: Lazy get
     protected SessionInterface $session;
 
     #[Inject]
