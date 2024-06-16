@@ -12,10 +12,7 @@ use Ray\Di\ProviderInterface;
 
 final class AdminContext implements AdminContextInterface
 {
-    /**
-     * @SuppressWarnings(PHPMD.LongVariable)
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     */
+    /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
         #[Set(AdminAuthenticatorInterface::class)]
         private readonly ProviderInterface $adminAuthenticatorProvider,
@@ -34,6 +31,7 @@ final class AdminContext implements AdminContextInterface
         return $this->sessionProvider->get();
     }
 
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function isAllowed(string $resourceName, string $permission): bool
     {
         $requirePermission = Permission::from($permission);
