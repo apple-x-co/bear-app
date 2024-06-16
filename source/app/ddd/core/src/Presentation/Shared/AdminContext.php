@@ -59,7 +59,7 @@ final class AdminContext implements AdminContextInterface
 
     public function getSessionValue(string $key, ?string $alt = null): mixed
     {
-        $this->session()->get($key, $alt);
+        return $this->session()->get($key, $alt);
     }
 
     public function resetSessionValue(string $key): void
