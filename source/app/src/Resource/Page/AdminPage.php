@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page;
 
+use AppCore\Presentation\Shared\AdminContextInterface;
 use BEAR\Resource\ResourceObject;
-use MyVendor\MyProject\Session\SessionInterface;
 use Ray\Di\Di\Inject;
 
 /** @SuppressWarnings(PHPMD.NumberOfChildren) */
 class AdminPage extends ResourceObject
 {
-    // TODO: Lazy get
-    protected SessionInterface $session;
+    protected AdminContextInterface $context;
 
     #[Inject]
-    public function setSession(SessionInterface $session): void
+    public function setAdminContext(AdminContextInterface $context): void
     {
-        $this->session = $session;
+        $this->context = $context;
+
+        $this->body['context'] = $context;
     }
 }

@@ -41,9 +41,9 @@ class ResetPassword extends AdminPage
                 new GetForgotAdminPasswordInputData($signature)
             );
         } catch (Throwable) {
-            $this->session->set('error:message', 'message:admin:reset_password:decrypt_error');
-            $this->session->set('error:returnName', 'Forgot password');
-            $this->session->set('error:returnUrl', '/admin/forgot-password');
+            $this->context->setSessionValue('error:message', 'message:admin:reset_password:decrypt_error');
+            $this->context->setSessionValue('error:returnName', 'Forgot password');
+            $this->context->setSessionValue('error:returnUrl', '/admin/forgot-password');
             $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = [ResponseHeader::LOCATION => '/admin/error'];

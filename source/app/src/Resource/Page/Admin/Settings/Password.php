@@ -79,9 +79,9 @@ class Password extends AdminPage
         );
 
         $this->renderer = new NullRenderer();
-        $this->session->setFlashMessage($this->language->get('message:admin:password_updated'));
         $this->code = StatusCode::SEE_OTHER;
         $this->headers = [ResponseHeader::LOCATION => '/admin/settings/index']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
+        $this->context->setFlashMessage($this->language->get('message:admin:password_updated'));
 
         return $this;
     }

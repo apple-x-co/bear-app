@@ -25,7 +25,7 @@
 </header>
 <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-5 flex flex-row">
     {{= render('partials/Admin/InlineIcon', ['name' => 'user-circle']) }}
-    <p class="text-base lg:text-xl font-extrabold ml-1"><!-- TODO: AdminIdentity.displayName -->></p>
+    <p class="text-base lg:text-xl font-extrabold ml-1">{{h $context->displayName() }}</p>
 </div>
 <div class="max-w-7xl mx-auto px-0 lg:px-8 pt-5 flex flex-row grow">
     {{ $isNavVisible = isset($navVisible) ? $navVisible : true }}

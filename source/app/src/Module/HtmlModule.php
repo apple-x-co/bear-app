@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
+use AppCore\Presentation\Shared\AdminContext;
+use AppCore\Presentation\Shared\AdminContextInterface;
 use BEAR\Package\AbstractAppModule;
 use MyVendor\MyProject\Form\AdminCodeVerifyForm;
 use MyVendor\MyProject\Form\AdminContactDemoForm;
@@ -53,6 +55,8 @@ class HtmlModule extends AbstractAppModule
 
     private function admin(): void
     {
+        $this->bind(AdminContextInterface::class)->to(AdminContext::class);
+
         $this->bind(FormInterface::class)->annotatedWith('admin_code_verify_form')->to(AdminCodeVerifyForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_delete_form')->to(AdminDeleteForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_email_create_form')->to(AdminEmailCreateForm::class);

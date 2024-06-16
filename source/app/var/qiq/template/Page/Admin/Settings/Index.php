@@ -4,7 +4,8 @@
 
 {{ setBlock ('body_content') }}
 
-<!-- TODO: Get FlashMessage by resourceObject -->
-{{= render('partials/Admin/AlertInformation', ['text' => 'FIXME']) }}
+{{ if ($message = $context->flashMessage()): }}
+{{= render('partials/Admin/AlertInformation', ['text' => $message]) }}
+{{ endif }}
 
 {{ endBlock () }}

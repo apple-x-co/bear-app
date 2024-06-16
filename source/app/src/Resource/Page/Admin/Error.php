@@ -19,13 +19,13 @@ class Error extends AdminPage
 
     public function onGet(): static
     {
-        $message = $this->session->get('error:message');
-        $returnName = $this->session->get('error:returnName');
-        $returnUrl = $this->session->get('error:returnUrl');
+        $message = $this->context->getSessionValue('error:message');
+        $returnName = $this->context->getSessionValue('error:returnName');
+        $returnUrl = $this->context->getSessionValue('error:returnUrl');
 
-        $this->session->reset('error:message');
-        $this->session->reset('error:returnName');
-        $this->session->reset('error:returnUrl');
+        $this->context->resetSessionValue('error:message');
+        $this->context->resetSessionValue('error:returnName');
+        $this->context->resetSessionValue('error:returnUrl');
 
         if ($message === null) {
             $this->renderer = new NullRenderer();

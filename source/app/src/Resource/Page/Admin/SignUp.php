@@ -40,9 +40,9 @@ class SignUp extends AdminPage
                 new GetJoinedAdminInputData($signature),
             );
         } catch (Throwable) {
-            $this->session->set('error:message', 'message:admin:sign_up:decrypt_error');
-            $this->session->set('error:returnName', 'Join');
-            $this->session->set('error:returnUrl', '/admin/join');
+            $this->context->setSessionValue('error:message', 'message:admin:sign_up:decrypt_error');
+            $this->context->setSessionValue('error:returnName', 'Join');
+            $this->context->setSessionValue('error:returnUrl', '/admin/join');
             $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = [ResponseHeader::LOCATION => '/admin/error'];

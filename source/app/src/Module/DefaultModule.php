@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
+use AppCore\Presentation\Shared\AdminContextInterface;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
 use MyVendor\MyProject\Form\UploadFilesInterface;
@@ -38,6 +39,8 @@ class DefaultModule extends AbstractModule
     private function admin(): void
     {
         $this->bind(AdminAuthenticatorInterface::class)->toNull();
+
+        $this->bind(AdminContextInterface::class)->toNull();
 
         $this->bind(FormInterface::class)->annotatedWith('admin_code_verify_form')->toNull();
         $this->bind(FormInterface::class)->annotatedWith('admin_delete_form')->toNull();
