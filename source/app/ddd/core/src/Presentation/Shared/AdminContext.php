@@ -12,6 +12,10 @@ use Ray\Di\ProviderInterface;
 
 final class AdminContext implements AdminContextInterface
 {
+    /**
+     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
     public function __construct(
         #[Set(AdminAuthenticatorInterface::class)]
         private readonly ProviderInterface $adminAuthenticatorProvider,
