@@ -6,6 +6,7 @@ namespace MyVendor\MyProject\TemplateEngine;
 
 use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
+use Koriym\HttpConstants\ResponseHeader;
 use Qiq\Template;
 use Ray\Aop\WeavedInterface;
 use ReflectionClass;
@@ -28,6 +29,19 @@ class QiqRenderer implements RenderInterface
 
     public function render(ResourceObject $ro): string
     {
+        if ($ro->code >= 300 && $ro->code < 400) {
+            $location = $ro->headers[ResponseHeader::LOCATION];
+            $ro->view = <<<HTML
+<html lang="ja">
+<body>
+<p>Redirect to <a href="{$location}">{$location}</a> :)</p>
+</body>
+</html>
+HTML;
+
+            return $ro->view;
+        }
+
         $template = clone $this->template;
         $this->setTemplateView($template, $ro);
         assert($ro->body === null || is_array($ro->body));
