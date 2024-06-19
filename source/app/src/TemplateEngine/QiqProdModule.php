@@ -21,5 +21,7 @@ class QiqProdModule extends AbstractModule
     {
         $this->bind()->annotatedWith('qiq_cache_path')->toInstance($this->cachePath);
         $this->bind(Compiler::class)->toConstructor(QiqCompiler::class, ['cachePath' => 'qiq_cache_path']);
+
+        $this->bind()->annotatedWith('qiq_error_view_name')->toInstance('Error');
     }
 }

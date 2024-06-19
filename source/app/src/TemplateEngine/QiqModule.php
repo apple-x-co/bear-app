@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\TemplateEngine;
 
+use BEAR\Package\Provide\Error\ErrorPageFactoryInterface;
 use BEAR\Resource\RenderInterface;
 use Qiq\Catalog;
 use Qiq\Compiler;
@@ -42,5 +43,8 @@ class QiqModule extends AbstractModule
         $this->bind(RenderInterface::class)->to(QiqRenderer::class)->in(Scope::SINGLETON);
         $this->bind(Helpers::class)->to(HtmlHelpers::class);
         $this->bind(Compiler::class)->to(QiqCompiler::class);
+
+        $this->bind()->annotatedWith('qiq_error_view_name')->toInstance('DebugTrace');
+        $this->bind(ErrorPageFactoryInterface::class)->to(QiqErrorPageFactory::class);
     }
 }

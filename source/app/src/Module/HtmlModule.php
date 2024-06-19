@@ -26,7 +26,6 @@ use MyVendor\MyProject\Form\UploadFilesInterface;
 use MyVendor\MyProject\Form\UserLoginForm;
 use MyVendor\MyProject\Provider\UploadedFilesProvider;
 use MyVendor\MyProject\TemplateEngine\QiqCustomHelpers;
-use MyVendor\MyProject\TemplateEngine\QiqErrorModule;
 use MyVendor\MyProject\TemplateEngine\QiqModule;
 use Qiq\Helpers;
 use Ray\AuraSessionModule\AuraSessionModule;
@@ -41,7 +40,6 @@ class HtmlModule extends AbstractAppModule
         $this->install(new AuraSessionModule());
         $this->bind(Helpers::class)->to(QiqCustomHelpers::class);
         $this->install(new QiqModule([$this->appMeta->appDir . '/var/qiq/template']));
-        $this->install(new QiqErrorModule('DebugTrace'));
         $this->install(new AuraInputModule());
         $this->install(new SessionAuthModule());
         $this->install(new CaptchaModule());

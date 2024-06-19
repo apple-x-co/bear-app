@@ -4,30 +4,43 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\TemplateEngine;
 
-use BEAR\Resource\RenderInterface;
+use BEAR\Package\Provide\Error\Status;
 use BEAR\Resource\ResourceObject;
-use Ray\Di\Di\Inject;
-use Ray\Di\Di\Named;
+use BEAR\Sunday\Extension\Router\RouterMatch;
+use Qiq\Template;
+use Throwable;
 
-class QiqErrorPage extends ResourceObject
+final class QiqErrorPage extends ResourceObject
 {
-    // phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-    /** @var array<string, string>  */
-    public $headers = ['content-type' => 'text/html; charset=utf-8'];
-    // phpcs:enable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __sleep(): array
-    {
-        return ['renderer'];
+    public function __construct(
+        private readonly Throwable $e, // @phpstan-ignore-line
+        private readonly string $errorViewName,
+        private readonly RouterMatch $request, // @phpstan-ignore-line
+        private readonly Template $template,
+    ) {
+        $status = new Status($e);
+        $this->code = $status->code;
+        $this->headers = ['Content-Type' => 'text/html; charset=UTF-8'];
+        $this->body = [
+            'code' => $status->code,
+            'message' => $status->text,
+            'e' => [
+                'code' => $e->getCode(),
+                'class' => $e::class,
+                'message' => $e->getMessage(),
+            ],
+            'request' => (string) $request,
+        ];
     }
 
-    #[Inject]
-    #[Named('error_page')]
-    public function setRenderer(RenderInterface $renderer): ResourceObject
+    public function toString(): string
     {
-        return parent::setRenderer($renderer);
+        $template = clone $this->template;
+        $template->setView($this->errorViewName);
+        $template->setData($this->body ?? []);
+
+        $this->view = $template();
+
+        return $this->view;
     }
 }
