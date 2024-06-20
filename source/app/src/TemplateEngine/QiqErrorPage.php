@@ -29,6 +29,7 @@ final class QiqErrorPage extends ResourceObject
                 'class' => $e::class,
                 'message' => $e->getMessage(),
             ],
+            'file' => sprintf('%s(%s)', $e->getFile(), $e->getLine()),
             'request' => (string) $request,
         ];
     }
