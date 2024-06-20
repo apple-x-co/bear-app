@@ -28,9 +28,11 @@ final class QiqErrorPage extends ResourceObject
                 'code' => $e->getCode(),
                 'message' => $e->getMessage(),
                 'class' => $e::class,
+                'file' => $e->getFile(),
                 'line' => $e->getLine(),
             ],
             'request' => (string) $request,
+            'stacktrace' => $e->getTraceAsString(),
         ];
     }
 

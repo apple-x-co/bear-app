@@ -12,7 +12,8 @@ $this->setLayout('layout/base');
                         <div class="mt-2 text-center">
                             <p class="text-rose-500 font-semibold">{{h $e['code'] }}</p>
                             <p class="text-rose-500 font-semibold">{{h $e['message'] }}</p>
-                            <p class="text-rose-500 font-semibold">{{h $e['class'] }} ({{h $e['line'] }})</p>
+                            <p class="text-rose-500 font-semibold">{{h $e['class'] }}</p>
+                            <p class="text-rose-500 font-semibold">{{h $e['file'] }}#L{{h $e['line'] }}</p>
                         </div>
                     </div>
                 </div>
