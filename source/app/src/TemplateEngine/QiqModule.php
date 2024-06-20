@@ -6,6 +6,7 @@ namespace MyVendor\MyProject\TemplateEngine;
 
 use BEAR\Package\Provide\Error\ErrorPageFactoryInterface;
 use BEAR\Resource\RenderInterface;
+use BEAR\Sunday\Extension\Error\ErrorInterface;
 use Qiq\Catalog;
 use Qiq\Compiler;
 use Qiq\Compiler\QiqCompiler;
@@ -16,6 +17,7 @@ use Qiq\Template;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
+/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class QiqModule extends AbstractModule
 {
     /** @param array<string> $paths */
@@ -45,6 +47,7 @@ class QiqModule extends AbstractModule
         $this->bind(Compiler::class)->to(QiqCompiler::class);
 
         $this->bind()->annotatedWith('qiq_error_view_name')->toInstance('DebugTrace');
-        $this->bind(ErrorPageFactoryInterface::class)->to(QiqErrorPageFactory::class);
+        $this->bind(ErrorPageFactoryInterface::class)->annotatedWith('qiq')->to(QiqErrorPageFactory::class);
+        $this->bind(ErrorInterface::class)->to(QiqErrorHandler::class);
     }
 }
