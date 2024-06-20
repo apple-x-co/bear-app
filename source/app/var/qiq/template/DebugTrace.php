@@ -11,7 +11,8 @@ $this->setLayout('layout/base');
                         <h2 class="text-xl text-center tracking-widest font-sans font-bold text-rose-500">Exception</h2>
                         <div class="mt-2 text-center">
                             <p class="text-rose-500 font-semibold">{{h $e['code'] }}</p>
-                            <p class="text-rose-500 font-semibold">{{h $e['class'] }} ({{h $e['message'] }})</p>
+                            <p class="text-rose-500 font-semibold">{{h $e['message'] }}</p>
+                            <p class="text-rose-500 font-semibold">{{h $e['class'] }} ({{h $e['line'] }})</p>
                         </div>
                     </div>
                 </div>

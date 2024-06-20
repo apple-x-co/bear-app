@@ -10,8 +10,6 @@ use BEAR\Sunday\Extension\Router\RouterMatch;
 use Qiq\Template;
 use Throwable;
 
-use function sprintf;
-
 final class QiqErrorPage extends ResourceObject
 {
     public function __construct(
@@ -28,10 +26,10 @@ final class QiqErrorPage extends ResourceObject
             'message' => $status->text,
             'e' => [
                 'code' => $e->getCode(),
-                'class' => $e::class,
                 'message' => $e->getMessage(),
+                'class' => $e::class,
+                'line' => $e->getLine(),
             ],
-            'file' => sprintf('%s(%s)', $e->getFile(), $e->getLine()),
             'request' => (string) $request,
         ];
     }
