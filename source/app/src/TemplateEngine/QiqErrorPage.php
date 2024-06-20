@@ -10,6 +10,8 @@ use BEAR\Sunday\Extension\Router\RouterMatch;
 use Qiq\Template;
 use Throwable;
 
+use function sprintf;
+
 final class QiqErrorPage extends ResourceObject
 {
     public function __construct(
