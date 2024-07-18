@@ -28,11 +28,13 @@ class Session implements SessionInterface
         $this->segment->set($key, null);
     }
 
+    /** @deprecated use "FlashMessenger" instead */
     public function setFlashMessage(string $val): void
     {
         $this->segment->setFlash('message', $val);
     }
 
+    /** @deprecated use "FlashMessenger" instead */
     public function getFlashMessage(?string $alt = null): mixed
     {
         return $this->segment->getFlash('message', $alt);

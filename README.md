@@ -58,6 +58,7 @@ graph TD;
 * Create account
 * Delete account
 * Email (immediately or schedule)
+* Flash message
 
 ### Security
 

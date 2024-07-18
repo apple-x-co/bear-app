@@ -12,7 +12,9 @@ interface SessionInterface
 
     public function reset(string $key): void;
 
+    /** @deprecated use "FlashMessenger" instead */
     public function setFlashMessage(string $val): void;
 
+    /** @deprecated use "FlashMessenger" instead */
     public function getFlashMessage(?string $alt = null): mixed;
 }

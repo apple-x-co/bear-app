@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
+use AppCore\Application\Shared\FlashMessengerInterface;
 use AppCore\Presentation\Shared\AdminContextInterface;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
@@ -19,6 +20,8 @@ class DefaultModule extends AbstractModule
 {
     protected function configure(): void
     {
+        $this->bind(FlashMessengerInterface::class)->toNull();
+
         $this->bind(UploadFilesInterface::class)->toNull();
 
         $this->bind(SessionInterface::class)->toNull();

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
+use AppCore\Application\Shared\FlashMessengerInterface;
+use AppCore\Infrastructure\Shared\FlashMessenger;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\AdminLogin;
 use MyVendor\MyProject\Annotation\AdminLogout;
@@ -51,6 +53,8 @@ class SessionAuthModule extends AbstractModule
         $this->bind()
              ->annotatedWith('session_name')
              ->toInstance(session_name());
+
+        $this->bind(FlashMessengerInterface::class)->to(FlashMessenger::class)->in(Scope::SINGLETON);
 
         $this->admin();
         $this->user();
