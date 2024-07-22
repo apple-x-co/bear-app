@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
-use AppCore\Application\Shared\FlashMessengerInterface;
+use AppCore\Domain\FlashMessenger\FlashMessengerInterface;
 use AppCore\Infrastructure\Shared\FlashMessenger;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\AdminLogin;

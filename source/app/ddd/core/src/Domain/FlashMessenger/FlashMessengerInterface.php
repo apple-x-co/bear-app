@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppCore\Application\Shared;
-
-use AppCore\Domain\FlashMessenger\FlashMessageType;
+namespace AppCore\Domain\FlashMessenger;
 
 interface FlashMessengerInterface
 {

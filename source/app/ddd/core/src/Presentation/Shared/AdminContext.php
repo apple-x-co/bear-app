@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AppCore\Presentation\Shared;
 
-use AppCore\Application\Shared\FlashMessengerInterface;
 use AppCore\Domain\AccessControl\Permission;
 use AppCore\Domain\FlashMessenger\FlashMessageType;
+use AppCore\Domain\FlashMessenger\FlashMessengerInterface;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Session\SessionInterface;
 use Ray\Di\Di\Set;

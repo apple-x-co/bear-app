@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
-use AppCore\Application\Shared\FlashMessengerInterface;
+use AppCore\Domain\FlashMessenger\FlashMessengerInterface;
 use AppCore\Presentation\Shared\AdminContextInterface;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\UserAuthenticatorInterface;

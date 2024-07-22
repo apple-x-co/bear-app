@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Shared;
 
-use AppCore\Application\Shared\FlashMessengerInterface;
 use AppCore\Domain\FlashMessenger\FlashMessageType;
+use AppCore\Domain\FlashMessenger\FlashMessengerInterface;
 use AppCore\Exception\RuntimeException;
 
 use function session_id;
