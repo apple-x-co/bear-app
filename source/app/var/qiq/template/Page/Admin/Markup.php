@@ -220,27 +220,31 @@
             </select>
         </label>
 
-        <label class="block mt-5">
+        <div class="mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">送信ボタン</span>
             <input type="submit" value="登録" class="py-2 px-3 bg-sky-500 text-white text-sm font-sans font-bold tracking-wider rounded-md shadow-lg shadow-sky-500/50 focus:outline-none">
-        </label>
+        </div>
 
-        <label class="block mt-5">
+        <div class="mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">キャンセルボタン</span>
             <input type="button" value="キャンセル" class="py-2 px-3 bg-white text-gray-500 text-sm font-sans font-bold tracking-wider rounded-md shadow-lg shadow-gray-500/20 focus:outline-none border border-gray-300">
-        </label>
+        </div>
 
-        <label class="block mt-5">
+        <div class="mt-5">
             <span class="block text-sm font-sans font-normal text-slate-700">無効ボタン</span>
             <input type="button" value="キャンセル" class="py-2 px-3 bg-sky-500 text-white text-sm font-sans font-bold tracking-wider rounded-md shadow-lg shadow-sky-500/50 focus:outline-none disabled:text-white disabled:bg-slate-200 disabled:shadow-none" disabled="disabled">
-        </label>
+        </div>
 
-        <label class="block mt-5">
-            <span class="block text-sm font-sans font-normal text-slate-700">削除ボタン</span>
-            <button type="submit" value="キャンセル" class="text-rose-500 focus:outline-none">
-                {{= render('partials/Admin/InlineIcon', ['name' => 'trash']) }}
-            </button>
-        </label>
+        <div class="mt-5">
+            <div class="border-2 border-rose-500 bg-rose-100 rounded-md p-5">
+                <p class="text-sm mb-1 font-semibold">削除しますか?</p>
+                <p class="text-xs mb-3">削除後は元に戻すことができません</p>
+                <button type="submit" value="削除" class="py-2 px-4 bg-rose-500 text-white text-sm font-sans font-bold tracking-wider rounded-full shadow-lg shadow-rose-500/50 focus:outline-none hover:bg-rose-600 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">
+                    {{= render('partials/Admin/InlineIcon', ['name' => 'trash']) }}
+                    削除する
+                </button>
+            </div>
+        </div>
     </form>
 </section>
 
