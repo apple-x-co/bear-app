@@ -1,7 +1,6 @@
 services:
   web:
-    image: ghcr.io/buddying-inc/webserver-amzn2:apache24-php82
-    platform: linux/amd64
+    image: ghcr.io/buddying-inc/webserver-centos83:apache24-php82
     container_name: bear-web
     working_dir: /var/www/html
     volumes:
@@ -23,7 +22,6 @@ services:
 
   mysql:
     image: ghcr.io/buddying-inc/mysql:80
-    platform: linux/amd64
     container_name: bear-mysql
     volumes:
       - type: bind
