@@ -10,6 +10,7 @@ use Koriym\HttpConstants\ResponseHeader;
 
 class Index extends ResourceObject
 {
+    /** @var array<string, string> */
     public $headers = [ResponseHeader::CACHE_CONTROL => CacheControl::PUBLIC_ . ',max-age=300'];
 
     /** @var array{greeting: string} */
