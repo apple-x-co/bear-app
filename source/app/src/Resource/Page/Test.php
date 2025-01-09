@@ -7,7 +7,6 @@ namespace MyVendor\MyProject\Resource\Page;
 use AppCore\Domain\Test\Test as TestDomain;
 use AppCore\Domain\Test\TestRepositoryInterface;
 use BEAR\Resource\ResourceObject;
-
 use Koriym\HttpConstants\CacheControl;
 use Koriym\HttpConstants\ResponseHeader;
 
