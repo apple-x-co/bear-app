@@ -8,10 +8,15 @@ use AppCore\Domain\Test\Test as TestDomain;
 use AppCore\Domain\Test\TestRepositoryInterface;
 use BEAR\Resource\ResourceObject;
 
+use Koriym\HttpConstants\CacheControl;
+use Koriym\HttpConstants\ResponseHeader;
+
 use function time;
 
 class Test extends ResourceObject
 {
+    public $headers = [ResponseHeader::CACHE_CONTROL => CacheControl::PUBLIC_ . ',max-age=300'];
+
     public function __construct(
         private readonly TestRepositoryInterface $testRepository
     ) {
