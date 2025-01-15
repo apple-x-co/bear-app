@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'admin_delete_list.sql' => [],
     'admin_email_by_admin_id.sql' => ['adminId' => 1],
