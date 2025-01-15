@@ -11,3 +11,4 @@ CREATE TABLE `admin_deletes`
 ENGINE = InnoDB COMMENT '管理者退会申請';
 
 CREATE UNIQUE INDEX idx_admin_deletes_1 ON admin_deletes (admin_id);
+CREATE INDEX idx_admin_deletes_2 ON admin_deletes (schedule_at, deleted_at);
