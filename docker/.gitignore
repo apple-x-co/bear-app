@@ -2,3 +2,5 @@
 !.localstack/.gitkeep
 .mysql/*
 !.mysql/.gitkeep
+.sql-quality/*
+!.sql-quality/.gitkeep

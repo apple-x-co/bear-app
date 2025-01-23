@@ -505,16 +505,16 @@
         },
         {
             "name": "aura/sql",
-            "version": "5.0.2",
+            "version": "5.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/auraphp/Aura.Sql.git",
-                "reference": "0e1fdc674e2a11b4ab83286c4410426714ece1e1"
+                "reference": "fd7a6dd1c9d2a1da5754c50f287f8be8a27db0e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auraphp/Aura.Sql/zipball/0e1fdc674e2a11b4ab83286c4410426714ece1e1",
-                "reference": "0e1fdc674e2a11b4ab83286c4410426714ece1e1",
+                "url": "https://api.github.com/repos/auraphp/Aura.Sql/zipball/fd7a6dd1c9d2a1da5754c50f287f8be8a27db0e7",
+                "reference": "fd7a6dd1c9d2a1da5754c50f287f8be8a27db0e7",
                 "shasum": ""
             },
             "require": {
@@ -557,9 +557,9 @@
             ],
             "support": {
                 "issues": "https://github.com/auraphp/Aura.Sql/issues",
-                "source": "https://github.com/auraphp/Aura.Sql/tree/5.0.2"
+                "source": "https://github.com/auraphp/Aura.Sql/tree/5.0.3"
             },
-            "time": "2023-06-12T05:16:06+00:00"
+            "time": "2025-01-22T06:39:17+00:00"
         },
         {
             "name": "aura/sqlquery",
@@ -680,16 +680,16 @@
         },
         {
             "name": "bear/aura-router-module",
-            "version": "2.3.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.AuraRouterModule.git",
-                "reference": "954fa50076599d4c1a414a15eb274028bb59a0e2"
+                "reference": "03a7467856c5827b620b9cf64bdf74c4eca866c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.AuraRouterModule/zipball/954fa50076599d4c1a414a15eb274028bb59a0e2",
-                "reference": "954fa50076599d4c1a414a15eb274028bb59a0e2",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.AuraRouterModule/zipball/03a7467856c5827b620b9cf64bdf74c4eca866c9",
+                "reference": "03a7467856c5827b620b9cf64bdf74c4eca866c9",
                 "shasum": ""
             },
             "require": {
@@ -699,13 +699,14 @@
                 "bear/sunday": "^1.5",
                 "doctrine/annotations": "^1.7",
                 "nyholm/psr7": "^1.3",
-                "php": "^7.3 || ^8.0",
+                "php": "^8.1",
                 "ray/aop": "^2.12",
                 "ray/di": "^2.14"
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.4",
-                "phpunit/phpunit": "^9.5.25"
+                "phpunit/phpunit": "^9.5.25",
+                "rector/rector": "^2.0"
             },
             "type": "library",
             "autoload": {
@@ -731,9 +732,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.AuraRouterModule/issues",
-                "source": "https://github.com/bearsunday/BEAR.AuraRouterModule/tree/2.3.0"
+                "source": "https://github.com/bearsunday/BEAR.AuraRouterModule/tree/2.4.0"
             },
-            "time": "2022-10-18T02:00:31+00:00"
+            "time": "2025-01-17T11:58:39+00:00"
         },
         {
             "name": "bear/devtools",
@@ -843,40 +844,41 @@
         },
         {
             "name": "bear/package",
-            "version": "1.17.0",
+            "version": "1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.Package.git",
-                "reference": "46991d83fcb5e64cbf5f4f2ac5c3c09e52e8cec4"
+                "reference": "559f6d52cb7cb151605bca75af74efcdc89cabe2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.Package/zipball/46991d83fcb5e64cbf5f4f2ac5c3c09e52e8cec4",
-                "reference": "46991d83fcb5e64cbf5f4f2ac5c3c09e52e8cec4",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.Package/zipball/559f6d52cb7cb151605bca75af74efcdc89cabe2",
+                "reference": "559f6d52cb7cb151605bca75af74efcdc89cabe2",
                 "shasum": ""
             },
             "require": {
                 "aura/cli": "^2.2",
-                "bear/app-meta": "^1.8",
-                "bear/query-repository": "^1.9.1",
-                "bear/resource": "^1.22",
+                "bear/app-meta": "^1.9",
+                "bear/query-repository": "^1.12",
+                "bear/resource": "^1.24",
                 "bear/streamer": "^1.2.2",
                 "bear/sunday": "^1.6.1",
-                "doctrine/annotations": "^1.11",
+                "doctrine/annotations": "^1.11 | ^2.0",
                 "doctrine/cache": "^1.10 || ^2.0",
                 "ext-hash": "*",
                 "koriym/attributes": "^1.0",
                 "koriym/http-constants": "^1.1",
+                "koriym/psr4list": "^1.3",
                 "monolog/monolog": "^1.25 || ^2.0 || ^3.0",
                 "php": "^8.1",
-                "psr/cache": "^1.0",
+                "psr/cache": "^1.0 || ^2.0 || ^3.0",
                 "psr/log": "^1.1 || ^2.0 || ^3.0",
                 "ray/aop": "^2.13.1",
-                "ray/compiler": "^1.9.1",
+                "ray/compiler": "^1.10.6",
                 "ray/di": "^2.15.1",
                 "ray/object-visual-grapher": "^1.0",
-                "ray/psr-cache-module": "^1.3.2",
-                "symfony/cache": "^5.3"
+                "ray/psr-cache-module": "^1.4",
+                "symfony/cache": "^v6.4 || ^v7.2"
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8",
@@ -920,9 +922,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.Package/issues",
-                "source": "https://github.com/bearsunday/BEAR.Package/tree/1.17.0"
+                "source": "https://github.com/bearsunday/BEAR.Package/tree/1.18.0"
             },
-            "time": "2024-06-09T12:29:49+00:00"
+            "time": "2025-01-11T11:52:38+00:00"
         },
         {
             "name": "bear/query-repository",
@@ -1001,16 +1003,16 @@
         },
         {
             "name": "bear/resource",
-            "version": "1.23.0",
+            "version": "1.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.Resource.git",
-                "reference": "ae1c589cc2b023d3e491ce4161d3781e0a71c3d2"
+                "reference": "48c6fee2ce5bed83a8b2b49f3136593ae082fdc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.Resource/zipball/ae1c589cc2b023d3e491ce4161d3781e0a71c3d2",
-                "reference": "ae1c589cc2b023d3e491ce4161d3781e0a71c3d2",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.Resource/zipball/48c6fee2ce5bed83a8b2b49f3136593ae082fdc1",
+                "reference": "48c6fee2ce5bed83a8b2b49f3136593ae082fdc1",
                 "shasum": ""
             },
             "require": {
@@ -1026,7 +1028,7 @@
                 "ray/aop": "^2.12.3",
                 "ray/di": "^2.13",
                 "ray/web-param-module": "^2.1.1",
-                "rize/uri-template": "^0.3"
+                "rize/uri-template": "^0.4"
             },
             "require-dev": {
                 "bear/devtools": "^1.0",
@@ -1036,12 +1038,12 @@
                 "phpmetrics/phpmetrics": "^2.7",
                 "phpstan/phpstan": "^1.3",
                 "phpunit/phpunit": "^9.5.10",
-                "psalm/plugin-phpunit": "^0.13",
+                "psalm/plugin-phpunit": "^0.18",
                 "ray/compiler": "^1.9.1",
                 "ray/rector-ray": "^1.0",
                 "rector/rector": "^1.2.4",
                 "squizlabs/php_codesniffer": "^3.5",
-                "vimeo/psalm": "^4.17"
+                "vimeo/psalm": "4.30.0"
             },
             "type": "library",
             "autoload": {
@@ -1077,9 +1079,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.Resource/issues",
-                "source": "https://github.com/bearsunday/BEAR.Resource/tree/1.23.0"
+                "source": "https://github.com/bearsunday/BEAR.Resource/tree/1.24.0"
             },
-            "time": "2024-10-27T17:30:14+00:00"
+            "time": "2025-01-11T10:11:19+00:00"
         },
         {
             "name": "bear/streamer",
@@ -3415,20 +3417,20 @@
         },
         {
             "name": "psr/cache",
-            "version": "1.0.1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/cache.git",
-                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8"
+                "reference": "aa5030cfa5405eccfdcb1083ce040c2cb8d253bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/cache/zipball/d11b50ad223250cf17b86e38383413f5a6764bf8",
-                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/aa5030cfa5405eccfdcb1083ce040c2cb8d253bf",
+                "reference": "aa5030cfa5405eccfdcb1083ce040c2cb8d253bf",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=8.0.0"
             },
             "type": "library",
             "extra": {
@@ -3448,7 +3450,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
+                    "homepage": "https://www.php-fig.org/"
                 }
             ],
             "description": "Common interface for caching libraries",
@@ -3458,9 +3460,9 @@
                 "psr-6"
             ],
             "support": {
-                "source": "https://github.com/php-fig/cache/tree/master"
+                "source": "https://github.com/php-fig/cache/tree/3.0.0"
             },
-            "time": "2016-08-06T20:24:11+00:00"
+            "time": "2021-02-03T23:26:27+00:00"
         },
         {
             "name": "psr/container",
@@ -4238,29 +4240,29 @@
         },
         {
             "name": "ray/aura-sql-module",
-            "version": "1.13.2",
+            "version": "1.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.AuraSqlModule.git",
-                "reference": "deb9b8bce31e4829cb3be6ac840a4dfea0e53267"
+                "reference": "13044e7270c8e5069ca0ad4892c78fa8f29cd632"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.AuraSqlModule/zipball/deb9b8bce31e4829cb3be6ac840a4dfea0e53267",
-                "reference": "deb9b8bce31e4829cb3be6ac840a4dfea0e53267",
+                "url": "https://api.github.com/repos/ray-di/Ray.AuraSqlModule/zipball/13044e7270c8e5069ca0ad4892c78fa8f29cd632",
+                "reference": "13044e7270c8e5069ca0ad4892c78fa8f29cd632",
                 "shasum": ""
             },
             "require": {
                 "aura/sql": "^4.0 || ^5.0",
                 "aura/sqlquery": "^2.7.1 || 3.x-dev",
-                "doctrine/annotations": "^1.11",
+                "doctrine/annotations": "^1.11 || ^2.0",
                 "ext-pdo": "*",
                 "pagerfanta/pagerfanta": "^3.5",
                 "php": "^7.4 || ^8.0",
                 "psr/log": "^1.1 || ^2.0 || ^3.0",
                 "ray/aop": "^2.10.4",
                 "ray/di": "^2.13.1",
-                "rize/uri-template": "^0.3.4",
+                "rize/uri-template": "^0.3.4 || ^0.4",
                 "symfony/polyfill-php81": "^1.24"
             },
             "require-dev": {
@@ -4292,9 +4294,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ray-di/Ray.AuraSqlModule/issues",
-                "source": "https://github.com/ray-di/Ray.AuraSqlModule/tree/1.13.2"
+                "source": "https://github.com/ray-di/Ray.AuraSqlModule/tree/1.13.3"
             },
-            "time": "2023-07-10T23:32:21+00:00"
+            "time": "2025-01-22T08:16:19+00:00"
         },
         {
             "name": "ray/compiler",
@@ -4597,26 +4599,26 @@
         },
         {
             "name": "ray/psr-cache-module",
-            "version": "1.3.4",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.PsrCacheModule.git",
-                "reference": "25f510d066fa982f28555f5fafae0c12c470c02f"
+                "reference": "d550309671721060c0a5581da05df2b9b5171116"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.PsrCacheModule/zipball/25f510d066fa982f28555f5fafae0c12c470c02f",
-                "reference": "25f510d066fa982f28555f5fafae0c12c470c02f",
+                "url": "https://api.github.com/repos/ray-di/Ray.PsrCacheModule/zipball/d550309671721060c0a5581da05df2b9b5171116",
+                "reference": "d550309671721060c0a5581da05df2b9b5171116",
                 "shasum": ""
             },
             "require": {
-                "doctrine/annotations": "^1.13",
-                "php": "^7.3 || ^8.0",
+                "doctrine/annotations": "^1.13 || ^2.0",
+                "php": "^8.1",
                 "psr/cache": "^1.0.1 || ^2.0 || ^3.0",
                 "psr/simple-cache": "^1.0 || ^2.0 || ^3.0",
                 "ray/aop": "^2.10.4",
                 "ray/di": "^2.13.2",
-                "symfony/cache": "^5.3.4 || ^6.0"
+                "symfony/cache": "^6.0 || ^7.2"
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.4",
@@ -4649,11 +4651,12 @@
                     "email": "akihito.koriyama@gmail.com"
                 }
             ],
+            "description": "PSR-6 PSR-16 cache module for Ray.Di",
             "support": {
                 "issues": "https://github.com/ray-di/Ray.PsrCacheModule/issues",
-                "source": "https://github.com/ray-di/Ray.PsrCacheModule/tree/1.3.4"
+                "source": "https://github.com/ray-di/Ray.PsrCacheModule/tree/1.4.0"
             },
-            "time": "2024-05-13T17:54:25+00:00"
+            "time": "2025-01-10T00:31:12+00:00"
         },
         {
             "name": "ray/web-form-module",
@@ -4741,23 +4744,25 @@
         },
         {
             "name": "rize/uri-template",
-            "version": "0.3.8",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rize/UriTemplate.git",
-                "reference": "34a5b96d0b65a5dddb7d20f09b6527a43faede24"
+                "reference": "56f374a9a42c7c3998f8b55b6b21b224de90c58b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rize/UriTemplate/zipball/34a5b96d0b65a5dddb7d20f09b6527a43faede24",
-                "reference": "34a5b96d0b65a5dddb7d20f09b6527a43faede24",
+                "url": "https://api.github.com/repos/rize/UriTemplate/zipball/56f374a9a42c7c3998f8b55b6b21b224de90c58b",
+                "reference": "56f374a9a42c7c3998f8b55b6b21b224de90c58b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=8.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8.36"
+                "friendsofphp/php-cs-fixer": "^3.63",
+                "phpstan/phpstan": "^1.12",
+                "phpunit/phpunit": "~10.0"
             },
             "type": "library",
             "autoload": {
@@ -4783,7 +4788,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rize/UriTemplate/issues",
-                "source": "https://github.com/rize/UriTemplate/tree/0.3.8"
+                "source": "https://github.com/rize/UriTemplate/tree/0.4.0"
             },
             "funding": [
                 {
@@ -4799,7 +4804,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-08-30T07:09:40+00:00"
+            "time": "2024-11-27T12:13:42+00:00"
         },
         {
             "name": "roave/better-reflection",
@@ -4917,58 +4922,57 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v5.4.46",
+            "version": "v6.4.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "0fe08ee32cec2748fbfea10c52d3ee02049e0f6b"
+                "reference": "70d60e9a3603108563010f8592dff15a6f15dfae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/0fe08ee32cec2748fbfea10c52d3ee02049e0f6b",
-                "reference": "0fe08ee32cec2748fbfea10c52d3ee02049e0f6b",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/70d60e9a3603108563010f8592dff15a6f15dfae",
+                "reference": "70d60e9a3603108563010f8592dff15a6f15dfae",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
-                "psr/cache": "^1.0|^2.0",
+                "php": ">=8.1",
+                "psr/cache": "^2.0|^3.0",
                 "psr/log": "^1.1|^2|^3",
-                "symfony/cache-contracts": "^1.1.7|^2",
-                "symfony/deprecation-contracts": "^2.1|^3",
-                "symfony/polyfill-php73": "^1.9",
-                "symfony/polyfill-php80": "^1.16",
-                "symfony/service-contracts": "^1.1|^2|^3",
-                "symfony/var-exporter": "^4.4|^5.0|^6.0"
+                "symfony/cache-contracts": "^2.5|^3",
+                "symfony/service-contracts": "^2.5|^3",
+                "symfony/var-exporter": "^6.3.6|^7.0"
             },
             "conflict": {
                 "doctrine/dbal": "<2.13.1",
-                "symfony/dependency-injection": "<4.4",
-                "symfony/http-kernel": "<4.4",
-                "symfony/var-dumper": "<4.4"
+                "symfony/dependency-injection": "<5.4",
+                "symfony/http-kernel": "<5.4",
+                "symfony/var-dumper": "<5.4"
             },
             "provide": {
-                "psr/cache-implementation": "1.0|2.0",
-                "psr/simple-cache-implementation": "1.0|2.0",
-                "symfony/cache-implementation": "1.0|2.0"
+                "psr/cache-implementation": "2.0|3.0",
+                "psr/simple-cache-implementation": "1.0|2.0|3.0",
+                "symfony/cache-implementation": "1.1|2.0|3.0"
             },
             "require-dev": {
                 "cache/integration-tests": "dev-master",
-                "doctrine/cache": "^1.6|^2.0",
                 "doctrine/dbal": "^2.13.1|^3|^4",
                 "predis/predis": "^1.1|^2.0",
-                "psr/simple-cache": "^1.0|^2.0",
-                "symfony/config": "^4.4|^5.0|^6.0",
-                "symfony/dependency-injection": "^4.4|^5.0|^6.0",
-                "symfony/filesystem": "^4.4|^5.0|^6.0",
-                "symfony/http-kernel": "^4.4|^5.0|^6.0",
-                "symfony/messenger": "^4.4|^5.0|^6.0",
-                "symfony/var-dumper": "^4.4|^5.0|^6.0"
+                "psr/simple-cache": "^1.0|^2.0|^3.0",
+                "symfony/config": "^5.4|^6.0|^7.0",
+                "symfony/dependency-injection": "^5.4|^6.0|^7.0",
+                "symfony/filesystem": "^5.4|^6.0|^7.0",
+                "symfony/http-kernel": "^5.4|^6.0|^7.0",
+                "symfony/messenger": "^5.4|^6.0|^7.0",
+                "symfony/var-dumper": "^5.4|^6.0|^7.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Cache\\": ""
                 },
+                "classmap": [
+                    "Traits/ValueWrapper.php"
+                ],
                 "exclude-from-classmap": [
                     "/Tests/"
                 ]
@@ -4994,7 +4998,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v5.4.46"
+                "source": "https://github.com/symfony/cache/tree/v6.4.16"
             },
             "funding": [
                 {
@@ -5010,28 +5014,25 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-04T11:43:55+00:00"
+            "time": "2024-11-20T10:10:54+00:00"
         },
         {
             "name": "symfony/cache-contracts",
-            "version": "v2.5.4",
+            "version": "v3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache-contracts.git",
-                "reference": "517c3a3619dadfa6952c4651767fcadffb4df65e"
+                "reference": "15a4f8e5cd3bce9aeafc882b1acab39ec8de2c1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache-contracts/zipball/517c3a3619dadfa6952c4651767fcadffb4df65e",
-                "reference": "517c3a3619dadfa6952c4651767fcadffb4df65e",
+                "url": "https://api.github.com/repos/symfony/cache-contracts/zipball/15a4f8e5cd3bce9aeafc882b1acab39ec8de2c1b",
+                "reference": "15a4f8e5cd3bce9aeafc882b1acab39ec8de2c1b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
-                "psr/cache": "^1.0|^2.0|^3.0"
-            },
-            "suggest": {
-                "symfony/cache-implementation": ""
+                "php": ">=8.1",
+                "psr/cache": "^3.0"
             },
             "type": "library",
             "extra": {
@@ -5040,7 +5041,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "2.5-dev"
+                    "dev-main": "3.5-dev"
                 }
             },
             "autoload": {
@@ -5073,7 +5074,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache-contracts/tree/v2.5.4"
+                "source": "https://github.com/symfony/cache-contracts/tree/v3.5.1"
             },
             "funding": [
                 {
@@ -5089,7 +5090,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-25T14:11:13+00:00"
+            "time": "2024-09-25T14:20:29+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -5300,82 +5301,6 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.31.0"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2024-09-09T11:45:10+00:00"
-        },
-        {
-            "name": "symfony/polyfill-php73",
-            "version": "v1.31.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php73.git",
-                "reference": "0f68c03565dcaaf25a890667542e8bd75fe7e5bb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/0f68c03565dcaaf25a890667542e8bd75fe7e5bb",
-                "reference": "0f68c03565dcaaf25a890667542e8bd75fe7e5bb",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2"
-            },
-            "type": "library",
-            "extra": {
-                "thanks": {
-                    "url": "https://github.com/symfony/polyfill",
-                    "name": "symfony/polyfill"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php73\\": ""
-                },
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-php73/tree/v1.31.0"
             },
             "funding": [
                 {
@@ -5695,26 +5620,25 @@
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v6.4.13",
+            "version": "v7.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "0f605f72a363f8743001038a176eeb2a11223b51"
+                "reference": "1a6a89f95a46af0f142874c9d650a6358d13070d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/0f605f72a363f8743001038a176eeb2a11223b51",
-                "reference": "0f605f72a363f8743001038a176eeb2a11223b51",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/1a6a89f95a46af0f142874c9d650a6358d13070d",
+                "reference": "1a6a89f95a46af0f142874c9d650a6358d13070d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
-                "symfony/deprecation-contracts": "^2.5|^3"
+                "php": ">=8.2"
             },
             "require-dev": {
                 "symfony/property-access": "^6.4|^7.0",
                 "symfony/serializer": "^6.4|^7.0",
-                "symfony/var-dumper": "^5.4|^6.0|^7.0"
+                "symfony/var-dumper": "^6.4|^7.0"
             },
             "type": "library",
             "autoload": {
@@ -5752,7 +5676,7 @@
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v6.4.13"
+                "source": "https://github.com/symfony/var-exporter/tree/v7.2.0"
             },
             "funding": [
                 {
@@ -5768,7 +5692,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-25T14:18:03+00:00"
+            "time": "2024-10-18T07:58:17+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -6043,16 +5967,16 @@
         },
         {
             "name": "koriym/sql-quality",
-            "version": "0.1.1",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/koriym/Koriym.SqlQuality.git",
-                "reference": "38e47c451b88719b2e8574e5721e101844f8ef82"
+                "reference": "a5f49a5f805cd2b3c21d6bdddf387ff08da68cb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/Koriym.SqlQuality/zipball/38e47c451b88719b2e8574e5721e101844f8ef82",
-                "reference": "38e47c451b88719b2e8574e5721e101844f8ef82",
+                "url": "https://api.github.com/repos/koriym/Koriym.SqlQuality/zipball/a5f49a5f805cd2b3c21d6bdddf387ff08da68cb7",
+                "reference": "a5f49a5f805cd2b3c21d6bdddf387ff08da68cb7",
                 "shasum": ""
             },
             "require": {
@@ -6082,9 +6006,9 @@
             ],
             "support": {
                 "issues": "https://github.com/koriym/Koriym.SqlQuality/issues",
-                "source": "https://github.com/koriym/Koriym.SqlQuality/tree/0.1.1"
+                "source": "https://github.com/koriym/Koriym.SqlQuality/tree/0.1.2"
             },
-            "time": "2025-01-16T03:39:10+00:00"
+            "time": "2025-01-22T03:39:52+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -6692,12 +6616,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "e7a38fcc13e4ddfe9a28d5c7bf50aa9a9da758ec"
+                "reference": "2135caa192c134f0a421ee680fa9c0e346841dbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/e7a38fcc13e4ddfe9a28d5c7bf50aa9a9da758ec",
-                "reference": "e7a38fcc13e4ddfe9a28d5c7bf50aa9a9da758ec",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/2135caa192c134f0a421ee680fa9c0e346841dbc",
+                "reference": "2135caa192c134f0a421ee680fa9c0e346841dbc",
                 "shasum": ""
             },
             "conflict": {
@@ -6792,7 +6716,7 @@
                 "cockpit-hq/cockpit": "<2.7|==2.7",
                 "codeception/codeception": "<3.1.3|>=4,<4.1.22",
                 "codeigniter/framework": "<3.1.9",
-                "codeigniter4/framework": "<4.4.7",
+                "codeigniter4/framework": "<4.5.8",
                 "codeigniter4/shield": "<1.0.0.0-beta8",
                 "codiad/codiad": "<=2.8.4",
                 "composer/composer": "<1.10.27|>=2,<2.2.24|>=2.3,<2.7.7",
@@ -6807,7 +6731,7 @@
                 "contao/managed-edition": "<=1.5",
                 "corveda/phpsandbox": "<1.3.5",
                 "cosenary/instagram": "<=2.3",
-                "craftcms/cms": "<4.13.2|>=5,<5.5.2",
+                "craftcms/cms": "<4.13.8|>=5,<5.5.5",
                 "croogo/croogo": "<4",
                 "cuyz/valinor": "<0.12",
                 "czim/file-handling": "<1.5|>=2,<2.3",
@@ -7174,7 +7098,7 @@
                 "phpmyfaq/phpmyfaq": "<3.2.5|==3.2.5|>=3.2.10,<=4.0.1",
                 "phpoffice/common": "<0.2.9",
                 "phpoffice/phpexcel": "<1.8.1",
-                "phpoffice/phpspreadsheet": "<=1.29.6|>=2,<=2.1.5|>=2.2,<=2.3.4|>=3,<3.7",
+                "phpoffice/phpspreadsheet": "<1.29.8|>=2,<2.1.7|>=2.2,<2.3.6|>=3,<3.8",
                 "phpseclib/phpseclib": "<2.0.47|>=3,<3.0.36",
                 "phpservermon/phpservermon": "<3.6",
                 "phpsysinfo/phpsysinfo": "<3.4.3",
@@ -7204,6 +7128,7 @@
                 "prestashop/gamification": "<2.3.2",
                 "prestashop/prestashop": "<8.1.6",
                 "prestashop/productcomments": "<5.0.2",
+                "prestashop/ps_contactinfo": "<=3.3.2",
                 "prestashop/ps_emailsubscription": "<2.6.1",
                 "prestashop/ps_facetedsearch": "<3.4.1",
                 "prestashop/ps_linklist": "<3.1",
@@ -7462,7 +7387,7 @@
                 "xataface/xataface": "<3",
                 "xpressengine/xpressengine": "<3.0.15",
                 "yab/quarx": "<2.4.5",
-                "yeswiki/yeswiki": "<=4.4.4",
+                "yeswiki/yeswiki": "<=4.4.5",
                 "yetiforce/yetiforce-crm": "<6.5",
                 "yidashi/yii2cmf": "<=2",
                 "yii2mod/yii2-cms": "<1.9.2",
@@ -7553,7 +7478,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-15T23:05:13+00:00"
+            "time": "2025-01-22T19:04:49+00:00"
         },
         {
             "name": "sebastian/cli-parser",

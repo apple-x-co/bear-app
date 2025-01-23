@@ -38,6 +38,24 @@ services:
       - MYSQL_PASSWORD=passw0rd
       - TZ=Asia/Tokyo
 
+  sql-quality:
+    image: ghcr.io/buddying-inc/mysql:80
+    container_name: sql-quality
+    volumes:
+      - type: bind
+        source: .sql-quality
+        target: /var/lib/mysql
+        read_only: false
+        consistency: delegated
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=passw0rd
+      - MYSQL_DATABASE=sql_quality_db
+      - MYSQL_USER=sql_quality
+      - MYSQL_PASSWORD=passw0rd
+      - TZ=Asia/Tokyo
+
   smtp:
     image: mailhog/mailhog
     platform: linux/amd64
