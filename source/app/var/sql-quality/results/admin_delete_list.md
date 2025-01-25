@@ -1,28 +1,28 @@
 # SQL Performance Analysis
 - **SQL File:** `admin_delete_list.sql`
-- **Cost:** 10.25
+- **Cost:** 0.35
 
 ## SQL
 ```sql
 /* admin_delete_list */
 SELECT `admin_id`, `request_at`, `schedule_at`, `deleted_at`, `created_at`
   FROM `admin_deletes`
- WHERE `schedule_at` <= NOW()
-   AND `deleted_at` IS NULL;
+ WHERE `deleted_at` IS NULL
+   AND `schedule_at` <= NOW();
 
 ```
 
 ## Detected Issues
-- Full table scan detected. [Learn more](https://koriym.github.io/Koriym.SqlQuality/issues/FullTableScan)
+
 
 ## Explain Tree
 ```
 Table scan
 +- Table
    table           admin_deletes
-   rows            100
-   filtered        10.00
-   condition       ((`sql_quality_db`.`admin_deletes`.`schedule_at` <= <cache>(now())) and (`sql_quality_db`.`admin_deletes`.`deleted_at` is null))
+   rows            1
+   filtered        33.33
+   condition       (`sql_quality_db`.`admin_deletes`.`schedule_at` <= <cache>(now()))
 ```
 
 ## AI Prompt
@@ -63,9 +63,9 @@ Based on the provided MySQL table schemas and EXPLAIN results, please provide:
 Please focus on practical, high-impact improvements that can be implemented with minimal risk.
 
 ### Schema
-{"admin_deletes":{"columns":[{"COLUMN_NAME":"id","DATA_TYPE":"int","COLUMN_TYPE":"int unsigned","IS_NULLABLE":"NO","COLUMN_KEY":"PRI","COLUMN_DEFAULT":null,"EXTRA":"auto_increment"},{"COLUMN_NAME":"admin_id","DATA_TYPE":"int","COLUMN_TYPE":"int unsigned","IS_NULLABLE":"NO","COLUMN_KEY":"UNI","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"request_at","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"schedule_at","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"MUL","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"deleted_at","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"YES","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"created_at","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""}],"indexes":[{"INDEX_NAME":"idx_admin_deletes_1","COLUMN_NAME":"admin_id","NON_UNIQUE":0,"SEQ_IN_INDEX":1,"CARDINALITY":100},{"INDEX_NAME":"idx_admin_deletes_2","COLUMN_NAME":"schedule_at","NON_UNIQUE":1,"SEQ_IN_INDEX":1,"CARDINALITY":89},{"INDEX_NAME":"idx_admin_deletes_2","COLUMN_NAME":"deleted_at","NON_UNIQUE":1,"SEQ_IN_INDEX":2,"CARDINALITY":100},{"INDEX_NAME":"PRIMARY","COLUMN_NAME":"id","NON_UNIQUE":0,"SEQ_IN_INDEX":1,"CARDINALITY":100}],"status":{"table_rows":100,"data_length":16384,"index_length":32768,"auto_increment":101,"create_time":"2025-01-23 09:55:20","update_time":"2025-01-23 09:55:21"}}}
+{"admin_deletes":{"columns":[{"COLUMN_NAME":"id","DATA_TYPE":"int","COLUMN_TYPE":"int unsigned","IS_NULLABLE":"NO","COLUMN_KEY":"PRI","COLUMN_DEFAULT":null,"EXTRA":"auto_increment"},{"COLUMN_NAME":"admin_id","DATA_TYPE":"int","COLUMN_TYPE":"int unsigned","IS_NULLABLE":"NO","COLUMN_KEY":"UNI","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"request_at","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"schedule_at","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"deleted_at","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"YES","COLUMN_KEY":"MUL","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"created_at","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""}],"indexes":[{"INDEX_NAME":"idx_admin_deletes_1","COLUMN_NAME":"admin_id","NON_UNIQUE":0,"SEQ_IN_INDEX":1,"CARDINALITY":100},{"INDEX_NAME":"idx_admin_deletes_2","COLUMN_NAME":"deleted_at","NON_UNIQUE":1,"SEQ_IN_INDEX":1,"CARDINALITY":92},{"INDEX_NAME":"PRIMARY","COLUMN_NAME":"id","NON_UNIQUE":0,"SEQ_IN_INDEX":1,"CARDINALITY":100}],"status":{"table_rows":100,"data_length":16384,"index_length":32768,"auto_increment":100,"create_time":"2025-01-25 16:05:11","update_time":null}}}
 
 ### EXPLAIN Results
-{"query_block":{"select_id":1,"cost_info":{"query_cost":"10.25"},"table":{"table_name":"admin_deletes","access_type":"ALL","possible_keys":["idx_admin_deletes_2"],"rows_examined_per_scan":100,"rows_produced_per_join":10,"filtered":"10.00","cost_info":{"read_cost":"9.25","eval_cost":"1.00","prefix_cost":"10.25","data_read_per_join":"320"},"used_columns":["admin_id","request_at","schedule_at","deleted_at","created_at"],"attached_condition":"((`sql_quality_db`.`admin_deletes`.`schedule_at` <= <cache>(now())) and (`sql_quality_db`.`admin_deletes`.`deleted_at` is null))"}}}
+{"query_block":{"select_id":1,"cost_info":{"query_cost":"0.35"},"table":{"table_name":"admin_deletes","access_type":"ref","possible_keys":["idx_admin_deletes_2"],"key":"idx_admin_deletes_2","used_key_parts":["deleted_at"],"key_length":"6","ref":["const"],"rows_examined_per_scan":1,"rows_produced_per_join":0,"filtered":"33.33","index_condition":"(`sql_quality_db`.`admin_deletes`.`deleted_at` is null)","cost_info":{"read_cost":"0.25","eval_cost":"0.03","prefix_cost":"0.35","data_read_per_join":"10"},"used_columns":["admin_id","request_at","schedule_at","deleted_at","created_at"],"attached_condition":"(`sql_quality_db`.`admin_deletes`.`schedule_at` <= <cache>(now()))"}}}
 
 以上の分析を日本語で記述してください。

@@ -3,7 +3,7 @@
 ## Query Analysis List
 | SQL File | Cost | Level | Issues | Report |
 |----------|------|-------|---------|---------|
-| admin\_delete\_list.sql | 10.25 | Medium (μ ± σ) | FullTableScan | [Details](admin_delete_list.md) |
+| admin\_delete\_list.sql | 0.35 | Medium (μ ± σ) | - | [Details](admin_delete_list.md) |
 | admin\_email\_by\_admin\_id.sql | 0.35 | Medium (μ ± σ) | - | [Details](admin_email_by_admin_id.md) |
 | admin\_item.sql | 1.00 | Medium (μ ± σ) | - | [Details](admin_item.md) |
 | admin\_item\_by\_email.sql | 0.00 | Medium (μ ± σ) | - | [Details](admin_item_by_email.md) |
@@ -20,5 +20,5 @@
 
 ## Project Statistics
 - Total SQLs analyzed: 14
-- Average query cost: 22.67
-- Standard deviation: 41.29
+- Average query cost: 21.96
+- Standard deviation: 41.58

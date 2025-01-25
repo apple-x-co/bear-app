@@ -57,7 +57,7 @@ Based on the provided MySQL table schemas and EXPLAIN results, please provide:
 Please focus on practical, high-impact improvements that can be implemented with minimal risk.
 
 ### Schema
-{"bad_passwords":{"columns":[{"COLUMN_NAME":"password","DATA_TYPE":"varchar","COLUMN_TYPE":"varchar(255)","IS_NULLABLE":"NO","COLUMN_KEY":"PRI","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"created_at","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""}],"indexes":[{"INDEX_NAME":"PRIMARY","COLUMN_NAME":"password","NON_UNIQUE":0,"SEQ_IN_INDEX":1,"CARDINALITY":1000}],"status":{"table_rows":1000,"data_length":65536,"index_length":0,"auto_increment":null,"create_time":"2025-01-23 09:55:20","update_time":"2025-01-23 09:55:22"}}}
+{"bad_passwords":{"columns":[{"COLUMN_NAME":"password","DATA_TYPE":"varchar","COLUMN_TYPE":"varchar(255)","IS_NULLABLE":"NO","COLUMN_KEY":"PRI","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"created_at","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""}],"indexes":[{"INDEX_NAME":"PRIMARY","COLUMN_NAME":"password","NON_UNIQUE":0,"SEQ_IN_INDEX":1,"CARDINALITY":1000}],"status":{"table_rows":1000,"data_length":65536,"index_length":0,"auto_increment":null,"create_time":"2025-01-23 09:55:20","update_time":null}}}
 
 ### EXPLAIN Results
 {"query_block":{"select_id":1,"message":"no matching row in const table"}}
