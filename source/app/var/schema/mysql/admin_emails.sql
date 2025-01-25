@@ -11,4 +11,4 @@ CREATE TABLE `admin_emails`
     )
 ENGINE = InnoDB COMMENT '管理者Eメール';
 
-CREATE UNIQUE INDEX idx_admin_emails_1 ON admin_emails (email_address);
+CREATE UNIQUE INDEX `idx_admin_emails_1` ON `admin_emails` (`email_address`);

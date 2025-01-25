@@ -11,4 +11,4 @@ CREATE TABLE `admins`
     )
 ENGINE = InnoDB COMMENT '管理者アカウント';
 
-CREATE UNIQUE INDEX idx_admins_1 ON admins (username);
+CREATE UNIQUE INDEX `idx_admins_1` ON `admins` (`username`);

@@ -13,4 +13,4 @@ CREATE TABLE `emails`
     )
 ENGINE = InnoDB COMMENT 'Eメール';
 
-CREATE INDEX idx_emails_1 ON emails (`sent_at`);
+CREATE INDEX `idx_emails_1` ON `emails` (`sent_at`);

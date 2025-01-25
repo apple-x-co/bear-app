@@ -13,4 +13,4 @@ CREATE TABLE `verification_codes`
     )
 ENGINE = InnoDB COMMENT 'コード認証';
 
-CREATE UNIQUE INDEX idx_codes_1 ON verification_codes (uuid);
+CREATE UNIQUE INDEX `idx_codes_1` ON `verification_codes` (`uuid`);

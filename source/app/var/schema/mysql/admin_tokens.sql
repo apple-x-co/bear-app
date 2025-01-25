@@ -10,4 +10,4 @@ CREATE TABLE `admin_tokens`
     )
 ENGINE = InnoDB COMMENT '管理者永続ログイントークン';
 
-CREATE UNIQUE INDEX idx_admin_tokens_1 ON admin_tokens (token);
+CREATE UNIQUE INDEX `idx_admin_tokens_1` ON `admin_tokens` (`token`);
