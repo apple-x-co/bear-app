@@ -13,7 +13,7 @@ return [
     'bad_password_item.sql' => ['password' => 'p@ssw0rd'],
     'email_list.sql' => [],
     'email_recipient_list.sql' => ['emailIds' => 1],
-    'test_item.sql' => ['id' => 1],
+    'test_item.sql' => ['id' => 'id1'],
     'test_list.sql' => [],
     'throttle_item_by_key.sql' => ['throttleKey' => 'index'],
     'verification_code_by_uuid.sql' => ['uuid' => '80fd5900-c337-41f3-a631-307cbb95568c'],

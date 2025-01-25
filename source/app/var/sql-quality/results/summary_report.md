@@ -13,12 +13,12 @@
 | bad\_password\_item.sql | 0.00 | Medium (μ ± σ) | - | [Details](bad_password_item.md) |
 | email\_list.sql | 0.35 | Medium (μ ± σ) | - | [Details](email_list.md) |
 | email\_recipient\_list.sql | 0.35 | Medium (μ ± σ) | - | [Details](email_recipient_list.md) |
-| test\_item.sql | 101.25 | Very High (> μ + 2σ) | FullTableScan | [Details](test_item.md) |
+| test\_item.sql | 1.00 | Medium (μ ± σ) | - | [Details](test_item.md) |
 | test\_list.sql | 101.25 | Very High (> μ + 2σ) | FullTableScan | [Details](test_list.md) |
 | throttle\_item\_by\_key.sql | 0.35 | Medium (μ ± σ) | - | [Details](throttle_item_by_key.md) |
 | verification\_code\_by\_uuid.sql | 0.00 | Medium (μ ± σ) | - | [Details](verification_code_by_uuid.md) |
 
 ## Project Statistics
 - Total SQLs analyzed: 14
-- Average query cost: 14.69
-- Standard deviation: 35.34
+- Average query cost: 7.53
+- Standard deviation: 26.00
