@@ -4882,26 +4882,27 @@
         },
         {
             "name": "roave/signature",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/Signature.git",
-                "reference": "f92ce20f82c9a1df3b50fc56fbdaeb82cf4c9c5b"
+                "reference": "f30f7107f08215cea86a6996613bf86c20db1bda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/Signature/zipball/f92ce20f82c9a1df3b50fc56fbdaeb82cf4c9c5b",
-                "reference": "f92ce20f82c9a1df3b50fc56fbdaeb82cf4c9c5b",
+                "url": "https://api.github.com/repos/Roave/Signature/zipball/f30f7107f08215cea86a6996613bf86c20db1bda",
+                "reference": "f30f7107f08215cea86a6996613bf86c20db1bda",
                 "shasum": ""
             },
             "require": {
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0"
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^12.0.0",
-                "infection/infection": "^0.26.19",
-                "phpunit/phpunit": "^9.6.7",
-                "vimeo/psalm": "^5.9.0"
+                "phpunit/phpunit": "^11.5.6",
+                "psalm/plugin-phpunit": "^0.19.2",
+                "roave/infection-static-analysis-plugin": "^1.36.0",
+                "vimeo/psalm": "^6.4.0"
             },
             "type": "library",
             "autoload": {
@@ -4916,9 +4917,9 @@
             "description": "Sign and verify stuff",
             "support": {
                 "issues": "https://github.com/Roave/Signature/issues",
-                "source": "https://github.com/Roave/Signature/tree/1.8.0"
+                "source": "https://github.com/Roave/Signature/tree/1.9.0"
             },
-            "time": "2023-11-25T00:11:29+00:00"
+            "time": "2025-02-05T15:43:11+00:00"
         },
         {
             "name": "symfony/cache",
@@ -5967,16 +5968,16 @@
         },
         {
             "name": "koriym/sql-quality",
-            "version": "0.1.2",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/koriym/Koriym.SqlQuality.git",
-                "reference": "a5f49a5f805cd2b3c21d6bdddf387ff08da68cb7"
+                "reference": "7f0384df735c86aabc370be8d648f75dbdd74b60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/Koriym.SqlQuality/zipball/a5f49a5f805cd2b3c21d6bdddf387ff08da68cb7",
-                "reference": "a5f49a5f805cd2b3c21d6bdddf387ff08da68cb7",
+                "url": "https://api.github.com/repos/koriym/Koriym.SqlQuality/zipball/7f0384df735c86aabc370be8d648f75dbdd74b60",
+                "reference": "7f0384df735c86aabc370be8d648f75dbdd74b60",
                 "shasum": ""
             },
             "require": {
@@ -6006,9 +6007,9 @@
             ],
             "support": {
                 "issues": "https://github.com/koriym/Koriym.SqlQuality/issues",
-                "source": "https://github.com/koriym/Koriym.SqlQuality/tree/0.1.2"
+                "source": "https://github.com/koriym/Koriym.SqlQuality/tree/0.1.3"
             },
-            "time": "2025-01-22T03:39:52+00:00"
+            "time": "2025-02-07T02:16:13+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -6616,12 +6617,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "4015f7fbd4aedd2ebe19143e26e9f64fafae8d88"
+                "reference": "fea491c34509d40dc45b48b9d1e18a5559eee9a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/4015f7fbd4aedd2ebe19143e26e9f64fafae8d88",
-                "reference": "4015f7fbd4aedd2ebe19143e26e9f64fafae8d88",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/fea491c34509d40dc45b48b9d1e18a5559eee9a6",
+                "reference": "fea491c34509d40dc45b48b9d1e18a5559eee9a6",
                 "shasum": ""
             },
             "conflict": {
@@ -7163,6 +7164,7 @@
                 "robrichards/xmlseclibs": ">=1,<3.0.4",
                 "roots/soil": "<4.1",
                 "rudloff/alltube": "<3.0.3",
+                "rudloff/rtmpdump-bin": "<=2.3.1",
                 "s-cart/core": "<6.9",
                 "s-cart/s-cart": "<6.9",
                 "sabberworm/php-css-parser": ">=1,<1.0.1|>=2,<2.0.1|>=3,<3.0.1|>=4,<4.0.1|>=5,<5.0.9|>=5.1,<5.1.3|>=5.2,<5.2.1|>=6,<6.0.2|>=7,<7.0.4|>=8,<8.0.1|>=8.1,<8.1.1|>=8.2,<8.2.1|>=8.3,<8.3.1",
@@ -7218,7 +7220,7 @@
                 "snipe/snipe-it": "<=7.0.13",
                 "socalnick/scn-social-auth": "<1.15.2",
                 "socialiteproviders/steam": "<1.1",
-                "spatie/browsershot": "<5.0.3",
+                "spatie/browsershot": "<5.0.5",
                 "spatie/image-optimizer": "<1.7.3",
                 "spencer14420/sp-php-email-handler": "<1",
                 "spipu/html2pdf": "<5.2.8",
@@ -7246,7 +7248,7 @@
                 "sylius/grid-bundle": "<1.10.1",
                 "sylius/paypal-plugin": ">=1,<1.2.4|>=1.3,<1.3.1",
                 "sylius/resource-bundle": ">=1,<1.3.14|>=1.4,<1.4.7|>=1.5,<1.5.2|>=1.6,<1.6.4",
-                "sylius/sylius": "<1.12.19|>=1.13.0.0-alpha1,<1.13.4",
+                "sylius/sylius": "<=2.0.2",
                 "symbiote/silverstripe-multivaluefield": ">=3,<3.1",
                 "symbiote/silverstripe-queuedjobs": ">=3,<3.0.2|>=3.1,<3.1.4|>=4,<4.0.7|>=4.1,<4.1.2|>=4.2,<4.2.4|>=4.3,<4.3.3|>=4.4,<4.4.3|>=4.5,<4.5.1|>=4.6,<4.6.4",
                 "symbiote/silverstripe-seed": "<6.0.3",
@@ -7480,7 +7482,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-03T16:05:30+00:00"
+            "time": "2025-02-06T19:04:33+00:00"
         },
         {
             "name": "sebastian/cli-parser",
