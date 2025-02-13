@@ -28,7 +28,7 @@ info            no matching row in const table
 {"select_id":1,"message":"no matching row in const table"}
 
 ### EXPLAIN ANALYZE
--> Zero rows (no matching row in const table)  (cost=0..0 rows=0) (actual time=0..0 rows=0 loops=1)
+-> Zero rows (no matching row in const table)  (cost=0..0 rows=0) (actual time=42e-6..42e-6 rows=0 loops=1)
 
 ### SHOW WARNINGS
 N/A

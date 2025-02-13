@@ -31,7 +31,7 @@ Table scan
 {"select_id":1,"cost_info":{"query_cost":"0.91"},"table":{"table_name":"admin_permissions","access_type":"ref","possible_keys":["fk_admin_permissions_1"],"key":"fk_admin_permissions_1","used_key_parts":["admin_id"],"key_length":"4","ref":["const"],"rows_examined_per_scan":1,"rows_produced_per_join":1,"filtered":"100.00","cost_info":{"read_cost":"0.81","eval_cost":"0.10","prefix_cost":"0.91","data_read_per_join":"200"},"used_columns":["id","admin_id","access","resource_name","permission_name","created_at"]}}
 
 ### EXPLAIN ANALYZE
--> Index lookup on admin_permissions using fk_admin_permissions_1 (admin_id=1)  (cost=0.912 rows=1) (actual time=0.00217..0.00246 rows=1 loops=1)
+-> Index lookup on admin_permissions using fk_admin_permissions_1 (admin_id=1)  (cost=0.912 rows=1) (actual time=0.00192..0.00217 rows=1 loops=1)
 
 ### SHOW WARNINGS
 N/A

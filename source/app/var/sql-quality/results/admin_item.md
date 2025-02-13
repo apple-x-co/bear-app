@@ -31,7 +31,7 @@ Table scan
 {"select_id":1,"cost_info":{"query_cost":"1.00"},"table":{"table_name":"admins","access_type":"const","possible_keys":["PRIMARY"],"key":"PRIMARY","used_key_parts":["id"],"key_length":"4","ref":["const"],"rows_examined_per_scan":1,"rows_produced_per_join":1,"filtered":"100.00","cost_info":{"read_cost":"0.00","eval_cost":"0.10","prefix_cost":"0.00","data_read_per_join":"1K"},"used_columns":["id","username","password","display_name","active","created_at","updated_at"]}}
 
 ### EXPLAIN ANALYZE
--> Rows fetched before execution  (cost=0..0 rows=1) (actual time=42e-6..84e-6 rows=1 loops=1)
+-> Rows fetched before execution  (cost=0..0 rows=1) (actual time=42e-6..42e-6 rows=1 loops=1)
 
 ### SHOW WARNINGS
 N/A

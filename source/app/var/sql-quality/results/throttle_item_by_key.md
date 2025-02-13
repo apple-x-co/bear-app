@@ -34,7 +34,7 @@ Table scan
 
 ### EXPLAIN ANALYZE
 -> Filter: (throttles.expire_at >= <cache>(now()))  (cost=1.03 rows=0.333) (actual time=0.00175..0.00175 rows=0 loops=1)
-    -> Index lookup on throttles using idx_throttles_1 (throttle_key='index')  (cost=1.03 rows=1) (actual time=0.0015..0.0015 rows=0 loops=1)
+    -> Index lookup on throttles using idx_throttles_1 (throttle_key='index')  (cost=1.03 rows=1) (actual time=0.00154..0.00154 rows=0 loops=1)
 
 ### SHOW WARNINGS
 N/A

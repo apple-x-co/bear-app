@@ -33,8 +33,8 @@ Table scan
 {"select_id":1,"cost_info":{"query_cost":"1.10"},"table":{"table_name":"emails","access_type":"ref","possible_keys":["idx_emails_1"],"key":"idx_emails_1","used_key_parts":["sent_at"],"key_length":"6","ref":["const"],"rows_examined_per_scan":1,"rows_produced_per_join":0,"filtered":"33.33","index_condition":"(`sql_quality_db`.`emails`.`sent_at` is null)","cost_info":{"read_cost":"1.00","eval_cost":"0.03","prefix_cost":"1.10","data_read_per_join":"415"},"used_columns":["id","sender_email_address","sender_name","subject","text","html","schedule_at","sent_at","created_at"],"attached_condition":"(`sql_quality_db`.`emails`.`schedule_at` <= <cache>(now()))"}}
 
 ### EXPLAIN ANALYZE
--> Filter: (emails.schedule_at <= <cache>(now()))  (cost=1.03 rows=0.333) (actual time=0.00167..0.00167 rows=0 loops=1)
-    -> Index lookup on emails using idx_emails_1 (sent_at=NULL), with index condition: (emails.sent_at is null)  (cost=1.03 rows=1) (actual time=0.00138..0.00138 rows=0 loops=1)
+-> Filter: (emails.schedule_at <= <cache>(now()))  (cost=1.03 rows=0.333) (actual time=0.00171..0.00171 rows=0 loops=1)
+    -> Index lookup on emails using idx_emails_1 (sent_at=NULL), with index condition: (emails.sent_at is null)  (cost=1.03 rows=1) (actual time=0.0015..0.0015 rows=0 loops=1)
 
 ### SHOW WARNINGS
 N/A
