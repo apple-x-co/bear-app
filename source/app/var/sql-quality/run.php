@@ -17,7 +17,8 @@ $analyzer = new SqlFileAnalyzer(
     $pdo,
     new ExplainAnalyzer(),
     dirname(__DIR__, 2) . '/var/sql',
-    new AIQueryAdvisor('以上の分析を日本語で記述してください。')
+    new AIQueryAdvisor('以上の分析を日本語で記述してください。'),
+    null,
 );
 
 $analyzer->analyzeSqlDirectory($sqlParams, __DIR__ . '/results');
