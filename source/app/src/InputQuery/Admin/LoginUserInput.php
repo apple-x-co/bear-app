@@ -2,22 +2,23 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Input\Admin;
+namespace MyVendor\MyProject\InputQuery\Admin;
 
+use Ray\InputQuery\Attribute\Input;
 use SensitiveParameter;
 
-class LoginUserInput
+final readonly class LoginUserInput
 {
     /**
      * @psalm-suppress UndefinedAttributeClass
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
      */
     public function __construct(
-        public readonly string $username,
-        #[SensitiveParameter] public readonly string $password,
-        public readonly string $remember,
-        public readonly string $__csrf_token, // phpcs:ignore
-        public readonly ?string $login,
+        #[Input] public string $username,
+        #[Input, SensitiveParameter] public string $password,
+        #[Input] public string $remember,
+        #[Input] public string $__csrf_token, // phpcs:ignore
+        #[Input] public string|null $login,
     ) {
     }
 

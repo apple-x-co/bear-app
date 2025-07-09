@@ -19,6 +19,7 @@ use function is_array;
 /** @SuppressWarnings(PHPMD.NumberOfChildren) */
 abstract class ExtendedForm extends AbstractForm implements SubmitInterface
 {
+    /** @deprecated */
     abstract protected function getFormName(): string;
 
     /**
@@ -79,10 +80,15 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
      * @psalm-suppress InvalidReturnStatement
      *
      * @SuppressWarnings(PHPMD.Superglobals)
+     *
+     * @deprecated
      */
     public function submit(): array
     {
         $formName = $this->getFormName();
+        if (empty($formName)) {
+            return $_POST;
+        }
 
         /** @var array<string, mixed> $posts */
         $posts = $_POST[$formName] ?? [];
