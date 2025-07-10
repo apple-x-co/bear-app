@@ -15,7 +15,9 @@ final readonly class LoginUserInput
      */
     public function __construct(
         #[Input] public string $username,
-        #[Input, SensitiveParameter] public string $password,
+        #[Input]
+        #[SensitiveParameter]
+        public string $password,
         #[Input] public string $remember,
         #[Input] public string $__csrf_token, // phpcs:ignore
         #[Input] public string|null $login,
