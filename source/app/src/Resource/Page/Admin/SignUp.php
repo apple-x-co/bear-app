@@ -12,7 +12,7 @@ use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Form\ExtendedForm;
-use MyVendor\MyProject\Input\Admin\SignUpInput;
+use MyVendor\MyProject\InputQuery\Admin\SignUpInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
@@ -61,14 +61,14 @@ class SignUp extends AdminPage
      * @FormValidation()
      * @Transactional()
      */
-    public function onPost(SignUpInput $signUp): static
+    public function onPost(#[Input] SignUpInput $input): static
     {
         $this->createAdminUseCase->execute(
             new CreateAdminInputData(
-                $signUp->username,
-                $signUp->displayName,
-                $signUp->password,
-                $signUp->signature,
+                $input->username,
+                $input->displayName,
+                $input->password,
+                $input->signature,
             )
         );
 

@@ -15,8 +15,6 @@ class AdminSignUpForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
-    private const FORM_NAME = 'signUp';
-
     private AdminQueryInterface $adminQuery;
     private BadPasswordQueryInterface $badPasswordQuery;
 
@@ -34,8 +32,6 @@ class AdminSignUpForm extends ExtendedForm
 
     public function init(): void
     {
-        $this->setName(self::FORM_NAME);
-
         /** @psalm-suppress UndefinedMethod */
         $this->setField('displayName', 'text')
              ->setAttribs([
@@ -100,6 +96,6 @@ class AdminSignUpForm extends ExtendedForm
 
     public function getFormName(): string
     {
-        return self::FORM_NAME;
+        return '';
     }
 }
