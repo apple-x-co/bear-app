@@ -13,10 +13,11 @@ use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Form\ExtendedForm;
-use MyVendor\MyProject\Input\Admin\CodeVerifyInput;
+use MyVendor\MyProject\InputQuery\Admin\CodeVerifyInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
+use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -33,13 +34,13 @@ class CodeVerify extends AdminPage
         $this->body['form'] = $this->form;
     }
 
-    public function onGet(string $uuid): static
+    public function onGet(#[Input] string $uuid): static
     {
         try {
             $outputData = $this->getAdminVerificationCodeUseCase->execute(
                 new GetVerificationCodeInputData($uuid),
             );
-        } catch (VerificationCodeNotFoundException $exception) {
+        } catch (VerificationCodeNotFoundException) {
             $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = [ResponseHeader::LOCATION => '/admin/login']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
@@ -57,7 +58,7 @@ class CodeVerify extends AdminPage
      * @FormValidation()
      * @Transactional()
      */
-    public function onPost(CodeVerifyInput $codeVerify): static
+    public function onPost(#[Input] CodeVerifyInput $input): static
     {
         $this->renderer = new NullRenderer();
         $this->code = StatusCode::SEE_OTHER;
@@ -65,11 +66,11 @@ class CodeVerify extends AdminPage
         try {
             $outputData = $this->verifyAdminVerificationCodeUseCase->execute(
                 new VerifyVerificationCodeInputData(
-                    $codeVerify->uuid,
-                    $codeVerify->code,
+                    $input->uuid,
+                    $input->code,
                 )
             );
-        } catch (VerificationCodeNotFoundException $exception) {
+        } catch (VerificationCodeNotFoundException) {
             $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = [ResponseHeader::LOCATION => '/admin/login']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない

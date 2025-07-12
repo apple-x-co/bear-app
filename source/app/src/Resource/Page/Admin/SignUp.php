@@ -16,6 +16,7 @@ use MyVendor\MyProject\Input\Admin\SignUpInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
+use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 use Throwable;
@@ -33,7 +34,7 @@ class SignUp extends AdminPage
         $this->body['form'] = $this->form;
     }
 
-    public function onGet(string $signature): static
+    public function onGet(#[Input] string $signature): static
     {
         try {
             $this->getJoinedAdminUseCase->execute(

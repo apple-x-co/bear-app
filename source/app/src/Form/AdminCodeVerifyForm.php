@@ -11,12 +11,8 @@ class AdminCodeVerifyForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
-    private const FORM_NAME = 'codeVerify';
-
     public function init(): void
     {
-        $this->setName(self::FORM_NAME);
-
         $this->setField('uuid', 'hidden');
         $this->filter->validate('uuid')->is('string');
 
@@ -27,7 +23,6 @@ class AdminCodeVerifyForm extends ExtendedForm
                  'autocomplete' => 'one-time-code',
                  'placeholder' => '',
                  'required' => 'required',
-                 'tabindex' => 1,
                  'pattern' => '^\d+$',
                  'title' => 'メールに記載されたコードを入力してください',
              ]);
@@ -35,12 +30,11 @@ class AdminCodeVerifyForm extends ExtendedForm
         $this->filter->useFieldMessage('code', 'メールに記載されたコードを入力してください');
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setField('continue', 'submit')
-             ->setAttribs(['tabindex' => 2]);
+        $this->setField('continue', 'submit');
     }
 
     public function getFormName(): string
     {
-        return self::FORM_NAME;
+        return '';
     }
 }

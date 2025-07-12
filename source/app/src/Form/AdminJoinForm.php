@@ -14,8 +14,6 @@ class AdminJoinForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
-    private const FORM_NAME = 'join';
-
     private AdminQueryInterface $adminQuery;
 
     #[Inject]
@@ -26,8 +24,6 @@ class AdminJoinForm extends ExtendedForm
 
     public function init(): void
     {
-        $this->setName(self::FORM_NAME);
-
         /** @psalm-suppress UndefinedMethod */
         $this->setField('emailAddress', 'email')
              ->setAttribs([
@@ -54,6 +50,6 @@ class AdminJoinForm extends ExtendedForm
 
     public function getFormName(): string
     {
-        return self::FORM_NAME;
+        return '';
     }
 }

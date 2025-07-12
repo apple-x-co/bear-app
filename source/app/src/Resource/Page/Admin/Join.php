@@ -12,9 +12,10 @@ use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\GoogleRecaptchaV2;
 use MyVendor\MyProject\Annotation\RateLimiter;
 use MyVendor\MyProject\Captcha\RecaptchaException;
-use MyVendor\MyProject\Input\Admin\JoinInput;
+use MyVendor\MyProject\InputQuery\Admin\JoinInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
+use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -39,11 +40,11 @@ class Join extends AdminPage
      */
     #[GoogleRecaptchaV2]
     #[RateLimiter]
-    public function onPost(JoinInput $join): static
+    public function onPost(#[Input] JoinInput $input): static
     {
         $outputData = $this->createAdminUseCase->execute(
             new JoinAdminInputData(
-                $join->emailAddress,
+                $input->emailAddress,
             )
         );
 

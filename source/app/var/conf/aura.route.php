@@ -17,10 +17,10 @@ $map->attach('/admin', '/admin', static function (\Aura\Router\Map $map) {
     ]);
 
 
-    $map->route('/code-verify', '/code-verify/{uuid}')->tokens(['uuid' => '.+']);
+    $map->route('/code-verify', '/code-verify?uuid={uuid}')->tokens(['uuid' => '.+']);
     $map->route('/email-verify', '/email-verify?signature={signature}')->tokens(['signature' => '.+']);
-    $map->route('/reset-password', '/reset-password/{signature}')->tokens(['signature' => '.+']);
-    $map->route('/sign-up', '/sign-up/{signature}')->tokens(['signature' => '.+']);
+    $map->route('/reset-password', '/reset-password?signature={signature}')->tokens(['signature' => '.+']);
+    $map->route('/sign-up', '/sign-up?signature={signature}')->tokens(['signature' => '.+']);
     $map->route('/settings/emails/delete', '/settings/emails/{id}/delete');
 });
 
