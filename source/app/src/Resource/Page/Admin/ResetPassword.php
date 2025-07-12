@@ -12,7 +12,7 @@ use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Form\ExtendedForm;
-use MyVendor\MyProject\Input\Admin\ResetPasswordInput;
+use MyVendor\MyProject\InputQuery\Admin\ResetPasswordInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
@@ -63,12 +63,12 @@ class ResetPassword extends AdminPage
      * @Transactional()
      * @SuppressWarnings(PHPMD.LongVariable)
      */
-    public function onPost(ResetPasswordInput $resetPassword): static
+    public function onPost(#[Input] ResetPasswordInput $input): static
     {
         $this->resetAdminPasswordUseCase->execute(
             new ResetAdminPasswordInputData(
-                $resetPassword->password,
-                $resetPassword->signature,
+                $input->password,
+                $input->signature,
             )
         );
 

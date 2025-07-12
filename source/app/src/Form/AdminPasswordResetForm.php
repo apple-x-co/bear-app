@@ -14,8 +14,6 @@ class AdminPasswordResetForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
-    private const FORM_NAME = 'resetPassword';
-
     private BadPasswordQueryInterface $badPasswordQuery;
 
     #[Inject]
@@ -26,15 +24,12 @@ class AdminPasswordResetForm extends ExtendedForm
 
     public function init(): void
     {
-        $this->setName(self::FORM_NAME);
-
         /** @psalm-suppress UndefinedMethod */
         $this->setField('password', 'password')
              ->setAttribs([
                  'autocomplete' => 'current-password',
                  'placeholder' => '',
                  'required' => 'required',
-                 'tabindex' => 1,
                  'minlength' => 8,
                  'maxlength' => 20,
                  'pattern' => '^[\x20-\x7E]+$', // ASCII 文字列
@@ -56,12 +51,11 @@ class AdminPasswordResetForm extends ExtendedForm
         $this->filter->validate('signature')->isNotBlank()->is('string');
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setField('continue', 'submit')
-             ->setAttribs(['tabindex' => 3]);
+        $this->setField('continue', 'submit');
     }
 
     public function getFormName(): string
     {
-        return self::FORM_NAME;
+        return '';
     }
 }

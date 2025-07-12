@@ -12,10 +12,11 @@ use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\GoogleRecaptchaV2;
 use MyVendor\MyProject\Annotation\RateLimiter;
 use MyVendor\MyProject\Captcha\RecaptchaException;
-use MyVendor\MyProject\Input\Admin\ForgotPasswordInput;
+use MyVendor\MyProject\InputQuery\Admin\ForgotPasswordInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
+use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -41,10 +42,10 @@ class ForgotPassword extends AdminPage
      */
     #[GoogleRecaptchaV2]
     #[RateLimiter]
-    public function onPost(ForgotPasswordInput $forgotPassword): static
+    public function onPost(#[Input] ForgotPasswordInput $input): static
     {
         $outputData = $this->forgotAdminPasswordUseCase->execute(
-            new ForgotAdminPasswordInputData($forgotPassword->emailAddress),
+            new ForgotAdminPasswordInputData($input->emailAddress),
         );
 
         $this->renderer = new NullRenderer();

@@ -34,7 +34,7 @@ class Login extends AdminPage
      */
     #[GoogleRecaptchaV2]
     #[AdminLogin]
-    public function onPost(#[Input] LoginUserInput $loginUser): static
+    public function onPost(#[Input] LoginUserInput $input): static
     {
         // login success !!
 

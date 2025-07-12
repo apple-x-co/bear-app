@@ -62,7 +62,7 @@ class AdminAuthentication implements MethodInterceptor
 
         $login = $method->getAnnotation(AdminLogin::class);
         if ($login instanceof AdminLogin) {
-            return $this->login($invocation, $login->onFailure);
+            return $this->login($invocation, $login->inputName, $login->onFailure);
         }
 
         $logout = $method->getAnnotation(AdminLogout::class);
@@ -72,7 +72,7 @@ class AdminAuthentication implements MethodInterceptor
 
         $verifyPassword = $method->getAnnotation(AdminVerifyPassword::class);
         if ($verifyPassword instanceof AdminVerifyPassword) {
-            return $this->verifyPassword($invocation, $verifyPassword->onFailure);
+            return $this->verifyPassword($invocation, $verifyPassword->inputName, $verifyPassword->onFailure);
         }
 
         return $invocation->proceed();
@@ -82,10 +82,10 @@ class AdminAuthentication implements MethodInterceptor
      * @SuppressWarnings(PHPMD.ElseExpression)
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    private function login(MethodInvocation $invocation, string $onFailure): mixed
+    private function login(MethodInvocation $invocation, string $inputName, string $onFailure): mixed
     {
         $args = $invocation->getNamedArguments();
-        $input = $args['loginUser'] ?? null;
+        $input = $args[$inputName] ?? null;
         assert($input instanceof LoginUserInput);
 
         if ($input->isValid()) {
@@ -191,10 +191,10 @@ class AdminAuthentication implements MethodInterceptor
         return $ro;
     }
 
-    private function verifyPassword(MethodInvocation $invocation, string $onFailure): mixed
+    private function verifyPassword(MethodInvocation $invocation, string $inputName, string $onFailure): mixed
     {
         $args = $invocation->getNamedArguments();
-        $input = $args['input'] ?? null;
+        $input = $args[$inputName] ?? null;
         assert($input instanceof UserPasswordInput);
 
         $userName = $this->authenticator->getUserName();
