@@ -14,8 +14,6 @@ class AdminPasswordUpdateForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
-    private const FORM_NAME = 'updatePassword';
-
     private BadPasswordQueryInterface $badPasswordQuery;
 
     #[Inject]
@@ -26,8 +24,6 @@ class AdminPasswordUpdateForm extends ExtendedForm
 
     public function init(): void
     {
-        $this->setName(self::FORM_NAME);
-
         /** @psalm-suppress UndefinedMethod */
         $this->setField('oldPassword', 'password')
              ->setAttribs([
@@ -100,6 +96,6 @@ class AdminPasswordUpdateForm extends ExtendedForm
 
     public function getFormName(): string
     {
-        return self::FORM_NAME;
+        return '';
     }
 }

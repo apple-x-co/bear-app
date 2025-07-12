@@ -16,9 +16,10 @@ use MyVendor\MyProject\Annotation\RequiredPermission;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\AuthenticationException;
 use MyVendor\MyProject\Auth\PasswordIncorrect;
-use MyVendor\MyProject\Input\Admin\UpdatePasswordInput;
+use MyVendor\MyProject\InputQuery\Admin\UpdatePasswordInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
+use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 use Throwable;
@@ -47,7 +48,7 @@ class Password extends AdminPage
      * @FormValidation()
      */
     #[AdminGuard]
-    public function onPost(UpdatePasswordInput $updatePassword): static
+    public function onPost(#[Input] UpdatePasswordInput $input): static
     {
         $userName = $this->adminAuthenticator->getUserName();
         $adminId = $this->adminAuthenticator->getUserId();
@@ -58,7 +59,7 @@ class Password extends AdminPage
         try {
             $this->adminAuthenticator->verifyPassword(
                 $userName,
-                $updatePassword->oldPassword,
+                $input->oldPassword,
             );
         } catch (Throwable $throwable) {
             return $this->onPostPasswordNotMatched(
@@ -74,7 +75,7 @@ class Password extends AdminPage
             new UpdateAdminPasswordInputData(
                 $adminId,
                 $userName,
-                $updatePassword->password,
+                $input->password,
             )
         );
 
