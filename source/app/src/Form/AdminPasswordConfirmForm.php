@@ -11,12 +11,8 @@ class AdminPasswordConfirmForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
-    private const FORM_NAME = 'userPassword';
-
     public function init(): void
     {
-        $this->setName(self::FORM_NAME);
-
         /** @psalm-suppress UndefinedMethod */
         $this->setField('password', 'password')
              ->setAttribs([
@@ -24,7 +20,6 @@ class AdminPasswordConfirmForm extends ExtendedForm
                  'autocomplete' => 'current-password',
                  'placeholder' => '',
                  'required' => 'required',
-                 'tabindex' => 1,
                  'title' => '有効なパスワードを入力してください',
              ]);
         /** @psalm-suppress TooManyArguments */
@@ -35,12 +30,11 @@ class AdminPasswordConfirmForm extends ExtendedForm
         $this->filter->useFieldMessage('password', '有効なパスワードを入力してください');
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setField('continue', 'submit')
-             ->setAttribs(['tabindex' => 2]);
+        $this->setField('continue', 'submit');
     }
 
     public function getFormName(): string
     {
-        return self::FORM_NAME;
+        return '';
     }
 }

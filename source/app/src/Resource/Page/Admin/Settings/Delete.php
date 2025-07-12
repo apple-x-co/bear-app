@@ -12,10 +12,11 @@ use MyVendor\MyProject\Annotation\AdminLogout;
 use MyVendor\MyProject\Annotation\AdminPasswordProtect;
 use MyVendor\MyProject\Annotation\RequiredPermission;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
-use MyVendor\MyProject\Input\Admin\DeleteInput;
+use MyVendor\MyProject\InputQuery\Admin\DeleteInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
+use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -45,7 +46,7 @@ class Delete extends AdminPage
     #[AdminGuard]
     #[Transactional]
     #[AdminLogout]
-    public function onPost(DeleteInput $delete): static
+    public function onPost(#[Input] DeleteInput $input): static
     {
         $this->deleteAdminUseCase->execute(
             new DeleteAdminInputData((int) $this->adminAuthenticator->getUserId())

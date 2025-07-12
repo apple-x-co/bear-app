@@ -25,8 +25,8 @@ use MyVendor\MyProject\Auth\PasswordIncorrect;
 use MyVendor\MyProject\Auth\PasswordMissing;
 use MyVendor\MyProject\Auth\UsernameMissing;
 use MyVendor\MyProject\Auth\UsernameNotFound;
-use MyVendor\MyProject\Input\Admin\UserPasswordInput;
 use MyVendor\MyProject\InputQuery\Admin\LoginUserInput;
+use MyVendor\MyProject\InputQuery\Admin\UserPasswordInput;
 use MyVendor\MyProject\Session\SessionInterface;
 use MyVendor\MyProject\Throttle\ThrottleInterface;
 use Ray\Aop\MethodInterceptor;
@@ -194,7 +194,7 @@ class AdminAuthentication implements MethodInterceptor
     private function verifyPassword(MethodInvocation $invocation, string $onFailure): mixed
     {
         $args = $invocation->getNamedArguments();
-        $input = $args['userPassword'] ?? null;
+        $input = $args['input'] ?? null;
         assert($input instanceof UserPasswordInput);
 
         $userName = $this->authenticator->getUserName();
