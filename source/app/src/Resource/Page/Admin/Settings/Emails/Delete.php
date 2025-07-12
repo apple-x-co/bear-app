@@ -14,7 +14,9 @@ use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\RequiredPermission;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
+use MyVendor\MyProject\InputQuery\Admin\DeleteEmailInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
+use Ray\InputQuery\Attribute\Input;
 
 class Delete extends AdminPage
 {
@@ -28,12 +30,12 @@ class Delete extends AdminPage
 
     #[AdminGuard]
     #[RequiredPermission('settings', Permission::Read)]
-    public function onPost(int $id): static
+    public function onPost(#[Input] DeleteEmailInput $input): static
     {
         $this->deleteAdminEmailUseCase->execute(
             new DeleteAdminEmailInputData(
                 (int) $this->adminAuthenticator->getUserId(),
-                $id,
+                $input->id,
             )
         );
 
