@@ -84,6 +84,8 @@ class AdminAuthentication implements MethodInterceptor
      */
     private function login(MethodInvocation $invocation, string $inputName, string $onFailure): mixed
     {
+        assert($inputName !== '');
+
         $args = $invocation->getNamedArguments();
         $input = $args[$inputName] ?? null;
         assert($input instanceof LoginUserInput);
@@ -193,6 +195,8 @@ class AdminAuthentication implements MethodInterceptor
 
     private function verifyPassword(MethodInvocation $invocation, string $inputName, string $onFailure): mixed
     {
+        assert($inputName !== '');
+
         $args = $invocation->getNamedArguments();
         $input = $args[$inputName] ?? null;
         assert($input instanceof UserPasswordInput);
