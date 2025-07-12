@@ -7,9 +7,10 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Form\AdminContactDemoForm;
 use MyVendor\MyProject\Form\FormMode;
-use MyVendor\MyProject\Input\Admin\ContactDemo as Input;
+use MyVendor\MyProject\InputQuery\Admin\ContactDemoInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
+use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -35,9 +36,9 @@ class ContactDemo extends AdminPage
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @FormValidation()
      */
-    public function onPost(Input $contactDemo): static
+    public function onPost(#[Input] ContactDemoInput $input): static
     {
-        if ($contactDemo->mode === FormMode::Complete->name) {
+        if ($input->mode === FormMode::Complete->name) {
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = ['Location' => '/admin/contact-complete-demo'];
 
