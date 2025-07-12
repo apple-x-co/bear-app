@@ -16,10 +16,11 @@ use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\RequiredPermission;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
-use MyVendor\MyProject\Input\Admin\CreateEmailInput;
+use MyVendor\MyProject\InputQuery\Admin\CreateEmailInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
+use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -54,12 +55,12 @@ class Emails extends AdminPage
      */
     #[AdminGuard]
     #[Transactional]
-    public function onPost(CreateEmailInput $createEmail): static
+    public function onPost(#[Input] CreateEmailInput $input): static
     {
         $this->createAdminEmailUseCase->execute(
             new CreateAdminEmailInputData(
                 (int) $this->adminAuthenticator->getUserId(),
-                $createEmail->emailAddress,
+                $input->emailAddress,
             )
         );
 

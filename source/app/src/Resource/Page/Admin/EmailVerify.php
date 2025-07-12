@@ -12,9 +12,11 @@ use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
+use MyVendor\MyProject\InputQuery\Admin\VerifyEmailInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\AuraSqlModule\Annotation\WriteConnection;
+use Ray\InputQuery\Attribute\Input;
 
 class EmailVerify extends AdminPage
 {
@@ -30,12 +32,12 @@ class EmailVerify extends AdminPage
     #[AdminGuard]
     #[WriteConnection]
     #[Transactional]
-    public function onGet(string $signature): static
+    public function onGet(#[Input] VerifyEmailInput $input): static
     {
         $this->verifyAdminEmailUseCase->execute(
             new VerifyAdminEmailInputData(
                 (int) $this->adminAuthenticator->getUserId(),
-                $signature,
+                $input->signature,
             )
         );
 
