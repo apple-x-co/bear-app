@@ -9,8 +9,8 @@ use Ray\InputQuery\Attribute\Input;
 readonly class FieldsetDemoInput
 {
     /**
-     * @param array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null, houseType?: string|null, smartphones?: array<string>|null}            $home
-     * @param list<int, array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null, houseType?: string|null, smartphones?: array<string>|null}> $deliveries
+     * @param array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null, houseType?: string|null, smartphones?: array<string>|null}       $home
+     * @param list<array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null, houseType?: string|null, smartphones?: array<string>|null}> $deliveries
      *
      * @psalm-suppress UndefinedAttributeClass
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)

@@ -41,6 +41,9 @@ class FieldsetDemo extends AdminPage
         return $this;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function onPostValidationFailed(#[Input] FieldsetDemoInput $input): static
     {
         return $this;
