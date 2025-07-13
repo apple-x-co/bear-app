@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use MyVendor\MyProject\Form\ExtendedForm;
-use MyVendor\MyProject\Input\Admin\FieldsetDemo as Input;
+use MyVendor\MyProject\InputQuery\Admin\FieldsetDemoInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
+use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -35,12 +36,12 @@ class FieldsetDemo extends AdminPage
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @FormValidation()
      */
-    public function onPost(Input $fieldsetDemo): static
+    public function onPost(#[Input] FieldsetDemoInput $input): static
     {
         return $this;
     }
 
-    public function onPostValidationFailed(): static
+    public function onPostValidationFailed(#[Input] FieldsetDemoInput $input): static
     {
         return $this;
     }

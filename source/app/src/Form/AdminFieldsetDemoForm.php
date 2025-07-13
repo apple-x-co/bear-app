@@ -17,17 +17,13 @@ class AdminFieldsetDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
-    private const FORM_NAME = 'fieldsetDemo';
-
     protected function getFormName(): string
     {
-        return self::FORM_NAME;
+        return '';
     }
 
     public function init(): void
     {
-        $this->setName(self::FORM_NAME);
-
         $this->builder = new Builder([
             'address' => static function () {
                 return new AddressFieldset(
