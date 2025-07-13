@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\InputQuery\Admin;
 
+use MyVendor\MyProject\InputQuery\Admin\Fieldset\Address;
 use Ray\InputQuery\Attribute\Input;
 
 readonly class FieldsetDemoInput
 {
     /**
-     * @param array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null, houseType?: string|null, smartphones?: array<string>|null}       $home
-     * @param list<array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null, houseType?: string|null, smartphones?: array<string>|null}> $deliveries
+     * @param array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null, houseType?: string|null, smartphones?: array<string>|null} $home
      *
      * @psalm-suppress UndefinedAttributeClass
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
@@ -21,7 +21,7 @@ readonly class FieldsetDemoInput
         #[Input] public string $__csrf_token, // phpcs:ignore
         #[Input] public string|null $submit,
         #[Input] public array $home = [],
-        #[Input] public array $deliveries = [],
+        #[Input(item: Address::class)] public array|null $deliveries = [],
     ) {
     }
 }
