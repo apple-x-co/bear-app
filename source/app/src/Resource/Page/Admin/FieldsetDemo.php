@@ -13,7 +13,6 @@ use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
 use function assert;
-use function var_dump;
 
 class FieldsetDemo extends AdminPage
 {
@@ -39,8 +38,6 @@ class FieldsetDemo extends AdminPage
      */
     public function onPost(#[Input] FieldsetDemoInput $input): static
     {
-        var_dump($input);
-
         return $this;
     }
 

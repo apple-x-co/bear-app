@@ -11,6 +11,7 @@ readonly class FieldsetDemoInput
 {
     /**
      * @param array{zip?: string|null, state?: string|null, city?: string|null, street?: string|null, houseType?: string|null, smartphones?: array<string>|null} $home
+     * @param list<Address>|null                                                                                                                                 $deliveries
      *
      * @psalm-suppress UndefinedAttributeClass
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
