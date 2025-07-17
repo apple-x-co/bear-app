@@ -3,7 +3,7 @@
 {{ setBlock ('body') }}
 <header class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 bg-white/70 supports-backdrop-blur:bg-white/60">
     {{ setBlock ('body_header') }}
-    <div class="max-w-7xl mx-auto">
+    <div class="w-full">
         <div class="py-4 border-b border-slate-900/10 px-4 lg:px-8 lg:border-0">
             <div class="relative flex items-center">
                 <a class="mr-3 flex-none overflow-hidden lg:w-auto font-sans font-black text-lg bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" href="/admin/index">
@@ -18,6 +18,16 @@
                         </form>
                     </div>
                 </div>
+            </div>
+            <div class="flex pt-1 lg:pt-2">
+                <a href="markup" class="group block font-sans text-sm rounded-md hover:bg-slate-50 hover:ring-2 hover:ring-slate-900/10 px-2 py-1 lg:px-4 lg:py-2">
+                    <p class="group-hover:underline">Markup</p>
+                </a>
+                {{ if ($context->isAllowed('settings', 'read')): }}
+                <a href="settings/" class="group block font-sans text-sm rounded-md hover:bg-slate-50 hover:ring-2 hover:ring-slate-900/10 px-2 py-1 lg:px-4 lg:py-2">
+                    <p class="group-hover:underline">Settings</p>
+                </a>
+                {{ endif }}
             </div>
         </div>
     </div>

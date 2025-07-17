@@ -2,10 +2,6 @@
 
 {{ setBlock ('title') }}INDEX | {{ parentBlock () }}{{ endBlock () }}
 
+{{ $this->addData(['navVisible' => false]) }}
 {{ setBlock ('body_content') }}
-<p><a href="markup">Markup</a></p>
-
-{{ if ($context->isAllowed('settings', 'read')): }}
-<p><a href="settings/">Settings</a></p>
-{{ endif }}
 {{ endBlock () }}
