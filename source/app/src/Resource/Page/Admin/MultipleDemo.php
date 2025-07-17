@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
-use MyVendor\MyProject\Input\Admin\MultipleDemo as Input;
+use MyVendor\MyProject\InputQuery\Admin\MultipleDemoInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
+use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -27,7 +28,7 @@ class MultipleDemo extends AdminPage
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @FormValidation()
      */
-    public function onPost(Input $multipleDemo): static
+    public function onPost(#[Input] MultipleDemoInput $input): static
     {
         return $this;
     }
