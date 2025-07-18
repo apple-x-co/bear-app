@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Form;
 
+/** @deprecated */
 class UploadFiles implements UploadFilesInterface
 {
     /**

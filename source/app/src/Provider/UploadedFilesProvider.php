@@ -9,6 +9,7 @@ use MyVendor\MyProject\Form\UploadFiles;
 use MyVendor\MyProject\Form\UploadFilesInterface;
 use Ray\Di\ProviderInterface;
 
+/** @deprecated */
 class UploadedFilesProvider implements ProviderInterface
 {
     public function get(): UploadFilesInterface

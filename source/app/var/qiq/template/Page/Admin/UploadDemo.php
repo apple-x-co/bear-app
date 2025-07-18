@@ -11,20 +11,20 @@
             {{= adminFile(form: $form, input: 'file') }}
             {{= adminFormError(form: $form, input: 'file') }}
         </label>
-        {{ if (isset($uploadedFile)): }}
+        {{ if (isset($fileUpload)): }}
         <div class="block mt-5">
-            <p class="font-bold">UploadedFileInterface</p>
-            <p>Client file name: {{h $uploadedFile->getClientFilename() }}</p>
-            <p>Client media type: {{h $uploadedFile->getClientMediaType() }}</p>
-            <p>Size: {{= $uploadedFile->getSize() }}</p>
+            <p class="font-bold">Koriym\FileUpload\FileUpload</p>
+            <p>name: {{h $fileUpload->name }}</p>
+            <p>type: {{h $fileUpload->type }}</p>
+            <p>size: {{= $fileUpload->size }}</p>
+            <p>tmpName: {{= $fileUpload->tmpName }}</p>
+            <p>extension: {{= $fileUpload->extension }}</p>
         </div>
         {{ endif }}
-        {{ if (isset($file)): }}
+        {{ if (isset($errorFileUpload)): }}
         <div class="block mt-5">
-            <p class="font-bold">$_FILES</p>
-            <p>Name: {{h $file['name'] }}</p>
-            <p>Type: {{= $file['type'] }}</p>
-            <p>Size: {{= $file['size'] }}</p>
+            <p class="font-bold">Koriym\FileUpload\ErrorFileUpload</p>
+            <p>message: {{h $errorFileUpload->message }}</p>
         </div>
         {{ endif }}
         <label class="block mt-5 text-center">
