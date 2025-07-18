@@ -35,6 +35,8 @@ use Ray\Aop\MethodInvocation;
 use Ray\Di\Di\Named;
 use Throwable;
 
+use function array_filter;
+use function array_shift;
 use function assert;
 use function call_user_func;
 use function is_string;
@@ -86,21 +88,18 @@ class AdminAuthentication implements MethodInterceptor
     private function login(MethodInvocation $invocation, string $onFailure): mixed
     {
         $args = $invocation->getNamedArguments();
-
-        /** @var LoginUserInput|null $input */
-        $input = null;
-        foreach ($args as $value) {
-            if ($value instanceof LoginUserInput) {
-                $input = $value;
-            }
-        }
-
-        if ($input === null) {
+        $array = array_filter(
+            $args->getArrayCopy(),
+            static fn ($arg) => $arg instanceof LoginUserInput,
+        );
+        if (empty($array)) {
             return call_user_func(
                 [$invocation->getThis(), $onFailure],
                 new ParameterMissingException()
             );
         }
+
+        $input = array_shift($array);
 
         if ($input->isValid()) {
             $throttleKey = sha1($input->username);
@@ -209,11 +208,12 @@ class AdminAuthentication implements MethodInterceptor
     {
         $args = $invocation->getNamedArguments();
 
-        /** @var UserPasswordInput|null $input */
         $input = null;
         foreach ($args as $value) {
             if ($value instanceof UserPasswordInput) {
                 $input = $value;
+
+                break;
             }
         }
 

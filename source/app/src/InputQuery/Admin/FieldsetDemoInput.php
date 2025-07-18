@@ -10,7 +10,7 @@ use Ray\InputQuery\Attribute\Input;
 readonly class FieldsetDemoInput
 {
     /**
-     * @param list<Address>|null                                                                                                                                 $deliveries
+     * @param list<Address>|null $deliveries
      *
      * @psalm-suppress UndefinedAttributeClass
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
