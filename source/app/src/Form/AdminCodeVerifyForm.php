@@ -32,9 +32,4 @@ class AdminCodeVerifyForm extends ExtendedForm
         /** @psalm-suppress UndefinedMethod */
         $this->setField('continue', 'submit');
     }
-
-    public function getFormName(): string
-    {
-        return '';
-    }
 }

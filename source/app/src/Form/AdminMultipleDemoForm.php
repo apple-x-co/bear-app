@@ -13,11 +13,6 @@ class AdminMultipleDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
-    protected function getFormName(): string
-    {
-        return '';
-    }
-
     public function init(): void
     {
         $this->setField('fruits', 'checkbox')

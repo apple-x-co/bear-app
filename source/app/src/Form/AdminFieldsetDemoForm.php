@@ -17,11 +17,6 @@ class AdminFieldsetDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
-    protected function getFormName(): string
-    {
-        return '';
-    }
-
     public function init(): void
     {
         $this->builder = new Builder([

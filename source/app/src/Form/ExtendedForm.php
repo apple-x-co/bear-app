@@ -17,11 +17,8 @@ use function assert;
 use function is_array;
 
 /** @SuppressWarnings(PHPMD.NumberOfChildren) */
-abstract class ExtendedForm extends AbstractForm implements SubmitInterface
+abstract class ExtendedForm extends AbstractForm
 {
-    /** @deprecated */
-    abstract protected function getFormName(): string;
-
     /**
      * @return array<string, mixed>
      */
@@ -83,28 +80,25 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
      *
      * @deprecated
      */
-    public function submit(): array
-    {
-        $formName = $this->getFormName();
-        if (empty($formName)) {
-            return $_POST;
-        }
-
-        /** @var array<string, mixed> $posts */
-        $posts = $_POST[$formName] ?? [];
-
-        if (isset($_POST[AntiCsrf::TOKEN_KEY])) {
-            /** @psalm-suppress InvalidArrayOffset */
-            $posts[AntiCsrf::TOKEN_KEY] = $_POST[AntiCsrf::TOKEN_KEY];
-        }
-
-        if (isset($_FILES[$formName])) {
-            $files = (new NormalizeFiles())($_FILES);
-            if (! empty($files)) {
-                $posts = array_merge_recursive($posts, $files[$formName]);
-            }
-        }
-
-        return $posts;
-    }
+//    public function submit(): array
+//    {
+//        $formName = $this->getFormName();
+//
+//        /** @var array<string, mixed> $posts */
+//        $posts = $_POST[$formName] ?? [];
+//
+//        if (isset($_POST[AntiCsrf::TOKEN_KEY])) {
+//            /** @psalm-suppress InvalidArrayOffset */
+//            $posts[AntiCsrf::TOKEN_KEY] = $_POST[AntiCsrf::TOKEN_KEY];
+//        }
+//
+//        if (isset($_FILES[$formName])) {
+//            $files = (new NormalizeFiles())($_FILES);
+//            if (! empty($files)) {
+//                $posts = array_merge_recursive($posts, $files[$formName]);
+//            }
+//        }
+//
+//        return $posts;
+//    }
 }

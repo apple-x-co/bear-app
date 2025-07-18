@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\Form;
 use function array_keys;
 use function is_array;
 
+/** @deprecated */
 class NormalizeFiles
 {
     /**

@@ -93,9 +93,4 @@ class AdminPasswordUpdateForm extends ExtendedForm
         $this->setField('update', 'submit')
              ->setAttribs(['tabindex' => 4]);
     }
-
-    public function getFormName(): string
-    {
-        return '';
-    }
 }

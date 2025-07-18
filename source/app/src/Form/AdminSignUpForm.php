@@ -93,9 +93,4 @@ class AdminSignUpForm extends ExtendedForm
         $this->setField('continue', 'submit')
              ->setAttribs(['tabindex' => 4]);
     }
-
-    public function getFormName(): string
-    {
-        return '';
-    }
 }

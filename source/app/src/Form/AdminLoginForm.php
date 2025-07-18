@@ -54,9 +54,4 @@ class AdminLoginForm extends ExtendedForm
         $this->setField('login', 'submit')
              ->setAttribs(['tabindex' => 5]);
     }
-
-    public function getFormName(): string
-    {
-        return '';
-    }
 }

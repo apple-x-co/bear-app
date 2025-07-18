@@ -20,9 +20,4 @@ class AdminUploadDemoForm extends ExtendedForm
         /** @psalm-suppress UndefinedMethod */
         $this->setField('submit', 'submit');
     }
-
-    public function getFormName(): string
-    {
-        return '';
-    }
 }

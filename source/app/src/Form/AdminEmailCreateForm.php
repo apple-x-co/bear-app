@@ -47,9 +47,4 @@ class AdminEmailCreateForm extends ExtendedForm
         $this->setField('create', 'submit')
              ->setAttribs(['tabindex' => 2]);
     }
-
-    public function getFormName(): string
-    {
-        return '';
-    }
 }

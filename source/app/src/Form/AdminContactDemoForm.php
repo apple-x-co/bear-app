@@ -14,11 +14,6 @@ class AdminContactDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
-    protected function getFormName(): string
-    {
-        return '';
-    }
-
     public function init(): void
     {
         /** @psalm-suppress UndefinedMethod */

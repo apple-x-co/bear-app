@@ -47,9 +47,4 @@ class AdminJoinForm extends ExtendedForm
         $this->setField('continue', 'submit')
              ->setAttribs(['tabindex' => 3]);
     }
-
-    public function getFormName(): string
-    {
-        return '';
-    }
 }
