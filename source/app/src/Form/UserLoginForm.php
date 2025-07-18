@@ -11,12 +11,8 @@ class UserLoginForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
-    private const FORM_NAME = 'loginUser';
-
     public function init(): void
     {
-        $this->setName(self::FORM_NAME);
-
         /** @psalm-suppress UndefinedMethod */
         $this->setField('username', 'text')
              ->setAttribs([
@@ -61,6 +57,6 @@ class UserLoginForm extends ExtendedForm
 
     public function getFormName(): string
     {
-        return self::FORM_NAME;
+        return '';
     }
 }

@@ -6,9 +6,10 @@ namespace MyVendor\MyProject\Resource\Page\User;
 
 use MyVendor\MyProject\Annotation\UserLogin;
 use MyVendor\MyProject\Auth\AuthenticationException;
-use MyVendor\MyProject\Input\User\LoginUser;
+use MyVendor\MyProject\InputQuery\User\LoginUserInput;
 use MyVendor\MyProject\Resource\Page\UserPage;
 use Ray\Di\Di\Named;
+use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -30,7 +31,7 @@ class Login extends UserPage
      * @FormValidation()
      */
     #[UserLogin]
-    public function onPost(LoginUser $loginUser): static
+    public function onPost(#[Input] LoginUserInput $input): static
     {
         // login success !!
 

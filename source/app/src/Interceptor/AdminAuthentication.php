@@ -21,6 +21,7 @@ use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\AdminPasswordLocking;
 use MyVendor\MyProject\Auth\MaxAttemptsExceeded;
 use MyVendor\MyProject\Auth\MultipleMatches;
+use MyVendor\MyProject\Auth\ParameterMissingException;
 use MyVendor\MyProject\Auth\PasswordIncorrect;
 use MyVendor\MyProject\Auth\PasswordMissing;
 use MyVendor\MyProject\Auth\UsernameMissing;
@@ -62,7 +63,7 @@ class AdminAuthentication implements MethodInterceptor
 
         $login = $method->getAnnotation(AdminLogin::class);
         if ($login instanceof AdminLogin) {
-            return $this->login($invocation, $login->inputName, $login->onFailure);
+            return $this->login($invocation, $login->onFailure);
         }
 
         $logout = $method->getAnnotation(AdminLogout::class);
@@ -72,7 +73,7 @@ class AdminAuthentication implements MethodInterceptor
 
         $verifyPassword = $method->getAnnotation(AdminVerifyPassword::class);
         if ($verifyPassword instanceof AdminVerifyPassword) {
-            return $this->verifyPassword($invocation, $verifyPassword->inputName, $verifyPassword->onFailure);
+            return $this->verifyPassword($invocation, $verifyPassword->onFailure);
         }
 
         return $invocation->proceed();
@@ -82,13 +83,24 @@ class AdminAuthentication implements MethodInterceptor
      * @SuppressWarnings(PHPMD.ElseExpression)
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    private function login(MethodInvocation $invocation, string $inputName, string $onFailure): mixed
+    private function login(MethodInvocation $invocation, string $onFailure): mixed
     {
-        assert($inputName !== '');
-
         $args = $invocation->getNamedArguments();
-        $input = $args[$inputName] ?? null;
-        assert($input instanceof LoginUserInput);
+
+        /** @var LoginUserInput|null $input */
+        $input = null;
+        foreach ($args as $value) {
+            if ($value instanceof LoginUserInput) {
+                $input = $value;
+            }
+        }
+
+        if ($input === null) {
+            return call_user_func(
+                [$invocation->getThis(), $onFailure],
+                new ParameterMissingException()
+            );
+        }
 
         if ($input->isValid()) {
             $throttleKey = sha1($input->username);
@@ -193,13 +205,24 @@ class AdminAuthentication implements MethodInterceptor
         return $ro;
     }
 
-    private function verifyPassword(MethodInvocation $invocation, string $inputName, string $onFailure): mixed
+    private function verifyPassword(MethodInvocation $invocation, string $onFailure): mixed
     {
-        assert($inputName !== '');
-
         $args = $invocation->getNamedArguments();
-        $input = $args[$inputName] ?? null;
-        assert($input instanceof UserPasswordInput);
+
+        /** @var UserPasswordInput|null $input */
+        $input = null;
+        foreach ($args as $value) {
+            if ($value instanceof UserPasswordInput) {
+                $input = $value;
+            }
+        }
+
+        if ($input === null) {
+            return call_user_func(
+                [$invocation->getThis(), $onFailure],
+                new ParameterMissingException()
+            );
+        }
 
         $userName = $this->authenticator->getUserName();
 

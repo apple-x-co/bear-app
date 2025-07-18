@@ -16,12 +16,13 @@ use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\UserLogin;
 use MyVendor\MyProject\Annotation\UserLogout;
 use MyVendor\MyProject\Auth\MultipleMatches;
+use MyVendor\MyProject\Auth\ParameterMissingException;
 use MyVendor\MyProject\Auth\PasswordIncorrect;
 use MyVendor\MyProject\Auth\PasswordMissing;
 use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
 use MyVendor\MyProject\Auth\UsernameMissing;
 use MyVendor\MyProject\Auth\UsernameNotFound;
-use MyVendor\MyProject\Input\User\LoginUser;
+use MyVendor\MyProject\InputQuery\User\LoginUserInput;
 use MyVendor\MyProject\Session\SessionInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
@@ -29,6 +30,7 @@ use Ray\Di\Di\Named;
 
 use function assert;
 use function call_user_func;
+use function var_dump;
 
 /**
  * User認証
@@ -62,13 +64,26 @@ class UserAuthentication implements MethodInterceptor
     private function login(MethodInvocation $invocation, string $onFailure): mixed
     {
         $args = $invocation->getNamedArguments();
-        $loginUser = $args['loginUser'] ?? null;
-        assert($loginUser instanceof LoginUser);
 
-        if ($loginUser->isValid()) {
+        /** @var LoginUserInput|null $input */
+        $input = null;
+        foreach ($args as $value) {
+            if ($value instanceof LoginUserInput) {
+                $input = $value;
+            }
+        }
+
+        if ($input === null) {
+            return call_user_func(
+                [$invocation->getThis(), $onFailure],
+                new ParameterMissingException()
+            );
+        }
+
+        if ($input->isValid()) {
             try {
-                $this->authenticator->login($loginUser->username, $loginUser->password);
-                $this->logger->log('[logged] ' . $loginUser->username);
+                $this->authenticator->login($input->username, $input->password);
+                $this->logger->log('[logged] ' . $input->username);
             } catch (AuraUsernameMissing $usernameMissing) {
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],

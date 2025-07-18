@@ -11,7 +11,6 @@ final class AdminLogin
 {
     public function __construct(
         public readonly string $onFailure = 'onPostAuthenticationFailed',
-        public readonly string $inputName = 'input',
     ) {
     }
 }
