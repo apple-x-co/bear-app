@@ -21,9 +21,7 @@ use MyVendor\MyProject\Form\AdminPasswordResetForm;
 use MyVendor\MyProject\Form\AdminPasswordUpdateForm;
 use MyVendor\MyProject\Form\AdminSignUpForm;
 use MyVendor\MyProject\Form\AdminUploadDemoForm;
-use MyVendor\MyProject\Form\UploadFilesInterface;
 use MyVendor\MyProject\Form\UserLoginForm;
-use MyVendor\MyProject\Provider\UploadedFilesProvider;
 use MyVendor\MyProject\TemplateEngine\QiqCustomHelpers;
 use MyVendor\MyProject\TemplateEngine\QiqModule;
 use Qiq\Helpers;
@@ -43,9 +41,6 @@ class HtmlModule extends AbstractAppModule
         $this->install(new SessionAuthModule());
         $this->install(new CaptchaModule());
         $this->install(new ThrottlingModule());
-
-        /** @deprecated  */
-        $this->bind(UploadFilesInterface::class)->toProvider(UploadedFilesProvider::class);
 
         $this->admin();
         $this->user();

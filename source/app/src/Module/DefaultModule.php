@@ -8,7 +8,6 @@ use AppCore\Domain\FlashMessenger\FlashMessengerInterface;
 use AppCore\Presentation\Shared\AdminContextInterface;
 use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
-use MyVendor\MyProject\Form\UploadFilesInterface;
 use MyVendor\MyProject\Session\SessionInterface;
 use MyVendor\MyProject\Throttle\ThrottleInterface;
 use Qiq\Helpers;
@@ -21,8 +20,6 @@ class DefaultModule extends AbstractModule
     protected function configure(): void
     {
         $this->bind(FlashMessengerInterface::class)->toNull();
-
-        $this->bind(UploadFilesInterface::class)->toNull();
 
         $this->bind(SessionInterface::class)->toNull();
 
