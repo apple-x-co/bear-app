@@ -52,7 +52,7 @@ class SessionAuthModule extends AbstractModule
 
         $this->bind()
              ->annotatedWith('session_name')
-             ->toInstance(session_name());
+             ->toInstance('bear-app');
 
         $this->bind(FlashMessengerInterface::class)->to(FlashMessenger::class)->in(Scope::SINGLETON);
 
