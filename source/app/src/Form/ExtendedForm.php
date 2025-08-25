@@ -8,13 +8,14 @@ use Aura\Html\Helper\Input\AbstractInput;
 use Aura\Input\Collection;
 use Aura\Input\Fieldset;
 use Ray\WebFormModule\AbstractForm;
+use Ray\WebFormModule\SubmitInterface;
 
 use function array_merge;
 use function assert;
 use function is_array;
 
 /** @SuppressWarnings(PHPMD.NumberOfChildren) */
-abstract class ExtendedForm extends AbstractForm
+abstract class ExtendedForm extends AbstractForm implements SubmitInterface
 {
     /**
      * @return array<string, mixed>
@@ -77,25 +78,8 @@ abstract class ExtendedForm extends AbstractForm
      *
      * @deprecated
      */
-//    public function submit(): array
-//    {
-//        $formName = $this->getFormName();
-//
-//        /** @var array<string, mixed> $posts */
-//        $posts = $_POST[$formName] ?? [];
-//
-//        if (isset($_POST[AntiCsrf::TOKEN_KEY])) {
-//            /** @psalm-suppress InvalidArrayOffset */
-//            $posts[AntiCsrf::TOKEN_KEY] = $_POST[AntiCsrf::TOKEN_KEY];
-//        }
-//
-//        if (isset($_FILES[$formName])) {
-//            $files = (new NormalizeFiles())($_FILES);
-//            if (! empty($files)) {
-//                $posts = array_merge_recursive($posts, $files[$formName]);
-//            }
-//        }
-//
-//        return $posts;
-//    }
+    public function submit(): array
+    {
+        return $_POST;
+    }
 }
