@@ -35,8 +35,6 @@ use MyVendor\MyProject\Session\SessionInterface;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
-use function session_name;
-
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class SessionAuthModule extends AbstractModule
 {
