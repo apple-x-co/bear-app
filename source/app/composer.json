@@ -4,30 +4,30 @@
     "license": "proprietary",
     "description": "",
     "require": {
-        "php": "^8.2.0",
-        "ext-json": "*",
+        "php": "^8.3.0",
         "aura/auth": "^4.0",
-        "bear/aura-router-module": "^2.0",
-        "bear/devtools": "^1.0",
+        "bear/aura-router-module": "^2.4",
         "bear/dotenv": "^1.0",
-        "bear/package": "^1.12.1",
-        "bear/resource": "^1.16",
-        "bear/sunday": "^1.5",
-        "koriym/env-json": "^0.1.0",
+        "bear/package": "^1.14",
+        "bear/resource": "^1.17",
+        "bear/sunday": "^1.6",
+        "koriym/env-json": "^1.0",
         "koriym/file-upload": "^0.2.0",
-        "phpmailer/phpmailer": "^6.8",
-        "qiq/qiq": "^2.0",
-        "ray/aop": "^2.11",
+        "phpmailer/phpmailer": "^6.10",
+        "qiq/qiq": "^3.0",
+        "ray/aop": "^2.12",
         "ray/aura-session-module": "^1.2",
-        "ray/di": "^2.13",
+        "ray/di": "^2.14",
         "ray/identity-value-module": "^1.0",
-        "ray/media-query": "^0.10.2",
+        "ray/media-query": "^0.17.1",
         "ray/web-form-module": "^0.6.0"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.4",
-        "koriym/sql-quality": "^0.1.0",
-        "phpunit/phpunit": "^9.5",
+        "bear/api-doc": "^1.1",
+        "bear/devtools": "^1.0",
+        "koriym/sql-quality": "^0.1.7",
+        "phpunit/phpunit": "^10.0",
         "roave/security-advisories": "dev-latest"
     },
     "autoload": {
@@ -49,8 +49,10 @@
         }
     },
     "scripts": {
-        "post-update-cmd": "@setup",
-        "post-install-cmd": "@composer bin all install --ansi",
+        "post-install-cmd": [
+            "@setup",
+            "@composer bin all install --ansi"
+        ],
         "setup": "php bin/setup.php",
         "compile": [
             "cp -ap autoload.php autoload.php.org",
@@ -95,7 +97,7 @@
             "@compile",
             "@metrics"
         ],
-        "serve": "php -dzend_extension=xdebug.so -S 127.0.0.1:8080 -t public",
+        "serve": "COMPOSER_PROCESS_TIMEOUT=0 php -dzend_extension=xdebug.so -S 127.0.0.1:8080 -t public",
         "app": "php bin/app.php",
         "page": "php bin/page.php"
     },
@@ -118,10 +120,16 @@
     },
     "config": {
         "sort-packages": true,
-        "process-timeout": 0,
         "allow-plugins": {
-            "bamarni/composer-bin-plugin": true,
-            "aura/installer-default": true
+            "aura/installer-default": true,
+            "bamarni/composer-bin-plugin": true
+        },
+        "process-timeout" : 0
+    },
+    "extra": {
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": false
         }
     }
 }

@@ -1,6 +1,6 @@
 services:
   web:
-    image: ghcr.io/buddying-inc/webserver-centos83:apache24-php82
+    image: ghcr.io/buddying-inc/webserver-ubuntu2404:apache24-php83
     container_name: bear-web
     working_dir: /var/www/html
     volumes:
