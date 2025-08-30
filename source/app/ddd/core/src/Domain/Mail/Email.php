@@ -8,89 +8,79 @@ use DateTimeImmutable;
 
 class Email
 {
-    private ?AddressInterface $from = null;
+    private AddressInterface|null $from = null;
 
-    /** @var array<AddressInterface> */
+    /** @var list<AddressInterface> */
     private array $to = [];
 
-    /** @var array<AddressInterface> */
+    /** @var list<AddressInterface> */
     private array $replayTo = [];
 
-    /** @var array<AddressInterface> */
+    /** @var list<AddressInterface> */
     private array $cc = [];
 
-    /** @var array<AddressInterface> */
+    /** @var list<AddressInterface> */
     private array $bcc = [];
-    private ?string $subject = null;
-    private ?string $text = null;
-    private ?string $html = null;
-    private ?string $templateId = null;
+    private string|null $subject = null;
+    private string|null $text = null;
+    private string|null $html = null;
+    private string|null $templateId = null;
 
     /** @var array<string, mixed> */
     private array $templateVars = [];
     private Format $emailFormat = Format::Both;
-    private ?DateTimeImmutable $scheduleAt = null;
+    private DateTimeImmutable|null $scheduleDate = null;
 
-    public function getFrom(): ?AddressInterface
+    public function getFrom(): AddressInterface|null
     {
         return $this->from;
     }
 
-    /**
-     * @return array<AddressInterface>
-     */
+    /** @return list<AddressInterface> */
     public function getTo(): array
     {
         return $this->to;
     }
 
-    /**
-     * @return array<AddressInterface>
-     */
+    /** @return list<AddressInterface> */
     public function getReplayTo(): array
     {
         return $this->replayTo;
     }
 
-    /**
-     * @return array<AddressInterface>
-     */
+    /** @return list<AddressInterface> */
     public function getCc(): array
     {
         return $this->cc;
     }
 
-    /**
-     * @return array<AddressInterface>
-     */
+    /** @return list<AddressInterface> */
     public function getBcc(): array
     {
         return $this->bcc;
     }
 
-    public function getSubject(): ?string
+    public function getSubject(): string|null
     {
         return $this->subject;
     }
 
-    public function getText(): ?string
+    public function getText(): string|null
     {
         return $this->text;
     }
 
-    public function getHtml(): ?string
+    public function getHtml(): string|null
     {
         return $this->html;
     }
 
-    public function getTemplateId(): ?string
+    public function getTemplateId(): string|null
     {
         return $this->templateId;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     public function getTemplateVars(): array
     {
         return $this->templateVars;
@@ -101,12 +91,12 @@ class Email
         return $this->emailFormat;
     }
 
-    public function getScheduleAt(): ?DateTimeImmutable
+    public function getScheduleDate(): DateTimeImmutable|null
     {
-        return $this->scheduleAt;
+        return $this->scheduleDate;
     }
 
-    public function setFrom(?AddressInterface $from): self
+    public function setFrom(AddressInterface|null $from): self
     {
         $clone = clone $this;
         $clone->from = $from;
@@ -114,9 +104,7 @@ class Email
         return $clone;
     }
 
-    /**
-     * @param array<AddressInterface> $to
-     */
+    /** @param list<AddressInterface> $to */
     public function setTo(array $to): self
     {
         $clone = clone $this;
@@ -125,9 +113,7 @@ class Email
         return $clone;
     }
 
-    /**
-     * @param array<AddressInterface> $replayTo
-     */
+    /** @param list<AddressInterface> $replayTo */
     public function setReplayTo(array $replayTo): self
     {
         $clone = clone $this;
@@ -136,9 +122,7 @@ class Email
         return $clone;
     }
 
-    /**
-     * @param array<AddressInterface> $cc
-     */
+    /** @param list<AddressInterface> $cc */
     public function setCc(array $cc): self
     {
         $clone = clone $this;
@@ -147,9 +131,7 @@ class Email
         return $clone;
     }
 
-    /**
-     * @param array<AddressInterface> $bcc
-     */
+    /** @param list<AddressInterface> $bcc */
     public function setBcc(array $bcc): self
     {
         $clone = clone $this;
@@ -158,7 +140,7 @@ class Email
         return $clone;
     }
 
-    public function setSubject(?string $subject): self
+    public function setSubject(string|null $subject): self
     {
         $clone = clone $this;
         $clone->subject = $subject;
@@ -166,7 +148,7 @@ class Email
         return $clone;
     }
 
-    public function setText(?string $text): self
+    public function setText(string|null $text): self
     {
         $clone = clone $this;
         $clone->text = $text;
@@ -174,7 +156,7 @@ class Email
         return $clone;
     }
 
-    public function setHtml(?string $html): self
+    public function setHtml(string|null $html): self
     {
         $clone = clone $this;
         $clone->html = $html;
@@ -182,7 +164,7 @@ class Email
         return $clone;
     }
 
-    public function setTemplateId(?string $templateId): self
+    public function setTemplateId(string|null $templateId): self
     {
         $clone = clone $this;
         $clone->templateId = $templateId;
@@ -190,9 +172,7 @@ class Email
         return $clone;
     }
 
-    /**
-     * @param array<string, mixed> $templateVars
-     */
+    /** @param array<string, mixed> $templateVars */
     public function setTemplateVars(array $templateVars): self
     {
         $clone = clone $this;
@@ -209,10 +189,10 @@ class Email
         return $clone;
     }
 
-    public function setScheduleAt(?DateTimeImmutable $scheduleAt): self
+    public function setScheduleDate(DateTimeImmutable|null $scheduleDate): self
     {
         $clone = clone $this;
-        $clone->scheduleAt = $scheduleAt;
+        $clone->scheduleDate = $scheduleDate;
 
         return $clone;
     }

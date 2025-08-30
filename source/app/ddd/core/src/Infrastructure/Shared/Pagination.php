@@ -9,9 +9,9 @@ use Ray\MediaQuery\PagesInterface;
 
 readonly class Pagination implements PagesInterface
 {
-    public function __construct(
-        private readonly Pages $pages,
-    ) {
+    /** @param Pages<mixed> $pages */
+    public function __construct(private Pages $pages)
+    {
     }
 
     public function count(): int
@@ -26,12 +26,15 @@ readonly class Pagination implements PagesInterface
 
     public function offsetGet(mixed $offset): mixed
     {
-        return new Page($this->pages->offsetGet($offset));
+        $page = $this->pages->offsetGet($offset);
+        if ($page === null) {
+            return null;
+        }
+
+        return new Page($page);
     }
 
-    /**
-     * @param int $offset
-     */
+    /** @param int $offset */
     public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->pages->offsetSet($offset, $value);

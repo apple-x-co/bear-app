@@ -17,9 +17,7 @@ use function is_array;
 /** @SuppressWarnings(PHPMD.NumberOfChildren) */
 abstract class ExtendedForm extends AbstractForm implements SubmitInterface
 {
-    /**
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     public function getData(): array
     {
         return $this->getValue();
@@ -41,9 +39,7 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
         return $this->helper->input($spec);
     }
 
-    /**
-     * @param array<array-key, mixed> $data
-     */
+    /** @param array<array-key, mixed> $data */
     public function apply(array $data): bool
     {
         $isValid = parent::apply($data);

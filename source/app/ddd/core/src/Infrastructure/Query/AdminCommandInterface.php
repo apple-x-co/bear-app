@@ -9,25 +9,23 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminCommandInterface
 {
-    /**
-     * @return array{id: int}
-     */
-    #[DbQuery('admin_add', 'row')]
+    /** @return array{id: positive-int} */
+    #[DbQuery('admins/admin_add', 'row')]
     public function add(
         string $username,
         string $password,
         string $displayName,
         int $active,
-        ?DateTimeImmutable $createdAt = null,
-        ?DateTimeImmutable $updatedAt = null,
+        DateTimeImmutable|null $createdDate = null,
+        DateTimeImmutable|null $updatedDate = null,
     ): array;
 
-    #[DbQuery('admin_update')]
+    #[DbQuery('admins/admin_update')]
     public function update(
         int $id,
         string $username,
         string $displayName,
         int $active,
-        ?DateTimeImmutable $updatedAt = null,
+        DateTimeImmutable|null $updatedDate = null,
     ): void;
 }

@@ -6,12 +6,12 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use AppCore\Application\Admin\JoinAdminInputData;
 use AppCore\Application\Admin\JoinAdminUserCase;
+use AppCore\Domain\Captcha\CaptchaException;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
-use MyVendor\MyProject\Annotation\GoogleRecaptchaV2;
+use MyVendor\MyProject\Annotation\CloudflareTurnstile;
 use MyVendor\MyProject\Annotation\RateLimiter;
-use MyVendor\MyProject\Captcha\RecaptchaException;
 use MyVendor\MyProject\InputQuery\Admin\JoinInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
@@ -25,7 +25,8 @@ class Join extends AdminPage
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
         protected readonly JoinAdminUserCase $createAdminUseCase,
-        #[Named('admin_join_form')] protected readonly FormInterface $form,
+        #[Named('admin_join_form')]
+        protected readonly FormInterface $form,
     ) {
         $this->body['form'] = $this->form;
     }
@@ -35,17 +36,17 @@ class Join extends AdminPage
         return $this;
     }
 
-    /**
-     * @FormValidation()
-     */
-    #[GoogleRecaptchaV2]
+    /** @FormValidation() */
+    #[CloudflareTurnstile]
     #[RateLimiter]
-    public function onPost(#[Input] JoinInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        JoinInput $input,
+    ): static {
         $outputData = $this->createAdminUseCase->execute(
             new JoinAdminInputData(
                 $input->emailAddress,
-            )
+            ),
         );
 
         $this->renderer = new NullRenderer();
@@ -61,11 +62,13 @@ class Join extends AdminPage
     }
 
     /**
-     * @param array<RecaptchaException> $recaptchaExceptions
+     * Callback from CloudflareTurnstileVerification
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function onPostGoogleRecaptchaV2Failed(array $recaptchaExceptions): static
+    public function onCfTurnstileFailed(CaptchaException $captchaException): static
     {
-        $this->body['recaptchaError'] = ! empty($recaptchaExceptions);
+        $this->body['captchaError'] = true;
 
         return $this;
     }

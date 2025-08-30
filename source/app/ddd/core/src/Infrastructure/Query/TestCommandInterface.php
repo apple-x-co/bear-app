@@ -9,6 +9,6 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface TestCommandInterface
 {
-    #[DbQuery('test_add')]
-    public function add(string $id, string $title, ?DateTimeImmutable $dateCreated = null): void;
+    #[DbQuery('test/test_add')]
+    public function add(string $id, string $title, DateTimeImmutable|null $dateCreated = null): void;
 }

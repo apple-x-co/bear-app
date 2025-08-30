@@ -10,12 +10,12 @@ use Ray\MediaQuery\Annotation\DbQuery;
 interface EmailRecipientCommandInterface
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
-    #[DbQuery('email_recipient_add')]
+    #[DbQuery('emails/email_recipient_add')]
     public function add(
         int $emailId,
         string $recipientType,
         string $recipientEmailAddress,
-        ?string $recipientName = null,
-        ?DateTimeImmutable $createdAt = null,
+        string|null $recipientName = null,
+        DateTimeImmutable|null $createdDate = null,
     ): void;
 }

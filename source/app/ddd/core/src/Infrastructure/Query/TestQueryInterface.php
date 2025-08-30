@@ -12,13 +12,15 @@ use Ray\MediaQuery\Pages;
 
 interface TestQueryInterface
 {
-    #[DbQuery('test_item', type: 'row', factory: TestEntityFactory::class)]
-    public function item(string $id): ?TestEntity;
+    #[DbQuery('test/test_item', type: 'row', factory: TestEntityFactory::class)]
+    public function item(string $id): TestEntity|null;
 
-    /** @return array<TestEntity> */
-    #[DbQuery('test_list', factory: TestEntityFactory::class)]
+    /** @return list<TestEntity> */
+    #[DbQuery('test/test_list', factory: TestEntityFactory::class)]
     public function list(): array;
 
-    #[DbQuery('test_list', factory: TestEntityFactory::class), Pager(perPage: 'pageNum', template: '/{?page}')]
+    /** @return Pages<TestEntity> */
+    #[DbQuery('test/test_list', factory: TestEntityFactory::class)]
+    #[Pager(perPage: 'pageNum', template: '/{?page}')]
     public function pagination(int $pageNum): Pages;
 }

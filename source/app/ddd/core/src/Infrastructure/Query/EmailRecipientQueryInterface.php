@@ -13,6 +13,6 @@ interface EmailRecipientQueryInterface
      *
      * @return array<array{id: int, email_id: int, recipient_type: string, recipient_email_address: string, recipient_name: string|null, created_at: string}>
      */
-    #[DbQuery('email_recipient_list')]
+    #[DbQuery('emails/email_recipient_list')]
     public function list(array $emailIds): array;
 }

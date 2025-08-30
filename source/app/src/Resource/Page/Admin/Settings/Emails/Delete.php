@@ -7,13 +7,13 @@ namespace MyVendor\MyProject\Resource\Page\Admin\Settings\Emails;
 use AppCore\Application\Admin\DeleteAdminEmailInputData;
 use AppCore\Application\Admin\DeleteAdminEmailUseCase;
 use AppCore\Domain\AccessControl\Permission;
+use AppCore\Domain\Auth\AdminAuthenticatorInterface;
 use AppCore\Domain\Language\LanguageInterface;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\RequiredPermission;
-use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\InputQuery\Admin\DeleteEmailInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\InputQuery\Attribute\Input;
@@ -30,13 +30,15 @@ class Delete extends AdminPage
 
     #[AdminGuard]
     #[RequiredPermission('settings', Permission::Read)]
-    public function onPost(#[Input] DeleteEmailInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        DeleteEmailInput $input,
+    ): static {
         $this->deleteAdminEmailUseCase->execute(
             new DeleteAdminEmailInputData(
                 (int) $this->adminAuthenticator->getUserId(),
                 $input->id,
-            )
+            ),
         );
 
         $this->renderer = new NullRenderer();

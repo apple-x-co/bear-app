@@ -12,17 +12,17 @@ class AdminEmailEntityFactory
         int $id,
         int $adminId,
         string $emailAddress,
-        ?string $verifiedAt,
-        string $createdAt,
-        string $updatedAt,
+        string|null $verifiedDate,
+        string $createdDate,
+        string $updatedDate,
     ): AdminEmailEntity {
         return new AdminEmailEntity(
             $id,
             $adminId,
             $emailAddress,
-            $verifiedAt === null ? null : new DateTimeImmutable($verifiedAt),
-            new DateTimeImmutable($createdAt),
-            new DateTimeImmutable($updatedAt),
+            $verifiedDate === null ? null : new DateTimeImmutable($verifiedDate),
+            new DateTimeImmutable($createdDate),
+            new DateTimeImmutable($updatedDate),
         );
     }
 }

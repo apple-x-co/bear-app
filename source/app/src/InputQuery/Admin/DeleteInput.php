@@ -13,8 +13,10 @@ readonly class DeleteInput
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
      */
     public function __construct(
-        #[Input] public string $__csrf_token, // phpcs:ignore
-        #[Input] public string|null $continue,
+        #[Input]
+        public string $__csrf_token, // phpcs:ignore
+        #[Input]
+        public string|null $continue,
     ) {
     }
 }

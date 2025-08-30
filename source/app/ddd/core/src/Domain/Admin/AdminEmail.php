@@ -13,11 +13,11 @@ class AdminEmail
 
     public function __construct(
         public readonly string $emailAddress,
-        public readonly ?DateTimeImmutable $verifiedAt = null,
-        public readonly ?DateTimeImmutable $createdAt = null,
-        public readonly ?DateTimeImmutable $updatedAt = null,
-        public readonly ?int $id = null,
-        public readonly ?int $adminId = null,
+        public readonly DateTimeImmutable|null $verifiedDate = null,
+        public readonly DateTimeImmutable|null $createdDate = null,
+        public readonly DateTimeImmutable|null $updatedDate = null,
+        public readonly int|null $id = null,
+        public readonly int|null $adminId = null,
     ) {
     }
 
@@ -25,15 +25,15 @@ class AdminEmail
         int $id,
         int $adminId,
         string $emailAddress,
-        ?DateTimeImmutable $verifiedAt,
-        DateTimeImmutable $createdAt,
-        DateTimeImmutable $updatedAt,
+        DateTimeImmutable|null $verifiedDate,
+        DateTimeImmutable $createdDate,
+        DateTimeImmutable $updatedDate,
     ): self {
         return new self(
             $emailAddress,
-            $verifiedAt,
-            $createdAt,
-            $updatedAt,
+            $verifiedDate,
+            $createdDate,
+            $updatedDate,
             $id,
             $adminId,
         );
@@ -44,8 +44,8 @@ class AdminEmail
         return new self(
             $this->emailAddress,
             new DateTimeImmutable(),
-            $this->createdAt,
-            $this->updatedAt,
+            $this->createdDate,
+            $this->updatedDate,
             $this->id,
             $this->adminId,
         );

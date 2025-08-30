@@ -4,18 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
-use AppCore\Application\Admin\CreateAdminEmailUseCase;
-use AppCore\Application\Admin\CreateAdminUseCase;
-use AppCore\Application\Admin\DeleteAdminEmailUseCase;
-use AppCore\Application\Admin\DeleteAdminUseCase;
-use AppCore\Application\Admin\ForgotAdminPasswordUseCase;
-use AppCore\Application\Admin\GetAdminUseCase;
-use AppCore\Application\Admin\GetForgotAdminPasswordUseCase;
-use AppCore\Application\Admin\GetJoinedAdminUseCase;
-use AppCore\Application\Admin\JoinAdminUserCase;
-use AppCore\Application\Admin\ResetAdminPasswordUseCase;
-use AppCore\Application\Admin\UpdateAdminPasswordUseCase;
-use AppCore\Application\Admin\VerifyAdminEmailUseCase;
+use AppCore\Application\Admin as AdminUseCase;
 use AppCore\Application\GetVerificationCodeUseCase;
 use AppCore\Application\VerifyVerificationCodeUseCase;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
@@ -69,8 +58,8 @@ use function random_bytes;
 class BaseModule extends AbstractModule
 {
     public function __construct(
-        private string $emailDir,
-        private string $langDir,
+        private readonly string $emailDir,
+        private readonly string $langDir,
         AbstractModule|null $module = null,
     ) {
         parent::__construct($module);
@@ -172,19 +161,20 @@ class BaseModule extends AbstractModule
 
     private function usecase(): void
     {
-        $this->bind(CreateAdminEmailUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(CreateAdminUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(DeleteAdminEmailUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(DeleteAdminUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(ForgotAdminPasswordUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(GetAdminUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(GetForgotAdminPasswordUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(GetJoinedAdminUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\CreateAdminEmailUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\CreateAdminUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\DeleteAdminEmailUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\DeleteAdminUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\ForgotAdminPasswordUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\GetAdminUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\GetForgotAdminPasswordUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\GetJoinedAdminUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\JoinAdminUserCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\ResetAdminPasswordUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\UpdateAdminPasswordUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\VerifyAdminEmailUseCase::class)->in(Scope::SINGLETON);
+
         $this->bind(GetVerificationCodeUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(JoinAdminUserCase::class)->in(Scope::SINGLETON);
-        $this->bind(ResetAdminPasswordUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(UpdateAdminPasswordUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(VerifyAdminEmailUseCase::class)->in(Scope::SINGLETON);
         $this->bind(VerifyVerificationCodeUseCase::class)->in(Scope::SINGLETON);
     }
 

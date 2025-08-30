@@ -7,15 +7,15 @@ namespace MyVendor\MyProject\Resource\Page\Admin\Settings;
 use AppCore\Application\Admin\UpdateAdminPasswordInputData;
 use AppCore\Application\Admin\UpdateAdminPasswordUseCase;
 use AppCore\Domain\AccessControl\Permission;
+use AppCore\Domain\Auth\AdminAuthenticatorInterface;
+use AppCore\Domain\Auth\AuthenticationException;
+use AppCore\Domain\Auth\PasswordIncorrect;
 use AppCore\Domain\Language\LanguageInterface;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\RequiredPermission;
-use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
-use MyVendor\MyProject\Auth\AuthenticationException;
-use MyVendor\MyProject\Auth\PasswordIncorrect;
 use MyVendor\MyProject\InputQuery\Admin\UpdatePasswordInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
@@ -30,7 +30,8 @@ class Password extends AdminPage
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
-        #[Named('admin_password_update_form')] protected readonly FormInterface $form,
+        #[Named('admin_password_update_form')]
+        protected readonly FormInterface $form,
         private readonly LanguageInterface $language,
         private readonly UpdateAdminPasswordUseCase $updateAdminPasswordUseCase,
     ) {
@@ -44,12 +45,12 @@ class Password extends AdminPage
         return $this;
     }
 
-    /**
-     * @FormValidation()
-     */
+    /** @FormValidation() */
     #[AdminGuard]
-    public function onPost(#[Input] UpdatePasswordInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        UpdatePasswordInput $input,
+    ): static {
         $userName = $this->adminAuthenticator->getUserName();
         $adminId = $this->adminAuthenticator->getUserId();
         if ($userName === null || $adminId === null) {
@@ -66,8 +67,8 @@ class Password extends AdminPage
                 new PasswordIncorrect(
                     $throwable->getMessage(),
                     (int) $throwable->getCode(),
-                    $throwable->getPrevious()
-                )
+                    $throwable->getPrevious(),
+                ),
             );
         }
 
@@ -76,7 +77,7 @@ class Password extends AdminPage
                 $adminId,
                 $userName,
                 $input->password,
-            )
+            ),
         );
 
         $this->renderer = new NullRenderer();
@@ -87,17 +88,13 @@ class Password extends AdminPage
         return $this;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
+    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
     public function onPostValidationFailed(): static
     {
         return $this;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
+    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
     public function onPostPasswordNotMatched(AuthenticationException $authException): static
     {
         $this->body['authError'] = true;

@@ -18,7 +18,7 @@ class ThrottleRepository implements ThrottleRepositoryInterface
     ) {
     }
 
-    public function findByThrottleKey(string $throttleKey): ?Throttle
+    public function findByThrottleKey(string $throttleKey): Throttle|null
     {
         $entity = $this->query->itemByKey($throttleKey);
         if ($entity === null) {
@@ -38,9 +38,9 @@ class ThrottleRepository implements ThrottleRepositoryInterface
             $entity->iterationCount,
             $entity->maxAttempts,
             $entity->interval,
-            $entity->expireAt,
-            $entity->createdAt,
-            $entity->updatedAt,
+            $entity->expireDate,
+            $entity->createdDate,
+            $entity->updatedDate,
         );
     }
 
@@ -53,7 +53,7 @@ class ThrottleRepository implements ThrottleRepositoryInterface
                 $throttle->iterationCount,
                 $throttle->maxAttempts,
                 $throttle->interval,
-                $throttle->expireAt,
+                $throttle->expireDate,
             );
 
             return;
@@ -63,7 +63,7 @@ class ThrottleRepository implements ThrottleRepositoryInterface
             $throttle->id,
             $throttle->remoteIp,
             $throttle->iterationCount,
-            $throttle->expireAt,
+            $throttle->expireDate,
         );
     }
 }

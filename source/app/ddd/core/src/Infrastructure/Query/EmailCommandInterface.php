@@ -9,20 +9,18 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface EmailCommandInterface
 {
-    /**
-     * @return array{id: int}
-     */
-    #[DbQuery('email_add', 'row')]
+    /** @return array{id: positive-int} */
+    #[DbQuery('emails/email_add', 'row')]
     public function add(
         string $senderEmailAddress,
-        ?string $senderName,
+        string|null $senderName,
         string $subject,
         string $text,
-        ?string $html,
-        DateTimeImmutable $scheduleAt,
-        ?DateTimeImmutable $createdAt = null,
+        string|null $html,
+        DateTimeImmutable $scheduleDate,
+        DateTimeImmutable|null $createdDate = null,
     ): array;
 
-    #[DbQuery('email_sent')]
-    public function sent(int $id, DateTimeImmutable $sentAt): void;
+    #[DbQuery('emails/email_sent')]
+    public function sent(int $id, DateTimeImmutable $sentDate): void;
 }

@@ -17,10 +17,10 @@ class VerificationCodeEntity
         public readonly string $emailAddress,
         public readonly string $url,
         public readonly string $code,
-        public readonly DateTimeImmutable $expireAt,
-        public readonly ?DateTimeImmutable $verifiedAt,
-        public readonly DateTimeImmutable $createdAt,
-        public readonly DateTimeImmutable $updatedAt,
+        public readonly DateTimeImmutable $expireDate,
+        public readonly DateTimeImmutable|null $verifiedDate,
+        public readonly DateTimeImmutable $createdDate,
+        public readonly DateTimeImmutable $updatedDate,
     ) {
     }
 }

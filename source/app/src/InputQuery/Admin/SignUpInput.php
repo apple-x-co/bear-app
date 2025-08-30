@@ -14,14 +14,19 @@ readonly class SignUpInput
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
      */
     public function __construct(
-        #[Input] public string $username,
-        #[Input] public string $displayName,
+        #[Input]
+        public string $username,
+        #[Input]
+        public string $displayName,
         #[Input]
         #[SensitiveParameter]
         public string $password,
-        #[Input] public string $signature,
-        #[Input] public string $__csrf_token, // phpcs:ignore
-        #[Input] public string|null $continue,
+        #[Input]
+        public string $signature,
+        #[Input]
+        public string $__csrf_token, // phpcs:ignore
+        #[Input]
+        public string|null $continue,
     ) {
     }
 }

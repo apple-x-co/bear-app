@@ -17,9 +17,12 @@ readonly class ResetPasswordInput
         #[Input]
         #[SensitiveParameter]
         public string $password,
-        #[Input] public string $signature,
-        #[Input] public string $__csrf_token, // phpcs:ignore
-        #[Input] public string|null $continue,
+        #[Input]
+        public string $signature,
+        #[Input]
+        public string $__csrf_token, // phpcs:ignore
+        #[Input]
+        public string|null $continue,
     ) {
     }
 }

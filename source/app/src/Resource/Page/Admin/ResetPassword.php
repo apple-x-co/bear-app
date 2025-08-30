@@ -27,7 +27,8 @@ class ResetPassword extends AdminPage
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        #[Named('admin_password_reset_form')] protected readonly FormInterface $form,
+        #[Named('admin_password_reset_form')]
+        protected readonly FormInterface $form,
         private readonly GetForgotAdminPasswordUseCase $getForgotAdminPasswordUseCase,
         private readonly ResetAdminPasswordUseCase $resetAdminPasswordUseCase,
     ) {
@@ -35,11 +36,13 @@ class ResetPassword extends AdminPage
     }
 
     /** @SuppressWarnings(PHPMD.LongVariable) */
-    public function onGet(#[Input] string $signature): static
-    {
+    public function onGet(
+        #[Input]
+        string $signature,
+    ): static {
         try {
             $this->getForgotAdminPasswordUseCase->execute(
-                new GetForgotAdminPasswordInputData($signature)
+                new GetForgotAdminPasswordInputData($signature),
             );
         } catch (Throwable) {
             $this->context->setSessionValue('error:message', 'message:admin:reset_password:decrypt_error');
@@ -63,13 +66,15 @@ class ResetPassword extends AdminPage
      * @Transactional()
      * @SuppressWarnings(PHPMD.LongVariable)
      */
-    public function onPost(#[Input] ResetPasswordInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        ResetPasswordInput $input,
+    ): static {
         $this->resetAdminPasswordUseCase->execute(
             new ResetAdminPasswordInputData(
                 $input->password,
                 $input->signature,
-            )
+            ),
         );
 
         $this->renderer = new NullRenderer();

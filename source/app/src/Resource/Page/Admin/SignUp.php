@@ -29,13 +29,16 @@ class SignUp extends AdminPage
     public function __construct(
         private readonly CreateAdminUseCase $createAdminUseCase,
         private readonly GetJoinedAdminUseCase $getJoinedAdminUseCase,
-        #[Named('admin_sign_up_form')] protected readonly FormInterface $form,
+        #[Named('admin_sign_up_form')]
+        protected readonly FormInterface $form,
     ) {
         $this->body['form'] = $this->form;
     }
 
-    public function onGet(#[Input] string $signature): static
-    {
+    public function onGet(
+        #[Input]
+        string $signature,
+    ): static {
         try {
             $this->getJoinedAdminUseCase->execute(
                 new GetJoinedAdminInputData($signature),
@@ -61,15 +64,17 @@ class SignUp extends AdminPage
      * @FormValidation()
      * @Transactional()
      */
-    public function onPost(#[Input] SignUpInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        SignUpInput $input,
+    ): static {
         $this->createAdminUseCase->execute(
             new CreateAdminInputData(
                 $input->username,
                 $input->displayName,
                 $input->password,
                 $input->signature,
-            )
+            ),
         );
 
         $this->renderer = new NullRenderer();

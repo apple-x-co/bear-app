@@ -10,7 +10,7 @@ use Stringable;
 readonly class Page implements Stringable
 {
     public function __construct(
-        private readonly PagerfantaPage $page
+        private PagerfantaPage $page,
     ) {
     }
 

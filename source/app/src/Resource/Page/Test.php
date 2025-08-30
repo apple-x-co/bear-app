@@ -18,7 +18,7 @@ class Test extends ResourceObject
     public $headers = [ResponseHeader::CACHE_CONTROL => CacheControl::PUBLIC_ . ',max-age=300'];
 
     public function __construct(
-        private readonly TestRepositoryInterface $testRepository
+        private readonly TestRepositoryInterface $testRepository,
     ) {
     }
 
@@ -38,7 +38,7 @@ class Test extends ResourceObject
         $this->testRepository->store(
             new TestDomain(
                 (string) time(),
-                'test3'
+                'test3',
             ),
         );
 

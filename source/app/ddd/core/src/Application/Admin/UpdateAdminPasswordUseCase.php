@@ -15,15 +15,18 @@ use AppCore\Infrastructure\Query\AdminPasswordUpdateInterface;
 use Ray\Di\Di\Named;
 use Throwable;
 
-class UpdateAdminPasswordUseCase
+readonly class UpdateAdminPasswordUseCase
 {
     public function __construct(
-        #[Named('admin')] private readonly AddressInterface $adminAddress,
-        private readonly AdminRepositoryInterface $adminRepository,
-        private readonly AdminPasswordUpdateInterface $adminPasswordUpdate,
-        private readonly PasswordHasherInterface $passwordHasher,
-        #[Named('admin')] private readonly LoggerInterface $logger,
-        #[Named('SMTP')] private readonly TransportInterface $transport,
+        #[Named('admin')]
+        private AddressInterface $adminAddress,
+        private AdminRepositoryInterface $adminRepository,
+        private AdminPasswordUpdateInterface $adminPasswordUpdate,
+        private PasswordHasherInterface $passwordHasher,
+        #[Named('admin')]
+        private LoggerInterface $logger,
+        #[Named('SMTP')]
+        private TransportInterface $transport,
     ) {
     }
 
@@ -31,7 +34,7 @@ class UpdateAdminPasswordUseCase
     {
         ($this->adminPasswordUpdate)(
             $inputData->adminId,
-            $this->passwordHasher->hash($inputData->password)
+            $this->passwordHasher->hash($inputData->password),
         );
 
         $admin = $this->adminRepository->findById($inputData->adminId);
@@ -42,7 +45,7 @@ class UpdateAdminPasswordUseCase
                         ->setFrom($this->adminAddress)
                         ->setTo([new Address($adminEmail->emailAddress, $admin->username)])
                         ->setTemplateId('admin_password_updated')
-                        ->setTemplateVars(['displayName' => $admin->displayName])
+                        ->setTemplateVars(['displayName' => $admin->displayName]),
                 );
             } catch (Throwable $throwable) {
                 $this->logger->log((string) $throwable);

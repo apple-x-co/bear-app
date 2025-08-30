@@ -62,7 +62,7 @@ graph TD;
 
 ### Security
 
-* Google reCAPTCHA v2
+* Cloudflare Turnstile
 * Account lock after consecutive failures
 * Password confirm when important page visit
 * Email notification after password change

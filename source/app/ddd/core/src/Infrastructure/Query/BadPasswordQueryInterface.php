@@ -8,9 +8,7 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface BadPasswordQueryInterface
 {
-    /**
-     * @return array{password: string, createdAt: string}|null
-     */
-    #[DbQuery('bad_password_item', type: 'row')]
-    public function item(string $password): ?array;
+    /** @return array{password: string, created_date: string}|null */
+    #[DbQuery('bad_passwords/bad_password_item', type: 'row')]
+    public function item(string $password): array|null;
 }

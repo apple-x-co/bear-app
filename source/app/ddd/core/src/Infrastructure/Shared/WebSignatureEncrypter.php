@@ -14,11 +14,11 @@ use function assert;
 use function method_exists;
 use function str_replace;
 
-class WebSignatureEncrypter implements WebSignatureEncrypterInterface
+readonly class WebSignatureEncrypter implements WebSignatureEncrypterInterface
 {
     public function __construct(
-        private readonly EncrypterInterface $encrypter,
-        private readonly SecureRandomInterface $secureRandom,
+        private EncrypterInterface $encrypter,
+        private SecureRandomInterface $secureRandom,
     ) {
     }
 

@@ -20,10 +20,11 @@ readonly class UploadDemoInput
             maxSize: 1024 * 1024, // 1MB
             allowedTypes: ['image/jpeg', 'image/png', 'image/svg+xml'],
             allowedExtensions: ['jpg', 'jpeg', 'png', 'svg'],
-            required: false  // ファイルアップロードをオプショナルにする
+            required: false, // ファイルアップロードをオプショナルにする
         )]
         public FileUpload|ErrorFileUpload|null $file = null,
-        #[Input] public ?string $submit,
+        #[Input]
+        public string|null $submit = null,
     ) {
     }
 }

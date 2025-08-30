@@ -20,13 +20,12 @@ use const EXTR_SKIP;
 class TemplateRenderer implements TemplateRendererInterface
 {
     public function __construct(
-        #[ServiceName] private readonly string $serviceName
+        #[ServiceName]
+        private readonly string $serviceName,
     ) {
     }
 
-    /**
-     * @param array<string, mixed> $vars
-     */
+    /** @param array<string, mixed> $vars */
     public function __invoke(string $path, array $vars = []): string
     {
         if (! file_exists($path) || ! is_readable($path)) {

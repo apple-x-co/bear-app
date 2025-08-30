@@ -49,6 +49,7 @@ readonly class TestRepository implements TestRepositoryInterface
     {
         $pages = $this->query->pagination(2);
 
+        /** @psalm-suppress InvalidArgument */
         return new Pagination($pages);
     }
 

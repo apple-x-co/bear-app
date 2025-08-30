@@ -13,9 +13,12 @@ readonly class ForgotPasswordInput
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
      */
     public function __construct(
-        #[Input] public string $emailAddress,
-        #[Input] public string $__csrf_token, // phpcs:ignore
-        #[Input] public string|null $continue,
+        #[Input]
+        public string $emailAddress,
+        #[Input]
+        public string $__csrf_token, // phpcs:ignore
+        #[Input]
+        public string|null $continue,
     ) {
     }
 }

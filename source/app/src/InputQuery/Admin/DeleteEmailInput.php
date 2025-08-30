@@ -8,9 +8,10 @@ use Ray\InputQuery\Attribute\Input;
 
 final readonly class DeleteEmailInput
 {
-    /** @param int<1, max> $id */
+    /** @param positive-int $id */
     public function __construct(
-        #[Input] public int $id,
+        #[Input]
+        public int $id,
     ) {
     }
 }

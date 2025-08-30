@@ -9,10 +9,12 @@ use PHPMailer\PHPMailer\PHPMailer;
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
-class PhpMailerProvider implements ProviderInterface
+/** @template-implements ProviderInterface<PHPMailer> */
+readonly class PhpMailerProvider implements ProviderInterface
 {
     public function __construct(
-        #[Named('default')] private readonly EmailConfigInterface $emailConfig
+        #[Named('default')]
+        private EmailConfigInterface $emailConfig,
     ) {
     }
 

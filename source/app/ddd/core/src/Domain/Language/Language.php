@@ -10,9 +10,7 @@ use function str_starts_with;
 
 class Language implements LanguageInterface
 {
-    /**
-     * @param array<string, string> $messages
-     */
+    /** @param array<string, string> $messages */
     public function __construct(
         private readonly array $messages,
     ) {

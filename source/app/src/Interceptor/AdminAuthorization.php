@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Interceptor;
 
+use AppCore\Domain\Auth\AdminAuthenticatorInterface;
+use AppCore\Domain\Auth\ForbiddenException;
 use MyVendor\MyProject\Annotation\RequiredPermission;
-use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
-use MyVendor\MyProject\Auth\ForbiddenException;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
-class AdminAuthorization implements MethodInterceptor
+readonly class AdminAuthorization implements MethodInterceptor
 {
     public function __construct(
-        private readonly AdminAuthenticatorInterface $authenticator,
+        private AdminAuthenticatorInterface $authenticator,
     ) {
     }
 

@@ -6,7 +6,8 @@ namespace MyVendor\MyProject\Provider;
 
 use Ray\Di\ProviderInterface;
 
-class CookieProvider implements ProviderInterface
+/** @template-implements ProviderInterface<array<string, string>> */
+readonly class CookieProvider implements ProviderInterface
 {
     /**
      * {@inheritdoc}

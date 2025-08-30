@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace AppCore\Application\Admin;
 
-class JoinAdminInputData
+readonly class JoinAdminInputData
 {
-    public function __construct(
-        public readonly string $emailAddress
-    ) {
+    public function __construct(public string $emailAddress)
+    {
     }
 }

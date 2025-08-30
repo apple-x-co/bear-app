@@ -4,15 +4,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor-bin/tools/vendor/vimeo/psalm/config.xsd"
+    findUnusedBaselineEntry="false"
+    findUnusedCode="false"
 >
     <projectFiles>
         <directory name="src"/>
         <directory name="tests"/>
-        <directory name="ddd/core/src"/>
-        <directory name="ddd/core/tests"/>
         <ignoreFiles>
             <directory name="vendor"/>
+            <file name="tests/Http/index.php"/>
+            <file name="src/Bootstrap.php" />
         </ignoreFiles>
+        <directory name="ddd/core/src"/>
     </projectFiles>
     <!-- suppress -->
     <issueHandlers>

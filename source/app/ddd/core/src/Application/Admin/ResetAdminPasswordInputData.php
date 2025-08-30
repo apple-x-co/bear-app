@@ -6,11 +6,12 @@ namespace AppCore\Application\Admin;
 
 use SensitiveParameter;
 
-class ResetAdminPasswordInputData
+readonly class ResetAdminPasswordInputData
 {
     public function __construct(
-        #[SensitiveParameter] public readonly string $password,
-        public readonly string $signature,
+        #[SensitiveParameter]
+        public string $password,
+        public string $signature,
     ) {
     }
 }

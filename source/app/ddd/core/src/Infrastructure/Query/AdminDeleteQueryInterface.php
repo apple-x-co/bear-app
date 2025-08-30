@@ -8,9 +8,7 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminDeleteQueryInterface
 {
-    /**
-     * @return array<array{admin_id: int, request_at: string, schedule_at: string, deleted_at: string|null, created_at: string}>
-     */
-    #[DbQuery('admin_delete_list')]
+    /** @return list<array{admin_id: int, request_at: string, schedule_at: string, deleted_at: string|null, created_at: string}> */
+    #[DbQuery('admins/admin_delete_list')]
     public function list(): array;
 }

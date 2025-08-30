@@ -14,13 +14,17 @@ final readonly class LoginUserInput
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
      */
     public function __construct(
-        #[Input] public string $username,
+        #[Input]
+        public string $username,
         #[Input]
         #[SensitiveParameter]
         public string $password,
-        #[Input] public string $remember,
-        #[Input] public string $__csrf_token, // phpcs:ignore
-        #[Input] public string|null $login,
+        #[Input]
+        public string $remember,
+        #[Input]
+        public string $__csrf_token, // phpcs:ignore
+        #[Input]
+        public string|null $login,
     ) {
     }
 

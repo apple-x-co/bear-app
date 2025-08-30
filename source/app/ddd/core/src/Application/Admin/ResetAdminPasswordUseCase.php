@@ -17,16 +17,18 @@ use DateTimeImmutable;
 use Ray\Di\Di\Named;
 
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
-class ResetAdminPasswordUseCase
+readonly class ResetAdminPasswordUseCase
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        #[Named('admin')] private readonly AddressInterface $adminAddress,
-        private readonly AdminQueryInterface $adminQuery,
-        private readonly AdminPasswordUpdateInterface $adminPasswordUpdate,
-        private readonly PasswordHasherInterface $passwordHasher,
-        #[Named('SMTP')] private readonly TransportInterface $transport,
-        private readonly WebSignatureEncrypterInterface $webSignatureEncrypter,
+        #[Named('admin')]
+        private AddressInterface $adminAddress,
+        private AdminQueryInterface $adminQuery,
+        private AdminPasswordUpdateInterface $adminPasswordUpdate,
+        private PasswordHasherInterface $passwordHasher,
+        #[Named('SMTP')]
+        private TransportInterface $transport,
+        private WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
     }
 
@@ -34,7 +36,7 @@ class ResetAdminPasswordUseCase
     {
         $webSignature = $this->webSignatureEncrypter->decrypt($inputData->signature);
         $now = new DateTimeImmutable();
-        if ($webSignature->expiresAt < $now) {
+        if ($webSignature->expiresDate < $now) {
             throw new ExpiredSignatureException();
         }
 
@@ -49,7 +51,7 @@ class ResetAdminPasswordUseCase
                 ->setFrom($this->adminAddress)
                 ->setTo([new Address($webSignature->address)])
                 ->setTemplateId('admin_password_reset')
-                ->setTemplateVars(['displayName' => $adminEntity->displayName])
+                ->setTemplateVars(['displayName' => $adminEntity->displayName]),
         );
     }
 }

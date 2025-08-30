@@ -18,9 +18,9 @@ class ThrottleEntity
         public readonly int $iterationCount,
         public readonly int $maxAttempts,
         public readonly string $interval,
-        public readonly DateTimeImmutable $expireAt,
-        public readonly DateTimeImmutable $createdAt,
-        public readonly DateTimeImmutable $updatedAt,
+        public readonly DateTimeImmutable $expireDate,
+        public readonly DateTimeImmutable $createdDate,
+        public readonly DateTimeImmutable $updatedDate,
     ) {
     }
 }

@@ -15,24 +15,68 @@ use function array_merge;
 use function is_string;
 use function sprintf;
 
-/** @SuppressWarnings(PHPMD.TooManyPublicMethods) */
+/**
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 class QiqCustomHelpers extends HtmlHelpers
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        #[Named('google_recaptcha_site_key')]
-        private readonly string $googleRecaptchaSiteKey,
+        #[Named('cloudflare_turnstile_site_key')]
+        private readonly string $cloudflareTurnstileSiteKey,
         private readonly RouterInterface $router,
     ) {
         parent::__construct(null);
+    }
+
+    /** @see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/ */
+    public function cfTurnstileWidget(
+        string $size = 'normal',
+        string $action = 'none',
+        string|null $checked = null,
+        string|null $expired = null,
+        string|null $error = null,
+        string|null $timeout = null,
+    ): string {
+        if ($this->cloudflareTurnstileSiteKey === '') {
+            return '';
+        }
+
+        $attribs = [
+            'class' => 'cf-turnstile',
+            'data-action' => $action,
+            'data-language' => 'ja',
+            'data-sitekey' => $this->cloudflareTurnstileSiteKey,
+            'data-size' => $size,
+            'data-theme' => 'light',
+        ];
+
+        if (is_string($checked)) {
+            $attribs['data-callback'] = $checked;
+        }
+
+        if (is_string($expired)) {
+            $attribs['data-expired-callback'] = $expired;
+        }
+
+        if (is_string($error)) {
+            $attribs['data-error-callback'] = $error;
+        }
+
+        if (is_string($timeout)) {
+            $attribs['data-timeout-callback'] = $timeout;
+        }
+
+        return sprintf('<div %s></div>', $this->a($attribs));
     }
 
     /** @param array<string, string> $attribs */
     public function adminCheckBox(
         ExtendedForm $form,
         string $input,
-        ?ExtendedFieldset $fieldset = null,
-        array $attribs = []
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
     ): AbstractInput {
         $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
 
@@ -46,7 +90,7 @@ class QiqCustomHelpers extends HtmlHelpers
         ExtendedFieldset $fieldset,
         string $input,
         string $tag = 'span',
-        array $attribs = []
+        array $attribs = [],
     ): string {
         $errorMessages = $fieldset->error($input);
         if (empty($errorMessages)) {
@@ -68,8 +112,8 @@ class QiqCustomHelpers extends HtmlHelpers
     public function adminFile(
         ExtendedForm $form,
         string $input,
-        ?ExtendedFieldset $fieldset = null,
-        array $attribs = []
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
     ): AbstractInput {
         $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
 
@@ -101,8 +145,8 @@ class QiqCustomHelpers extends HtmlHelpers
     public function adminHidden(
         ExtendedForm $form,
         string $input,
-        ?ExtendedFieldset $fieldset = null,
-        array $attribs = []
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
     ): AbstractInput {
         $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
         $spec['type'] = 'hidden';
@@ -116,8 +160,8 @@ class QiqCustomHelpers extends HtmlHelpers
     public function adminRadio(
         ExtendedForm $form,
         string $input,
-        ?ExtendedFieldset $fieldset = null,
-        array $attribs = []
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
     ): AbstractInput {
         $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
 
@@ -130,12 +174,12 @@ class QiqCustomHelpers extends HtmlHelpers
     public function adminSelect(
         ExtendedForm $form,
         string $input,
-        ?ExtendedFieldset $fieldset = null,
-        array $attribs = []
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
     ): AbstractInput {
         $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
 
-        $defaultAttribs = ['class' => 'rounded focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
+        $defaultAttribs = ['class' => 'rounded transition duration-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
 
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
@@ -144,12 +188,12 @@ class QiqCustomHelpers extends HtmlHelpers
     public function adminText(
         ExtendedForm $form,
         string $input,
-        ?ExtendedFieldset $fieldset = null,
-        array $attribs = []
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
     ): AbstractInput {
         $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
 
-        $defaultAttribs = ['class' => 'rounded w-full placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
+        $defaultAttribs = ['class' => 'rounded w-full placeholder:text-slate-500 placeholder:font-thin transition duration-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
 
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
@@ -158,12 +202,12 @@ class QiqCustomHelpers extends HtmlHelpers
     public function adminTextArea(
         ExtendedForm $form,
         string $input,
-        ?ExtendedFieldset $fieldset = null,
-        array $attribs = []
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
     ): AbstractInput {
         $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
 
-        $defaultAttribs = ['class' => 'rounded w-full placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 leading-6 h-40'];
+        $defaultAttribs = ['class' => 'rounded w-full placeholder:text-slate-500 placeholder:font-thin transition duration-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 leading-6 h-40'];
 
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
@@ -172,8 +216,8 @@ class QiqCustomHelpers extends HtmlHelpers
     public function adminSubmit(
         ExtendedForm $form,
         string $input,
-        ?ExtendedFieldset $fieldset = null,
-        array $attribs = []
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
     ): AbstractInput {
         $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
 
@@ -184,15 +228,173 @@ class QiqCustomHelpers extends HtmlHelpers
 
         $defaultAttribs = [
             'value' => 'Submit',
-            'class' => 'py-2 px-3 bg-sky-500 text-white text-sm font-sans font-bold tracking-wider rounded-md shadow-lg shadow-sky-500/50 focus:outline-none disabled:text-white disabled:bg-slate-200 disabled:shadow-none',
+            'class' => 'py-2 px-4 bg-indigo-500 text-white text-sm font-sans font-bold tracking-wider rounded-full shadow-lg shadow-indigo-500/50 focus:outline-none hover:bg-indigo-600 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:text-white disabled:bg-slate-200 disabled:shadow-none',
         ];
 
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
 
-    public function googleRecaptchaSiteKey(): string
+    /** @param array<string, string> $attribs */
+    public function managerCheckBox(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        $defaultAttribs = ['class' => ''];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function managerFieldsetError(
+        ExtendedFieldset $fieldset,
+        string $input,
+        string $tag = 'span',
+        array $attribs = [],
+    ): string {
+        $errorMessages = $fieldset->error($input);
+        if (empty($errorMessages)) {
+            return '';
+        }
+
+        $defaultAttribs = ['class' => 'block text-sm text-rose-500 italic'];
+
+        return sprintf(
+            '<%s %s>%s</%s>',
+            $tag,
+            $this->a(array_merge($defaultAttribs, $attribs)),
+            $this->h($errorMessages[0]),
+            $tag,
+        );
+    }
+
+    /** @param array<string, string> $attribs */
+    public function managerFile(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        $defaultAttribs = ['class' => 'rounded w-full p-3 bg-white border border-[#6b7280] placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function managerFormError(ExtendedForm $form, string $input, string $tag = 'span', array $attribs = []): string
     {
-        return $this->googleRecaptchaSiteKey;
+        $message = $form->error($input);
+        if ($message === '') {
+            return '';
+        }
+
+        $defaultAttribs = ['class' => 'block text-sm text-rose-500 italic'];
+
+        return sprintf(
+            '<%s %s>%s</%s>',
+            $tag,
+            $this->a(array_merge($defaultAttribs, $attribs)),
+            $this->h($message),
+            $tag,
+        );
+    }
+
+    /** @param array<string, string> $attribs */
+    public function managerHidden(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+        $spec['type'] = 'hidden';
+
+        $defaultAttribs = [];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function managerRadio(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        $defaultAttribs = ['class' => ''];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function managerSelect(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        $defaultAttribs = ['class' => 'rounded transition duration-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function managerText(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        $defaultAttribs = ['class' => 'rounded w-full placeholder:text-slate-500 placeholder:font-thin transition duration-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function managerTextArea(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        $defaultAttribs = ['class' => 'rounded w-full placeholder:text-slate-500 placeholder:font-thin transition duration-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 leading-6 h-40'];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function managerSubmit(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        if (isset($attribs['value'])) {
+            $spec['value'] = $attribs['value'];
+            unset($attribs['value']);
+        }
+
+        $defaultAttribs = [
+            'value' => 'Submit',
+            'class' => 'py-2 px-4 bg-indigo-500 text-white text-sm font-sans font-bold tracking-wider rounded-full shadow-lg shadow-indigo-500/50 focus:outline-none hover:bg-indigo-600 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:text-white disabled:bg-slate-200 disabled:shadow-none',
+        ];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
 
     public function csrfTokenField(ExtendedForm $form): AbstractInput
@@ -200,9 +402,7 @@ class QiqCustomHelpers extends HtmlHelpers
         return $form->widget($form->get('__csrf_token'));
     }
 
-    /**
-     * @param array<string, mixed> $params
-     */
+    /** @param array<string, mixed> $params */
     public function url(string $routePath, array $params = []): string
     {
         $path = $this->router->generate($routePath, $params);

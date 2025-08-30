@@ -9,13 +9,13 @@ use AppCore\Application\Admin\CreateAdminEmailUseCase;
 use AppCore\Application\Admin\GetAdminInputData;
 use AppCore\Application\Admin\GetAdminUseCase;
 use AppCore\Domain\AccessControl\Permission;
+use AppCore\Domain\Auth\AdminAuthenticatorInterface;
 use AppCore\Domain\Language\LanguageInterface;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\RequiredPermission;
-use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
 use MyVendor\MyProject\InputQuery\Admin\CreateEmailInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
@@ -31,7 +31,8 @@ class Emails extends AdminPage
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
         private readonly CreateAdminEmailUseCase $createAdminEmailUseCase,
         private readonly GetAdminUseCase $getAdminUseCase,
-        #[Named('admin_email_create_form')] protected readonly FormInterface $form,
+        #[Named('admin_email_create_form')]
+        protected readonly FormInterface $form,
         private readonly LanguageInterface $language,
     ) {
         $this->body['form'] = $this->form;
@@ -41,8 +42,13 @@ class Emails extends AdminPage
     #[RequiredPermission('settings', Permission::Read)]
     public function onGet(): static
     {
+        $adminId = $this->adminAuthenticator->getUserId();
+        if ($adminId === null) {
+            return $this;
+        }
+
         $outputData = $this->getAdminUseCase->execute(
-            new GetAdminInputData((int) $this->adminAuthenticator->getUserId())
+            new GetAdminInputData($adminId),
         );
 
         $this->body['admin'] = $outputData->admin;
@@ -50,18 +56,23 @@ class Emails extends AdminPage
         return $this;
     }
 
-    /**
-     * @FormValidation()
-     */
+    /** @FormValidation() */
     #[AdminGuard]
     #[Transactional]
-    public function onPost(#[Input] CreateEmailInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        CreateEmailInput $input,
+    ): static {
+        $adminId = $this->adminAuthenticator->getUserId();
+        if ($adminId === null) {
+            return $this;
+        }
+
         $this->createAdminEmailUseCase->execute(
             new CreateAdminEmailInputData(
-                (int) $this->adminAuthenticator->getUserId(),
+                $adminId,
                 $input->emailAddress,
-            )
+            ),
         );
 
         $this->renderer = new NullRenderer();
@@ -72,13 +83,16 @@ class Emails extends AdminPage
         return $this;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
+    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
     public function onPostValidationFailed(): static
     {
+        $adminId = $this->adminAuthenticator->getUserId();
+        if ($adminId === null) {
+            return $this;
+        }
+
         $outputData = $this->getAdminUseCase->execute(
-            new GetAdminInputData((int) $this->adminAuthenticator->getUserId())
+            new GetAdminInputData($adminId),
         );
 
         $this->body['admin'] = $outputData->admin;

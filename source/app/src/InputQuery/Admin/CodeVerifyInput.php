@@ -13,10 +13,14 @@ readonly class CodeVerifyInput
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
      */
     public function __construct(
-        #[Input] public string $uuid,
-        #[Input] public string $code,
-        #[Input] public string $__csrf_token, // phpcs:ignore
-        #[Input] public ?string $continue,
+        #[Input]
+        public string $uuid,
+        #[Input]
+        public string $code,
+        #[Input]
+        public string $__csrf_token, // phpcs:ignore
+        #[Input]
+        public string|null $continue,
     ) {
     }
 }

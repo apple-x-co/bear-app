@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Provider;
 
+use AppCore\Infrastructure\Shared\UserAuthenticator;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Session\Segment;
 use Aura\Auth\Session\Session;
-use MyVendor\MyProject\Auth\UserAuthenticator;
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
@@ -15,17 +15,23 @@ use function ini_get;
 
 /**
  * User認証基盤を提供
+ *
+ * @template-implements ProviderInterface<UserAuthenticator>
  */
 class UserAuthenticatorProvider implements ProviderInterface
 {
-    /**
-     * @param array<array-key, mixed> $cookie
-     */
+    private const string SEGMENT_NAME = 'Bebo\User';
+
+    /** @param array<array-key, mixed> $cookie */
     public function __construct(
-        #[Named('cookie')] private readonly array $cookie,
-        #[Named('pdo_dsn')] private readonly string $pdoDsn,
-        #[Named('pdo_username')] private readonly string $pdoUsername,
-        #[Named('pdo_password')] private readonly string $pdoPassword,
+        #[Named('cookie')]
+        private readonly array $cookie,
+        #[Named('pdo_dsn')]
+        private readonly string $pdoDsn,
+        #[Named('pdo_username')]
+        private readonly string $pdoUsername,
+        #[Named('pdo_password')]
+        private readonly string $pdoPassword,
     ) {
     }
 
@@ -41,7 +47,7 @@ class UserAuthenticatorProvider implements ProviderInterface
     public function get()
     {
         $authSession = new Session($this->cookie);
-        $authSegment = new Segment('BearApp\User');
+        $authSegment = new Segment(self::SEGMENT_NAME);
         $authFactory = new AuthFactory($this->cookie, $authSession, $authSegment);
 
         return new UserAuthenticator(

@@ -18,18 +18,21 @@ use DateTimeImmutable;
 use Ray\Di\Di\Named;
 
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
-class JoinAdminUserCase
+readonly class JoinAdminUserCase
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        #[Named('admin')] private readonly AddressInterface $adminAddress,
-        #[Named('admin_base_url')] private readonly string $adminBaseUrl,
-        private readonly AdminQueryInterface $adminQuery,
-        private readonly SecureRandomInterface $secureRandom,
-        #[Named('SMTP')] private readonly TransportInterface $transport,
-        private readonly RouterInterface $router,
-        private readonly VerificationCodeCommandInterface $verificationCodeCommand,
-        private readonly WebSignatureEncrypterInterface $webSignatureEncrypter,
+        #[Named('admin')]
+        private AddressInterface $adminAddress,
+        #[Named('admin_base_url')]
+        private string $adminBaseUrl,
+        private AdminQueryInterface $adminQuery,
+        private SecureRandomInterface $secureRandom,
+        #[Named('SMTP')]
+        private TransportInterface $transport,
+        private RouterInterface $router,
+        private VerificationCodeCommandInterface $verificationCodeCommand,
+        private WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
     }
 
@@ -48,7 +51,7 @@ class JoinAdminUserCase
                     ->setTemplateVars([
                         'expiresAt' => $expiresAt,
                         'code' => $code,
-                    ])
+                    ]),
             );
         }
 

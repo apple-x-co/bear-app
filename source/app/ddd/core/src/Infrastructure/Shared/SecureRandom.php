@@ -17,10 +17,11 @@ use function rtrim;
 use function str_repeat;
 use function strtr;
 
-class SecureRandom implements SecureRandomInterface
+readonly class SecureRandom implements SecureRandomInterface
 {
     public function __construct(
-        #[Named('hash_salt')] private readonly string $hashSalt,
+        #[Named('hash_salt')]
+        private string $hashSalt,
     ) {
     }
 

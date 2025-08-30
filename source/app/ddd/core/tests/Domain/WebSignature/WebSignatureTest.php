@@ -34,7 +34,7 @@ class WebSignatureTest extends TestCase
             'a:3:{s:1:"_";s:3:"abc";s:9:"timestamp";i:1672498800;s:7:"address";s:16:"test@example.com";}'
         );
 
-        $this->assertSame('2023-01-01 00:00:00', $deserialized->expiresAt->format('Y-m-d H:i:s'));
+        $this->assertSame('2023-01-01 00:00:00', $deserialized->expiresDate->format('Y-m-d H:i:s'));
         $this->assertSame('test@example.com', $deserialized->address);
     }
 }

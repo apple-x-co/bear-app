@@ -5,22 +5,28 @@ declare(strict_types=1);
 namespace AppCore\Presentation\Shared;
 
 use AppCore\Domain\AccessControl\Permission;
+use AppCore\Domain\Auth\AdminAuthenticatorInterface;
+use AppCore\Domain\Auth\AdminContextInterface;
 use AppCore\Domain\FlashMessenger\FlashMessageType;
 use AppCore\Domain\FlashMessenger\FlashMessengerInterface;
-use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
-use MyVendor\MyProject\Session\SessionInterface;
+use AppCore\Domain\Session\SessionInterface;
 use Ray\Di\Di\Set;
 use Ray\Di\ProviderInterface;
 
-final class AdminContext implements AdminContextInterface
+final readonly class AdminContext implements AdminContextInterface
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /**
+     * @param ProviderInterface<AdminAuthenticatorInterface> $adminAuthenticatorProvider
+     * @param ProviderInterface<SessionInterface>            $sessionProvider
+     *
+     * @SuppressWarnings(PHPMD.LongVariable)
+     */
     public function __construct(
         #[Set(AdminAuthenticatorInterface::class)]
-        private readonly ProviderInterface $adminAuthenticatorProvider,
-        private readonly FlashMessengerInterface $flashMessenger,
+        private ProviderInterface $adminAuthenticatorProvider,
+        private FlashMessengerInterface $flashMessenger,
         #[Set(SessionInterface::class)]
-        private readonly ProviderInterface $sessionProvider,
+        private ProviderInterface $sessionProvider,
     ) {
     }
 
@@ -64,7 +70,7 @@ final class AdminContext implements AdminContextInterface
         $this->session()->set($key, $val);
     }
 
-    public function getSessionValue(string $key, ?string $alt = null): mixed
+    public function getSessionValue(string $key, string|null $alt = null): mixed
     {
         return $this->session()->get($key, $alt);
     }

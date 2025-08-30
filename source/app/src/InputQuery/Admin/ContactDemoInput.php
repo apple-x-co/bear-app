@@ -13,9 +13,12 @@ readonly class ContactDemoInput
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
      */
     public function __construct(
-        #[Input] public string $username,
-        #[Input] public string $__csrf_token, // phpcs:ignore
-        #[Input] public string|null $mode,
+        #[Input]
+        public string $username,
+        #[Input]
+        public string $__csrf_token, // phpcs:ignore
+        #[Input]
+        public string|null $mode,
     ) {
     }
 }

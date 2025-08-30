@@ -19,8 +19,10 @@ class Index extends ResourceObject
     public $headers = [ResponseHeader::CACHE_CONTROL => CacheControl::PUBLIC_ . ',max-age=300'];
 
     /** @return static */
-    public function onGet(#[Input] IndexInput $input): static
-    {
+    public function onGet(
+        #[Input]
+        IndexInput $input,
+    ): static {
         $this->body = [
             'greeting' => 'Hello ' . $input->name . ' (page)',
         ];

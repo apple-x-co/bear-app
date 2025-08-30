@@ -9,7 +9,8 @@ use Ray\InputQuery\Attribute\Input;
 final readonly class IndexInput
 {
     public function __construct(
-        #[Input] public string $name = 'BEAR.Sunday',
+        #[Input]
+        public string $name = 'BEAR.Sunday',
     ) {
     }
 }

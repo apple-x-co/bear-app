@@ -8,14 +8,18 @@ use DateTimeImmutable;
 
 class AdminEntityFactory
 {
+    /**
+     * @param positive-int $id
+     * @param int<0, 1>    $active
+     */
     public static function factory(
         int $id,
         string $username,
         string $password,
         string $displayName,
         int $active,
-        string $createdAt,
-        string $updatedAt
+        string $createdDate,
+        string $updatedDate,
     ): AdminEntity {
         return new AdminEntity(
             $id,
@@ -23,8 +27,8 @@ class AdminEntityFactory
             $password,
             $displayName,
             $active,
-            new DateTimeImmutable($createdAt),
-            new DateTimeImmutable($updatedAt),
+            new DateTimeImmutable($createdDate),
+            new DateTimeImmutable($updatedDate),
         );
     }
 }

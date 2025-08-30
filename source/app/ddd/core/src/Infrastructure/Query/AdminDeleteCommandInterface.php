@@ -9,14 +9,14 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminDeleteCommandInterface
 {
-    #[DbQuery('admin_delete_add')]
+    #[DbQuery('admins/admin_delete_add')]
     public function add(
         int $adminId,
-        DateTimeImmutable $requestAt,
-        DateTimeImmutable $scheduleAt,
-        ?DateTimeImmutable $createdAt = null,
+        DateTimeImmutable $requestDate,
+        DateTimeImmutable $scheduleDate,
+        DateTimeImmutable|null $createdDate = null,
     ): void;
 
-    #[DbQuery('admin_delete_delete')]
-    public function delete(int $adminId, DateTimeImmutable $deletedAt): void;
+    #[DbQuery('admins/admin_delete_delete')]
+    public function delete(int $adminId, DateTimeImmutable $deletedDate): void;
 }

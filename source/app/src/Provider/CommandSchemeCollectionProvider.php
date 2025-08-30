@@ -11,13 +11,15 @@ use BEAR\Resource\SchemeCollection;
 use Ray\Di\InjectorInterface;
 use Ray\Di\ProviderInterface;
 
-class CommandSchemeCollectionProvider implements ProviderInterface
+/** @template-implements ProviderInterface<SchemeCollection> */
+readonly class CommandSchemeCollectionProvider implements ProviderInterface
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        #[AppName] private readonly string $appName,
-        private readonly InjectorInterface $injector,
-        private readonly SchemeCollectionProvider $schemeCollectionProvider,
+        #[AppName]
+        private string $appName,
+        private InjectorInterface $injector,
+        private SchemeCollectionProvider $schemeCollectionProvider,
     ) {
     }
 

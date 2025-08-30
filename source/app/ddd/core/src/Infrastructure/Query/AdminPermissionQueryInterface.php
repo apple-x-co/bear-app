@@ -11,6 +11,6 @@ use Ray\MediaQuery\Annotation\DbQuery;
 interface AdminPermissionQueryInterface
 {
     /** @return array<AdminPermissionEntity> */
-    #[DbQuery('admin_permission_by_admin_id', factory: AdminPermissionEntityFactory::class)]
+    #[DbQuery('admins/admin_permission_by_admin_id', factory: AdminPermissionEntityFactory::class)]
     public function list(int $adminId): array;
 }

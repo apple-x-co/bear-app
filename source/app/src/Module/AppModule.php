@@ -21,9 +21,7 @@ use function getenv;
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class AppModule extends AbstractAppModule
 {
-    /**
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     */
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
     protected function configure(): void
     {
         (new EnvJson())->load(dirname(__DIR__, 2));
@@ -41,15 +39,15 @@ class AppModule extends AbstractAppModule
                 (string) getenv('DB_DSN'),
                 (string) getenv('DB_USER'),
                 (string) getenv('DB_PASS'),
-                (string) getenv('DB_SLAVE')
-            )
+                (string) getenv('DB_SLAVE'),
+            ),
         );
 
         $this->install(
             new MediaQueryModule(
                 Queries::fromDir($this->appMeta->appDir . '/ddd/core/src/Infrastructure/Query'),
-                [new DbQueryConfig($this->appMeta->appDir . '/var/sql')]
-            )
+                [new DbQueryConfig($this->appMeta->appDir . '/var/sql')],
+            ),
         );
 
         $this->install(new IdentityValueModule());
@@ -57,14 +55,16 @@ class AppModule extends AbstractAppModule
         $this->install(
             new JsonSchemaModule(
                 $this->appMeta->appDir . '/var/schema/response',
-                $this->appMeta->appDir . '/var/schema/request'
-            )
+                $this->appMeta->appDir . '/var/schema/request',
+            ),
         );
 
-        $this->install(new BaseModule(
-            $this->appMeta->appDir . '/var/email',
-            $this->appMeta->appDir . '/var/lang',
-        ));
+        $this->install(
+            new BaseModule(
+                $this->appMeta->appDir . '/var/email',
+                $this->appMeta->appDir . '/var/lang',
+            ),
+        );
 
         $this->install(new PackageModule());
 

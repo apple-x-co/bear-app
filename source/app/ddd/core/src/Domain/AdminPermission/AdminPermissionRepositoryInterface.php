@@ -6,9 +6,7 @@ namespace AppCore\Domain\AdminPermission;
 
 interface AdminPermissionRepositoryInterface
 {
-    /**
-     * @return array<AdminPermission>
-     */
+    /** @return list<AdminPermission> */
     public function findByAdminId(int $adminId): array;
 
     public function store(AdminPermission $adminPermission): void;

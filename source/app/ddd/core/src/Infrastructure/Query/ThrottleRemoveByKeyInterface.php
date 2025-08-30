@@ -8,6 +8,6 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface ThrottleRemoveByKeyInterface
 {
-    #[DbQuery('throttle_remove_by_key')]
+    #[DbQuery('throttles/throttle_remove_by_key')]
     public function __invoke(string $throttleKey): void;
 }

@@ -9,6 +9,10 @@ use SensitiveParameter;
 
 interface AdminPasswordUpdateInterface
 {
-    #[DbQuery('admin_password_update')]
-    public function __invoke(int $id, #[SensitiveParameter] string $password): void;
+    #[DbQuery('admins/admin_password_update')]
+    public function __invoke(
+        int $id,
+        #[SensitiveParameter]
+        string $password,
+    ): void;
 }

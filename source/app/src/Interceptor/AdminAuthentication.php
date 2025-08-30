@@ -4,7 +4,18 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Interceptor;
 
+use AppCore\Domain\Auth\AdminAuthenticatorInterface;
+use AppCore\Domain\Auth\AdminPasswordLocking;
+use AppCore\Domain\Auth\MaxAttemptsExceeded;
+use AppCore\Domain\Auth\MultipleMatches;
+use AppCore\Domain\Auth\ParameterMissingException;
+use AppCore\Domain\Auth\PasswordIncorrect;
+use AppCore\Domain\Auth\PasswordMissing;
+use AppCore\Domain\Auth\UsernameMissing;
+use AppCore\Domain\Auth\UsernameNotFound;
 use AppCore\Domain\LoggerInterface;
+use AppCore\Domain\Session\SessionInterface;
+use AppCore\Domain\Throttle\ThrottlingHandlerInterface;
 use Aura\Auth\Exception\MultipleMatches as AuraMultipleMatches;
 use Aura\Auth\Exception\PasswordIncorrect as AuraPasswordIncorrect;
 use Aura\Auth\Exception\PasswordMissing as AuraPasswordMissing;
@@ -17,19 +28,8 @@ use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminLogin;
 use MyVendor\MyProject\Annotation\AdminLogout;
 use MyVendor\MyProject\Annotation\AdminVerifyPassword;
-use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
-use MyVendor\MyProject\Auth\AdminPasswordLocking;
-use MyVendor\MyProject\Auth\MaxAttemptsExceeded;
-use MyVendor\MyProject\Auth\MultipleMatches;
-use MyVendor\MyProject\Auth\ParameterMissingException;
-use MyVendor\MyProject\Auth\PasswordIncorrect;
-use MyVendor\MyProject\Auth\PasswordMissing;
-use MyVendor\MyProject\Auth\UsernameMissing;
-use MyVendor\MyProject\Auth\UsernameNotFound;
 use MyVendor\MyProject\InputQuery\Admin\LoginUserInput;
 use MyVendor\MyProject\InputQuery\Admin\UserPasswordInput;
-use MyVendor\MyProject\Session\SessionInterface;
-use MyVendor\MyProject\Throttle\ThrottleInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\Di\Di\Named;
@@ -47,34 +47,41 @@ use function sha1;
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class AdminAuthentication implements MethodInterceptor
+readonly class AdminAuthentication implements MethodInterceptor
 {
     public function __construct(
-        #[Named('admin_auth_attempt_interval')] private readonly string $attemptInterval,
-        private readonly AdminAuthenticatorInterface $authenticator,
-        #[Named('admin')] private readonly LoggerInterface $logger,
-        #[Named('admin_auth_max_attempts')] private readonly int $maxAttempts,
-        private readonly SessionInterface $session,
-        private readonly ThrottleInterface $throttle,
+        #[Named('admin_auth_attempt_interval')]
+        private string $attemptInterval,
+        private AdminAuthenticatorInterface $authenticator,
+        #[Named('admin')]
+        private LoggerInterface $logger,
+        #[Named('admin_auth_max_attempts')]
+        private int $maxAttempts,
+        private SessionInterface $session,
+        private ThrottlingHandlerInterface $throttlingHandler,
     ) {
     }
 
+    /** @psalm-suppress ArgumentTypeCoercion */
     public function invoke(MethodInvocation $invocation): mixed
     {
         $method = $invocation->getMethod();
 
         $login = $method->getAnnotation(AdminLogin::class);
         if ($login instanceof AdminLogin) {
+            // @phpstan-ignore-next-line
             return $this->login($invocation, $login->onFailure);
         }
 
         $logout = $method->getAnnotation(AdminLogout::class);
         if ($logout instanceof AdminLogout) {
+            // @phpstan-ignore-next-line
             return $this->logout($invocation);
         }
 
         $verifyPassword = $method->getAnnotation(AdminVerifyPassword::class);
         if ($verifyPassword instanceof AdminVerifyPassword) {
+            // @phpstan-ignore-next-line
             return $this->verifyPassword($invocation, $verifyPassword->onFailure);
         }
 
@@ -82,6 +89,9 @@ class AdminAuthentication implements MethodInterceptor
     }
 
     /**
+     * @param MethodInvocation<ResourceObject> $invocation
+     *
+     * @psalm-suppress ArgumentTypeCoercion
      * @SuppressWarnings(PHPMD.ElseExpression)
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -95,7 +105,7 @@ class AdminAuthentication implements MethodInterceptor
         if (empty($array)) {
             return call_user_func(
                 [$invocation->getThis(), $onFailure],
-                new ParameterMissingException()
+                new ParameterMissingException(),
             );
         }
 
@@ -104,7 +114,7 @@ class AdminAuthentication implements MethodInterceptor
         if ($input->isValid()) {
             $throttleKey = sha1($input->username);
 
-            if ($this->throttle->isExceeded($throttleKey)) {
+            if ($this->throttlingHandler->isExceeded($throttleKey)) {
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],
                     new MaxAttemptsExceeded(),
@@ -132,21 +142,21 @@ class AdminAuthentication implements MethodInterceptor
                 }
 
                 $remoteIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
-                $this->throttle->countUp($throttleKey, $remoteIp, $this->attemptInterval, $this->maxAttempts);
+                $this->throttlingHandler->countUp($throttleKey, $remoteIp, $this->attemptInterval, $this->maxAttempts);
 
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],
                     new $class(
                         $throwable->getMessage(),
                         $throwable->getCode(),
-                        $throwable->getPrevious()
-                    )
+                        $throwable->getPrevious(),
+                    ),
                 );
             }
 
             $this->logger->log('[logged] ' . $input->username);
 
-            $this->throttle->clear($throttleKey);
+            $this->throttlingHandler->clear($throttleKey);
 
             $continue = $this->session->get('admin:continue', '');
             $expire = (new DateTimeImmutable())->modify('+5 min')->getTimestamp();
@@ -172,7 +182,6 @@ class AdminAuthentication implements MethodInterceptor
         }
 
         $ro = $invocation->getThis();
-        assert($ro instanceof ResourceObject);
 
         $ro->setRenderer(new NullRenderer());
         $ro->code = StatusCode::FOUND;
@@ -183,6 +192,11 @@ class AdminAuthentication implements MethodInterceptor
         return $ro;
     }
 
+    /**
+     * @param MethodInvocation<ResourceObject> $invocation
+     *
+     * @psalm-suppress ArgumentTypeCoercion
+     */
     private function logout(MethodInvocation $invocation): mixed
     {
         $this->session->set('admin:continue', '');
@@ -204,6 +218,11 @@ class AdminAuthentication implements MethodInterceptor
         return $ro;
     }
 
+    /**
+     * @param MethodInvocation<ResourceObject> $invocation
+     *
+     * @psalm-suppress ArgumentTypeCoercion
+     */
     private function verifyPassword(MethodInvocation $invocation, string $onFailure): mixed
     {
         $args = $invocation->getNamedArguments();
@@ -220,7 +239,7 @@ class AdminAuthentication implements MethodInterceptor
         if ($input === null) {
             return call_user_func(
                 [$invocation->getThis(), $onFailure],
-                new ParameterMissingException()
+                new ParameterMissingException(),
             );
         }
 
@@ -238,8 +257,8 @@ class AdminAuthentication implements MethodInterceptor
                     new PasswordIncorrect(
                         $passwordIncorrect->getMessage(),
                         $passwordIncorrect->getCode(),
-                        $passwordIncorrect->getPrevious()
-                    )
+                        $passwordIncorrect->getPrevious(),
+                    ),
                 );
             }
 
@@ -267,7 +286,7 @@ class AdminAuthentication implements MethodInterceptor
 
         return call_user_func(
             [$invocation->getThis(), $onFailure],
-            new PasswordIncorrect()
+            new PasswordIncorrect(),
         );
     }
 }

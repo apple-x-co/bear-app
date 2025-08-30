@@ -11,7 +11,7 @@ services:
         consistency: delegated
       - type: bind
         source: localhost.conf
-        target: /etc/httpd/conf.d/00_localhost.conf
+        target: /etc/apache2/sites-enabled/000-default.conf
         read_only: true
     ports:
       - "80:80"

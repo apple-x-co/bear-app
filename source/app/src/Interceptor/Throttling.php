@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Interceptor;
 
+use AppCore\Domain\Throttle\ThrottlingHandlerInterface;
 use BEAR\Resource\Exception\BadRequestException;
 use BEAR\Resource\ResourceObject;
 use MyVendor\MyProject\Annotation\RateLimiter;
-use MyVendor\MyProject\Throttle\ThrottleInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
 use function assert;
 use function sha1;
 
-class Throttling implements MethodInterceptor
+readonly class Throttling implements MethodInterceptor
 {
-    private const TOO_MANY_REQUESTS = 429;
+    private const int TOO_MANY_REQUESTS = 429;
 
     public function __construct(
-        private readonly ThrottleInterface $throttle
+        private ThrottlingHandlerInterface $throttle,
     ) {
     }
 

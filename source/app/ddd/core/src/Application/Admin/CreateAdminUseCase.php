@@ -24,17 +24,20 @@ use Ray\Di\Di\Named;
 use function is_int;
 
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
-class CreateAdminUseCase
+readonly class CreateAdminUseCase
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        #[Named('admin')] private readonly AddressInterface $adminAddress,
-        private readonly AdminPermissionRepositoryInterface $adminPermissionRepository,
-        private readonly AdminRepositoryInterface $adminRepository,
-        private readonly PasswordHasherInterface $passwordHasher,
-        #[Named('SMTP')] private readonly TransportInterface $smtpTransport,
-        #[Named('queue')] private readonly TransportInterface $queueTransport,
-        private readonly WebSignatureEncrypterInterface $webSignatureEncrypter,
+        #[Named('admin')]
+        private AddressInterface $adminAddress,
+        private AdminPermissionRepositoryInterface $adminPermissionRepository,
+        private AdminRepositoryInterface $adminRepository,
+        private PasswordHasherInterface $passwordHasher,
+        #[Named('SMTP')]
+        private TransportInterface $smtpTransport,
+        #[Named('queue')]
+        private TransportInterface $queueTransport,
+        private WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
     }
 
@@ -42,7 +45,7 @@ class CreateAdminUseCase
     {
         $webSignature = $this->webSignatureEncrypter->decrypt($inputData->signature);
         $now = new DateTimeImmutable();
-        if ($webSignature->expiresAt < $now) {
+        if ($webSignature->expiresDate < $now) {
             throw new ExpiredSignatureException();
         }
 
@@ -64,7 +67,7 @@ class CreateAdminUseCase
                         Access::Allow,
                         $resourceName,
                         Permission::Read,
-                    )
+                    ),
                 );
             }
         }
@@ -75,7 +78,7 @@ class CreateAdminUseCase
                 ->setTo([new Address($webSignature->address, $inputData->displayName)])
                 ->setTemplateId('admin_welcome')
                 ->setTemplateVars(['displayName' => $inputData->displayName])
-                ->setScheduleAt(new DateTimeImmutable())
+                ->setScheduleDate(new DateTimeImmutable()),
         );
 
         $this->smtpTransport->send(
@@ -83,7 +86,7 @@ class CreateAdminUseCase
                 ->setFrom($this->adminAddress)
                 ->setTo([new Address($webSignature->address, $inputData->displayName)])
                 ->setTemplateId('admin_sign_up')
-                ->setTemplateVars(['displayName' => $inputData->displayName])
+                ->setTemplateVars(['displayName' => $inputData->displayName]),
         );
     }
 }

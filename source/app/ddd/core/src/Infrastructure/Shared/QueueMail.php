@@ -19,14 +19,15 @@ use function is_string;
 
 use const DIRECTORY_SEPARATOR;
 
-class QueueMail implements TransportInterface
+readonly class QueueMail implements TransportInterface
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        private readonly EmailCommandInterface $emailCommand,
-        #[EmailDir] private string $emailDir,
-        private readonly EmailRecipientCommandInterface $emailRecipientCommand,
-        private readonly TemplateRendererInterface $templateRenderer,
+        private EmailCommandInterface $emailCommand,
+        #[EmailDir]
+        private string $emailDir,
+        private EmailRecipientCommandInterface $emailRecipientCommand,
+        private TemplateRendererInterface $templateRenderer,
     ) {
     }
 
@@ -43,7 +44,7 @@ class QueueMail implements TransportInterface
             throw new InvalidArgumentException('"From" must be not null');
         }
 
-        $scheduleAt = $email->getScheduleAt();
+        $scheduleAt = $email->getScheduleDate();
         if ($scheduleAt === null) {
             throw new InvalidArgumentException('"ScheduleAt" must be not null');
         }
@@ -113,9 +114,7 @@ class QueueMail implements TransportInterface
         }
     }
 
-    /**
-     * @param array<string, mixed> $vars
-     */
+    /** @param array<string, mixed> $vars */
     private function renderTemplate(string $filePath, array $vars = []): string
     {
         if (! is_readable($filePath)) {

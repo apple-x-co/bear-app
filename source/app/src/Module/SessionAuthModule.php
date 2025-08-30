@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
+use AppCore\Domain\Auth\AdminAuthenticatorInterface;
+use AppCore\Domain\Auth\UserAuthenticatorInterface;
 use AppCore\Domain\FlashMessenger\FlashMessengerInterface;
+use AppCore\Domain\Session\SessionInterface;
 use AppCore\Infrastructure\Shared\FlashMessenger;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\AdminLogin;
@@ -16,8 +19,6 @@ use MyVendor\MyProject\Annotation\RequiredPermission;
 use MyVendor\MyProject\Annotation\UserGuard;
 use MyVendor\MyProject\Annotation\UserLogin;
 use MyVendor\MyProject\Annotation\UserLogout;
-use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
-use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
 use MyVendor\MyProject\Interceptor\AdminAuthentication;
 use MyVendor\MyProject\Interceptor\AdminAuthGuardian;
 use MyVendor\MyProject\Interceptor\AdminAuthorization;
@@ -31,7 +32,6 @@ use MyVendor\MyProject\Provider\SessionProvider;
 use MyVendor\MyProject\Provider\UserAuthenticatorProvider;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use MyVendor\MyProject\Resource\Page\UserPage;
-use MyVendor\MyProject\Session\SessionInterface;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
@@ -58,7 +58,7 @@ class SessionAuthModule extends AbstractModule
         $this->user();
     }
 
-    public function admin(): void
+    private function admin(): void
     {
         $this->bind()->annotatedWith('admin_auth_max_attempts')->toInstance(10);
         $this->bind()->annotatedWith('admin_auth_attempt_interval')->toInstance('30 minutes');
@@ -94,7 +94,7 @@ class SessionAuthModule extends AbstractModule
             $this->matcher->subclassesOf(AdminPage::class),
             $this->matcher->logicalOr(
                 $this->matcher->annotatedWith(AdminPasswordProtect::class),
-                $this->matcher->annotatedWith(AdminPasswordLock::class)
+                $this->matcher->annotatedWith(AdminPasswordLock::class),
             ),
             [AdminPasswordProtector::class],
         );
@@ -106,7 +106,7 @@ class SessionAuthModule extends AbstractModule
         );
     }
 
-    public function user(): void
+    private function user(): void
     {
         $this->bind(UserAuthenticatorInterface::class)
              ->toProvider(UserAuthenticatorProvider::class)

@@ -16,6 +16,7 @@ use BEAR\Resource\ResourceObject;
 use DateTimeImmutable;
 use Ray\Di\Di\Named;
 
+use function array_merge;
 use function array_reduce;
 
 class SendQueueMail extends ResourceObject
@@ -24,7 +25,8 @@ class SendQueueMail extends ResourceObject
         private readonly EmailCommandInterface $emailCommand,
         private readonly EmailQueryInterface $emailQuery,
         private readonly EmailRecipientQueryInterface $emailRecipientQuery,
-        #[Named('SMTP')] private readonly TransportInterface $transport,
+        #[Named('SMTP')]
+        private readonly TransportInterface $transport,
     ) {
     }
 
@@ -74,10 +76,18 @@ class SendQueueMail extends ResourceObject
             foreach ($recipientMap[$queue['id']] as $recipient) {
                 $address = new Address($recipient['recipient_email_address'], $recipient['recipient_name']);
                 $email = match ($recipient['recipient_type']) {
-                    RecipientType::To->value => $email->setTo($email->getTo() + [$address]),
-                    RecipientType::Cc->value => $email->setCc($email->getCc() + [$address]),
-                    RecipientType::Bcc->value => $email->setBcc($email->getBcc() + [$address]),
-                    RecipientType::ReplayTo->value => $email->setReplayTo($email->getReplayTo() + [$address]),
+                    RecipientType::To->value => $email->setTo(
+                        array_merge($email->getTo(), [$address]),
+                    ),
+                    RecipientType::Cc->value => $email->setCc(
+                        array_merge($email->getCc(), [$address]),
+                    ),
+                    RecipientType::Bcc->value => $email->setBcc(
+                        array_merge($email->getBcc(), [$address]),
+                    ),
+                    RecipientType::ReplayTo->value => $email->setReplayTo(
+                        array_merge($email->getReplayTo(), [$address]),
+                    ),
                     default => $email,
                 };
             }

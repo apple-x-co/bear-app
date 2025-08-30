@@ -23,8 +23,10 @@ readonly class UpdatePasswordInput
         #[Input]
         #[SensitiveParameter]
         public string $passwordConfirmation,
-        #[Input] public string $__csrf_token, // phpcs:ignore
-        #[Input] public ?string $update,
+        #[Input]
+        public string $__csrf_token, // phpcs:ignore
+        #[Input]
+        public string|null $update,
     ) {
     }
 }

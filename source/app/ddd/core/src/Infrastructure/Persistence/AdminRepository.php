@@ -17,14 +17,15 @@ use AppCore\Infrastructure\Query\AdminQueryInterface;
 use DateTimeImmutable;
 
 use function array_reduce;
+use function array_values;
 
-class AdminRepository implements AdminRepositoryInterface
+readonly class AdminRepository implements AdminRepositoryInterface
 {
     public function __construct(
-        private readonly AdminCommandInterface $adminCommand,
-        private readonly AdminEmailCommandInterface $adminEmailCommand,
-        private readonly AdminEmailQueryInterface $adminEmailQuery,
-        private readonly AdminQueryInterface $adminQuery,
+        private AdminCommandInterface $adminCommand,
+        private AdminEmailCommandInterface $adminEmailCommand,
+        private AdminEmailQueryInterface $adminEmailQuery,
+        private AdminQueryInterface $adminQuery,
     ) {
     }
 
@@ -41,27 +42,29 @@ class AdminRepository implements AdminRepositoryInterface
     }
 
     /**
-     * @param array<AdminEmailEntity> $adminEmailEntities
+     * @param list<AdminEmailEntity> $adminEmailEntities
      *
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
     private function entityToModel(AdminEntity $adminEntity, array $adminEmailEntities): Admin
     {
-        $adminEmails = array_reduce(
-            $adminEmailEntities,
-            static function (array $carry, AdminEmailEntity $item) {
-                $carry[] = AdminEmail::reconstruct(
-                    $item->id,
-                    $item->adminId,
-                    $item->emailAddress,
-                    $item->verifiedAt,
-                    $item->createdAt,
-                    $item->updatedAt,
-                );
+        $adminEmails = array_values(
+            array_reduce(
+                $adminEmailEntities,
+                static function (array $carry, AdminEmailEntity $item) {
+                    $carry[] = AdminEmail::reconstruct(
+                        $item->id,
+                        $item->adminId,
+                        $item->emailAddress,
+                        $item->verifiedDate,
+                        $item->createdDate,
+                        $item->updatedDate,
+                    );
 
-                return $carry;
-            },
-            [],
+                    return $carry;
+                },
+                [],
+            ),
         );
 
         return Admin::reconstruct(
@@ -71,8 +74,8 @@ class AdminRepository implements AdminRepositoryInterface
             $adminEntity->displayName,
             (bool) $adminEntity->active,
             $adminEmails,
-            $adminEntity->createdAt,
-            $adminEntity->updatedAt,
+            $adminEntity->createdDate,
+            $adminEntity->updatedDate,
         );
     }
 
@@ -98,11 +101,11 @@ class AdminRepository implements AdminRepositoryInterface
                 $email->emailAddress,
             );
 
-            if (! ($email->verifiedAt instanceof DateTimeImmutable)) {
+            if (! ($email->verifiedDate instanceof DateTimeImmutable)) {
                 continue;
             }
 
-            $this->adminEmailCommand->verified($array['id'], $email->verifiedAt);
+            $this->adminEmailCommand->verified($array['id'], $email->verifiedDate);
         }
 
         $admin->setNewId($adminId);
@@ -125,7 +128,7 @@ class AdminRepository implements AdminRepositoryInterface
             if ($email->id === null) {
                 $this->adminEmailCommand->add(
                     $admin->id,
-                    $email->emailAddress
+                    $email->emailAddress,
                 );
 
                 continue;
@@ -137,11 +140,11 @@ class AdminRepository implements AdminRepositoryInterface
                 continue;
             }
 
-            if (! ($email->verifiedAt instanceof DateTimeImmutable)) {
+            if (! ($email->verifiedDate instanceof DateTimeImmutable)) {
                 continue;
             }
 
-            $this->adminEmailCommand->verified($email->id, $email->verifiedAt);
+            $this->adminEmailCommand->verified($email->id, $email->verifiedDate);
         }
     }
 }

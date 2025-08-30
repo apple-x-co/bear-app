@@ -15,8 +15,8 @@ class AdminTokenEntity
         public readonly int $id,
         public readonly int $adminId,
         public readonly string $token,
-        public readonly DateTimeImmutable $expireAt,
-        public readonly DateTimeImmutable $createdAt,
+        public readonly DateTimeImmutable $expireDate,
+        public readonly DateTimeImmutable $createdDate,
     ) {
     }
 }

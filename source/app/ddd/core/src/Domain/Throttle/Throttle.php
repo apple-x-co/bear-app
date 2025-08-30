@@ -7,18 +7,18 @@ namespace AppCore\Domain\Throttle;
 use DateInterval;
 use DateTimeImmutable;
 
-class Throttle
+readonly class Throttle
 {
     public function __construct(
-        public readonly string $throttleKey,
-        public readonly string $remoteIp,
-        public readonly int $iterationCount,
-        public readonly int $maxAttempts,
-        public readonly string $interval,
-        public readonly DateTimeImmutable $expireAt,
-        public readonly ?DateTimeImmutable $createdAt = null,
-        public readonly ?DateTimeImmutable $updatedAt = null,
-        public readonly ?int $id = null,
+        public string $throttleKey,
+        public string $remoteIp,
+        public int $iterationCount,
+        public int $maxAttempts,
+        public string $interval,
+        public DateTimeImmutable $expireDate,
+        public DateTimeImmutable|null $createdDate = null,
+        public DateTimeImmutable|null $updatedDate = null,
+        public int|null $id = null,
     ) {
     }
 
@@ -29,9 +29,9 @@ class Throttle
         int $iterationCount,
         int $maxAttempts,
         string $interval,
-        DateTimeImmutable $expireAt,
-        DateTimeImmutable $createdAt,
-        DateTimeImmutable $updatedAt,
+        DateTimeImmutable $expireDate,
+        DateTimeImmutable $createdDate,
+        DateTimeImmutable $updatedDate,
     ): self {
         return new self(
             $throttleKey,
@@ -39,9 +39,9 @@ class Throttle
             $iterationCount,
             $maxAttempts,
             $interval,
-            $expireAt,
-            $createdAt,
-            $updatedAt,
+            $expireDate,
+            $createdDate,
+            $updatedDate,
             $id,
         );
     }
@@ -55,7 +55,7 @@ class Throttle
     {
         $now = new DateTimeImmutable();
 
-        return $this->expireAt < $now;
+        return $this->expireDate < $now;
     }
 
     /** @SuppressWarnings(PHPMD.StaticAccess) */
@@ -68,8 +68,8 @@ class Throttle
             $this->maxAttempts,
             $this->interval,
             (new DateTimeImmutable())->add(DateInterval::createFromDateString($this->interval)),
-            $this->createdAt,
-            $this->updatedAt,
+            $this->createdDate,
+            $this->updatedDate,
             $this->id,
         );
     }

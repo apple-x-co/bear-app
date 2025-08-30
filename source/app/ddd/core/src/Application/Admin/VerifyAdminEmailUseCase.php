@@ -22,15 +22,18 @@ use Throwable;
 use function array_reduce;
 
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
-class VerifyAdminEmailUseCase
+readonly class VerifyAdminEmailUseCase
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        #[Named('admin')] private readonly AddressInterface $adminAddress,
-        private readonly AdminRepositoryInterface $adminRepository,
-        #[Named('admin')] private readonly LoggerInterface $logger,
-        #[Named('SMTP')] private readonly TransportInterface $transport,
-        private readonly WebSignatureEncrypterInterface $webSignatureEncrypter,
+        #[Named('admin')]
+        private AddressInterface $adminAddress,
+        private AdminRepositoryInterface $adminRepository,
+        #[Named('admin')]
+        private LoggerInterface $logger,
+        #[Named('SMTP')]
+        private TransportInterface $transport,
+        private WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
     }
 
@@ -38,7 +41,7 @@ class VerifyAdminEmailUseCase
     {
         $emailWebSignature = $this->webSignatureEncrypter->decrypt($inputData->signature, EmailWebSignature::class);
         $now = new DateTimeImmutable();
-        if ($emailWebSignature->expiresAt < $now) {
+        if ($emailWebSignature->expiresDate < $now) {
             throw new ExpiredSignatureException();
         }
 
@@ -54,15 +57,13 @@ class VerifyAdminEmailUseCase
 
                 return $carry;
             },
-            []
+            [],
         );
         if (! isset($emailAddressMap[$emailWebSignature->address])) {
             throw new WrongEmailVerifyException();
         }
 
-        $this->adminRepository->store(
-            $admin->markEmailAsVerified($emailWebSignature->address)
-        );
+        $this->adminRepository->store($admin->markEmailAsVerified($emailWebSignature->address));
 
         try {
             $this->transport->send(
@@ -72,7 +73,7 @@ class VerifyAdminEmailUseCase
                     ->setTemplateId('admin_email_verified')
                     ->setTemplateVars([
                         'displayName' => $admin->displayName,
-                    ])
+                    ]),
             );
         } catch (Throwable $throwable) {
             $this->logger->log((string) $throwable);

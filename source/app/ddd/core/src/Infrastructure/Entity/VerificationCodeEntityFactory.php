@@ -14,10 +14,10 @@ class VerificationCodeEntityFactory
         string $emailAddress,
         string $url,
         string $code,
-        string $expireAt,
-        ?string $verifiedAt,
-        string $createdAt,
-        string $updatedAt,
+        string $expireDate,
+        string|null $verifiedDate,
+        string $createdDate,
+        string $updatedDate,
     ): VerificationCodeEntity {
         return new VerificationCodeEntity(
             $id,
@@ -25,10 +25,10 @@ class VerificationCodeEntityFactory
             $emailAddress,
             $url,
             $code,
-            new DateTimeImmutable($expireAt),
-            $verifiedAt === null ? null : new DateTimeImmutable($verifiedAt),
-            new DateTimeImmutable($createdAt),
-            new DateTimeImmutable($updatedAt),
+            new DateTimeImmutable($expireDate),
+            $verifiedDate === null ? null : new DateTimeImmutable($verifiedDate),
+            new DateTimeImmutable($createdDate),
+            new DateTimeImmutable($updatedDate),
         );
     }
 }

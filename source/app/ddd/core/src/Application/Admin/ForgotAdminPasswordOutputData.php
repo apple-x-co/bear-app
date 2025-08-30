@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AppCore\Application\Admin;
 
-class ForgotAdminPasswordOutputData
+readonly class ForgotAdminPasswordOutputData
 {
     public function __construct(
-        public readonly string $redirectUrl,
+        public string $redirectUrl,
     ) {
     }
 }

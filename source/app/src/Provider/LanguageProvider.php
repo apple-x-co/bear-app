@@ -8,10 +8,12 @@ use AppCore\Domain\Language\LangDir;
 use AppCore\Domain\Language\Language;
 use Ray\Di\ProviderInterface;
 
-class LanguageProvider implements ProviderInterface
+/** @template-implements ProviderInterface<Language> */
+readonly class LanguageProvider implements ProviderInterface
 {
     public function __construct(
-        #[LangDir] private readonly string $langDir,
+        #[LangDir]
+        private string $langDir,
     ) {
     }
 

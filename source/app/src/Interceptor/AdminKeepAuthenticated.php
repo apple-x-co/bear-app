@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Interceptor;
 
-use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
+use AppCore\Domain\Auth\AdminAuthenticatorInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\Di\Di\Named;
 
 use function is_string;
 
-class AdminKeepAuthenticated implements MethodInterceptor
+readonly class AdminKeepAuthenticated implements MethodInterceptor
 {
-    /**
-     * @param array<array-key, mixed> $cookie
-     */
+    /** @param array<array-key, mixed> $cookie */
     public function __construct(
-        private readonly AdminAuthenticatorInterface $authenticator,
-        #[Named('cookie')] private readonly array $cookie,
+        private AdminAuthenticatorInterface $authenticator,
+        #[Named('cookie')]
+        private array $cookie,
     ) {
     }
 

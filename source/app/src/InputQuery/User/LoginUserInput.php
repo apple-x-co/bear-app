@@ -14,7 +14,8 @@ readonly class LoginUserInput
      * @SuppressWarnings(PHPMD.CamelCaseParameterName)
      */
     public function __construct(
-        #[Input] public string $username,
+        #[Input]
+        public string $username,
         #[Input]
         #[SensitiveParameter]
         public string $password,

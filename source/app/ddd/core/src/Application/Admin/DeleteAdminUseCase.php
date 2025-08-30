@@ -15,14 +15,17 @@ use DateTimeImmutable;
 use Ray\Di\Di\Named;
 use Throwable;
 
-class DeleteAdminUseCase
+readonly class DeleteAdminUseCase
 {
     public function __construct(
-        #[Named('admin')] private readonly AddressInterface $adminAddress,
-        private readonly AdminDeleteCommandInterface $adminDeleteCommand,
-        private readonly AdminRepositoryInterface $adminRepository,
-        #[Named('admin')] private readonly LoggerInterface $logger,
-        #[Named('SMTP')] private readonly TransportInterface $transport,
+        #[Named('admin')]
+        private AddressInterface $adminAddress,
+        private AdminDeleteCommandInterface $adminDeleteCommand,
+        private AdminRepositoryInterface $adminRepository,
+        #[Named('admin')]
+        private LoggerInterface $logger,
+        #[Named('SMTP')]
+        private TransportInterface $transport,
     ) {
     }
 
@@ -42,7 +45,7 @@ class DeleteAdminUseCase
                         ->setFrom($this->adminAddress)
                         ->setTo([new Address($adminEmail->emailAddress, $admin->username)])
                         ->setTemplateId('admin_deleted')
-                        ->setTemplateVars(['displayName' => $admin->displayName])
+                        ->setTemplateVars(['displayName' => $admin->displayName]),
                 );
             } catch (Throwable $throwable) {
                 $this->logger->log((string) $throwable);

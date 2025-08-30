@@ -10,6 +10,6 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface VerificationCodeQueryInterface
 {
-    #[DbQuery('verification_code_by_uuid', type: 'row', factory: VerificationCodeEntityFactory::class)]
-    public function itemByUuid(string $uuid): ?VerificationCodeEntity;
+    #[DbQuery('verification_codes/verification_code_by_uuid', type: 'row', factory: VerificationCodeEntityFactory::class)]
+    public function itemByUuid(string $uuid): VerificationCodeEntity|null;
 }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
+use AppCore\Domain\Auth\AuthenticationException;
+use AppCore\Domain\Captcha\CaptchaException;
 use MyVendor\MyProject\Annotation\AdminLogin;
-use MyVendor\MyProject\Annotation\GoogleRecaptchaV2;
-use MyVendor\MyProject\Auth\AuthenticationException;
-use MyVendor\MyProject\Captcha\RecaptchaException;
+use MyVendor\MyProject\Annotation\CloudflareTurnstile;
 use MyVendor\MyProject\InputQuery\Admin\LoginUserInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\Di\Di\Named;
@@ -18,7 +18,8 @@ use Ray\WebFormModule\FormInterface;
 class Login extends AdminPage
 {
     public function __construct(
-        #[Named('admin_login_form')] protected readonly FormInterface $form,
+        #[Named('admin_login_form')]
+        protected readonly FormInterface $form,
     ) {
         $this->body['form'] = $this->form;
     }
@@ -32,10 +33,12 @@ class Login extends AdminPage
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @FormValidation()
      */
-    #[GoogleRecaptchaV2]
+    #[CloudflareTurnstile]
     #[AdminLogin]
-    public function onPost(#[Input] LoginUserInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        LoginUserInput $input,
+    ): static {
         // login success !!
 
         return $this;
@@ -47,6 +50,8 @@ class Login extends AdminPage
     }
 
     /**
+     * Callback from AdminAuthentication
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function onPostAuthenticationFailed(AuthenticationException $authException): static
@@ -57,11 +62,13 @@ class Login extends AdminPage
     }
 
     /**
-     * @param array<RecaptchaException> $recaptchaExceptions
+     * Callback from CloudflareTurnstileVerification
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function onPostGoogleRecaptchaV2Failed(array $recaptchaExceptions): static
+    public function onCfTurnstileFailed(CaptchaException $captchaException): static
     {
-        $this->body['recaptchaError'] = ! empty($recaptchaExceptions);
+        $this->body['captchaError'] = true;
 
         return $this;
     }

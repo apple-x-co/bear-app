@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Provider;
 
+use AppCore\Infrastructure\Shared\Session;
 use Aura\Session\Session as AuraSession;
-use MyVendor\MyProject\Session\Session;
 use Ray\Di\ProviderInterface;
 
-class SessionProvider implements ProviderInterface
+/** @template-implements ProviderInterface<Session> */
+readonly class SessionProvider implements ProviderInterface
 {
-    private const SEGMENT_NAME = 'MyVendor\MyProject';
+    private const string SEGMENT_NAME = 'Bebo\Common';
 
     public function __construct(
-        private readonly AuraSession $session,
+        private AuraSession $session,
     ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function get()
     {
         return new Session($this->session->getSegment(self::SEGMENT_NAME));

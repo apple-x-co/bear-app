@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Interceptor;
 
+use AppCore\Domain\Auth\UserAuthenticatorInterface;
+use AppCore\Domain\Session\SessionInterface;
 use BEAR\Resource\NullRenderer;
 use BEAR\Resource\ResourceObject;
 use BEAR\Sunday\Extension\Router\RouterInterface;
 use Koriym\HttpConstants\StatusCode;
-use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
-use MyVendor\MyProject\Session\SessionInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
 use function assert;
 
-class UserAuthGuardian implements MethodInterceptor
+readonly class UserAuthGuardian implements MethodInterceptor
 {
     public function __construct(
-        private readonly RouterInterface $router,
-        private readonly SessionInterface $session,
-        private readonly UserAuthenticatorInterface $authenticator,
+        private RouterInterface $router,
+        private SessionInterface $session,
+        private UserAuthenticatorInterface $authenticator,
     ) {
     }
 

@@ -12,15 +12,15 @@ class AdminTokenEntityFactory
         int $id,
         int $adminId,
         string $token,
-        string $expireAt,
-        string $createdAt
+        string $expireDate,
+        string $createdDate,
     ): AdminTokenEntity {
         return new AdminTokenEntity(
             $id,
             $adminId,
             $token,
-            new DateTimeImmutable($expireAt),
-            new DateTimeImmutable($createdAt)
+            new DateTimeImmutable($expireDate),
+            new DateTimeImmutable($createdDate),
         );
     }
 }

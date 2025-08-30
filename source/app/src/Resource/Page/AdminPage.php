@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page;
 
-use AppCore\Presentation\Shared\AdminContextInterface;
+use AppCore\Domain\Auth\AdminContextInterface;
 use BEAR\Resource\ResourceObject;
 use Ray\Di\Di\Inject;
 

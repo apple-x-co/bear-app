@@ -14,7 +14,7 @@ class AdminPermissionEntityFactory
         string $access,
         string $resourceName,
         string $permissionName,
-        string $createdAt,
+        string $createdDate,
     ): AdminPermissionEntity {
         return new AdminPermissionEntity(
             $id,
@@ -22,7 +22,7 @@ class AdminPermissionEntityFactory
             $access,
             $resourceName,
             $permissionName,
-            new DateTimeImmutable($createdAt),
+            new DateTimeImmutable($createdDate),
         );
     }
 }

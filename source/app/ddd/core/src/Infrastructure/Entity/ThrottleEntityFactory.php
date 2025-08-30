@@ -15,9 +15,9 @@ class ThrottleEntityFactory
         int $iterationCount,
         int $maxAttempts,
         string $interval,
-        string $expireAt,
-        string $createdAt,
-        string $updatedAt,
+        string $expireDate,
+        string $createdDate,
+        string $updatedDate,
     ): ThrottleEntity {
         return new ThrottleEntity(
             $id,
@@ -26,9 +26,9 @@ class ThrottleEntityFactory
             $iterationCount,
             $maxAttempts,
             $interval,
-            new DateTimeImmutable($expireAt),
-            new DateTimeImmutable($createdAt),
-            new DateTimeImmutable($updatedAt),
+            new DateTimeImmutable($expireDate),
+            new DateTimeImmutable($createdDate),
+            new DateTimeImmutable($updatedDate),
         );
     }
 }

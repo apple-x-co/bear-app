@@ -17,7 +17,8 @@ use function assert;
 class FieldsetDemo extends AdminPage
 {
     public function __construct(
-        #[Named('admin_fieldset_demo_form')] protected readonly FormInterface $form,
+        #[Named('admin_fieldset_demo_form')]
+        protected readonly FormInterface $form,
     ) {
         $this->body['form'] = $this->form;
     }
@@ -26,7 +27,7 @@ class FieldsetDemo extends AdminPage
     {
         assert($this->form instanceof ExtendedForm);
         $this->form->fill([
-            'deliveries' => [[],[]],
+            'deliveries' => [[], []],
         ]);
 
         return $this;
@@ -36,16 +37,18 @@ class FieldsetDemo extends AdminPage
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @FormValidation()
      */
-    public function onPost(#[Input] FieldsetDemoInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        FieldsetDemoInput $input,
+    ): static {
         return $this;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function onPostValidationFailed(#[Input] FieldsetDemoInput $input): static
-    {
+    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
+    public function onPostValidationFailed(
+        #[Input]
+        FieldsetDemoInput $input,
+    ): static {
         return $this;
     }
 }

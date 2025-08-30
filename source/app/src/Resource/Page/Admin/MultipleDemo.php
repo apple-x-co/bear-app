@@ -14,7 +14,8 @@ use Ray\WebFormModule\FormInterface;
 class MultipleDemo extends AdminPage
 {
     public function __construct(
-        #[Named('admin_multiple_demo_form')] protected readonly FormInterface $form,
+        #[Named('admin_multiple_demo_form')]
+        protected readonly FormInterface $form,
     ) {
         $this->body['form'] = $this->form;
     }
@@ -28,8 +29,10 @@ class MultipleDemo extends AdminPage
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @FormValidation()
      */
-    public function onPost(#[Input] MultipleDemoInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        MultipleDemoInput $input,
+    ): static {
         return $this;
     }
 

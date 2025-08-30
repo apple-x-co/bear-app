@@ -10,32 +10,32 @@ use DateTimeImmutable;
 
 class AdminPermission
 {
-    public const DEFAULT_RESOURCE_NAMES = ['settings'];
+    public const array DEFAULT_RESOURCE_NAMES = ['settings'];
 
     public function __construct(
         public readonly int $adminId,
         public readonly Access $access,
         public readonly string $resourceName,
         public readonly Permission $permission,
-        public readonly ?DateTimeImmutable $createdAt = null,
-        public readonly ?int $id = null,
+        public readonly DateTimeImmutable|null $createdDate = null,
+        public readonly int|null $id = null,
     ) {
     }
 
     public static function reconstruct(
-        ?int $id,
+        int|null $id,
         int $adminId,
         Access $access,
         string $resourceName,
         Permission $permission,
-        ?DateTimeImmutable $createdAt = null,
+        DateTimeImmutable|null $createdDate = null,
     ): self {
         return new self(
             $adminId,
             $access,
             $resourceName,
             $permission,
-            $createdAt,
+            $createdDate,
             $id,
         );
     }

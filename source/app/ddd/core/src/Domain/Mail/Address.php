@@ -8,7 +8,7 @@ class Address implements AddressInterface
 {
     public function __construct(
         protected readonly string $email,
-        protected readonly ?string $name = null,
+        protected readonly string|null $name = null,
     ) {
     }
 
@@ -17,7 +17,7 @@ class Address implements AddressInterface
         return $this->email;
     }
 
-    public function getName(): ?string
+    public function getName(): string|null
     {
         return $this->name;
     }

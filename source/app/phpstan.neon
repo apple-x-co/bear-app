@@ -4,5 +4,5 @@ parameters:
     - src
     - tests
     - ddd/core/src
-    - ddd/core/tests
-  checkGenericClassInNonGenericObjectType: false
+  excludePaths:
+  	- tests/Http/index.php

@@ -4,7 +4,15 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Interceptor;
 
+use AppCore\Domain\Auth\MultipleMatches;
+use AppCore\Domain\Auth\ParameterMissingException;
+use AppCore\Domain\Auth\PasswordIncorrect;
+use AppCore\Domain\Auth\PasswordMissing;
+use AppCore\Domain\Auth\UserAuthenticatorInterface;
+use AppCore\Domain\Auth\UsernameMissing;
+use AppCore\Domain\Auth\UsernameNotFound;
 use AppCore\Domain\LoggerInterface;
+use AppCore\Domain\Session\SessionInterface;
 use Aura\Auth\Exception\MultipleMatches as AuraMultipleMatches;
 use Aura\Auth\Exception\PasswordIncorrect as AuraPasswordIncorrect;
 use Aura\Auth\Exception\PasswordMissing as AuraPasswordMissing;
@@ -15,15 +23,7 @@ use BEAR\Resource\ResourceObject;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\UserLogin;
 use MyVendor\MyProject\Annotation\UserLogout;
-use MyVendor\MyProject\Auth\MultipleMatches;
-use MyVendor\MyProject\Auth\ParameterMissingException;
-use MyVendor\MyProject\Auth\PasswordIncorrect;
-use MyVendor\MyProject\Auth\PasswordMissing;
-use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
-use MyVendor\MyProject\Auth\UsernameMissing;
-use MyVendor\MyProject\Auth\UsernameNotFound;
 use MyVendor\MyProject\InputQuery\User\LoginUserInput;
-use MyVendor\MyProject\Session\SessionInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\Di\Di\Named;
@@ -38,30 +38,35 @@ use function call_user_func;
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class UserAuthentication implements MethodInterceptor
+readonly class UserAuthentication implements MethodInterceptor
 {
     public function __construct(
-        private readonly SessionInterface $session,
-        #[Named('user')] private readonly LoggerInterface $logger,
-        private readonly UserAuthenticatorInterface $authenticator
+        private SessionInterface $session,
+        #[Named('user')]
+        private LoggerInterface $logger,
+        private UserAuthenticatorInterface $authenticator,
     ) {
     }
 
+    /** @psalm-suppress ArgumentTypeCoercion */
     public function invoke(MethodInvocation $invocation): mixed
     {
         $login = $invocation->getMethod()->getAnnotation(UserLogin::class);
         if ($login instanceof UserLogin) {
+            // @phpstan-ignore-next-line
             return $this->login($invocation, $login->onFailure);
         }
 
         $logout = $invocation->getMethod()->getAnnotation(UserLogout::class);
         if ($logout instanceof UserLogout) {
+            // @phpstan-ignore-next-line
             return $this->logout($invocation);
         }
 
         return $invocation->proceed();
     }
 
+    /** @param MethodInvocation<ResourceObject> $invocation */
     private function login(MethodInvocation $invocation, string $onFailure): mixed
     {
         $args = $invocation->getNamedArguments();
@@ -72,7 +77,7 @@ class UserAuthentication implements MethodInterceptor
         if (empty($array)) {
             return call_user_func(
                 [$invocation->getThis(), $onFailure],
-                new ParameterMissingException()
+                new ParameterMissingException(),
             );
         }
 
@@ -88,8 +93,8 @@ class UserAuthentication implements MethodInterceptor
                     new UsernameMissing(
                         $usernameMissing->getMessage(),
                         $usernameMissing->getCode(),
-                        $usernameMissing->getPrevious()
-                    )
+                        $usernameMissing->getPrevious(),
+                    ),
                 );
             } catch (AuraPasswordMissing $passwordMissing) {
                 return call_user_func(
@@ -97,8 +102,8 @@ class UserAuthentication implements MethodInterceptor
                     new PasswordMissing(
                         $passwordMissing->getMessage(),
                         $passwordMissing->getCode(),
-                        $passwordMissing->getPrevious()
-                    )
+                        $passwordMissing->getPrevious(),
+                    ),
                 );
             } catch (AuraUsernameNotFound $usernameNotFound) {
                 return call_user_func(
@@ -106,8 +111,8 @@ class UserAuthentication implements MethodInterceptor
                     new UsernameNotFound(
                         $usernameNotFound->getMessage(),
                         $usernameNotFound->getCode(),
-                        $usernameNotFound->getPrevious()
-                    )
+                        $usernameNotFound->getPrevious(),
+                    ),
                 );
             } catch (AuraMultipleMatches $multipleMatches) {
                 return call_user_func(
@@ -115,8 +120,8 @@ class UserAuthentication implements MethodInterceptor
                     new MultipleMatches(
                         $multipleMatches->getMessage(),
                         $multipleMatches->getCode(),
-                        $multipleMatches->getPrevious()
-                    )
+                        $multipleMatches->getPrevious(),
+                    ),
                 );
             } catch (AuraPasswordIncorrect $passwordIncorrect) {
                 return call_user_func(
@@ -124,8 +129,8 @@ class UserAuthentication implements MethodInterceptor
                     new PasswordIncorrect(
                         $passwordIncorrect->getMessage(),
                         $passwordIncorrect->getCode(),
-                        $passwordIncorrect->getPrevious()
-                    )
+                        $passwordIncorrect->getPrevious(),
+                    ),
                 );
             }
 
@@ -149,7 +154,6 @@ class UserAuthentication implements MethodInterceptor
         }
 
         $ro = $invocation->getThis();
-        assert($ro instanceof ResourceObject);
 
         $ro->setRenderer(new NullRenderer());
         $ro->code = StatusCode::FOUND;
@@ -160,6 +164,7 @@ class UserAuthentication implements MethodInterceptor
         return $ro;
     }
 
+    /** @param MethodInvocation<ResourceObject> $invocation */
     private function logout(MethodInvocation $invocation): mixed
     {
         $this->authenticator->logout();

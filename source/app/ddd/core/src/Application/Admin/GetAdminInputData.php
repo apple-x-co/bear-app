@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace AppCore\Application\Admin;
 
-class GetAdminInputData
+readonly class GetAdminInputData
 {
+    /** @param positive-int $adminId */
     public function __construct(
-        public readonly int $adminId
+        public int $adminId,
     ) {
     }
 }

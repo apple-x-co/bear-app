@@ -8,11 +8,11 @@ use AppCore\Domain\WebSignature\ExpiredSignatureException;
 use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
 use DateTimeImmutable;
 
-class GetJoinedAdminUseCase
+readonly class GetJoinedAdminUseCase
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        private readonly WebSignatureEncrypterInterface $webSignatureEncrypter,
+        private WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
     }
 
@@ -21,7 +21,7 @@ class GetJoinedAdminUseCase
         $webSignature = $this->webSignatureEncrypter->decrypt($inputData->signature);
 
         $now = new DateTimeImmutable();
-        if ($webSignature->expiresAt < $now) {
+        if ($webSignature->expiresDate < $now) {
             throw new ExpiredSignatureException();
         }
     }

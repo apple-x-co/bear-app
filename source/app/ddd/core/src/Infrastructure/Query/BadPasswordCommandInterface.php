@@ -9,6 +9,6 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface BadPasswordCommandInterface
 {
-    #[DbQuery('bad_password_add')]
-    public function add(string $password, ?DateTimeImmutable $createdAt = null): void;
+    #[DbQuery('bad_passwords/bad_password_add')]
+    public function add(string $password, DateTimeImmutable|null $createdDate = null): void;
 }

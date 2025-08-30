@@ -19,7 +19,7 @@ class AdminTest extends TestCase
             [new AdminEmail('test@example.com')],
         ))->markEmailAsVerified('test@example.com');
 
-        $this->assertInstanceOf(DateTimeImmutable::class, $admin->emails[0]->verifiedAt);
+        $this->assertInstanceOf(DateTimeImmutable::class, $admin->emails[0]->verifiedDate);
     }
 
     public function testAddEmail(): void

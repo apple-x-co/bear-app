@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
+use AppCore\Domain\Auth\AdminAuthenticatorInterface;
+use AppCore\Domain\Auth\AdminContextInterface;
+use AppCore\Domain\Auth\UserAuthenticatorInterface;
 use AppCore\Domain\FlashMessenger\FlashMessengerInterface;
-use AppCore\Presentation\Shared\AdminContextInterface;
-use MyVendor\MyProject\Auth\AdminAuthenticatorInterface;
-use MyVendor\MyProject\Auth\UserAuthenticatorInterface;
-use MyVendor\MyProject\Session\SessionInterface;
-use MyVendor\MyProject\Throttle\ThrottleInterface;
+use AppCore\Domain\Session\SessionInterface;
+use AppCore\Domain\Throttle\ThrottlingHandlerInterface;
 use Qiq\Helpers;
 use Ray\Di\AbstractModule;
 use Ray\WebFormModule\FormInterface;
@@ -28,10 +28,10 @@ class DefaultModule extends AbstractModule
         $this->bind(Helpers::class)->to(Helpers::class);
         $this->bind()->annotatedWith('qiq_error_view_name')->toInstance('Error');
 
-        $this->bind()->annotatedWith('google_recaptcha_site_key')->toInstance('');
-        $this->bind()->annotatedWith('google_recaptcha_secret_key')->toInstance('');
+        $this->bind()->annotatedWith('cloudflare_turnstile_site_key')->toInstance('');
+        $this->bind()->annotatedWith('cloudflare_turnstile_secret_key')->toInstance('');
 
-        $this->bind(ThrottleInterface::class)->toNull();
+        $this->bind(ThrottlingHandlerInterface::class)->toNull();
 
         $this->admin();
         $this->user();

@@ -12,13 +12,9 @@ interface SecureRandomInterface
 
     public function hmac(string $data, string $algo = 'sha256'): string;
 
-    /**
-     * @param int<1, max> $length
-     */
+    /** @param positive-int $length */
     public function randomBytes(int $length): string;
 
-    /**
-     * @param int<1, max> $length
-     */
+    /** @param positive-int $length */
     public function randomNumbers(int $length): int;
 }

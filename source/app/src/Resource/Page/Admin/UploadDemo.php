@@ -17,7 +17,8 @@ use Ray\WebFormModule\FormInterface;
 class UploadDemo extends AdminPage
 {
     public function __construct(
-        #[Named('admin_upload_demo_form')] protected readonly FormInterface $form,
+        #[Named('admin_upload_demo_form')]
+        protected readonly FormInterface $form,
     ) {
         $this->body['form'] = $this->form;
     }
@@ -33,8 +34,10 @@ class UploadDemo extends AdminPage
      * @FormValidation()
      */
     #[AdminGuard]
-    public function onPost(#[Input] UploadDemoInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        UploadDemoInput $input,
+    ): static {
         if ($input->file instanceof FileUpload) {
             $this->body['fileUpload'] = $input->file;
         }

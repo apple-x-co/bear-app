@@ -6,7 +6,7 @@ namespace AppCore\Domain\Throttle;
 
 interface ThrottleRepositoryInterface
 {
-    public function findByThrottleKey(string $throttleKey): ?Throttle;
+    public function findByThrottleKey(string $throttleKey): Throttle|null;
 
     public function store(Throttle $throttle): void;
 }

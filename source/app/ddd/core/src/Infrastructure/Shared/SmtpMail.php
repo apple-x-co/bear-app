@@ -16,12 +16,13 @@ use function is_readable;
 
 use const DIRECTORY_SEPARATOR;
 
-class SmtpMail implements TransportInterface
+readonly class SmtpMail implements TransportInterface
 {
     public function __construct(
-        #[EmailDir] private string $emailDir,
-        private readonly PHPMailer $mailer,
-        private readonly TemplateRendererInterface $templateRenderer,
+        #[EmailDir]
+        private string $emailDir,
+        private PHPMailer $mailer,
+        private TemplateRendererInterface $templateRenderer,
     ) {
     }
 
@@ -93,9 +94,7 @@ class SmtpMail implements TransportInterface
         $mailer->send();
     }
 
-    /**
-     * @param array<string, mixed> $vars
-     */
+    /** @param array<string, mixed> $vars */
     private function renderTemplate(string $filePath, array $vars = []): string
     {
         if (! is_readable($filePath)) {

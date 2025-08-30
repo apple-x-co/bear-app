@@ -18,7 +18,7 @@ class AdminTokenRepository implements AdminTokenRepositoryInterface
     ) {
     }
 
-    public function findByToken(string $token): ?AdminToken
+    public function findByToken(string $token): AdminToken|null
     {
         $entity = $this->query->itemByToken($token);
         if ($entity === null) {
@@ -33,7 +33,7 @@ class AdminTokenRepository implements AdminTokenRepositoryInterface
         $this->command->add(
             $adminToken->adminId,
             $adminToken->token,
-            $adminToken->expireAt,
+            $adminToken->expireDate,
         );
     }
 
@@ -44,8 +44,8 @@ class AdminTokenRepository implements AdminTokenRepositoryInterface
             $entity->id,
             $entity->adminId,
             $entity->token,
-            $entity->expireAt,
-            $entity->createdAt,
+            $entity->expireDate,
+            $entity->createdDate,
         );
     }
 }

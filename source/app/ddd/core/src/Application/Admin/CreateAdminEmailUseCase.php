@@ -19,19 +19,24 @@ use Ray\Di\Di\Named;
 use Throwable;
 
 use function array_reduce;
+use function array_values;
 
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
-class CreateAdminEmailUseCase
+readonly class CreateAdminEmailUseCase
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        #[Named('admin')] private readonly AddressInterface $adminAddress,
-        #[Named('admin_base_url')] private readonly string $adminBaseUrl,
-        private readonly AdminRepositoryInterface $adminRepository,
-        #[Named('admin')] private readonly LoggerInterface $logger,
-        #[Named('SMTP')] private readonly TransportInterface $transport,
-        private readonly RouterInterface $router,
-        private readonly WebSignatureEncrypterInterface $webSignatureEncrypter
+        #[Named('admin')]
+        private AddressInterface $adminAddress,
+        #[Named('admin_base_url')]
+        private string $adminBaseUrl,
+        private AdminRepositoryInterface $adminRepository,
+        #[Named('admin')]
+        private LoggerInterface $logger,
+        #[Named('SMTP')]
+        private TransportInterface $transport,
+        private RouterInterface $router,
+        private WebSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
     }
 
@@ -59,22 +64,27 @@ class CreateAdminEmailUseCase
                     'displayName' => $admin->displayName,
                     'expiresAt' => $expiresAt,
                     'adminBaseUrl' => $this->adminBaseUrl,
-                    'verificationPathName' => $this->router->generate('/admin/email-verify', ['signature' => $encrypted]),
-                ])
+                    'verificationPathName' => $this->router->generate(
+                        '/admin/email-verify',
+                        ['signature' => $encrypted],
+                    ),
+                ]),
         );
 
-        $notifyAddresses = array_reduce(
-            $admin->emails,
-            static function (array $carry, AdminEmail $item) {
-                if ($item->verifiedAt === null) {
+        $notifyAddresses = array_values(
+            array_reduce(
+                $admin->emails,
+                static function (array $carry, AdminEmail $item) {
+                    if ($item->verifiedDate === null) {
+                        return $carry;
+                    }
+
+                    $carry[] = new Address($item->emailAddress);
+
                     return $carry;
-                }
-
-                $carry[] = new Address($item->emailAddress);
-
-                return $carry;
-            },
-            [],
+                },
+                [],
+            ),
         );
 
         if (empty($notifyAddresses)) {
@@ -90,7 +100,7 @@ class CreateAdminEmailUseCase
                     ->setTemplateVars([
                         'displayName' => $admin->displayName,
                         'emailAddress' => $inputData->emailAddress,
-                    ])
+                    ]),
             );
         } catch (Throwable $throwable) {
             $this->logger->log((string) $throwable);

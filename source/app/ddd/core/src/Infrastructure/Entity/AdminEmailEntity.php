@@ -15,9 +15,9 @@ class AdminEmailEntity
         public readonly int $id,
         public readonly int $adminId,
         public readonly string $emailAddress,
-        public readonly ?DateTimeImmutable $verifiedAt,
-        public readonly DateTimeImmutable $createdAt,
-        public readonly DateTimeImmutable $updatedAt,
+        public readonly DateTimeImmutable|null $verifiedDate,
+        public readonly DateTimeImmutable $createdDate,
+        public readonly DateTimeImmutable $updatedDate,
     ) {
     }
 }

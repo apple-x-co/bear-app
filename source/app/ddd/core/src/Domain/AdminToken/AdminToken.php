@@ -11,9 +11,9 @@ class AdminToken
     public function __construct(
         public readonly int $adminId,
         public readonly string $token,
-        public readonly DateTimeImmutable $expireAt,
-        public readonly ?DateTimeImmutable $createdAt = null,
-        public readonly ?int $id = null,
+        public readonly DateTimeImmutable $expireDate,
+        public readonly DateTimeImmutable|null $createdDate = null,
+        public readonly int|null $id = null,
     ) {
     }
 
@@ -21,14 +21,14 @@ class AdminToken
         int $id,
         int $adminId,
         string $token,
-        DateTimeImmutable $expireAt,
-        DateTimeImmutable $createdAt,
+        DateTimeImmutable $expireDate,
+        DateTimeImmutable $createdDate,
     ): self {
         return new self(
             $adminId,
             $token,
-            $expireAt,
-            $createdAt,
+            $expireDate,
+            $createdDate,
             $id,
         );
     }
@@ -37,6 +37,6 @@ class AdminToken
     {
         $now = new DateTimeImmutable();
 
-        return $this->expireAt < $now;
+        return $this->expireDate < $now;
     }
 }

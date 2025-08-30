@@ -16,7 +16,7 @@ use const PHP_EOL;
 
 class ImportBadPasswords extends ResourceObject
 {
-    private const URL = 'https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/500-worst-passwords.txt';
+    private const string URL = 'https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/500-worst-passwords.txt';
 
     public function __construct(
         private readonly ClientInterface $client,

@@ -12,9 +12,7 @@ class ExtendedFieldset extends Fieldset
     /** @var array<array-key, array<string>>|null */
     private array|null $errorMessages = null;
 
-    /**
-     * @return array<string>
-     */
+    /** @return array<string> */
     public function error(string $name): array
     {
         if ($this->errorMessages === null) {

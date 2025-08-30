@@ -1,6 +1,6 @@
 .env
-.DS_Store
 .phpunit.result.cache
+/.phpunit.cache/
 /.idea/
 /vendor/
 /build/
@@ -19,5 +19,5 @@ phpunit.xml
 /docs/api/
 /.phpcs.xml
 /.phpcs-cache
-/vendor-bin/tools/vendor/
+/vendor-bin/**/vendor/
 env.json

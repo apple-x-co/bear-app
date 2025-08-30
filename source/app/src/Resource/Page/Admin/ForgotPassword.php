@@ -6,12 +6,12 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use AppCore\Application\Admin\ForgotAdminPasswordInputData;
 use AppCore\Application\Admin\ForgotAdminPasswordUseCase;
+use AppCore\Domain\Captcha\CaptchaException;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
-use MyVendor\MyProject\Annotation\GoogleRecaptchaV2;
+use MyVendor\MyProject\Annotation\CloudflareTurnstile;
 use MyVendor\MyProject\Annotation\RateLimiter;
-use MyVendor\MyProject\Captcha\RecaptchaException;
 use MyVendor\MyProject\InputQuery\Admin\ForgotPasswordInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
@@ -25,7 +25,8 @@ class ForgotPassword extends AdminPage
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
         private readonly ForgotAdminPasswordUseCase $forgotAdminPasswordUseCase,
-        #[Named('admin_forgot_password_form')] protected readonly FormInterface $form,
+        #[Named('admin_forgot_password_form')]
+        protected readonly FormInterface $form,
     ) {
         $this->body['form'] = $this->form;
     }
@@ -40,10 +41,12 @@ class ForgotPassword extends AdminPage
      * @Transactional()
      * @SuppressWarnings(PHPMD.LongVariable)
      */
-    #[GoogleRecaptchaV2]
+    #[CloudflareTurnstile]
     #[RateLimiter]
-    public function onPost(#[Input] ForgotPasswordInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        ForgotPasswordInput $input,
+    ): static {
         $outputData = $this->forgotAdminPasswordUseCase->execute(
             new ForgotAdminPasswordInputData($input->emailAddress),
         );
@@ -61,11 +64,13 @@ class ForgotPassword extends AdminPage
     }
 
     /**
-     * @param array<RecaptchaException> $recaptchaExceptions
+     * Callback from CloudflareTurnstileVerification
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function onPostGoogleRecaptchaV2Failed(array $recaptchaExceptions): static
+    public function onCfTurnstileFailed(CaptchaException $captchaException): static
     {
-        $this->body['recaptchaError'] = ! empty($recaptchaExceptions);
+        $this->body['captchaError'] = true;
 
         return $this;
     }

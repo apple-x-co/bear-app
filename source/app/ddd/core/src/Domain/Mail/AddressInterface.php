@@ -8,5 +8,5 @@ interface AddressInterface
 {
     public function getEmail(): string;
 
-    public function getName(): ?string;
+    public function getName(): string|null;
 }

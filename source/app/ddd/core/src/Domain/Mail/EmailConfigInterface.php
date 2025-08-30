@@ -14,8 +14,6 @@ interface EmailConfigInterface
 
     public function getPassword(): string;
 
-    /**
-     * @return array{ssl?: array{verify_peer: bool, verify_peer_name: bool, allow_self_signed: bool}}
-     */
+    /** @return array{ssl?: array{verify_peer: bool, verify_peer_name: bool, allow_self_signed: bool}} */
     public function getOptions(): array;
 }

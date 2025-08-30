@@ -17,7 +17,7 @@ class AdminPermissionEntity
         public readonly string $access,
         public readonly string $resourceName,
         public readonly string $permissionName,
-        public readonly DateTimeImmutable $createdAt,
+        public readonly DateTimeImmutable $createdDate,
     ) {
     }
 }

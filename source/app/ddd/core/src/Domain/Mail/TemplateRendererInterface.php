@@ -6,8 +6,6 @@ namespace AppCore\Domain\Mail;
 
 interface TemplateRendererInterface
 {
-    /**
-     * @param array<string, mixed> $vars
-     */
+    /** @param array<string, mixed> $vars */
     public function __invoke(string $path, array $vars = []): string;
 }

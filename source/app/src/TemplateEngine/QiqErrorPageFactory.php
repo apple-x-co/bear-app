@@ -11,12 +11,12 @@ use Qiq\Template;
 use Ray\Di\Di\Named;
 use Throwable;
 
-final class QiqErrorPageFactory implements ErrorPageFactoryInterface
+final readonly class QiqErrorPageFactory implements ErrorPageFactoryInterface
 {
     public function __construct(
         #[Named('qiq_error_view_name')]
-        private readonly string $errorViewName,
-        private readonly Template $template,
+        private string $errorViewName,
+        private Template $template,
     ) {
     }
 

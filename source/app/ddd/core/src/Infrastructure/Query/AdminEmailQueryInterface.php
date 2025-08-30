@@ -10,7 +10,7 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminEmailQueryInterface
 {
-    /** @return array<AdminEmailEntity> */
-    #[DbQuery('admin_email_by_admin_id', factory: AdminEmailEntityFactory::class)]
+    /** @return list<AdminEmailEntity> */
+    #[DbQuery('admins/admin_email_by_admin_id', factory: AdminEmailEntityFactory::class)]
     public function list(int $adminId): array;
 }

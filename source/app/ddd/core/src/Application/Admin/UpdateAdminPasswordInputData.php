@@ -11,7 +11,8 @@ class UpdateAdminPasswordInputData
     public function __construct(
         public readonly int $adminId,
         public readonly string $userName,
-        #[SensitiveParameter] public readonly string $password,
+        #[SensitiveParameter]
+        public readonly string $password,
     ) {
     }
 }

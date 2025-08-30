@@ -6,8 +6,6 @@ namespace AppCore\Domain\Language;
 
 interface LanguageInterface
 {
-    /**
-     * @param array<string, mixed> $params
-     */
+    /** @param array<string, mixed> $params */
     public function get(string $key, array $params = []): string;
 }

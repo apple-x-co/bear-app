@@ -17,8 +17,10 @@ class UserPasswordInput
         #[Input]
         #[SensitiveParameter]
         public readonly string $password,
-        #[Input] public readonly string $__csrf_token, // phpcs:ignore
-        #[Input] public readonly string|null $continue,
+        #[Input]
+        public readonly string $__csrf_token, // phpcs:ignore
+        #[Input]
+        public readonly string|null $continue,
     ) {
     }
 }

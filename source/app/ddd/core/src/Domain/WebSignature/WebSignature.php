@@ -12,7 +12,7 @@ use function unserialize;
 class WebSignature implements WebSignatureInterface
 {
     public function __construct(
-        public readonly DateTimeImmutable $expiresAt,
+        public readonly DateTimeImmutable $expiresDate,
         public readonly string $address,
     ) {
     }
@@ -21,14 +21,14 @@ class WebSignature implements WebSignatureInterface
     {
         return serialize([
             '_' => $random,
-            'timestamp' => $this->expiresAt->getTimestamp(),
+            'timestamp' => $this->expiresDate->getTimestamp(),
             'address' => $this->address,
         ]);
     }
 
     public static function deserialize(string $string): self
     {
-        $array = unserialize($string, ['allowed_classes' => false, 'max_depth' => 1]);
+        $array = unserialize($string, ['allowed_classes' => false]);
         if (! isset($array['_'], $array['timestamp'], $array['address'])) {
             throw new InvalidSignatureException();
         }

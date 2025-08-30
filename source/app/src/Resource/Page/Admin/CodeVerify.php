@@ -27,15 +27,18 @@ class CodeVerify extends AdminPage
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        #[Named('admin_code_verify_form')] protected readonly FormInterface $form,
+        #[Named('admin_code_verify_form')]
+        protected readonly FormInterface $form,
         protected readonly GetVerificationCodeUseCase $getAdminVerificationCodeUseCase,
         protected readonly VerifyVerificationCodeUseCase $verifyAdminVerificationCodeUseCase,
     ) {
         $this->body['form'] = $this->form;
     }
 
-    public function onGet(#[Input] string $uuid): static
-    {
+    public function onGet(
+        #[Input]
+        string $uuid,
+    ): static {
         try {
             $outputData = $this->getAdminVerificationCodeUseCase->execute(
                 new GetVerificationCodeInputData($uuid),
@@ -58,8 +61,10 @@ class CodeVerify extends AdminPage
      * @FormValidation()
      * @Transactional()
      */
-    public function onPost(#[Input] CodeVerifyInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        CodeVerifyInput $input,
+    ): static {
         $this->renderer = new NullRenderer();
         $this->code = StatusCode::SEE_OTHER;
 
@@ -68,7 +73,7 @@ class CodeVerify extends AdminPage
                 new VerifyVerificationCodeInputData(
                     $input->uuid,
                     $input->code,
-                )
+                ),
             );
         } catch (VerificationCodeNotFoundException) {
             $this->renderer = new NullRenderer();

@@ -6,9 +6,7 @@ namespace AppCore\Domain\Mail;
 
 class EmailConfig implements EmailConfigInterface
 {
-    /**
-     * @param array{ssl?: array{verify_peer: bool, verify_peer_name: bool, allow_self_signed: bool}} $options
-     */
+    /** @param array{ssl?: array{verify_peer: bool, verify_peer_name: bool, allow_self_signed: bool}} $options */
     public function __construct(
         private readonly string $hostname,
         private readonly int $port,

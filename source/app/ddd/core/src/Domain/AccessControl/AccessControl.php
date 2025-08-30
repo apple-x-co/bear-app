@@ -59,7 +59,7 @@ class AccessControl implements AccessControlInterface
 
     public function isAllowed(string $resourceName, Permission $permission): bool
     {
-        if (! empty($this->denyRules[$resourceName])) {
+        if (! empty($this->denyRules[$resourceName] ?? [])) {
             return array_reduce(
                 $this->denyRules[$resourceName],
                 static function (bool $carry, Permission $item) use ($permission) {

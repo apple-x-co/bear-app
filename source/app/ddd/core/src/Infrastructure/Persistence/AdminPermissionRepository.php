@@ -13,13 +13,14 @@ use AppCore\Infrastructure\Query\AdminPermissionCommandInterface;
 use AppCore\Infrastructure\Query\AdminPermissionQueryInterface;
 
 use function array_map;
+use function array_values;
 
-class AdminPermissionRepository implements AdminPermissionRepositoryInterface
+readonly class AdminPermissionRepository implements AdminPermissionRepositoryInterface
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        private readonly AdminPermissionCommandInterface $adminPermissionCommand,
-        private readonly AdminPermissionQueryInterface $adminPermissionQuery
+        private AdminPermissionCommandInterface $adminPermissionCommand,
+        private AdminPermissionQueryInterface $adminPermissionQuery,
     ) {
     }
 
@@ -32,11 +33,13 @@ class AdminPermissionRepository implements AdminPermissionRepositoryInterface
     {
         $adminPermissionEntities = $this->adminPermissionQuery->list($adminId);
 
-        return array_map(
-            function (AdminPermissionEntity $item) {
-                return $this->entityToModel($item);
-            },
-            $adminPermissionEntities,
+        return array_values(
+            array_map(
+                function (AdminPermissionEntity $item) {
+                    return $this->entityToModel($item);
+                },
+                $adminPermissionEntities,
+            ),
         );
     }
 
@@ -49,7 +52,7 @@ class AdminPermissionRepository implements AdminPermissionRepositoryInterface
             Access::from($entity->access),
             $entity->resourceName,
             Permission::from($entity->permissionName),
-            $entity->createdAt,
+            $entity->createdDate,
         );
     }
 

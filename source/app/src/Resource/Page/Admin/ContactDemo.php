@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use Koriym\HttpConstants\StatusCode;
-use MyVendor\MyProject\Form\AdminContactDemoForm;
+use MyVendor\MyProject\Form\Admin\AdminContactDemoForm;
 use MyVendor\MyProject\Form\FormMode;
 use MyVendor\MyProject\InputQuery\Admin\ContactDemoInput;
 use MyVendor\MyProject\Resource\Page\AdminPage;
@@ -19,7 +19,8 @@ use function assert;
 class ContactDemo extends AdminPage
 {
     public function __construct(
-        #[Named('admin_contact_demo_form')] protected readonly FormInterface $form,
+        #[Named('admin_contact_demo_form')]
+        protected readonly FormInterface $form,
     ) {
         $this->body['form'] = $this->form;
         $this->body['inputMode'] = FormMode::Input;
@@ -36,8 +37,10 @@ class ContactDemo extends AdminPage
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @FormValidation()
      */
-    public function onPost(#[Input] ContactDemoInput $input): static
-    {
+    public function onPost(
+        #[Input]
+        ContactDemoInput $input,
+    ): static {
         if ($input->mode === FormMode::Complete->name) {
             $this->code = StatusCode::SEE_OTHER;
             $this->headers = ['Location' => '/admin/contact-complete-demo'];

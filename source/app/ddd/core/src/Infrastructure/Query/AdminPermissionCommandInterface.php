@@ -9,12 +9,12 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminPermissionCommandInterface
 {
-    #[DbQuery('admin_permission_add')]
+    #[DbQuery('admins/admin_permission_add')]
     public function add(
         int $adminId,
         string $access,
         string $resourceName,
         string $permissionName,
-        ?DateTimeImmutable $createdAt = null,
+        DateTimeImmutable|null $createdDate = null,
     ): void;
 }

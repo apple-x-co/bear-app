@@ -12,11 +12,11 @@ use function error_log;
 
 use const PHP_EOL;
 
-class AdminLogger implements LoggerInterface
+readonly class AdminLogger implements LoggerInterface
 {
     public function __construct(
-        private readonly AbstractAppMeta $appMeta,
-        private readonly DateTimeInterface $now,
+        private AbstractAppMeta $appMeta,
+        private DateTimeInterface $now,
     ) {
     }
 

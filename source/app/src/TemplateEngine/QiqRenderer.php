@@ -18,12 +18,12 @@ use function str_replace;
 use function strpos;
 use function substr;
 
-class QiqRenderer implements RenderInterface
+readonly class QiqRenderer implements RenderInterface
 {
-    private const LENGTH_OF_RESOURCE_DIR = 13;
+    private const int LENGTH_OF_RESOURCE_DIR = 13;
 
     public function __construct(
-        private readonly Template $template,
+        private Template $template,
     ) {
     }
 

@@ -27,11 +27,12 @@ use const JSON_UNESCAPED_SLASHES;
 
 class Encrypter implements EncrypterInterface
 {
-    private const CIPHER_ALGO = 'aes-128-cbc';
-    private const CIPHER_OPTION = 0;
+    private const string CIPHER_ALGO = 'aes-128-cbc';
+    private const int CIPHER_OPTION = 0;
 
     public function __construct(
-        #[EncryptPass] private readonly string $pass,
+        #[EncryptPass]
+        private readonly string $pass,
     ) {
     }
 
@@ -94,7 +95,7 @@ class Encrypter implements EncrypterInterface
             self::CIPHER_ALGO,
             $this->pass,
             self::CIPHER_OPTION,
-            $iv
+            $iv,
         );
         if ($decrypted === false) {
             throw new EncrypterException();

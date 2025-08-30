@@ -10,6 +10,6 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminTokenQueryInterface
 {
-    #[DbQuery('admin_token_item_by_token', type: 'row', factory: AdminTokenEntityFactory::class)]
-    public function itemByToken(string $token): ?AdminTokenEntity;
+    #[DbQuery('admins/admin_token_item_by_token', type: 'row', factory: AdminTokenEntityFactory::class)]
+    public function itemByToken(string $token): AdminTokenEntity|null;
 }

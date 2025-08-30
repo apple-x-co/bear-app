@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AppCore\Application\Admin;
 
-class ForgotAdminPasswordInputData
+readonly class ForgotAdminPasswordInputData
 {
     public function __construct(
-        public readonly string $emailAddress,
+        public string $emailAddress,
     ) {
     }
 }
