@@ -113,11 +113,27 @@ class Email
         return $clone;
     }
 
+    public function addTo(AddressInterface $to): self
+    {
+        $clone = clone $this;
+        $clone->to[] = $to;
+
+        return $clone;
+    }
+
     /** @param list<AddressInterface> $replayTo */
     public function setReplayTo(array $replayTo): self
     {
         $clone = clone $this;
         $clone->replayTo = $replayTo;
+
+        return $clone;
+    }
+
+    public function addReplayTo(AddressInterface $replayTo): self
+    {
+        $clone = clone $this;
+        $clone->replayTo[] = $replayTo;
 
         return $clone;
     }
@@ -131,11 +147,27 @@ class Email
         return $clone;
     }
 
+    public function addCc(AddressInterface $cc): self
+    {
+        $clone = clone $this;
+        $clone->cc[] = $cc;
+
+        return $clone;
+    }
+
     /** @param list<AddressInterface> $bcc */
     public function setBcc(array $bcc): self
     {
         $clone = clone $this;
         $clone->bcc = $bcc;
+
+        return $clone;
+    }
+
+    public function addBcc(AddressInterface $bcc): self
+    {
+        $clone = clone $this;
+        $clone->bcc[] = $bcc;
 
         return $clone;
     }
