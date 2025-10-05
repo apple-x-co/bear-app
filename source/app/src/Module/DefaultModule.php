@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
+use AppCore\Attribute\CloudflareTurnstileSecretKey;
+use AppCore\Attribute\CloudflareTurnstileSiteKey;
 use AppCore\Domain\Auth\AdminAuthenticatorInterface;
 use AppCore\Domain\Auth\AdminContextInterface;
 use AppCore\Domain\Auth\UserAuthenticatorInterface;
@@ -29,8 +31,8 @@ class DefaultModule extends AbstractModule
         $this->bind(Helpers::class)->to(Helpers::class);
         $this->bind()->annotatedWith('qiq_error_view_name')->toInstance('Error');
 
-        $this->bind()->annotatedWith('cloudflare_turnstile_site_key')->toInstance('');
-        $this->bind()->annotatedWith('cloudflare_turnstile_secret_key')->toInstance('');
+        $this->bind()->annotatedWith(CloudflareTurnstileSiteKey::class)->toInstance('');
+        $this->bind()->annotatedWith(CloudflareTurnstileSecretKey::class)->toInstance('');
 
         $this->bind(ThrottlingHandlerInterface::class)->toNull();
 

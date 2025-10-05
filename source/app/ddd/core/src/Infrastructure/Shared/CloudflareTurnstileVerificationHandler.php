@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Shared;
 
+use AppCore\Attribute\CloudflareTurnstileSecretKey;
 use AppCore\Domain\Captcha\CaptchaTokenMissing;
 use AppCore\Domain\Captcha\CaptchaVerifyError;
 use AppCore\Domain\Captcha\CloudflareTurnstileVerificationHandlerInterface;
-use Ray\Di\Di\Named;
 
 use function curl_close;
 use function curl_exec;
@@ -33,7 +33,7 @@ final class CloudflareTurnstileVerificationHandler implements CloudflareTurnstil
     private const VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
     public function __construct(
-        #[Named('cloudflare_turnstile_secret_key')]
+        #[CloudflareTurnstileSecretKey]
         private readonly string $secretKey,
     ) {
     }

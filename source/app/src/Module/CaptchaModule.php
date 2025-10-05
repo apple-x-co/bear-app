@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
+use AppCore\Attribute\CloudflareTurnstileSecretKey;
+use AppCore\Attribute\CloudflareTurnstileSiteKey;
 use AppCore\Domain\Captcha\CloudflareTurnstileVerificationHandlerInterface;
 use AppCore\Infrastructure\Shared\CloudflareTurnstileVerificationHandler;
 use BEAR\Resource\ResourceObject;
@@ -18,8 +20,8 @@ class CaptchaModule extends AbstractModule
 {
     protected function configure(): void
     {
-        $this->bind()->annotatedWith('cloudflare_turnstile_site_key')->toInstance((string) getenv('CLOUDFLARE_TURNSTILE_SITE_KEY'));
-        $this->bind()->annotatedWith('cloudflare_turnstile_secret_key')->toInstance((string) getenv('CLOUDFLARE_TURNSTILE_SECRET_KEY'));
+        $this->bind()->annotatedWith(CloudflareTurnstileSiteKey::class)->toInstance((string) getenv('CLOUDFLARE_TURNSTILE_SITE_KEY'));
+        $this->bind()->annotatedWith(CloudflareTurnstileSecretKey::class)->toInstance((string) getenv('CLOUDFLARE_TURNSTILE_SECRET_KEY'));
 
         $this->bind(CloudflareTurnstileVerificationHandlerInterface::class)->to(CloudflareTurnstileVerificationHandler::class);
 
