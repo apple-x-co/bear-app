@@ -17,4 +17,10 @@ interface SecureRandomInterface
 
     /** @param positive-int $length */
     public function randomNumbers(int $length): int;
+
+    /** @param positive-int $length */
+    public function alphabetNumeric(int $length): string;
+
+    /** @param positive-int $length */
+    public function lockToken(int $length = 16): string;
 }
