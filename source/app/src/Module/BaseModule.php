@@ -23,7 +23,7 @@ use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\EmailConfig;
 use AppCore\Domain\Mail\EmailConfigInterface;
-use AppCore\Domain\Mail\TemplateRenderer;
+use AppCore\Domain\Mail\PhpTemplateRenderer;
 use AppCore\Domain\Mail\TemplateRendererInterface;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
@@ -149,7 +149,7 @@ class BaseModule extends AbstractModule
         $this->bind(TransportInterface::class)->annotatedWith('SMTP')->to(SmtpMail::class)->in(Scope::SINGLETON);
         $this->bind(TransportInterface::class)->annotatedWith('queue')->to(QueueMail::class)->in(Scope::SINGLETON);
 
-        $this->bind(TemplateRendererInterface::class)->to(TemplateRenderer::class)->in(Scope::SINGLETON);
+        $this->bind(TemplateRendererInterface::class)->to(PhpTemplateRenderer::class)->in(Scope::SINGLETON);
     }
 
     private function repository(): void

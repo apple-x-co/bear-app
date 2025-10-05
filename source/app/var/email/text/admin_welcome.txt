@@ -2,4 +2,4 @@
 
 ようこそ!
 
-<?= $_serviceName ?>
+<?= $serviceName ?>

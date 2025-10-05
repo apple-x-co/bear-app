@@ -3,4 +3,4 @@
 ようこそ!!
 アカウントの作成が完了しました
 
-<?= $_serviceName ?>
+<?= $serviceName ?>

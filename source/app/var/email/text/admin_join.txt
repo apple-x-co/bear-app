@@ -4,4 +4,4 @@
 あなたの確認コード <?= $code . PHP_EOL ?>
 有効期限 <?= $expiresAt->format('Y-m-d H:i:s') . PHP_EOL ?>
 
-<?= $_serviceName ?>
+<?= $serviceName ?>

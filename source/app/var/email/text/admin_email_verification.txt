@@ -7,4 +7,4 @@ URLの有効期限は <?= $expiresAt->format('Y-m-d H:i:s') ?> です。
 
 もし心当たりがない場合、申し訳ありませんがこのメールを無視してください。
 
-<?= $_serviceName ?>
+<?= $serviceName ?>

@@ -2,4 +2,4 @@
 
 メールアドレスの確認が正常に完了しました。
 
-<?= $_serviceName ?>
+<?= $serviceName ?>
