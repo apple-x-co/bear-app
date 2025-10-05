@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Form\User;
+namespace MyVendor\MyProject\Form\Customer;
 
 use MyVendor\MyProject\Form\ExtendedForm;
 use Ray\WebFormModule\SetAntiCsrfTrait;
