@@ -9,4 +9,6 @@ interface PasswordHasherInterface
     public function hashType(): string;
 
     public function hash(string $text): string;
+
+    public function verify(string $password, string $hashedPassword): bool;
 }

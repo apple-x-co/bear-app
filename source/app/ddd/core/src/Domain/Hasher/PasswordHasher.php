@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AppCore\Domain\Hasher;
 
 use function password_hash;
+use function password_verify;
 
 use const PASSWORD_BCRYPT;
 
@@ -18,5 +19,10 @@ class PasswordHasher implements PasswordHasherInterface
     public function hash(string $text): string
     {
         return password_hash($text, PASSWORD_BCRYPT);
+    }
+
+    public function verify(string $password, string $hashedPassword): bool
+    {
+        return password_verify($password, $hashedPassword);
     }
 }
