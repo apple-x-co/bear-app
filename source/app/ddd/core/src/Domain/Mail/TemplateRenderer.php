@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Mail;
 
-use AppCore\Domain\ServiceName;
+use AppCore\Attribute\ServiceName;
 use DateTimeImmutable;
 use Throwable;
 

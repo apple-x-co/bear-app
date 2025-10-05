@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Provider;
 
-use AppCore\Domain\Language\LangDir;
+use AppCore\Attribute\LangDir;
 use AppCore\Domain\Language\Language;
 use Ray\Di\ProviderInterface;
 

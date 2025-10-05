@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Shared;
 
+use AppCore\Attribute\EncryptPass;
 use AppCore\Domain\Encrypter\EncrypterException;
 use AppCore\Domain\Encrypter\EncrypterInterface;
-use AppCore\Domain\Encrypter\EncryptPass;
 
 use function base64_decode;
 use function base64_encode;

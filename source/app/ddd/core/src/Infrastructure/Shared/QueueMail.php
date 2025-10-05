@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Shared;
 
+use AppCore\Attribute\EmailDir;
 use AppCore\Domain\Mail\Email;
-use AppCore\Domain\Mail\EmailDir;
 use AppCore\Domain\Mail\InvalidArgumentException;
 use AppCore\Domain\Mail\RecipientType;
 use AppCore\Domain\Mail\TemplateNotFoundException;

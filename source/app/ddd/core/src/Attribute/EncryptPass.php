@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace AppCore\Domain;
+namespace AppCore\Attribute;
 
 use Attribute;
 use Ray\Di\Di\Qualifier;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
 #[Qualifier]
-class ServiceName
+class EncryptPass
 {
 }
