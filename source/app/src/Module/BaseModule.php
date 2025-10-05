@@ -29,7 +29,7 @@ use AppCore\Domain\SecureRandom\SecureRandomInterface;
 use AppCore\Domain\ServiceName;
 use AppCore\Domain\Test\TestRepositoryInterface;
 use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
-use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
 use AppCore\Infrastructure\Persistence\AdminPermissionRepository;
 use AppCore\Infrastructure\Persistence\AdminRepository;
 use AppCore\Infrastructure\Persistence\AdminTokenRepository;
@@ -41,7 +41,7 @@ use AppCore\Infrastructure\Shared\QueueMail;
 use AppCore\Infrastructure\Shared\SecureRandom;
 use AppCore\Infrastructure\Shared\SmtpMail;
 use AppCore\Infrastructure\Shared\UserLogger;
-use AppCore\Infrastructure\Shared\WebSignatureEncrypter;
+use AppCore\Infrastructure\Shared\UrlSignatureEncrypter;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
 use MyVendor\MyProject\Provider\LanguageProvider;
@@ -92,7 +92,7 @@ class BaseModule extends AbstractModule
 
         $this->bind(PasswordHasherInterface::class)->to(PasswordHasher::class)->in(Scope::SINGLETON);
 
-        $this->bind(WebSignatureEncrypterInterface::class)->to(WebSignatureEncrypter::class)->in(Scope::SINGLETON);
+        $this->bind(UrlSignatureEncrypterInterface::class)->to(UrlSignatureEncrypter::class)->in(Scope::SINGLETON);
     }
 
     public function language(): void

@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace AppCore\Application\Admin;
 
 use AppCore\Domain\WebSignature\ExpiredSignatureException;
-use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
 use DateTimeImmutable;
 
 readonly class GetJoinedAdminUseCase
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        private WebSignatureEncrypterInterface $webSignatureEncrypter,
+        private UrlSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
     }
 

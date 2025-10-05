@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\WebSignature;
 
-interface WebSignatureInterface
+interface UrlSignatureInterface
 {
     public function serialize(string $random): string;
 

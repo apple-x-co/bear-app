@@ -10,7 +10,7 @@ use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\WebSignature\ExpiredSignatureException;
-use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
 use AppCore\Infrastructure\Query\AdminPasswordUpdateInterface;
 use AppCore\Infrastructure\Query\AdminQueryInterface;
 use DateTimeImmutable;
@@ -28,7 +28,7 @@ readonly class ResetAdminPasswordUseCase
         private PasswordHasherInterface $passwordHasher,
         #[Named('SMTP')]
         private TransportInterface $transport,
-        private WebSignatureEncrypterInterface $webSignatureEncrypter,
+        private UrlSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
     }
 

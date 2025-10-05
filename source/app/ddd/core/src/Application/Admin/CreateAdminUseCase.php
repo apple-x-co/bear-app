@@ -17,7 +17,7 @@ use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\WebSignature\ExpiredSignatureException;
-use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
 use DateTimeImmutable;
 use Ray\Di\Di\Named;
 
@@ -37,7 +37,7 @@ readonly class CreateAdminUseCase
         private TransportInterface $smtpTransport,
         #[Named('queue')]
         private TransportInterface $queueTransport,
-        private WebSignatureEncrypterInterface $webSignatureEncrypter,
+        private UrlSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
     }
 

@@ -9,13 +9,13 @@ use PHPUnit\Framework\TestCase;
 
 use function date_default_timezone_set;
 
-class WebSignatureTest extends TestCase
+class UrlSignatureTest extends TestCase
 {
     public function testSerialize(): void
     {
         date_default_timezone_set('Asia/Tokyo');
 
-        $serialized = (new WebSignature(
+        $serialized = (new UrlSignature(
             (new DateTimeImmutable('2023-01-01 00:00:00')),
             'test@example.com',
         ))->serialize('abc');
@@ -30,7 +30,7 @@ class WebSignatureTest extends TestCase
     {
         date_default_timezone_set('Asia/Tokyo');
 
-        $deserialized = WebSignature::deserialize(
+        $deserialized = UrlSignature::deserialize(
             'a:3:{s:1:"_";s:3:"abc";s:9:"timestamp";i:1672498800;s:7:"address";s:16:"test@example.com";}'
         );
 

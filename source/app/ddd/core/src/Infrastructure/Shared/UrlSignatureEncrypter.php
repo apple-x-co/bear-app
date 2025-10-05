@@ -6,15 +6,15 @@ namespace AppCore\Infrastructure\Shared;
 
 use AppCore\Domain\Encrypter\EncrypterInterface;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
-use AppCore\Domain\WebSignature\WebSignature;
-use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
-use AppCore\Domain\WebSignature\WebSignatureInterface;
+use AppCore\Domain\WebSignature\UrlSignature;
+use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
+use AppCore\Domain\WebSignature\UrlSignatureInterface;
 
 use function assert;
 use function method_exists;
 use function str_replace;
 
-readonly class WebSignatureEncrypter implements WebSignatureEncrypterInterface
+readonly class UrlSignatureEncrypter implements UrlSignatureEncrypterInterface
 {
     public function __construct(
         private EncrypterInterface $encrypter,
@@ -22,7 +22,7 @@ readonly class WebSignatureEncrypter implements WebSignatureEncrypterInterface
     ) {
     }
 
-    public function encrypt(WebSignatureInterface $webSignature): string
+    public function encrypt(UrlSignatureInterface $webSignature): string
     {
         $serialized = $webSignature->serialize($this->secureRandom->randomBytes(5));
         $encrypted = $this->encrypter->encrypt($serialized);
@@ -30,7 +30,7 @@ readonly class WebSignatureEncrypter implements WebSignatureEncrypterInterface
         return $this->encodeUrlSafe($encrypted);
     }
 
-    public function decrypt(string $string, string $className = WebSignature::class): WebSignatureInterface
+    public function decrypt(string $string, string $className = UrlSignature::class): UrlSignatureInterface
     {
         $decrypted = $this->encrypter->decrypt($this->decodeUrlSafe($string));
 

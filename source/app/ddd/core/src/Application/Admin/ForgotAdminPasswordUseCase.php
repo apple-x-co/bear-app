@@ -9,8 +9,8 @@ use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
-use AppCore\Domain\WebSignature\WebSignature;
-use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use AppCore\Domain\WebSignature\UrlSignature;
+use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
 use AppCore\Infrastructure\Query\AdminQueryInterface;
 use AppCore\Infrastructure\Query\VerificationCodeCommandInterface;
 use BEAR\Sunday\Extension\Router\RouterInterface;
@@ -32,7 +32,7 @@ readonly class ForgotAdminPasswordUseCase
         private TransportInterface $transport,
         private RouterInterface $router,
         private VerificationCodeCommandInterface $verificationCodeCommand,
-        private WebSignatureEncrypterInterface $webSignatureEncrypter,
+        private UrlSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
     }
 
@@ -54,7 +54,7 @@ readonly class ForgotAdminPasswordUseCase
                 ]),
         );
 
-        $webSignature = new WebSignature(
+        $webSignature = new UrlSignature(
             $expiresAt,
             $inputData->emailAddress,
         );

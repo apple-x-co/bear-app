@@ -6,14 +6,14 @@ namespace AppCore\Application\Admin;
 
 use AppCore\Domain\Admin\AdminEmail;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
-use AppCore\Domain\Admin\EmailWebSignature;
+use AppCore\Domain\Admin\EmailUrlSignature;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\WebSignature\ExpiredSignatureException;
-use AppCore\Domain\WebSignature\WebSignatureEncrypterInterface;
+use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
 use AppCore\Domain\WebSignature\WrongEmailVerifyException;
 use DateTimeImmutable;
 use Ray\Di\Di\Named;
@@ -33,13 +33,13 @@ readonly class VerifyAdminEmailUseCase
         private LoggerInterface $logger,
         #[Named('SMTP')]
         private TransportInterface $transport,
-        private WebSignatureEncrypterInterface $webSignatureEncrypter,
+        private UrlSignatureEncrypterInterface $webSignatureEncrypter,
     ) {
     }
 
     public function execute(VerifyAdminEmailInputData $inputData): void
     {
-        $emailWebSignature = $this->webSignatureEncrypter->decrypt($inputData->signature, EmailWebSignature::class);
+        $emailWebSignature = $this->webSignatureEncrypter->decrypt($inputData->signature, EmailUrlSignature::class);
         $now = new DateTimeImmutable();
         if ($emailWebSignature->expiresDate < $now) {
             throw new ExpiredSignatureException();
