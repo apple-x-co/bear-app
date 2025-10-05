@@ -13,7 +13,7 @@ use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
+use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
 use BEAR\Sunday\Extension\Router\RouterInterface;
 use DateTimeImmutable;
 use Ray\Di\Di\Named;
@@ -37,7 +37,7 @@ readonly class CreateAdminEmailUseCase
         #[Named('SMTP')]
         private TransportInterface $transport,
         private RouterInterface $router,
-        private UrlSignatureEncrypterInterface $webSignatureEncrypter,
+        private UrlSignatureEncrypterInterface $urlSignatureEncrypter,
     ) {
     }
 
@@ -49,12 +49,12 @@ readonly class CreateAdminEmailUseCase
         $this->adminRepository->store($admin);
 
         $expiresAt = (new DateTimeImmutable())->modify('+10 minutes');
-        $emailWebSignature = new EmailUrlSignature(
+        $emailUrlSignature = new EmailUrlSignature(
             $inputData->adminId,
             $expiresAt,
             $inputData->emailAddress,
         );
-        $encrypted = $this->webSignatureEncrypter->encrypt($emailWebSignature);
+        $encrypted = $this->urlSignatureEncrypter->encrypt($emailUrlSignature);
 
         $this->transport->send(
             (new Email())

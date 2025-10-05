@@ -10,8 +10,8 @@ use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
-use AppCore\Domain\WebSignature\UrlSignature;
-use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
+use AppCore\Domain\UrlSignature\UrlSignature;
+use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
 use AppCore\Infrastructure\Query\AdminQueryInterface;
 use AppCore\Infrastructure\Query\VerificationCodeCommandInterface;
 use BEAR\Sunday\Extension\Router\RouterInterface;
@@ -33,7 +33,7 @@ readonly class JoinAdminUserCase
         private TransportInterface $transport,
         private RouterInterface $router,
         private VerificationCodeCommandInterface $verificationCodeCommand,
-        private UrlSignatureEncrypterInterface $webSignatureEncrypter,
+        private UrlSignatureEncrypterInterface $urlSignatureEncrypter,
     ) {
     }
 
@@ -56,11 +56,11 @@ readonly class JoinAdminUserCase
             );
         }
 
-        $webSignature = new UrlSignature(
+        $urlSignature = new UrlSignature(
             $expiresAt,
             $inputData->emailAddress,
         );
-        $encrypted = $this->webSignatureEncrypter->encrypt($webSignature);
+        $encrypted = $this->urlSignatureEncrypter->encrypt($urlSignature);
 
         $array = $this->verificationCodeCommand->add(
             $inputData->emailAddress,

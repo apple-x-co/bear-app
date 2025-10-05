@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppCore\Domain\WebSignature;
+namespace AppCore\Domain\UrlSignature;
 
 interface UrlSignatureInterface
 {

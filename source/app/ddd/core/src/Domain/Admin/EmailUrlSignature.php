@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Admin;
 
-use AppCore\Domain\WebSignature\InvalidSignatureException;
-use AppCore\Domain\WebSignature\UrlSignatureInterface;
+use AppCore\Domain\UrlSignature\InvalidSignatureException;
+use AppCore\Domain\UrlSignature\UrlSignatureInterface;
 use DateTimeImmutable;
 
 use function serialize;

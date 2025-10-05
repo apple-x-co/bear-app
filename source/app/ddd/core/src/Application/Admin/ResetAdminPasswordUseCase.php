@@ -9,8 +9,8 @@ use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Domain\WebSignature\ExpiredSignatureException;
-use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
+use AppCore\Domain\UrlSignature\ExpiredSignatureException;
+use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
 use AppCore\Infrastructure\Query\AdminPasswordUpdateInterface;
 use AppCore\Infrastructure\Query\AdminQueryInterface;
 use DateTimeImmutable;
@@ -28,19 +28,19 @@ readonly class ResetAdminPasswordUseCase
         private PasswordHasherInterface $passwordHasher,
         #[Named('SMTP')]
         private TransportInterface $transport,
-        private UrlSignatureEncrypterInterface $webSignatureEncrypter,
+        private UrlSignatureEncrypterInterface $urlSignatureEncrypter,
     ) {
     }
 
     public function execute(ResetAdminPasswordInputData $inputData): void
     {
-        $webSignature = $this->webSignatureEncrypter->decrypt($inputData->signature);
+        $urlSignature = $this->urlSignatureEncrypter->decrypt($inputData->signature);
         $now = new DateTimeImmutable();
-        if ($webSignature->expiresDate < $now) {
+        if ($urlSignature->expiresDate < $now) {
             throw new ExpiredSignatureException();
         }
 
-        $adminEntity = $this->adminQuery->itemByEmailAddress($webSignature->address);
+        $adminEntity = $this->adminQuery->itemByEmailAddress($urlSignature->address);
         if ($adminEntity === null) {
             return;
         }
@@ -49,7 +49,7 @@ readonly class ResetAdminPasswordUseCase
         $this->transport->send(
             (new Email())
                 ->setFrom($this->adminAddress)
-                ->setTo([new Address($webSignature->address)])
+                ->setTo([new Address($urlSignature->address)])
                 ->setTemplateId('admin_password_reset')
                 ->setTemplateVars(['displayName' => $adminEntity->displayName]),
         );

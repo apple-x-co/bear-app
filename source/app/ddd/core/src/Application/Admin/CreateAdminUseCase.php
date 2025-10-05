@@ -16,8 +16,8 @@ use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Domain\WebSignature\ExpiredSignatureException;
-use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
+use AppCore\Domain\UrlSignature\ExpiredSignatureException;
+use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
 use DateTimeImmutable;
 use Ray\Di\Di\Named;
 
@@ -37,15 +37,15 @@ readonly class CreateAdminUseCase
         private TransportInterface $smtpTransport,
         #[Named('queue')]
         private TransportInterface $queueTransport,
-        private UrlSignatureEncrypterInterface $webSignatureEncrypter,
+        private UrlSignatureEncrypterInterface $urlSignatureEncrypter,
     ) {
     }
 
     public function execute(CreateAdminInputData $inputData): void
     {
-        $webSignature = $this->webSignatureEncrypter->decrypt($inputData->signature);
+        $urlSignature = $this->urlSignatureEncrypter->decrypt($inputData->signature);
         $now = new DateTimeImmutable();
-        if ($webSignature->expiresDate < $now) {
+        if ($urlSignature->expiresDate < $now) {
             throw new ExpiredSignatureException();
         }
 
@@ -54,7 +54,7 @@ readonly class CreateAdminUseCase
             $this->passwordHasher->hash($inputData->password),
             $inputData->displayName,
             true,
-            [new AdminEmail($webSignature->address, new DateTimeImmutable())],
+            [new AdminEmail($urlSignature->address, new DateTimeImmutable())],
         );
         $this->adminRepository->store($admin);
 
@@ -75,7 +75,7 @@ readonly class CreateAdminUseCase
         $this->queueTransport->send(
             (new Email())
                 ->setFrom($this->adminAddress)
-                ->setTo([new Address($webSignature->address, $inputData->displayName)])
+                ->setTo([new Address($urlSignature->address, $inputData->displayName)])
                 ->setTemplateId('admin_welcome')
                 ->setTemplateVars(['displayName' => $inputData->displayName])
                 ->setScheduleDate(new DateTimeImmutable()),
@@ -84,7 +84,7 @@ readonly class CreateAdminUseCase
         $this->smtpTransport->send(
             (new Email())
                 ->setFrom($this->adminAddress)
-                ->setTo([new Address($webSignature->address, $inputData->displayName)])
+                ->setTo([new Address($urlSignature->address, $inputData->displayName)])
                 ->setTemplateId('admin_sign_up')
                 ->setTemplateVars(['displayName' => $inputData->displayName]),
         );

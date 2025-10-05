@@ -33,7 +33,7 @@ use AppCore\Domain\SecureRandom\SecureRandomInterface;
 use AppCore\Domain\Test\TestRepositoryInterface;
 use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
 use AppCore\Domain\User\UserRepositoryInterface;
-use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
+use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
 use AppCore\Infrastructure\Persistence\AdminPermissionRepository;
 use AppCore\Infrastructure\Persistence\AdminRepository;
 use AppCore\Infrastructure\Persistence\AdminTokenRepository;

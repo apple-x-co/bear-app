@@ -6,9 +6,9 @@ namespace AppCore\Infrastructure\Shared;
 
 use AppCore\Domain\Encrypter\EncrypterInterface;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
-use AppCore\Domain\WebSignature\UrlSignature;
-use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
-use AppCore\Domain\WebSignature\UrlSignatureInterface;
+use AppCore\Domain\UrlSignature\UrlSignature;
+use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
+use AppCore\Domain\UrlSignature\UrlSignatureInterface;
 
 use function assert;
 use function method_exists;
@@ -22,9 +22,9 @@ readonly class UrlSignatureEncrypter implements UrlSignatureEncrypterInterface
     ) {
     }
 
-    public function encrypt(UrlSignatureInterface $webSignature): string
+    public function encrypt(UrlSignatureInterface $urlSignature): string
     {
-        $serialized = $webSignature->serialize($this->secureRandom->randomBytes(5));
+        $serialized = $urlSignature->serialize($this->secureRandom->randomBytes(5));
         $encrypted = $this->encrypter->encrypt($serialized);
 
         return $this->encodeUrlSafe($encrypted);

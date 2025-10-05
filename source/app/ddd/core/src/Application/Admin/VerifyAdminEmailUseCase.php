@@ -12,9 +12,9 @@ use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Domain\WebSignature\ExpiredSignatureException;
-use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
-use AppCore\Domain\WebSignature\WrongEmailVerifyException;
+use AppCore\Domain\UrlSignature\ExpiredSignatureException;
+use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
+use AppCore\Domain\UrlSignature\WrongEmailVerifyException;
 use DateTimeImmutable;
 use Ray\Di\Di\Named;
 use Throwable;
@@ -33,19 +33,19 @@ readonly class VerifyAdminEmailUseCase
         private LoggerInterface $logger,
         #[Named('SMTP')]
         private TransportInterface $transport,
-        private UrlSignatureEncrypterInterface $webSignatureEncrypter,
+        private UrlSignatureEncrypterInterface $urlSignatureEncrypter,
     ) {
     }
 
     public function execute(VerifyAdminEmailInputData $inputData): void
     {
-        $emailWebSignature = $this->webSignatureEncrypter->decrypt($inputData->signature, EmailUrlSignature::class);
+        $emailUrlSignature = $this->urlSignatureEncrypter->decrypt($inputData->signature, EmailUrlSignature::class);
         $now = new DateTimeImmutable();
-        if ($emailWebSignature->expiresDate < $now) {
+        if ($emailUrlSignature->expiresDate < $now) {
             throw new ExpiredSignatureException();
         }
 
-        if ($inputData->adminId !== $emailWebSignature->adminId) {
+        if ($inputData->adminId !== $emailUrlSignature->adminId) {
             throw new WrongEmailVerifyException();
         }
 
@@ -59,17 +59,17 @@ readonly class VerifyAdminEmailUseCase
             },
             [],
         );
-        if (! isset($emailAddressMap[$emailWebSignature->address])) {
+        if (! isset($emailAddressMap[$emailUrlSignature->address])) {
             throw new WrongEmailVerifyException();
         }
 
-        $this->adminRepository->store($admin->markEmailAsVerified($emailWebSignature->address));
+        $this->adminRepository->store($admin->markEmailAsVerified($emailUrlSignature->address));
 
         try {
             $this->transport->send(
                 (new Email())
                     ->setFrom($this->adminAddress)
-                    ->setTo([new Address($emailWebSignature->address)])
+                    ->setTo([new Address($emailUrlSignature->address)])
                     ->setTemplateId('admin_email_verified')
                     ->setTemplateVars([
                         'displayName' => $admin->displayName,
