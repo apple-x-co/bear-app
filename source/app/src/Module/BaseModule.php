@@ -193,6 +193,10 @@ class BaseModule extends AbstractModule
 
     private function http(): void
     {
-        $this->bind(HttpClientInterface::class)->to(HttpClient::class);
+        $this->bind()->annotatedWith('http_client_config')->toInstance(['verify' => false]);
+        $this->bind(HttpClientInterface::class)->toConstructor(
+            HttpClient::class,
+            ['config' => 'http_client_config'],
+        );
     }
 }
