@@ -36,12 +36,13 @@ class AdminPasswordResetForm extends ExtendedForm
                  'pattern' => '^[\x20-\x7E]+$', // ASCII 文字列
                  'title' => '新しいパスワードは8文字以上20文字以下の英数字記号(!@#$%^&*)で入力してください',
              ]);
+        $this->filter->validate('password')->is('string');
         /** @psalm-suppress TooManyArguments */
-        $this->filter
-            ->validate('password')
-            ->is('string')
-            ->is('regex', '/^[A-Za-z0-9!@#$%^&*]+$/i')
-            ->is('strlenBetween', 8, 20)
+        $this->filter->validate('password')->is('regex', '/^[A-Za-z0-9!@#$%^&*]+$/i');
+        /** @psalm-suppress TooManyArguments */
+        $this->filter->validate('password')->is('strlenBetween', 8, 20);
+        /** @psalm-suppress TooManyArguments */
+        $this->filter->validate('password')
             ->is('callback', function (stdClass $subject, string $field) {
                 return $this->badPasswordQuery->item($subject->$field) === null;
             });

@@ -34,10 +34,10 @@ class AdminEmailCreateForm extends ExtendedForm
                  'required' => 'required',
                  'title' => '有効なメールアドレスを入力してください',
              ]);
+        $this->filter->validate('emailAddress')->is('email');
         /** @psalm-suppress TooManyArguments */
         $this->filter
             ->validate('emailAddress')
-            ->is('email')
             ->is('callback', function (stdClass $subject, string $field) {
                 return $this->adminQuery->itemByEmailAddress($subject->$field) === null;
             });

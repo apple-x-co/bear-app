@@ -35,10 +35,8 @@ class AdminPasswordUpdateForm extends ExtendedForm
                  'required' => 'required',
                  'title' => '現在のパスワードを入力してください',
              ]);
-        $this->filter
-            ->validate('oldPassword')
-            ->isNotBlank()
-            ->is('string');
+        $this->filter->validate('oldPassword')->isNotBlank();
+        $this->filter->validate('oldPassword')->is('string');
         $this->filter->useFieldMessage('oldPassword', '現在のパスワードは文字で入力してください');
 
         /** @psalm-suppress UndefinedMethod */
@@ -56,11 +54,23 @@ class AdminPasswordUpdateForm extends ExtendedForm
         /** @psalm-suppress TooManyArguments */
         $this->filter
             ->validate('password')
-            ->isNotBlank()
-            ->is('string')
-            ->is('regex', '/^[A-Za-z0-9!@#$%^&*]+$/i')
-            ->is('strlenBetween', 8, 20)
-            ->isNot('equalToField', 'oldPassword')
+            ->isNotBlank();
+        /** @psalm-suppress TooManyArguments */
+        $this->filter
+            ->validate('password')
+            ->is('string');
+        /** @psalm-suppress TooManyArguments */
+        $this->filter
+            ->validate('password')
+            ->is('regex', '/^[A-Za-z0-9!@#$%^&*]+$/i');
+        /** @psalm-suppress TooManyArguments */
+        $this->filter
+            ->validate('password')
+            ->is('strlenBetween', 8, 20);
+        /** @psalm-suppress TooManyArguments */
+        $this->filter->validate('password')->isNot('equalToField', 'oldPassword');
+        /** @psalm-suppress TooManyArguments */
+        $this->filter->validate('password')
             ->is('callback', function (stdClass $subject, string $field) {
                 return $this->badPasswordQuery->item($subject->$field) === null;
             });
@@ -77,14 +87,14 @@ class AdminPasswordUpdateForm extends ExtendedForm
                  'required' => 'required',
                  'title' => '新しいパスワードは8文字以上20文字以下の英数字記号(!@#$%^&*)で入力してください',
              ]);
+        $this->filter->validate('passwordConfirmation')->isNotBlank();
+        $this->filter->validate('passwordConfirmation')->is('string');
         /** @psalm-suppress TooManyArguments */
-        $this->filter
-            ->validate('passwordConfirmation')
-            ->isNotBlank()
-            ->is('string')
-            ->is('regex', '/^[A-Za-z0-9!@#$%^&*]+$/i')
-            ->is('strlenBetween', 8, 20)
-            ->is('equalToField', 'password');
+        $this->filter->validate('passwordConfirmation')->is('regex', '/^[A-Za-z0-9!@#$%^&*]+$/i');
+        /** @psalm-suppress TooManyArguments */
+        $this->filter->validate('passwordConfirmation')->is('strlenBetween', 8, 20);
+        /** @psalm-suppress TooManyArguments */
+        $this->filter->validate('passwordConfirmation')->is('equalToField', 'password');
         $this->filter->useFieldMessage('passwordConfirmation', '新しいパスワードは8文字以上20文字以下の英数字記号(!@#$%^&*)で入力してください');
 
         /** @psalm-suppress UndefinedMethod */
