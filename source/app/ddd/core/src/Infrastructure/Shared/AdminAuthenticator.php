@@ -296,7 +296,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         }
 
         $userData = $auth->getUserData();
-        assert(isset($userData['id']) && is_int($userData['id']));
+        assert(isset($userData['id']) && is_int($userData['id']) && $userData['id'] > 0);
         assert(isset($userData['display_name']) && is_string($userData['display_name']));
 
         return new AdminIdentity(
