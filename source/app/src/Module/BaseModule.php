@@ -8,6 +8,7 @@ use AppCore\Application\Admin as AdminUseCase;
 use AppCore\Application\Command as CommandUseCase;
 use AppCore\Application\GetVerificationCodeUseCase;
 use AppCore\Application\VerifyVerificationCodeUseCase;
+use AppCore\Attribute\AdminBaseUrl;
 use AppCore\Attribute\EmailDir;
 use AppCore\Attribute\EncryptPass;
 use AppCore\Attribute\HashSalt;
@@ -117,7 +118,7 @@ class BaseModule extends AbstractModule
 
     private function url(): void
     {
-        $this->bind()->annotatedWith('admin_base_url')->toInstance(getenv('ADMIN_BASE_URL'));
+        $this->bind()->annotatedWith(AdminBaseUrl::class)->toInstance(getenv('ADMIN_BASE_URL'));
     }
 
     private function email(): void

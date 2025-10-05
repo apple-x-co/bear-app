@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Application\Admin;
 
+use AppCore\Attribute\AdminBaseUrl;
 use AppCore\Domain\Admin\AdminEmail;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\Admin\EmailUrlSignature;
@@ -28,7 +29,7 @@ readonly class CreateAdminEmailUseCase
     public function __construct(
         #[Named('admin')]
         private AddressInterface $adminAddress,
-        #[Named('admin_base_url')]
+        #[AdminBaseUrl]
         private string $adminBaseUrl,
         private AdminRepositoryInterface $adminRepository,
         #[Named('admin')]

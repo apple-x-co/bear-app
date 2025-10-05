@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Application\Admin;
 
+use AppCore\Attribute\AdminBaseUrl;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
 use AppCore\Domain\Mail\Email;
@@ -24,7 +25,7 @@ readonly class JoinAdminUserCase
     public function __construct(
         #[Named('admin')]
         private AddressInterface $adminAddress,
-        #[Named('admin_base_url')]
+        #[AdminBaseUrl]
         private string $adminBaseUrl,
         private AdminQueryInterface $adminQuery,
         private SecureRandomInterface $secureRandom,
