@@ -1,5 +1,6 @@
 {{ extends ('layout/Admin/settings') }}
 
+{{ $this->addData(['isNavVisible' => true]) }}
 {{ setBlock ('body_content') }}
 {{= render('partials/Admin/Heading1', ['title' => 'Emails']) }}
 
@@ -11,10 +12,10 @@
         <li class="flex gap-2 p-4 {{ if ($index0 > 0): }}border-t border-slate-300{{ endif }}">
             <div class="flex-1 col-span-3">
                 <p class="text-sm lg:text-base font-bold">{{h $adminEmail->emailAddress }}</p>
-                {{ if ($adminEmail->verifiedAt === null): }}
+                {{ if ($adminEmail->verifiedDate === null): }}
                 <p class="text-xs lg:text-sm font-thin">未確認</p>
                 {{ else: }}
-                <p class="text-xs lg:text-sm font-thin">確認済 {{h $adminEmail->verifiedAt->format('Y-m-d H:i:s') }}</p>
+                <p class="text-xs lg:text-sm font-thin">確認済 {{h $adminEmail->verifiedDate->format('Y-m-d H:i:s') }}</p>
                 {{ endif }}
             </div>
             <div class="flex-none text-right">

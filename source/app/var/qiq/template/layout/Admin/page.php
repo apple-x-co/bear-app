@@ -32,8 +32,8 @@
                 </div>
             </div>
             <div class="flex pt-1 lg:pt-2">
-                <a href="markup" class="group block font-sans text-sm rounded-md hover:bg-slate-50 hover:ring-2 hover:ring-slate-900/10 px-2 py-1 lg:px-4 lg:py-2">
-                    <p class="group-hover:underline">Markup</p>
+                <a href="/admin/index" class="group block font-sans text-sm rounded-md hover:bg-slate-50 hover:ring-2 hover:ring-slate-900/10 px-2 py-1 lg:px-4 lg:py-2">
+                    <p class="group-hover:underline">Home</p>
                 </a>
                 {{ if ($context->isAllowed('settings', 'read')): }}
                 <a href="settings/" class="group block font-sans text-sm rounded-md hover:bg-slate-50 hover:ring-2 hover:ring-slate-900/10 px-2 py-1 lg:px-4 lg:py-2">
@@ -46,7 +46,7 @@
     {{= getBlock () ~}}
 </header>
 <div class="max-w-7xl mx-auto px-0 lg:px-8 pt-5 flex flex-row grow">
-    {{ $isNavVisible = isset($isNavVisible) ? $isNavVisible : true }}
+    {{ $isNavVisible = isset($isNavVisible) ? $isNavVisible : false }}
     {{ if ($isNavVisible): }}
     <div class="hidden lg:block lg:w-72 lg:overflow-y-auto">
         <nav class="block leading-6 relative">

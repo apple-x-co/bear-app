@@ -1,5 +1,17 @@
 {{ extends ('layout/Admin/base') }}
 
+{{ setBlock ('head') }}
+{{ setBlock ('head_meta') }}{{= getBlock () ~}}
+{{ setBlock ('head_styles') }}
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100|Noto+Sans+JP:400|Noto+Sans+JP:700|Noto+Sans+JP:900|Roboto:100|Roboto:400|Roboto:700|Roboto:900&display=swap&subset=japanese" rel="stylesheet">
+<link href="/admin/css/bundle.css" rel="stylesheet">
+<link href="/admin/css/tailwind.css" rel="stylesheet">
+{{= getBlock () ~}}
+{{ setBlock ('head_scripts') }}
+<script src="/admin/js/bundle.min.js"></script>
+{{= getBlock () ~}}
+{{ endBlock () }}
+
 {{ setBlock ('body') }}
 <header class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 bg-white/70 supports-backdrop-blur:bg-white/60">
     {{ setBlock ('body_header') }}
@@ -25,31 +37,34 @@
 </header>
 <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-5 flex flex-row">
     {{= render('partials/Admin/InlineIcon', ['name' => 'user-circle']) }}
-    <p class="text-base lg:text-xl font-extrabold ml-1">{{h $context->displayName() }}</p>
+    <p class="text-base lg:text-xl font-extrabold ml-2">{{h $context->displayName() }}</p>
 </div>
 <div class="max-w-7xl mx-auto px-0 lg:px-8 pt-5 flex flex-row grow">
-    {{ $isNavVisible = isset($isNavVisible) ? $isNavVisible : true }}
+    {{ $isNavVisible = isset($isNavVisible) ? $isNavVisible : false }}
     {{ if ($isNavVisible): }}
     <div class="hidden lg:block lg:w-72 lg:overflow-y-auto">
         <nav class="block leading-6 relative">
             {{ setBlock ('body_nav') }}
             {{ $viewName = $this->getView() }}
+            {{ $isEmailPage = $viewName === 'Page/Admin/Settings/Emails' }}
+            {{ $isPasswordPage = $viewName === 'Page/Admin/Settings/Password' }}
+            {{ $isDeletePage = $viewName === 'Page/Admin/Settings/Delete' }}
             <ul>
                 <li>
-                    <h5 class="font-sans font-bold text-sm tracking-wide mb-8 lg:mb-3">Settings</h5>
+                    <h5 class="font-sans font-bold text-base tracking-wide mb-8 lg:mb-3">Settings</h5>
                     <ul class="space-y-6 lg:space-y-2 border-l border-slate-200">
                         <li>
-                            <a href="/admin/settings/emails" class="text-sm tracking-wide pl-4 -ml-px border-l {{ if ($view == 'Page/Admin/Settings/Emails'): }}font-bold text-lime-500 border-l border-current{{ else: }}border-transparent hover:border-slate-400{{ endif }}">
+                            <a href="/admin/settings/emails" class="text-base tracking-wide pl-4 -ml-px border-l {{ if ($isEmailPage): }}font-bold text-lime-500 border-current{{ else: }}border-transparent hover:border-slate-400{{ endif }}">
                                 Emails
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/settings/password" class="text-sm tracking-wide pl-4 -ml-px border-l {{ if ($view == 'Page/Admin/Settings/Password'): }}font-bold text-lime-500 border-l border-current{{ else: }}border-transparent hover:border-slate-400{{ endif }}">
+                            <a href="/admin/settings/password" class="text-base tracking-wide pl-4 -ml-px border-l {{ if ($isPasswordPage): }}font-bold text-lime-500 border-current{{ else: }}border-transparent hover:border-slate-400{{ endif }}">
                                 Password
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/settings/delete" class="text-sm tracking-wide pl-4 -ml-px border-l {{ if ($view == 'Page/Admin/Settings/Delete'): }}font-bold text-lime-500 border-l border-current{{ else: }}border-transparent hover:border-slate-400{{ endif }}">
+                            <a href="/admin/settings/delete" class="text-base tracking-wide pl-4 -ml-px border-l {{ if ($isDeletePage): }}font-bold text-lime-500 border-current{{ else: }}border-transparent hover:border-slate-400{{ endif }}">
                                 Delete
                             </a>
                         </li>
@@ -65,7 +80,7 @@
             <main>{{ setBlock ('body_content') }}{{= getBlock () ~}}</main>
         </div>
         <div class="mx-5 lg:mx-0 my-10">
-            <footer>{{ setBlock ('body_footer') }}<p class="font-sans font-thin text-sm">Copyright &copy; 2023 Buddying inc.</p>{{= getBlock () ~}}</footer>
+            <footer>{{ setBlock ('body_footer') }}<p class="font-sans font-thin text-sm">Copyright &copy; 2023 apple-x-co inc.</p>{{= getBlock () ~}}</footer>
         </div>
     </div>
 </div>

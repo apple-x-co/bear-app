@@ -1,10 +1,7 @@
-{{ extends ('layout/Admin/base') }}
+{{ extends ('layout/Admin/page-fullscreen') }}
 
-{{ setBlock ('head') }}
-<link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100|Noto+Sans+JP:400|Noto+Sans+JP:700|Noto+Sans+JP:900|Roboto:100|Roboto:400|Roboto:700|Roboto:900&display=swap&subset=japanese" rel="stylesheet">
-<link href="/admin/css/bundle.css" rel="stylesheet">
-<link href="/admin/css/tailwind.css" rel="stylesheet">
-<script src="/admin/js/bundle.min.js"></script>
+{{ setBlock ('head_scripts') }}
+{{ parentBlock () }}
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
   function cfTurnstileChecked() {

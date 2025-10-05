@@ -2,6 +2,7 @@
 
 {{ setBlock ('title') }}INDEX | {{ parentBlock () }}{{ endBlock () }}
 
+{{ $this->addData(['isNavVisible' => true]) }}
 {{ setBlock ('body_content') }}
 
 {{ if ($message = $context->flashMessage()): }}

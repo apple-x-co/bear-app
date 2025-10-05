@@ -1968,16 +1968,6 @@ select {
   transition-duration: 500ms;
 }
 
-.selection\:bg-\[\#54b37b\] *::-moz-selection {
-  --tw-bg-opacity: 1;
-  background-color: rgb(84 179 123 / var(--tw-bg-opacity, 1));
-}
-
-.selection\:bg-\[\#54b37b\] *::selection {
-  --tw-bg-opacity: 1;
-  background-color: rgb(84 179 123 / var(--tw-bg-opacity, 1));
-}
-
 .selection\:bg-fuchsia-300 *::-moz-selection {
   --tw-bg-opacity: 1;
   background-color: rgb(240 171 252 / var(--tw-bg-opacity, 1));
@@ -1986,6 +1976,16 @@ select {
 .selection\:bg-fuchsia-300 *::selection {
   --tw-bg-opacity: 1;
   background-color: rgb(240 171 252 / var(--tw-bg-opacity, 1));
+}
+
+.selection\:bg-indigo-400 *::-moz-selection {
+  --tw-bg-opacity: 1;
+  background-color: rgb(129 140 248 / var(--tw-bg-opacity, 1));
+}
+
+.selection\:bg-indigo-400 *::selection {
+  --tw-bg-opacity: 1;
+  background-color: rgb(129 140 248 / var(--tw-bg-opacity, 1));
 }
 
 .selection\:text-fuchsia-900 *::-moz-selection {
@@ -2008,16 +2008,6 @@ select {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
-.selection\:bg-\[\#54b37b\]::-moz-selection {
-  --tw-bg-opacity: 1;
-  background-color: rgb(84 179 123 / var(--tw-bg-opacity, 1));
-}
-
-.selection\:bg-\[\#54b37b\]::selection {
-  --tw-bg-opacity: 1;
-  background-color: rgb(84 179 123 / var(--tw-bg-opacity, 1));
-}
-
 .selection\:bg-fuchsia-300::-moz-selection {
   --tw-bg-opacity: 1;
   background-color: rgb(240 171 252 / var(--tw-bg-opacity, 1));
@@ -2026,6 +2016,16 @@ select {
 .selection\:bg-fuchsia-300::selection {
   --tw-bg-opacity: 1;
   background-color: rgb(240 171 252 / var(--tw-bg-opacity, 1));
+}
+
+.selection\:bg-indigo-400::-moz-selection {
+  --tw-bg-opacity: 1;
+  background-color: rgb(129 140 248 / var(--tw-bg-opacity, 1));
+}
+
+.selection\:bg-indigo-400::selection {
+  --tw-bg-opacity: 1;
+  background-color: rgb(129 140 248 / var(--tw-bg-opacity, 1));
 }
 
 .selection\:text-fuchsia-900::-moz-selection {
@@ -2540,6 +2540,11 @@ select {
   .lg\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
+  }
+
+  .lg\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 
   .lg\:text-xs {
