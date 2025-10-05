@@ -36,6 +36,7 @@ use AppCore\Infrastructure\Persistence\AdminTokenRepository;
 use AppCore\Infrastructure\Persistence\TestRepository;
 use AppCore\Infrastructure\Persistence\ThrottleRepository;
 use AppCore\Infrastructure\Shared\AdminLogger;
+use AppCore\Infrastructure\Shared\CompactEncrypter;
 use AppCore\Infrastructure\Shared\Encrypter;
 use AppCore\Infrastructure\Shared\QueueMail;
 use AppCore\Infrastructure\Shared\SecureRandom;
@@ -86,6 +87,7 @@ class BaseModule extends AbstractModule
 
         $this->bind()->annotatedWith(EncryptPass::class)->toInstance((string) getenv('ENCRYPT_PASS'));
         $this->bind(EncrypterInterface::class)->to(Encrypter::class)->in(Scope::SINGLETON);
+        $this->bind(EncrypterInterface::class)->annotatedWith('compact')->to(CompactEncrypter::class)->in(Scope::SINGLETON);
 
         $this->bind()->annotatedWith('hash_salt')->toInstance(random_bytes(32));
         $this->bind(SecureRandomInterface::class)->to(SecureRandom::class)->in(Scope::SINGLETON);
