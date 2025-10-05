@@ -12,12 +12,12 @@ use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
-use MyVendor\MyProject\Resource\Page\AdminPage;
+use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\AuraSqlModule\Annotation\WriteConnection;
 use Ray\InputQuery\Attribute\Input;
 
-class EmailVerify extends AdminPage
+class EmailVerify extends BaseAdminPage
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(

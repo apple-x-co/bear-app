@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use MyVendor\MyProject\Annotation\AdminGuard;
-use MyVendor\MyProject\Resource\Page\AdminPage;
+use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 
-class Index extends AdminPage
+class Index extends BaseAdminPage
 {
     #[AdminGuard]
     public function onGet(): static

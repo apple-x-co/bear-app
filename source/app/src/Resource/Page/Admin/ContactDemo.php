@@ -8,7 +8,7 @@ use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Form\Admin\AdminContactDemoForm;
 use MyVendor\MyProject\Form\FormMode;
 use MyVendor\MyProject\InputQuery\Admin\ContactDemoInput;
-use MyVendor\MyProject\Resource\Page\AdminPage;
+use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
@@ -16,7 +16,7 @@ use Ray\WebFormModule\FormInterface;
 
 use function assert;
 
-class ContactDemo extends AdminPage
+class ContactDemo extends BaseAdminPage
 {
     public function __construct(
         #[Named('admin_contact_demo_form')]

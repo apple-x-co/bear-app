@@ -14,7 +14,7 @@ use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Form\ExtendedForm;
 use MyVendor\MyProject\InputQuery\Admin\CodeVerifyInput;
-use MyVendor\MyProject\Resource\Page\AdminPage;
+use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
@@ -23,7 +23,7 @@ use Ray\WebFormModule\FormInterface;
 
 use function assert;
 
-class CodeVerify extends AdminPage
+class CodeVerify extends BaseAdminPage
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(

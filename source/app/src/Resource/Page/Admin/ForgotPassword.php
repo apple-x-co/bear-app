@@ -13,14 +13,14 @@ use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\CloudflareTurnstile;
 use MyVendor\MyProject\Annotation\RateLimiter;
 use MyVendor\MyProject\InputQuery\Admin\ForgotPasswordInput;
-use MyVendor\MyProject\Resource\Page\AdminPage;
+use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
-class ForgotPassword extends AdminPage
+class ForgotPassword extends BaseAdminPage
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(

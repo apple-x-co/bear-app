@@ -8,9 +8,9 @@ use AppCore\Domain\Language\LanguageInterface;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
-use MyVendor\MyProject\Resource\Page\AdminPage;
+use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 
-class Error extends AdminPage
+class Error extends BaseAdminPage
 {
     public function __construct(
         private readonly LanguageInterface $language,

@@ -7,9 +7,9 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 use BEAR\Resource\NullRenderer;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\AdminLogout;
-use MyVendor\MyProject\Resource\Page\AdminPage;
+use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 
-class Logout extends AdminPage
+class Logout extends BaseAdminPage
 {
     #[AdminGuard]
     #[AdminLogout]

@@ -6,9 +6,9 @@ namespace MyVendor\MyProject\Resource\Page\User;
 
 use AppCore\Domain\Auth\UserAuthenticatorInterface;
 use MyVendor\MyProject\Annotation\UserGuard;
-use MyVendor\MyProject\Resource\Page\UserPage;
+use MyVendor\MyProject\Resource\Page\BaseUserPage;
 
-class Index extends UserPage
+class Index extends BaseUserPage
 {
     public function __construct(
         private readonly UserAuthenticatorInterface $authenticator,

@@ -9,13 +9,13 @@ use AppCore\Domain\Captcha\CaptchaException;
 use MyVendor\MyProject\Annotation\AdminLogin;
 use MyVendor\MyProject\Annotation\CloudflareTurnstile;
 use MyVendor\MyProject\InputQuery\Admin\LoginUserInput;
-use MyVendor\MyProject\Resource\Page\AdminPage;
+use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
-class Login extends AdminPage
+class Login extends BaseAdminPage
 {
     public function __construct(
         #[Named('admin_login_form')]

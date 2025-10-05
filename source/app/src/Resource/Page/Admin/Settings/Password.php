@@ -17,7 +17,7 @@ use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\RequiredPermission;
 use MyVendor\MyProject\InputQuery\Admin\UpdatePasswordInput;
-use MyVendor\MyProject\Resource\Page\AdminPage;
+use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
@@ -25,7 +25,7 @@ use Ray\WebFormModule\FormInterface;
 use Throwable;
 
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
-class Password extends AdminPage
+class Password extends BaseAdminPage
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(

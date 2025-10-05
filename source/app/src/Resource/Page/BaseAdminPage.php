@@ -9,7 +9,7 @@ use BEAR\Resource\ResourceObject;
 use Ray\Di\Di\Inject;
 
 /** @SuppressWarnings(PHPMD.NumberOfChildren) */
-class AdminPage extends ResourceObject
+class BaseAdminPage extends ResourceObject
 {
     protected AdminContextInterface $context;
 

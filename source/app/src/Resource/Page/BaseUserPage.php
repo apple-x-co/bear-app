@@ -6,6 +6,6 @@ namespace MyVendor\MyProject\Resource\Page;
 
 use BEAR\Resource\ResourceObject;
 
-class UserPage extends ResourceObject
+class BaseUserPage extends ResourceObject
 {
 }

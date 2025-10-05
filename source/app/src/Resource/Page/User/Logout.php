@@ -7,9 +7,9 @@ namespace MyVendor\MyProject\Resource\Page\User;
 use BEAR\Resource\NullRenderer;
 use MyVendor\MyProject\Annotation\UserGuard;
 use MyVendor\MyProject\Annotation\UserLogout;
-use MyVendor\MyProject\Resource\Page\UserPage;
+use MyVendor\MyProject\Resource\Page\BaseUserPage;
 
-class Logout extends UserPage
+class Logout extends BaseUserPage
 {
     #[UserGuard]
     #[UserLogout]

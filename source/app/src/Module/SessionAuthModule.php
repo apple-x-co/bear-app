@@ -32,8 +32,8 @@ use MyVendor\MyProject\Provider\AdminAuthenticatorProvider;
 use MyVendor\MyProject\Provider\CookieProvider;
 use MyVendor\MyProject\Provider\SessionProvider;
 use MyVendor\MyProject\Provider\UserAuthenticatorProvider;
-use MyVendor\MyProject\Resource\Page\AdminPage;
-use MyVendor\MyProject\Resource\Page\UserPage;
+use MyVendor\MyProject\Resource\Page\BaseAdminPage;
+use MyVendor\MyProject\Resource\Page\BaseUserPage;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
@@ -64,7 +64,7 @@ class SessionAuthModule extends AbstractModule
              ->in(Scope::SINGLETON);
 
         $this->bindInterceptor(
-            $this->matcher->subclassesOf(AdminPage::class),
+            $this->matcher->subclassesOf(BaseAdminPage::class),
             $this->matcher->logicalAnd(
                 $this->matcher->startsWith('on'),
                 $this->matcher->logicalOr(
@@ -81,13 +81,13 @@ class SessionAuthModule extends AbstractModule
         $this->bind(AdminKeepAuthenticated::class); // 複数の Interceptor を渡すと Untargeted が発生するので事前に束縛をする
         $this->bind(AdminAuthGuardian::class); // 複数の Interceptor を渡すと Untargeted が発生するので事前に束縛をする
         $this->bindInterceptor(
-            $this->matcher->subclassesOf(AdminPage::class),
+            $this->matcher->subclassesOf(BaseAdminPage::class),
             $this->matcher->annotatedWith(AdminGuard::class),
             [AdminKeepAuthenticated::class, AdminAuthGuardian::class],
         );
 
         $this->bindInterceptor(
-            $this->matcher->subclassesOf(AdminPage::class),
+            $this->matcher->subclassesOf(BaseAdminPage::class),
             $this->matcher->logicalOr(
                 $this->matcher->annotatedWith(AdminPasswordProtect::class),
                 $this->matcher->annotatedWith(AdminPasswordLock::class),
@@ -96,7 +96,7 @@ class SessionAuthModule extends AbstractModule
         );
 
         $this->bindInterceptor(
-            $this->matcher->subclassesOf(AdminPage::class),
+            $this->matcher->subclassesOf(BaseAdminPage::class),
             $this->matcher->annotatedWith(RequiredPermission::class),
             [AdminAuthorization::class],
         );
@@ -109,19 +109,19 @@ class SessionAuthModule extends AbstractModule
              ->in(Scope::SINGLETON);
 
         $this->bindInterceptor(
-            $this->matcher->subclassesOf(UserPage::class),
+            $this->matcher->subclassesOf(BaseUserPage::class),
             $this->matcher->annotatedWith(UserLogin::class),
             [UserAuthentication::class],
         );
 
         $this->bindInterceptor(
-            $this->matcher->subclassesOf(UserPage::class),
+            $this->matcher->subclassesOf(BaseUserPage::class),
             $this->matcher->annotatedWith(UserLogout::class),
             [UserAuthentication::class],
         );
 
         $this->bindInterceptor(
-            $this->matcher->subclassesOf(UserPage::class),
+            $this->matcher->subclassesOf(BaseUserPage::class),
             $this->matcher->annotatedWith(UserGuard::class),
             [UserAuthGuardian::class],
         );

@@ -8,13 +8,13 @@ use AppCore\Domain\Auth\AuthenticationException;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\AdminVerifyPassword;
 use MyVendor\MyProject\InputQuery\Admin\UserPasswordInput;
-use MyVendor\MyProject\Resource\Page\AdminPage;
+use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
-class PasswordConfirm extends AdminPage
+class PasswordConfirm extends BaseAdminPage
 {
     public function __construct(
         #[Named('admin_password_confirm_form')]

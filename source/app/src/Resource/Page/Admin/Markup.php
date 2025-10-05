@@ -6,9 +6,9 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\AdminPasswordProtect;
-use MyVendor\MyProject\Resource\Page\AdminPage;
+use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 
-class Markup extends AdminPage
+class Markup extends BaseAdminPage
 {
     #[AdminGuard]
     #[AdminPasswordProtect]

@@ -7,13 +7,13 @@ namespace MyVendor\MyProject\Resource\Page\User;
 use AppCore\Domain\Auth\AuthenticationException;
 use MyVendor\MyProject\Annotation\UserLogin;
 use MyVendor\MyProject\InputQuery\Customer\LoginUserInput;
-use MyVendor\MyProject\Resource\Page\UserPage;
+use MyVendor\MyProject\Resource\Page\BaseUserPage;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
-class Login extends UserPage
+class Login extends BaseUserPage
 {
     public function __construct(
         #[Named('user_login_form')]
