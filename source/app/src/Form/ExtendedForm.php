@@ -17,6 +17,11 @@ use function is_array;
 /** @SuppressWarnings(PHPMD.NumberOfChildren) */
 abstract class ExtendedForm extends AbstractForm implements SubmitInterface
 {
+    public function setOptions(): void
+    {
+        // NOTE: This method is child class override.
+    }
+
     /** @return array<string, mixed> */
     public function getData(): array
     {
@@ -24,19 +29,17 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
     }
 
     /**
-     * @param array<string, mixed> $spec
-     * @param array<string, mixed> $attribs
+     * @param string|array<string, string|int> $nameOrSpec
+     * @param array<string, mixed>             $attribs
      */
-    public function widget(array $spec, array $attribs = []): AbstractInput
+    public function widget(string|array $nameOrSpec, array $attribs = []): AbstractInput
     {
-        $spec['attribs'] = array_merge($spec['attribs'] ?? [], $attribs);
-
-        if ($spec['type'] === 'file' && is_array($spec['value']) && isset($spec['value']['tmp_name'])) {
-            $spec['value'] = null;
+        $array = is_array($nameOrSpec) ? $nameOrSpec : $this->get($nameOrSpec);
+        if (is_array($array)) {
+            $array['attribs'] = array_merge($array['attribs'] ?? [], $attribs);
         }
 
-        /** @phpstan-ignore-next-line */
-        return $this->helper->input($spec);
+        return $this->helper->input($array); // @phpstan-ignore-line
     }
 
     /** @param array<array-key, mixed> $data */
