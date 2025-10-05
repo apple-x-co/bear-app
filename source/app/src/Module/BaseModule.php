@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Module;
 
 use AppCore\Application\Admin as AdminUseCase;
+use AppCore\Application\Command as CommandUseCase;
 use AppCore\Application\GetVerificationCodeUseCase;
 use AppCore\Application\VerifyVerificationCodeUseCase;
 use AppCore\Attribute\EmailDir;
@@ -36,6 +37,7 @@ use AppCore\Infrastructure\Persistence\AdminTokenRepository;
 use AppCore\Infrastructure\Persistence\TestRepository;
 use AppCore\Infrastructure\Persistence\ThrottleRepository;
 use AppCore\Infrastructure\Shared\AdminLogger;
+use AppCore\Infrastructure\Shared\CommandLogger;
 use AppCore\Infrastructure\Shared\CompactEncrypter;
 use AppCore\Infrastructure\Shared\Encrypter;
 use AppCore\Infrastructure\Shared\QueueMail;
@@ -106,6 +108,7 @@ class BaseModule extends AbstractModule
     private function logger(): void
     {
         $this->bind(LoggerInterface::class)->annotatedWith('admin')->to(AdminLogger::class)->in(Scope::SINGLETON);
+        $this->bind(LoggerInterface::class)->annotatedWith('command')->to(CommandLogger::class)->in(Scope::SINGLETON);
         $this->bind(LoggerInterface::class)->annotatedWith('user')->to(UserLogger::class)->in(Scope::SINGLETON);
     }
 
@@ -175,6 +178,9 @@ class BaseModule extends AbstractModule
         $this->bind(AdminUseCase\ResetAdminPasswordUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\UpdateAdminPasswordUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\VerifyAdminEmailUseCase::class)->in(Scope::SINGLETON);
+
+        $this->bind(CommandUseCase\ImportBadPasswordUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(CommandUseCase\SendEmailFromEmailQueueUseCase::class)->in(Scope::SINGLETON);
 
         $this->bind(GetVerificationCodeUseCase::class)->in(Scope::SINGLETON);
         $this->bind(VerifyVerificationCodeUseCase::class)->in(Scope::SINGLETON);
