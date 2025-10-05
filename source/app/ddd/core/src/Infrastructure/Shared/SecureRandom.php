@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Shared;
 
+use AppCore\Attribute\HashSalt;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
-use Ray\Di\Di\Named;
 
 use function base64_encode;
 use function hash;
@@ -20,7 +20,7 @@ use function strtr;
 readonly class SecureRandom implements SecureRandomInterface
 {
     public function __construct(
-        #[Named('hash_salt')]
+        #[HashSalt]
         private string $hashSalt,
     ) {
     }

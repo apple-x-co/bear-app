@@ -10,6 +10,7 @@ use AppCore\Application\GetVerificationCodeUseCase;
 use AppCore\Application\VerifyVerificationCodeUseCase;
 use AppCore\Attribute\EmailDir;
 use AppCore\Attribute\EncryptPass;
+use AppCore\Attribute\HashSalt;
 use AppCore\Attribute\LangDir;
 use AppCore\Attribute\ServiceName;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
@@ -93,7 +94,7 @@ class BaseModule extends AbstractModule
         $this->bind(EncrypterInterface::class)->to(Encrypter::class)->in(Scope::SINGLETON);
         $this->bind(EncrypterInterface::class)->annotatedWith('compact')->to(CompactEncrypter::class)->in(Scope::SINGLETON);
 
-        $this->bind()->annotatedWith('hash_salt')->toInstance(random_bytes(32));
+        $this->bind()->annotatedWith(HashSalt::class)->toInstance(random_bytes(32));
         $this->bind(SecureRandomInterface::class)->to(SecureRandom::class)->in(Scope::SINGLETON);
 
         $this->bind(PasswordHasherInterface::class)->to(PasswordHasher::class)->in(Scope::SINGLETON);
