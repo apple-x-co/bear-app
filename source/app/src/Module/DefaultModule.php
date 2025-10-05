@@ -21,23 +21,27 @@ class DefaultModule extends AbstractModule
 {
     protected function configure(): void
     {
-        $this->bind(FlashMessengerInterface::class)->toNull();
+        // CaptchaModule
+        $this->bind()->annotatedWith(CloudflareTurnstileSiteKey::class)->toInstance('');
+        $this->bind()->annotatedWith(CloudflareTurnstileSecretKey::class)->toInstance('');
 
+        // HtmlModule
+        $this->admin();
+        $this->user();
+
+        // SessionAuthModule
+        $this->bind(FlashMessengerInterface::class)->toNull();
         $this->bind(SessionInterface::class)->toNull();
 
+        // ThrottleModule
+        $this->bind(ThrottlingHandlerInterface::class)->toNull();
+
+        // QiqModule
         $this->bind()->annotatedWith('qiq_extension')->toInstance('.php');
         $this->bind()->annotatedWith('qiq_paths')->toInstance([]);
         $this->bind()->annotatedWith('qiq_vars')->toInstance([]);
         $this->bind(Helpers::class)->to(Helpers::class);
         $this->bind()->annotatedWith('qiq_error_view_name')->toInstance('Error');
-
-        $this->bind()->annotatedWith(CloudflareTurnstileSiteKey::class)->toInstance('');
-        $this->bind()->annotatedWith(CloudflareTurnstileSecretKey::class)->toInstance('');
-
-        $this->bind(ThrottlingHandlerInterface::class)->toNull();
-
-        $this->admin();
-        $this->user();
     }
 
     private function admin(): void
