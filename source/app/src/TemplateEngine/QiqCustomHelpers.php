@@ -9,7 +9,6 @@ use BEAR\Sunday\Extension\Router\RouterInterface;
 use MyVendor\MyProject\Form\ExtendedFieldset;
 use MyVendor\MyProject\Form\ExtendedForm;
 use Qiq\Helper\Html\HtmlHelpers;
-use Ray\Di\Di\Named;
 
 use function array_merge;
 use function is_string;

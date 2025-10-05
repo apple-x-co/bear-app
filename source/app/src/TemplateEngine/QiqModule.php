@@ -20,7 +20,10 @@ use Ray\Di\Scope;
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class QiqModule extends AbstractModule
 {
-    /** @param array<string> $paths */
+    /**
+     * @param list<string>         $paths
+     * @param array<string, mixed> $vars
+     */
     public function __construct(
         private readonly array $paths,
         private readonly array $vars,

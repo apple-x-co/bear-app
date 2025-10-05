@@ -17,6 +17,7 @@ use Ray\WebFormModule\AuraInputModule;
 use Ray\WebFormModule\FormInterface;
 
 use function getenv;
+use function time;
 
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class HtmlModule extends AbstractAppModule
@@ -32,7 +33,7 @@ class HtmlModule extends AbstractAppModule
                     'cloudflareTurnstileSiteKey' => (string) getenv('CLOUDFLARE_TURNSTILE_SITE_KEY'),
                     'compiledTime' => time(),
                 ],
-            )
+            ),
         );
         $this->install(new AuraInputModule());
         $this->install(new SessionAuthModule());
