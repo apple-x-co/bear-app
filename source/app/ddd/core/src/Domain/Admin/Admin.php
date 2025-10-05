@@ -70,15 +70,15 @@ class Admin
             ),
         );
 
-        return self::reconstruct(
-            $this->id,
+        return new self(
             $this->username,
             $this->password,
             $this->displayName,
             $this->active,
             $emails,
-            $this->createdDate,
-            $this->updatedDate,
+            $this->createdDate === null ? null : clone $this->createdDate,
+            $this->updatedDate === null ? null : clone $this->updatedDate,
+            $this->id,
         );
     }
 
@@ -97,15 +97,15 @@ class Admin
         );
         $emails[] = $adminEmail;
 
-        return self::reconstruct(
-            $this->id,
+        return new self(
             $this->username,
             $this->password,
             $this->displayName,
             $this->active,
             $emails,
-            $this->createdDate,
-            $this->updatedDate,
+            $this->createdDate === null ? null : clone $this->createdDate,
+            $this->updatedDate === null ? null : clone $this->updatedDate,
+            $this->id,
         );
     }
 
@@ -128,15 +128,15 @@ class Admin
             ),
         );
 
-        return self::reconstruct(
-            $this->id,
+        return new self(
             $this->username,
             $this->password,
             $this->displayName,
             $this->active,
             $emails,
-            $this->createdDate,
-            $this->updatedDate,
+            $this->createdDate === null ? null : clone $this->createdDate,
+            $this->updatedDate === null ? null : clone $this->updatedDate,
+            $this->id,
         );
     }
 
