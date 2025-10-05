@@ -9,10 +9,11 @@ use BEAR\Resource\ResourceObject;
 use Koriym\HttpConstants\ResponseHeader;
 use Qiq\Template;
 use Ray\Aop\WeavedInterface;
+use Ray\Di\Di\Named;
 use ReflectionClass;
 
 use function assert;
-use function is_array;
+use function is_iterable;
 use function is_string;
 use function str_replace;
 use function strpos;
@@ -22,8 +23,11 @@ readonly class QiqRenderer implements RenderInterface
 {
     private const int LENGTH_OF_RESOURCE_DIR = 13;
 
+    /** @param array<string, mixed> $vars */
     public function __construct(
         private Template $template,
+        #[Named('qiq_vars')]
+        private array $vars,
     ) {
     }
 
@@ -44,8 +48,10 @@ HTML;
 
         $template = clone $this->template;
         $this->setTemplateView($template, $ro);
-        assert($ro->body === null || is_array($ro->body));
-        $template->setData($ro->body ?? []);
+        $template->addData($this->vars);
+        if (is_iterable($ro->body)) {
+            $template->addData($ro->body);
+        }
 
         $ro->view = $template();
 

@@ -1,31 +1,36 @@
 {{ extends ('layout/Admin/base') }}
 
 {{ setBlock ('head_scripts') }}
-    {{ parentBlock () }}
-    <script>
-        function gRecaptchaChecked() {
-            document.getElementById('login').removeAttribute('disabled');
-        }
-        function gRecaptchaExpired() {
-            document.getElementById('login').setAttribute('disabled', 'disabled');
-        }
-        function gRecaptchaError() {
-            document.getElementById('login').setAttribute('disabled', 'disabled');
-        }
-    </script>
+{{ parentBlock () }}
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script>
+  function cfTurnstileChecked() {
+    document.getElementById('login').removeAttribute('disabled');
+  }
+  function cfTurnstileExpired() {
+    document.getElementById('login').setAttribute('disabled', 'disabled');
+  }
+  function cfTurnstileError() {
+    document.getElementById('login').setAttribute('disabled', 'disabled');
+  }
+  function cfTurnstileTimeout() {
+    document.getElementById('login').setAttribute('disabled', 'disabled');
+  }
+</script>
 {{ endBlock () }}
 
-{{ $this->addData(['useGoogleRecaptcha' => true]) }}
 {{ setBlock ('body') }}
 <div class="h-[100svh] grid place-content-center">
-    <div class="relative w-80 md:w-96 h-min p-5 md:p-8 rounded-xl bg-white shadow-[0_1px_3px_rgba(15,23,42,0.03),0_1px_2px_rgba(15,23,42,0.06)] ring-1 ring-slate-600/[0.04]">
-        <h2 class="text-xl text-center tracking-widest font-sans font-bold">BearApp</h2>
+    <div class="relative w-96 h-min p-8 rounded-xl bg-white shadow-[0_1px_3px_rgba(15,23,42,0.03),0_1px_2px_rgba(15,23,42,0.06)] ring-1 ring-slate-600/[0.04]">
+        <div class="flex justify-center">
+            <h2 class="text-xl text-center tracking-widest font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">Bear App</h2>
+        </div>
 
-        <form method="post">
+        <form method="post" name="login_form">
             {{ if (isset($authError) && $authError): }}
                 {{= render('partials/Admin/AlertError', ['text' => 'Authentication error']) }}
             {{ endif }}
-            {{ if (isset($recaptchaError) && $recaptchaError): }}
+            {{ if (isset($captchaError) && $captchaError): }}
                 {{= render('partials/Admin/AlertError', ['text' => 'CAPTCHA error']) }}
             {{ endif }}
             <div class="mt-5">
@@ -45,7 +50,9 @@
                     {{= adminCheckBox(form: $form, input: 'remember') }}
                     {{= adminFormError(form: $form, input: 'remember') }}
                 </label>
-                <div class="ml-[-11px] lg:ml-0 mt-5 g-recaptcha" data-sitekey="{{a googleRecaptchaSiteKey() }}" data-size="normal" data-tabindex="4" data-callback="gRecaptchaChecked" data-expired-callback="gRecaptchaExpired" data-error-callback="gRecaptchaError"></div>
+                <div class="flex justify-center mt-5">
+                    {{= cfTurnstileWidget(cloudflareTurnstileSiteKey: $cloudflareTurnstileSiteKey, action: 'login', checked: 'cfTurnstileChecked', expired: 'cfTurnstileExpired', error: 'cfTurnstileError', timeout: 'cfTurnstileTimeout') }}
+                </div>
                 <label class="block mt-5 text-center">
                     {{= adminSubmit(form: $form, input: 'login', attribs: ['id' => 'login', 'value' => 'LOGIN', 'disabled' => 'disabled', 'data-submit-once' => '1']) }}
                     {{= csrfTokenField(form: $form) }}

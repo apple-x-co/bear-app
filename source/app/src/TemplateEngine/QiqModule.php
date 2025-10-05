@@ -23,6 +23,7 @@ class QiqModule extends AbstractModule
     /** @param array<string> $paths */
     public function __construct(
         private readonly array $paths,
+        private readonly array $vars,
         private AbstractModule|null $module = null,
     ) {
         parent::__construct($this->module);
@@ -42,6 +43,7 @@ class QiqModule extends AbstractModule
         $this->bind()->annotatedWith('qiq_cache_path')->toInstance(null);
         $this->bind()->annotatedWith('qiq_extension')->toInstance('.php');
         $this->bind()->annotatedWith('qiq_paths')->toInstance($this->paths);
+        $this->bind()->annotatedWith('qiq_vars')->toInstance($this->vars);
         $this->bind(RenderInterface::class)->to(QiqRenderer::class)->in(Scope::SINGLETON);
         $this->bind(Helpers::class)->to(HtmlHelpers::class);
         $this->bind(Compiler::class)->to(QiqCompiler::class);

@@ -11,17 +11,11 @@
     {{ setBlock ('head_meta') }}{{= getBlock () ~}}
     {{ setBlock ('head_styles') }}
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100|Noto+Sans+JP:400|Noto+Sans+JP:700|Noto+Sans+JP:900|Roboto:100|Roboto:400|Roboto:700|Roboto:900&display=swap&subset=japanese" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
-    <link href="/admin/css/index.css" rel="stylesheet">
+    <link href="/admin/css/bundle.css" rel="stylesheet">
+    <link href="/admin/css/tailwind.css" rel="stylesheet">
     {{= getBlock () ~}}
     {{ setBlock ('head_scripts') }}
-    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    {{ $isUseGoogleRecaptchaV2 = isset($useGoogleRecaptcha) ? $useGoogleRecaptcha : false }}
-    {{ if ($isUseGoogleRecaptchaV2): }}
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    {{ endif }}
-    <script src="/admin/js/index.min.js"></script>
+    <script src="/admin/js/bundle.min.js"></script>
     {{= getBlock () ~}}
 </head>
 <body class="bg-slate-50 text-slate-700 tracking-wide selection:bg-fuchsia-300 selection:text-fuchsia-900">

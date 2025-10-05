@@ -16,6 +16,8 @@ use Ray\AuraSessionModule\AuraSessionModule;
 use Ray\WebFormModule\AuraInputModule;
 use Ray\WebFormModule\FormInterface;
 
+use function getenv;
+
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class HtmlModule extends AbstractAppModule
 {
@@ -23,7 +25,12 @@ class HtmlModule extends AbstractAppModule
     {
         $this->install(new AuraSessionModule());
         $this->bind(Helpers::class)->to(QiqCustomHelpers::class);
-        $this->install(new QiqModule([$this->appMeta->appDir . '/var/qiq/template']));
+        $this->install(new QiqModule(
+            [$this->appMeta->appDir . '/var/qiq/template'],
+            [
+                'cloudflareTurnstileSiteKey' => (string) getenv('CLOUDFLARE_TURNSTILE_SITE_KEY'),
+            ],
+        ));
         $this->install(new AuraInputModule());
         $this->install(new SessionAuthModule());
         $this->install(new CaptchaModule());

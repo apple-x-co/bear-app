@@ -22,16 +22,17 @@ use function sprintf;
 class QiqCustomHelpers extends HtmlHelpers
 {
     /** @SuppressWarnings(PHPMD.LongVariable) */
-    public function __construct(
-        #[Named('cloudflare_turnstile_site_key')]
-        private readonly string $cloudflareTurnstileSiteKey,
-        private readonly RouterInterface $router,
-    ) {
+    public function __construct(private readonly RouterInterface $router)
+    {
         parent::__construct(null);
     }
 
-    /** @see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/ */
+    /**
+     * @SuppressWarnings(PHPMD.LongVariable)
+     * @see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/
+     */
     public function cfTurnstileWidget(
+        string $cloudflareTurnstileSiteKey,
         string $size = 'normal',
         string $action = 'none',
         string|null $checked = null,
@@ -39,7 +40,7 @@ class QiqCustomHelpers extends HtmlHelpers
         string|null $error = null,
         string|null $timeout = null,
     ): string {
-        if ($this->cloudflareTurnstileSiteKey === '') {
+        if ($cloudflareTurnstileSiteKey === '') {
             return '';
         }
 
@@ -47,7 +48,7 @@ class QiqCustomHelpers extends HtmlHelpers
             'class' => 'cf-turnstile',
             'data-action' => $action,
             'data-language' => 'ja',
-            'data-sitekey' => $this->cloudflareTurnstileSiteKey,
+            'data-sitekey' => $cloudflareTurnstileSiteKey,
             'data-size' => $size,
             'data-theme' => 'light',
         ];

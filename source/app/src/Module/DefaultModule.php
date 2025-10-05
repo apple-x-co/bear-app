@@ -25,6 +25,7 @@ class DefaultModule extends AbstractModule
 
         $this->bind()->annotatedWith('qiq_extension')->toInstance('.php');
         $this->bind()->annotatedWith('qiq_paths')->toInstance([]);
+        $this->bind()->annotatedWith('qiq_vars')->toInstance([]);
         $this->bind(Helpers::class)->to(Helpers::class);
         $this->bind()->annotatedWith('qiq_error_view_name')->toInstance('Error');
 
