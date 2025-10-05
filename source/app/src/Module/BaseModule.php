@@ -30,12 +30,14 @@ use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
 use AppCore\Domain\Test\TestRepositoryInterface;
 use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
+use AppCore\Domain\User\UserRepositoryInterface;
 use AppCore\Domain\WebSignature\UrlSignatureEncrypterInterface;
 use AppCore\Infrastructure\Persistence\AdminPermissionRepository;
 use AppCore\Infrastructure\Persistence\AdminRepository;
 use AppCore\Infrastructure\Persistence\AdminTokenRepository;
 use AppCore\Infrastructure\Persistence\TestRepository;
 use AppCore\Infrastructure\Persistence\ThrottleRepository;
+use AppCore\Infrastructure\Persistence\UserRepository;
 use AppCore\Infrastructure\Shared\AdminLogger;
 use AppCore\Infrastructure\Shared\CommandLogger;
 use AppCore\Infrastructure\Shared\CompactEncrypter;
@@ -162,6 +164,7 @@ class BaseModule extends AbstractModule
         $this->bind(AdminTokenRepositoryInterface::class)->to(AdminTokenRepository::class)->in(Scope::SINGLETON);
         $this->bind(TestRepositoryInterface::class)->to(TestRepository::class)->in(Scope::SINGLETON);
         $this->bind(ThrottleRepositoryInterface::class)->to(ThrottleRepository::class)->in(Scope::SINGLETON);
+        $this->bind(UserRepositoryInterface::class)->to(UserRepository::class)->in(Scope::SINGLETON);
     }
 
     private function usecase(): void

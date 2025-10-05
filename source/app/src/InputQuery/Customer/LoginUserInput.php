@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\InputQuery\User;
+namespace MyVendor\MyProject\InputQuery\Customer;
 
 use Ray\InputQuery\Attribute\Input;
 use SensitiveParameter;

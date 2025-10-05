@@ -13,6 +13,7 @@ use AppCore\Domain\Auth\UsernameMissing;
 use AppCore\Domain\Auth\UsernameNotFound;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Session\SessionInterface;
+use AppCore\Domain\User\UserRepositoryInterface;
 use Aura\Auth\Exception\MultipleMatches as AuraMultipleMatches;
 use Aura\Auth\Exception\PasswordIncorrect as AuraPasswordIncorrect;
 use Aura\Auth\Exception\PasswordMissing as AuraPasswordMissing;
@@ -20,10 +21,11 @@ use Aura\Auth\Exception\UsernameMissing as AuraUsernameMissing;
 use Aura\Auth\Exception\UsernameNotFound as AuraUsernameNotFound;
 use BEAR\Resource\NullRenderer;
 use BEAR\Resource\ResourceObject;
+use DateTimeImmutable;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\UserLogin;
 use MyVendor\MyProject\Annotation\UserLogout;
-use MyVendor\MyProject\InputQuery\User\LoginUserInput;
+use MyVendor\MyProject\InputQuery\Customer\LoginUserInput;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\Di\Di\Named;
@@ -41,10 +43,11 @@ use function call_user_func;
 readonly class UserAuthentication implements MethodInterceptor
 {
     public function __construct(
-        private SessionInterface $session,
+        private UserAuthenticatorInterface $authenticator,
         #[Named('user')]
         private LoggerInterface $logger,
-        private UserAuthenticatorInterface $authenticator,
+        private SessionInterface $session,
+        private UserRepositoryInterface $userRepository,
     ) {
     }
 
@@ -134,6 +137,10 @@ readonly class UserAuthentication implements MethodInterceptor
                 );
             }
 
+            $user = $this->userRepository->findByUsername($input->username);
+            $user = $user->withLoggedIn(new DateTimeImmutable());
+            $this->userRepository->store($user);
+
             $continue = $this->session->get('user:continue', '');
             $this->session->set('user:continue', '');
 
@@ -143,9 +150,7 @@ readonly class UserAuthentication implements MethodInterceptor
             $ro->setRenderer(new NullRenderer());
             $ro->code = StatusCode::FOUND;
             $ro->headers = [
-                'Location' => $continue === '' ?
-                    $this->authenticator->getAuthRedirect() . '?logged' :
-                    $continue,
+                'Location' => $continue === '' ? $this->authenticator->getAuthRedirect() . '?logged' : $continue,
             ];
             $ro->view = '';
             $ro->body = [];

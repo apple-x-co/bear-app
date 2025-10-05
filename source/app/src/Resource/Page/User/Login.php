@@ -6,7 +6,7 @@ namespace MyVendor\MyProject\Resource\Page\User;
 
 use AppCore\Domain\Auth\AuthenticationException;
 use MyVendor\MyProject\Annotation\UserLogin;
-use MyVendor\MyProject\InputQuery\User\LoginUserInput;
+use MyVendor\MyProject\InputQuery\Customer\LoginUserInput;
 use MyVendor\MyProject\Resource\Page\UserPage;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;

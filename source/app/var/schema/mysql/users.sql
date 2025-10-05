@@ -2,6 +2,7 @@ CREATE TABLE `users`
 (
     `id`                  INTEGER UNSIGNED AUTO_INCREMENT NOT NULL,
     `uid`                 VARCHAR(36)                     NOT NULL COMMENT 'ユニークID',
+    `display_name`        VARCHAR(100)                    NOT NULL COMMENT '表示名',
     `username`            VARCHAR(255)                    NOT NULL COMMENT 'ユーザー名',
     `password`            VARCHAR(255)                    NOT NULL COMMENT 'パスワード',
     `active`              SMALLINT UNSIGNED               NOT NULL COMMENT 'アクティブ',
