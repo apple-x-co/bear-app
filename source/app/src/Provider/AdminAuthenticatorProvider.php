@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Provider;
 
+use AppCore\Attribute\Cookie;
+use AppCore\Attribute\SessionName;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\AdminPermission\AdminPermissionRepositoryInterface;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
@@ -44,7 +46,7 @@ readonly class AdminAuthenticatorProvider implements ProviderInterface
         private EncrypterInterface $encrypter,
         private PasswordHasherInterface $passwordHasher,
         private SecureRandomInterface $secureRandom,
-        #[Named('cookie')]
+        #[Cookie]
         private array $cookie,
         #[Named('pdo_dsn')]
         private string $pdoDsn,
@@ -52,7 +54,7 @@ readonly class AdminAuthenticatorProvider implements ProviderInterface
         private string $pdoUsername,
         #[Named('pdo_password')]
         private string $pdoPassword,
-        #[Named('session_name')]
+        #[SessionName]
         private string $sessionName,
     ) {
     }

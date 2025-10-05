@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Provider;
 
+use AppCore\Attribute\Cookie;
 use AppCore\Infrastructure\Shared\UserAuthenticator;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Session\Segment;
@@ -24,7 +25,7 @@ class UserAuthenticatorProvider implements ProviderInterface
 
     /** @param array<array-key, mixed> $cookie */
     public function __construct(
-        #[Named('cookie')]
+        #[Cookie]
         private readonly array $cookie,
         #[Named('pdo_dsn')]
         private readonly string $pdoDsn,

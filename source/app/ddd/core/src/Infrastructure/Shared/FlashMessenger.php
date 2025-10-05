@@ -4,18 +4,28 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Shared;
 
+use AppCore\Attribute\Cookie;
+use AppCore\Attribute\SessionName;
 use AppCore\Domain\FlashMessenger\FlashMessageType;
 use AppCore\Domain\FlashMessenger\FlashMessengerInterface;
 use AppCore\Exception\RuntimeException;
 
 use function session_id;
-use function session_name;
 use function session_start;
 use function session_write_close;
 
 /** @SuppressWarnings(PHPMD.Superglobals) */
-final class FlashMessenger implements FlashMessengerInterface
+final readonly class FlashMessenger implements FlashMessengerInterface
 {
+    /** @param array<string, string> $cookie */
+    public function __construct(
+        #[Cookie]
+        private array $cookie,
+        #[SessionName]
+        private string $sessionName,
+    ) {
+    }
+
     public function set(FlashMessageType $type, string $text): void
     {
         $this->resume();
@@ -48,7 +58,7 @@ final class FlashMessenger implements FlashMessengerInterface
             return;
         }
 
-        if (! isset($_COOKIE[session_name()])) {
+        if (! isset($this->cookie[$this->sessionName])) {
             return;
         }
 

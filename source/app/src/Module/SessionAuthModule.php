@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Module;
 
+use AppCore\Attribute\Cookie;
+use AppCore\Attribute\SessionName;
 use AppCore\Domain\Auth\AdminAuthenticatorInterface;
 use AppCore\Domain\Auth\UserAuthenticatorInterface;
 use AppCore\Domain\FlashMessenger\FlashMessengerInterface;
@@ -40,17 +42,11 @@ class SessionAuthModule extends AbstractModule
 {
     protected function configure(): void
     {
-        $this->bind(SessionInterface::class)
-             ->toProvider(SessionProvider::class)
-             ->in(Scope::SINGLETON);
+        $this->bind(SessionInterface::class)->toProvider(SessionProvider::class)->in(Scope::SINGLETON);
 
-        $this->bind()
-             ->annotatedWith('cookie')
-             ->toProvider(CookieProvider::class);
+        $this->bind()->annotatedWith(Cookie::class)->toProvider(CookieProvider::class);
 
-        $this->bind()
-             ->annotatedWith('session_name')
-             ->toInstance('bear-app');
+        $this->bind()->annotatedWith(SessionName::class)->toInstance('bear-app');
 
         $this->bind(FlashMessengerInterface::class)->to(FlashMessenger::class)->in(Scope::SINGLETON);
 
