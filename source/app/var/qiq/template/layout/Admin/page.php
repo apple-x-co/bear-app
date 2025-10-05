@@ -1,5 +1,17 @@
 {{ extends ('layout/Admin/base') }}
 
+{{ setBlock ('head') }}
+{{ setBlock ('head_meta') }}{{= getBlock () ~}}
+{{ setBlock ('head_styles') }}
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100|Noto+Sans+JP:400|Noto+Sans+JP:700|Noto+Sans+JP:900|Roboto:100|Roboto:400|Roboto:700|Roboto:900&display=swap&subset=japanese" rel="stylesheet">
+<link href="/admin/css/bundle.css" rel="stylesheet">
+<link href="/admin/css/tailwind.css" rel="stylesheet">
+{{= getBlock () ~}}
+{{ setBlock ('head_scripts') }}
+<script src="/admin/js/bundle.min.js"></script>
+{{= getBlock () ~}}
+{{ endBlock () }}
+
 {{ setBlock ('body') }}
 <header class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 bg-white/70 supports-backdrop-blur:bg-white/60">
     {{ setBlock ('body_header') }}
@@ -34,7 +46,7 @@
     {{= getBlock () ~}}
 </header>
 <div class="max-w-7xl mx-auto px-0 lg:px-8 pt-5 flex flex-row grow">
-    {{ $isNavVisible = isset($navVisible) ? $navVisible : true }}
+    {{ $isNavVisible = isset($isNavVisible) ? $isNavVisible : true }}
     {{ if ($isNavVisible): }}
     <div class="hidden lg:block lg:w-72 lg:overflow-y-auto">
         <nav class="block leading-6 relative">

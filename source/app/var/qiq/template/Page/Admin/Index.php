@@ -2,6 +2,6 @@
 
 {{ setBlock ('title') }}INDEX | {{ parentBlock () }}{{ endBlock () }}
 
-{{ $this->addData(['navVisible' => false]) }}
+{{ $this->addData(['isNavVisible' => false]) }}
 {{ setBlock ('body_content') }}
 {{ endBlock () }}

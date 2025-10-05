@@ -2,7 +2,7 @@
 
 {{ setBlock ('title') }}MARKUP | {{ parentBlock () }}{{ endBlock () }}
 
-{{ $this->addData(['navVisible' => false]) }}
+{{ $this->addData(['isNavVisible' => false]) }}
 {{ setBlock ('body_content') }}
 <section>
     <h3 class="font-bold border-b pb-2 mb-2">テキスト (太さ)</h3>

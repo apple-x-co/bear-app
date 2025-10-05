@@ -2,7 +2,7 @@
 
 {{ setBlock ('title') }}Upload Demo | {{ parentBlock () }}{{ endBlock () }}
 
-{{ $this->addData(['navVisible' => false]) }}
+{{ $this->addData(['isNavVisible' => false]) }}
 {{ setBlock ('body_content') }}
 <form method="post" enctype="multipart/form-data">
     <div class="mt-5">

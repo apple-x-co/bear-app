@@ -2,7 +2,7 @@
 
 {{ setBlock ('title') }}Upload2 Demo | {{ parentBlock () }}{{ endBlock () }}
 
-{{ $this->addData(['navVisible' => false]) }}
+{{ $this->addData(['isNavVisible' => false]) }}
 {{ setBlock ('body_content') }}
 <form method="post" enctype="multipart/form-data">
     {{ if ($form->mode == $confirmMode->name): }}

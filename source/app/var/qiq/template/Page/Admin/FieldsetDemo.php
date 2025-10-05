@@ -2,7 +2,7 @@
 
 {{ setBlock ('title') }}Fieldset Demo | {{ parentBlock () }}{{ endBlock () }}
 
-{{ $this->addData(['navVisible' => false]) }}
+{{ $this->addData(['isNavVisible' => false]) }}
 {{ setBlock ('body_content') }}
 <form method="post">
     <div class="mt-5">

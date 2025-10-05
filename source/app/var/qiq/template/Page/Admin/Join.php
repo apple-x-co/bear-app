@@ -1,6 +1,10 @@
 {{ extends ('layout/Admin/base') }}
 
-{{ setBlock ('head_scripts') }}
+{{ setBlock ('head') }}
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100|Noto+Sans+JP:400|Noto+Sans+JP:700|Noto+Sans+JP:900|Roboto:100|Roboto:400|Roboto:700|Roboto:900&display=swap&subset=japanese" rel="stylesheet">
+<link href="/admin/css/bundle.css" rel="stylesheet">
+<link href="/admin/css/tailwind.css" rel="stylesheet">
+<script src="/admin/js/bundle.min.js"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
   function cfTurnstileChecked() {
@@ -20,7 +24,7 @@
 
 {{ setBlock ('body') }}
 <div class="h-[100svh] grid place-content-center">
-    <div class="relative w-80 md:w-96 h-min p-5 md:p-8 rounded-xl bg-white shadow-[0_1px_3px_rgba(15,23,42,0.03),0_1px_2px_rgba(15,23,42,0.06)] ring-1 ring-slate-600/[0.04]">
+    <div class="relative w-96 h-min p-8 rounded-xl bg-white shadow-[0_1px_3px_rgba(15,23,42,0.03),0_1px_2px_rgba(15,23,42,0.06)] ring-1 ring-slate-600/[0.04]">
         <h2 class="text-xl text-center tracking-widest font-sans font-bold">Join</h2>
 
         <form method="post">
@@ -33,7 +37,7 @@
                     {{= adminText(form: $form, input: 'emailAddress') }}
                     {{= adminFormError(form: $form, input: 'emailAddress') }}
                 </label>
-                <div class="ml-[-11px] lg:ml-0 mt-5">
+                <div class="flex justify-center mt-5">
                     {{= cfTurnstileWidget(cloudflareTurnstileSiteKey: $cloudflareTurnstileSiteKey, action: 'login', checked: 'cfTurnstileChecked', expired: 'cfTurnstileExpired', error: 'cfTurnstileError', timeout: 'cfTurnstileTimeout') }}
                 </div>
                 <label class="block mt-5 text-center">
