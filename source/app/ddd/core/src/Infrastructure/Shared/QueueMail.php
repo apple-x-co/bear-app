@@ -11,8 +11,8 @@ use AppCore\Domain\Mail\RecipientType;
 use AppCore\Domain\Mail\TemplateNotFoundException;
 use AppCore\Domain\Mail\TemplateRendererInterface;
 use AppCore\Domain\Mail\TransportInterface;
-use AppCore\Infrastructure\Query\EmailCommandInterface;
-use AppCore\Infrastructure\Query\EmailRecipientCommandInterface;
+use AppCore\Infrastructure\Query\EmailQueueCommandInterface;
+use AppCore\Infrastructure\Query\EmailQueueRecipientCommandInterface;
 
 use function is_readable;
 use function is_string;
@@ -21,12 +21,21 @@ use const DIRECTORY_SEPARATOR;
 
 readonly class QueueMail implements TransportInterface
 {
+    private const string SUBJECT_DIR_NAME = 'subject';
+    private const string TEXT_DIR_NAME = 'text';
+    private const string HTML_DIR_NAME = 'html';
+    private const string PLAIN_TEXT_EXT = '.txt';
+    private const string HTML_EXT = '.html';
+    private const int ACTIVE = 1;
+    private const int DEFAULT_INIT_ATTEMPTS = 0;
+    private const int DEFAULT_MAX_ATTEMPTS = 5;
+
     /** @SuppressWarnings(PHPMD.LongVariable) */
     public function __construct(
-        private EmailCommandInterface $emailCommand,
+        private EmailQueueCommandInterface $emailQueueCommand,
         #[EmailDir]
         private string $emailDir,
-        private EmailRecipientCommandInterface $emailRecipientCommand,
+        private EmailQueueRecipientCommandInterface $emailQueueRecipientCommand,
         private TemplateRendererInterface $templateRenderer,
     ) {
     }
@@ -44,42 +53,45 @@ readonly class QueueMail implements TransportInterface
             throw new InvalidArgumentException('"From" must be not null');
         }
 
-        $scheduleAt = $email->getScheduleDate();
-        if ($scheduleAt === null) {
-            throw new InvalidArgumentException('"ScheduleAt" must be not null');
+        $scheduleDate = $email->getScheduleDate();
+        if ($scheduleDate === null) {
+            throw new InvalidArgumentException('"ScheduleDate" must be not null');
         }
 
-        $subjectDir = $this->emailDir . DIRECTORY_SEPARATOR . 'subject' . DIRECTORY_SEPARATOR;
-        $textDir = $this->emailDir . DIRECTORY_SEPARATOR . 'text' . DIRECTORY_SEPARATOR;
-        $htmlDir = $this->emailDir . DIRECTORY_SEPARATOR . 'html' . DIRECTORY_SEPARATOR;
+        $subjectDir = $this->emailDir . DIRECTORY_SEPARATOR . self::SUBJECT_DIR_NAME . DIRECTORY_SEPARATOR;
+        $textDir = $this->emailDir . DIRECTORY_SEPARATOR . self::TEXT_DIR_NAME . DIRECTORY_SEPARATOR;
+        $htmlDir = $this->emailDir . DIRECTORY_SEPARATOR . self::HTML_DIR_NAME . DIRECTORY_SEPARATOR;
 
         $subject = $this->renderTemplate(
-            $subjectDir . $templateId . '.txt',
+            $subjectDir . $templateId . self::PLAIN_TEXT_EXT,
             $email->getTemplateVars(),
         );
         $text = $this->renderTemplate(
-            $textDir . $templateId . '.txt',
+            $textDir . $templateId . self::PLAIN_TEXT_EXT,
             $email->getTemplateVars(),
         );
         $format = $email->getEmailFormat();
         $html = $format->isHtml() ? $this->renderTemplate(
-            $htmlDir . $templateId . '.html',
+            $htmlDir . $templateId . self::HTML_EXT,
             $email->getTemplateVars(),
         ) : null;
 
-        $array = $this->emailCommand->add(
+        $array = $this->emailQueueCommand->add(
             $from->getEmail(),
             $from->getName(),
             $subject,
             $text,
             $html,
-            $scheduleAt,
+            self::ACTIVE,
+            self::DEFAULT_INIT_ATTEMPTS,
+            self::DEFAULT_MAX_ATTEMPTS,
+            $scheduleDate,
         );
-        $emailId = $array['id'];
+        $emailQueueId = $array['id'];
 
         foreach ($email->getTo() as $to) {
-            $this->emailRecipientCommand->add(
-                $emailId,
+            $this->emailQueueRecipientCommand->add(
+                $emailQueueId,
                 RecipientType::To->value,
                 $to->getEmail(),
                 $to->getName(),
@@ -87,8 +99,8 @@ readonly class QueueMail implements TransportInterface
         }
 
         foreach ($email->getReplayTo() as $replyTo) {
-            $this->emailRecipientCommand->add(
-                $emailId,
+            $this->emailQueueRecipientCommand->add(
+                $emailQueueId,
                 RecipientType::ReplayTo->value,
                 $replyTo->getEmail(),
                 $replyTo->getName(),
@@ -96,8 +108,8 @@ readonly class QueueMail implements TransportInterface
         }
 
         foreach ($email->getCc() as $cc) {
-            $this->emailRecipientCommand->add(
-                $emailId,
+            $this->emailQueueRecipientCommand->add(
+                $emailQueueId,
                 RecipientType::Cc->value,
                 $cc->getEmail(),
                 $cc->getName(),
@@ -105,8 +117,8 @@ readonly class QueueMail implements TransportInterface
         }
 
         foreach ($email->getBcc() as $bcc) {
-            $this->emailRecipientCommand->add(
-                $emailId,
+            $this->emailQueueRecipientCommand->add(
+                $emailQueueId,
                 RecipientType::Bcc->value,
                 $bcc->getEmail(),
                 $bcc->getName(),
