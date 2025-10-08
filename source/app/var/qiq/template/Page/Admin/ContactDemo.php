@@ -4,7 +4,7 @@
 
 {{ setBlock ('body_content') }}
 <form method="post">
-    {{ if ($form->mode == $confirmMode->name): }}
+    {{ if ($form->mode == $confirmStep->name): }}
     <div class="mt-5">
         <label class="block">
             <span class="block text-sm font-thin text-slate-500 tracking-wide">Username</span>
@@ -12,8 +12,8 @@
             {{= adminHidden(form: $form, input: 'username') }}
         </label>
         <label class="block mt-5 text-center">
-            {{= adminSubmit(form: $form, input: 'mode', attribs: ['value' => $inputMode->name, 'data-submit-once' => '1']) }}
-            {{= adminSubmit(form: $form, input: 'mode', attribs: ['value' => $completeMode->name, 'data-submit-once' => '1']) }}
+            {{= adminSubmit(form: $form, input: 'mode', attribs: ['value' => $inputStep->name, 'data-submit-once' => '1']) }}
+            {{= adminSubmit(form: $form, input: 'mode', attribs: ['value' => $completeStep->name, 'data-submit-once' => '1']) }}
             {{= csrfTokenField(form: $form) }}
         </label>
     </div>

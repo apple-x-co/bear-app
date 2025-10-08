@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Form;
 
-enum FormMode
+enum FormStep
 {
     case Input;
     case Confirm;
