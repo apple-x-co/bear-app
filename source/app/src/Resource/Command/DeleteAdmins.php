@@ -31,7 +31,7 @@ class DeleteAdmins extends ResourceObject
         return $this;
     }
 
-    /** @Transactional() */
+    #[Transactional]
     protected function execute(int $adminId): void
     {
         $this->adminDeleteCommand->delete($adminId, new DateTimeImmutable());

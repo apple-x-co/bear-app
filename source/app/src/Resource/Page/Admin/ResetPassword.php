@@ -63,9 +63,9 @@ class ResetPassword extends BaseAdminPage
 
     /**
      * @FormValidation()
-     * @Transactional()
      * @SuppressWarnings(PHPMD.LongVariable)
      */
+    #[Transactional]
     public function onPost(
         #[Input]
         ResetPasswordInput $input,

@@ -60,10 +60,8 @@ class SignUp extends BaseAdminPage
         return $this;
     }
 
-    /**
-     * @FormValidation()
-     * @Transactional()
-     */
+    /** @FormValidation() */
+    #[Transactional]
     public function onPost(
         #[Input]
         SignUpInput $input,

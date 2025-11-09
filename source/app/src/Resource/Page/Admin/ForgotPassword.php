@@ -38,11 +38,11 @@ class ForgotPassword extends BaseAdminPage
 
     /**
      * @FormValidation()
-     * @Transactional()
      * @SuppressWarnings(PHPMD.LongVariable)
      */
     #[CloudflareTurnstile]
     #[RateLimiter]
+    #[Transactional]
     public function onPost(
         #[Input]
         ForgotPasswordInput $input,
