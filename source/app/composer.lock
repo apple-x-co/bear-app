@@ -879,24 +879,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.QueryRepository.git",
-                "reference": "a1c16a25211c3d4e3540f70fa0e9e792d7b65fa0"
+                "reference": "3891ae26e0a510390eb97f986bbf061ad393b0ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.QueryRepository/zipball/a1c16a25211c3d4e3540f70fa0e9e792d7b65fa0",
-                "reference": "a1c16a25211c3d4e3540f70fa0e9e792d7b65fa0",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.QueryRepository/zipball/3891ae26e0a510390eb97f986bbf061ad393b0ba",
+                "reference": "3891ae26e0a510390eb97f986bbf061ad393b0ba",
                 "shasum": ""
             },
             "require": {
                 "bear/resource": "^1.16.1",
                 "bear/sunday": "^1.5",
-                "doctrine/annotations": "^1.8 || ^2.0",
-                "doctrine/cache": "^1.12 || ^2.0",
-                "php": "^8.1",
+                "php": "^8.2",
                 "psr/cache": "^1.0 || ^2.0 || ^3.0",
                 "ray/aop": "^2.16",
                 "ray/di": "^2.17.2",
-                "ray/psr-cache-module": "^1.3.4",
+                "ray/psr-cache-module": "^1.5.1",
                 "symfony/cache": "^5.3 || ^6.0 || ^7.3",
                 "symfony/cache-contracts": "^2.4 || ^3.0",
                 "symfony/polyfill-php83": "^v1.32.0"
@@ -904,14 +902,16 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8",
                 "bear/fastly-module": "^1.0",
-                "ext-redis": "*",
-                "koriym/attributes": "^1.0.1",
                 "madapaja/twig-module": "^2.6",
                 "mobiledetect/mobiledetectlib": "^3.74 || ^4.8",
-                "phpunit/phpunit": "^9.6.23",
+                "phpunit/phpunit": "^11.0",
                 "predis/predis": "^2.4",
                 "symfony/process": "^6.1 || ^7.1",
                 "twig/twig": "^3.4.3"
+            },
+            "suggest": {
+                "ext-memcached": "Required for Memcached cache storage backend",
+                "ext-redis": "Required for Redis cache storage backend"
             },
             "type": "library",
             "extra": {
@@ -953,7 +953,7 @@
                 "issues": "https://github.com/bearsunday/BEAR.QueryRepository/issues",
                 "source": "https://github.com/bearsunday/BEAR.QueryRepository/tree/1.13.0"
             },
-            "time": "2025-10-21T05:26:39+00:00"
+            "time": "2025-11-10T07:47:58+00:00"
         },
         {
             "name": "bear/resource",
@@ -4244,16 +4244,16 @@
         },
         {
             "name": "ray/aura-sql-module",
-            "version": "1.13.4",
+            "version": "1.13.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.AuraSqlModule.git",
-                "reference": "d793e921ee8cbffc9ff74a243b6ae82544b1def1"
+                "reference": "0b0ba19de7761ff751a9a9778a69d0b50c868bd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.AuraSqlModule/zipball/d793e921ee8cbffc9ff74a243b6ae82544b1def1",
-                "reference": "d793e921ee8cbffc9ff74a243b6ae82544b1def1",
+                "url": "https://api.github.com/repos/ray-di/Ray.AuraSqlModule/zipball/0b0ba19de7761ff751a9a9778a69d0b50c868bd8",
+                "reference": "0b0ba19de7761ff751a9a9778a69d0b50c868bd8",
                 "shasum": ""
             },
             "require": {
@@ -4297,9 +4297,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ray-di/Ray.AuraSqlModule/issues",
-                "source": "https://github.com/ray-di/Ray.AuraSqlModule/tree/1.13.4"
+                "source": "https://github.com/ray-di/Ray.AuraSqlModule/tree/1.13.7"
             },
-            "time": "2025-11-08T16:22:26+00:00"
+            "time": "2025-11-10T11:22:33+00:00"
         },
         {
             "name": "ray/compiler",
@@ -4667,21 +4667,20 @@
         },
         {
             "name": "ray/psr-cache-module",
-            "version": "1.4.0",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.PsrCacheModule.git",
-                "reference": "d550309671721060c0a5581da05df2b9b5171116"
+                "reference": "7443832621679fb5007966c975ef5be1110ea530"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.PsrCacheModule/zipball/d550309671721060c0a5581da05df2b9b5171116",
-                "reference": "d550309671721060c0a5581da05df2b9b5171116",
+                "url": "https://api.github.com/repos/ray-di/Ray.PsrCacheModule/zipball/7443832621679fb5007966c975ef5be1110ea530",
+                "reference": "7443832621679fb5007966c975ef5be1110ea530",
                 "shasum": ""
             },
             "require": {
-                "doctrine/annotations": "^1.13 || ^2.0",
-                "php": "^8.1",
+                "php": "^8.2",
                 "psr/cache": "^1.0.1 || ^2.0 || ^3.0",
                 "psr/simple-cache": "^1.0 || ^2.0 || ^3.0",
                 "ray/aop": "^2.10.4",
@@ -4692,7 +4691,8 @@
                 "bamarni/composer-bin-plugin": "^1.4",
                 "ext-memcached": "*",
                 "ext-redis": "*",
-                "phpunit/phpunit": "^9.5.28"
+                "phpunit/phpunit": "^11.5.43",
+                "rector/rector": "^2.2"
             },
             "type": "library",
             "extra": {
@@ -4722,9 +4722,9 @@
             "description": "PSR-6 PSR-16 cache module for Ray.Di",
             "support": {
                 "issues": "https://github.com/ray-di/Ray.PsrCacheModule/issues",
-                "source": "https://github.com/ray-di/Ray.PsrCacheModule/tree/1.4.0"
+                "source": "https://github.com/ray-di/Ray.PsrCacheModule/tree/1.5.1"
             },
-            "time": "2025-01-10T00:31:12+00:00"
+            "time": "2025-11-10T02:53:42+00:00"
         },
         {
             "name": "ray/web-form-module",
