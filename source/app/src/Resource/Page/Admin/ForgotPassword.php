@@ -68,7 +68,10 @@ class ForgotPassword extends BaseAdminPage
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function onCfTurnstileFailed(CaptchaException $captchaException): static
+    public function onCfTurnstileFailed(
+        ForgotPasswordInput $input,
+        CaptchaException $captchaException,
+    ): static
     {
         $this->body['captchaError'] = true;
 

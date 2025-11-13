@@ -66,7 +66,10 @@ class Login extends BaseAdminPage
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function onCfTurnstileFailed(CaptchaException $captchaException): static
+    public function onCfTurnstileFailed(
+        LoginUserInput $input,
+        CaptchaException $captchaException,
+    ): static
     {
         $this->body['captchaError'] = true;
 

@@ -11,7 +11,7 @@ use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
 use function assert;
-use function call_user_func;
+use function call_user_func_array;
 
 readonly class CloudflareTurnstileVerification implements MethodInterceptor
 {
@@ -30,9 +30,12 @@ readonly class CloudflareTurnstileVerification implements MethodInterceptor
         try {
             ($this->cloudflareTurnstileVerificationHandler)();
         } catch (CaptchaException $captchaException) {
-            return call_user_func(
+            $args = $invocation->getArguments()->getArrayCopy();
+            $args[] = $captchaException;
+
+            return call_user_func_array(
                 [$invocation->getThis(), $cloudflareTurnstile->onFailure],
-                [$captchaException],
+                $args,
             );
         }
 
