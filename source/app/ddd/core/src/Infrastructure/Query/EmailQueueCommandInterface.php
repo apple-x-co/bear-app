@@ -16,7 +16,7 @@ interface EmailQueueCommandInterface
      *
      * @return array{id: positive-int}
      *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
      */
     #[DbQuery('email_queues/email_queue_add', 'row')]
     public function add(

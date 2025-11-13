@@ -30,7 +30,7 @@ readonly class QueueMail implements TransportInterface
     private const int DEFAULT_INIT_ATTEMPTS = 0;
     private const int DEFAULT_MAX_ATTEMPTS = 5;
 
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private EmailQueueCommandInterface $emailQueueCommand,
         #[EmailDir]
@@ -40,7 +40,7 @@ readonly class QueueMail implements TransportInterface
     ) {
     }
 
-    /** @SuppressWarnings(PHPMD.NPathComplexity) */
+    /** @SuppressWarnings("PHPMD.NPathComplexity") */
     public function send(Email $email): void
     {
         $templateId = $email->getTemplateId();

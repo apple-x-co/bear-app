@@ -44,7 +44,7 @@ readonly class AdminRepository implements AdminRepositoryInterface
     /**
      * @param list<AdminEmailEntity> $adminEmailEntities
      *
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings("PHPMD.StaticAccess")
      */
     private function entityToModel(AdminEntity $adminEntity, array $adminEmailEntities): Admin
     {

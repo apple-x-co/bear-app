@@ -15,13 +15,13 @@ use function call_user_func_array;
 
 readonly class CloudflareTurnstileVerification implements MethodInterceptor
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private CloudflareTurnstileVerificationHandlerInterface $cloudflareTurnstileVerificationHandler,
     ) {
     }
 
-    /** @SuppressWarnings(PHPMD.Superglobals) */
+    /** @SuppressWarnings("PHPMD.Superglobals") */
     public function invoke(MethodInvocation $invocation): mixed
     {
         $cloudflareTurnstile = $invocation->getMethod()->getAnnotation(CloudflareTurnstile::class);

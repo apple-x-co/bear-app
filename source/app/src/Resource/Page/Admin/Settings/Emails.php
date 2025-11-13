@@ -26,7 +26,7 @@ use Ray\WebFormModule\FormInterface;
 
 class Emails extends BaseAdminPage
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
         private readonly CreateAdminEmailUseCase $createAdminEmailUseCase,
@@ -83,7 +83,7 @@ class Emails extends BaseAdminPage
         return $this;
     }
 
-    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
+    /** @SuppressWarnings("PHPMD.UnusedFormalParameter") */
     public function onPostValidationFailed(): static
     {
         $adminId = $this->adminAuthenticator->getUserId();

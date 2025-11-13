@@ -21,10 +21,10 @@ use Throwable;
 
 use function array_reduce;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 readonly class VerifyAdminEmailUseCase
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         #[Named('admin')]
         private AddressInterface $adminAddress,

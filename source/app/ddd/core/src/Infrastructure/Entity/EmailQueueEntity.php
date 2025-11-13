@@ -14,7 +14,7 @@ final readonly class EmailQueueEntity
      * @param non-negative-int $attempts
      * @param non-negative-int $maxAttempts
      *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
      */
     public function __construct(
         public int $id,

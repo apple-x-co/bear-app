@@ -19,10 +19,10 @@ use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 class Join extends BaseAdminPage
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         protected readonly JoinAdminUserCase $createAdminUseCase,
         #[Named('admin_join_form')]
@@ -64,13 +64,12 @@ class Join extends BaseAdminPage
     /**
      * Callback from CloudflareTurnstileVerification
      *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      */
     public function onCfTurnstileFailed(
         JoinInput $input,
         CaptchaException $captchaException,
-    ): static
-    {
+    ): static {
         $this->body['captchaError'] = true;
 
         return $this;

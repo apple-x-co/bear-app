@@ -15,7 +15,7 @@ final readonly class EmailQueueRecipientEntity
      * @param positive-int $id
      * @param positive-int $emailQueueId
      *
-     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings("PHPMD.LongVariable")
      */
     public function __construct(
         public int $id,

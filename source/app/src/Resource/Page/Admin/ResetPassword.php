@@ -25,7 +25,7 @@ use function assert;
 
 class ResetPassword extends BaseAdminPage
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         #[Named('admin_password_reset_form')]
         protected readonly FormInterface $form,
@@ -35,7 +35,7 @@ class ResetPassword extends BaseAdminPage
         $this->body['form'] = $this->form;
     }
 
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function onGet(
         #[Input]
         string $signature,
@@ -63,7 +63,7 @@ class ResetPassword extends BaseAdminPage
 
     /**
      * @FormValidation()
-     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings("PHPMD.LongVariable")
      */
     #[Transactional]
     public function onPost(

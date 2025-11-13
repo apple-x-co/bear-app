@@ -15,7 +15,7 @@ use Ray\Di\AbstractModule;
 
 use function getenv;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 class CaptchaModule extends AbstractModule
 {
     protected function configure(): void

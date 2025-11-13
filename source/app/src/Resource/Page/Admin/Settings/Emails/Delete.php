@@ -20,7 +20,7 @@ use Ray\InputQuery\Attribute\Input;
 
 class Delete extends BaseAdminPage
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
         private readonly DeleteAdminEmailUseCase $deleteAdminEmailUseCase,

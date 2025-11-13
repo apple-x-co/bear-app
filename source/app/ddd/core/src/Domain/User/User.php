@@ -15,7 +15,7 @@ final class User
     /**
      * @param positive-int|null $id
      *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
      */
     public function __construct(
         public readonly string $uid,
@@ -35,7 +35,7 @@ final class User
     /**
      * @param positive-int $id
      *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
      */
     public static function reconstruct(
         int $id,

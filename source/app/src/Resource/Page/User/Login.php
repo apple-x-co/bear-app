@@ -28,7 +28,7 @@ class Login extends BaseUserPage
     }
 
     /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      * @FormValidation()
      */
     #[UserLogin]
@@ -49,7 +49,7 @@ class Login extends BaseUserPage
     /**
      * Callback from UserAuthentication
      *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      */
     public function onPostAuthenticationFailed(AuthenticationException $authException): static
     {

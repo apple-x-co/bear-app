@@ -30,7 +30,7 @@ class UploadDemo extends BaseAdminPage
     }
 
     /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      * @FormValidation()
      */
     #[AdminGuard]

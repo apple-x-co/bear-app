@@ -22,7 +22,7 @@ use Ray\WebFormModule\FormInterface;
 
 class ForgotPassword extends BaseAdminPage
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private readonly ForgotAdminPasswordUseCase $forgotAdminPasswordUseCase,
         #[Named('admin_forgot_password_form')]
@@ -38,7 +38,7 @@ class ForgotPassword extends BaseAdminPage
 
     /**
      * @FormValidation()
-     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings("PHPMD.LongVariable")
      */
     #[CloudflareTurnstile]
     #[RateLimiter]
@@ -66,13 +66,12 @@ class ForgotPassword extends BaseAdminPage
     /**
      * Callback from CloudflareTurnstileVerification
      *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      */
     public function onCfTurnstileFailed(
         ForgotPasswordInput $input,
         CaptchaException $captchaException,
-    ): static
-    {
+    ): static {
         $this->body['captchaError'] = true;
 
         return $this;

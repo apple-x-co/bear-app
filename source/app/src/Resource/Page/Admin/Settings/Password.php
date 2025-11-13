@@ -24,10 +24,10 @@ use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 use Throwable;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 class Password extends BaseAdminPage
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
         #[Named('admin_password_update_form')]
@@ -88,13 +88,13 @@ class Password extends BaseAdminPage
         return $this;
     }
 
-    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
+    /** @SuppressWarnings("PHPMD.UnusedFormalParameter") */
     public function onPostValidationFailed(): static
     {
         return $this;
     }
 
-    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
+    /** @SuppressWarnings("PHPMD.UnusedFormalParameter") */
     public function onPostPasswordNotMatched(AuthenticationException $authException): static
     {
         $this->body['authError'] = true;

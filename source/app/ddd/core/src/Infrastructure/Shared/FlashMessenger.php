@@ -14,7 +14,7 @@ use function session_id;
 use function session_start;
 use function session_write_close;
 
-/** @SuppressWarnings(PHPMD.Superglobals) */
+/** @SuppressWarnings("PHPMD.Superglobals") */
 final readonly class FlashMessenger implements FlashMessengerInterface
 {
     /** @param array<string, string> $cookie */

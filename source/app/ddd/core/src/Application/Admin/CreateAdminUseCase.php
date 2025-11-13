@@ -23,10 +23,10 @@ use Ray\Di\Di\Named;
 
 use function is_int;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 readonly class CreateAdminUseCase
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         #[Named('admin')]
         private AddressInterface $adminAddress,

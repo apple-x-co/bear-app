@@ -11,7 +11,7 @@ final readonly class UserEntity
     /**
      * @param positive-int $id
      *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
      */
     public function __construct(
         public int $id,

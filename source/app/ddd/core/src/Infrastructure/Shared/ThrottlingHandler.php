@@ -29,7 +29,7 @@ readonly class ThrottlingHandler implements ThrottlingHandlerInterface
         return $throttle->isExceeded();
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     public function countUp(string $key, string $remoteIp, string $attemptInterval, int $maxAttempts): void
     {
         $throttle = $this->throttleRepository->findByThrottleKey($key);

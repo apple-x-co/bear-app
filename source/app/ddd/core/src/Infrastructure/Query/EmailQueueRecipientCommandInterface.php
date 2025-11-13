@@ -12,7 +12,7 @@ interface EmailQueueRecipientCommandInterface
     /**
      * @param positive-int $emailQueueId
      *
-     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings("PHPMD.LongVariable")
      */
     #[DbQuery('email_queue_recipients/email_queue_recipient_add')]
     public function add(

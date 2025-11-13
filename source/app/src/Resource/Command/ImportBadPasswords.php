@@ -8,7 +8,7 @@ use AppCore\Application\Command\ImportBadPasswordUseCase;
 use BEAR\Resource\ResourceObject;
 use Ray\AuraSqlModule\Annotation\Transactional;
 
-/** @SuppressWarnings(PHPMD.LongVariable) */
+/** @SuppressWarnings("PHPMD.LongVariable") */
 class ImportBadPasswords extends ResourceObject
 {
     public function __construct(

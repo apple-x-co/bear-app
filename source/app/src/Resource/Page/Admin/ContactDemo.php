@@ -34,7 +34,7 @@ class ContactDemo extends BaseAdminPage
     }
 
     /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      * @FormValidation()
      */
     public function onPost(

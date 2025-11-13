@@ -34,7 +34,7 @@ class FieldsetDemo extends BaseAdminPage
     }
 
     /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      * @FormValidation()
      */
     public function onPost(
@@ -44,7 +44,7 @@ class FieldsetDemo extends BaseAdminPage
         return $this;
     }
 
-    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
+    /** @SuppressWarnings("PHPMD.UnusedFormalParameter") */
     public function onPostValidationFailed(
         #[Input]
         FieldsetDemoInput $input,

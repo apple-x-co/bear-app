@@ -23,7 +23,7 @@ readonly class Throttling implements MethodInterceptor
     ) {
     }
 
-    /** @SuppressWarnings(PHPMD.Superglobals) */
+    /** @SuppressWarnings("PHPMD.Superglobals") */
     public function invoke(MethodInvocation $invocation): mixed
     {
         $rateLimiter = $invocation->getMethod()->getAnnotation(RateLimiter::class);

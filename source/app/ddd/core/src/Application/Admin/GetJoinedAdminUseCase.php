@@ -10,7 +10,7 @@ use DateTimeImmutable;
 
 readonly class GetJoinedAdminUseCase
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private UrlSignatureEncrypterInterface $urlSignatureEncrypter,
     ) {

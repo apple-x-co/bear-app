@@ -27,7 +27,7 @@ use const CURLOPT_TIMEOUT;
 use const CURLOPT_URL;
 use const JSON_THROW_ON_ERROR;
 
-/** @SuppressWarnings(PHPMD.Superglobals) */
+/** @SuppressWarnings("PHPMD.Superglobals") */
 final class CloudflareTurnstileVerificationHandler implements CloudflareTurnstileVerificationHandlerInterface
 {
     private const VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
@@ -62,7 +62,7 @@ final class CloudflareTurnstileVerificationHandler implements CloudflareTurnstil
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYHOST => 0, // false
         ];
 
         $curl = curl_init();

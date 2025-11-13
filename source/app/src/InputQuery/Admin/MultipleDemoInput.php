@@ -14,7 +14,7 @@ readonly class MultipleDemoInput
      * @param list<string> $programmingLanguages
      *
      * @psalm-suppress UndefinedAttributeClass
-     * @SuppressWarnings(PHPMD.CamelCaseParameterName)
+     * @SuppressWarnings("PHPMD.CamelCaseParameterName")
      */
     public function __construct(
         #[Input]

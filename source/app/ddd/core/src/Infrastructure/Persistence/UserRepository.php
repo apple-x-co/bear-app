@@ -75,7 +75,7 @@ final readonly class UserRepository implements UserRepositoryInterface
         );
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     private function entityToModel(UserEntity $userEntity): User
     {
         return User::reconstruct(

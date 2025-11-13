@@ -19,7 +19,7 @@ use Ray\WebFormModule\FormInterface;
 use function getenv;
 use function time;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 class HtmlModule extends AbstractAppModule
 {
     protected function configure(): void

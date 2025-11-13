@@ -18,10 +18,10 @@ use Ray\MediaQuery\Queries;
 use function dirname;
 use function getenv;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 class AppModule extends AbstractAppModule
 {
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     protected function configure(): void
     {
         (new EnvJson())->load(dirname(__DIR__, 2));

@@ -12,7 +12,7 @@ final class EmailQueueRecipientEntityFactory
      * @param positive-int $id
      * @param positive-int $emailQueueId
      *
-     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings("PHPMD.LongVariable")
      */
     public function factory(
         int $id,

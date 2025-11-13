@@ -13,7 +13,7 @@ use function dirname;
 
 /**
  * @psalm-import-type Context from Types
- * @SuppressWarnings(PHPMD.StaticAccess)
+ * @SuppressWarnings("PHPMD.StaticAccess")
  */
 final class Injector
 {

@@ -25,7 +25,7 @@ use function assert;
 
 class CodeVerify extends BaseAdminPage
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         #[Named('admin_code_verify_form')]
         protected readonly FormInterface $form,

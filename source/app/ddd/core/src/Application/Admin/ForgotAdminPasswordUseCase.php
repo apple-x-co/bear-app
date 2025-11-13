@@ -18,10 +18,10 @@ use BEAR\Sunday\Extension\Router\RouterInterface;
 use DateTimeImmutable;
 use Ray\Di\Di\Named;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 readonly class ForgotAdminPasswordUseCase
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         #[Named('admin')]
         private AddressInterface $adminAddress,

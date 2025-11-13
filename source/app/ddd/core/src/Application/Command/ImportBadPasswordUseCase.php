@@ -29,7 +29,7 @@ final class ImportBadPasswordUseCase
     ) {
     }
 
-    /** @SuppressWarnings(PHPMD.EmptyCatchBlock) */
+    /** @SuppressWarnings("PHPMD.EmptyCatchBlock") */
     public function execute(): ImportBadPasswordOutputData
     {
         $passwords = [];

@@ -16,7 +16,7 @@ use Qiq\Helpers;
 use Ray\Di\AbstractModule;
 use Ray\WebFormModule\FormInterface;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 class DefaultModule extends AbstractModule
 {
     protected function configure(): void

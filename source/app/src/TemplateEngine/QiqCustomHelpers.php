@@ -15,19 +15,19 @@ use function is_string;
 use function sprintf;
 
 /**
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
 class QiqCustomHelpers extends HtmlHelpers
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(private readonly RouterInterface $router)
     {
         parent::__construct(null);
     }
 
     /**
-     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings("PHPMD.LongVariable")
      * @see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/
      */
     public function cfTurnstileWidget(

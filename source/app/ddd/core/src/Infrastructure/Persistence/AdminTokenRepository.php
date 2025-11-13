@@ -37,7 +37,7 @@ class AdminTokenRepository implements AdminTokenRepositoryInterface
         );
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     private function entityToModel(AdminTokenEntity $entity): AdminToken
     {
         return AdminToken::reconstruct(

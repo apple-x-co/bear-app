@@ -37,15 +37,15 @@ use function time;
 /**
  * Admin認証基盤
  *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
 class AdminAuthenticator implements AdminAuthenticatorInterface
 {
     private const string REMEMBER_SEPARATOR = ':';
 
     /**
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
+     * @SuppressWarnings("PHPMD.LongVariable")
      */
     public function __construct(
         private readonly AdminPermissionRepositoryInterface $adminPermissionRepository,

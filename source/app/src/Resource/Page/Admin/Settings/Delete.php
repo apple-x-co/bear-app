@@ -20,7 +20,7 @@ use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 class Delete extends BaseAdminPage
 {
     public function __construct(
@@ -42,7 +42,7 @@ class Delete extends BaseAdminPage
 
     /**
      * @FormValidation()
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      */
     #[AdminGuard]
     #[Transactional]

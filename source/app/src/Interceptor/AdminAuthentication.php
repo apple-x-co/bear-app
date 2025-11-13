@@ -45,7 +45,7 @@ use function sha1;
 /**
  * Admin認証
  *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
 readonly class AdminAuthentication implements MethodInterceptor
 {
@@ -92,8 +92,8 @@ readonly class AdminAuthentication implements MethodInterceptor
      * @param MethodInvocation<ResourceObject> $invocation
      *
      * @psalm-suppress ArgumentTypeCoercion
-     * @SuppressWarnings(PHPMD.ElseExpression)
-     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings("PHPMD.ElseExpression")
+     * @SuppressWarnings("PHPMD.Superglobals")
      */
     private function login(MethodInvocation $invocation, string $onFailure): mixed
     {

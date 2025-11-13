@@ -37,7 +37,7 @@ use MyVendor\MyProject\Resource\Page\BaseUserPage;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 class SessionAuthModule extends AbstractModule
 {
     protected function configure(): void

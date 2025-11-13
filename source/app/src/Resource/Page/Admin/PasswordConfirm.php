@@ -30,7 +30,7 @@ class PasswordConfirm extends BaseAdminPage
     }
 
     /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      * @FormValidation()
      */
     #[AdminGuard]
@@ -52,7 +52,7 @@ class PasswordConfirm extends BaseAdminPage
     /**
      * Callback from AdminAuthentication
      *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      */
     public function onPostAuthenticationFailed(AuthenticationException $authException): static
     {

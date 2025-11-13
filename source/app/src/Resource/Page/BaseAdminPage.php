@@ -8,7 +8,7 @@ use AppCore\Domain\Auth\AdminContextInterface;
 use BEAR\Resource\ResourceObject;
 use Ray\Di\Di\Inject;
 
-/** @SuppressWarnings(PHPMD.NumberOfChildren) */
+/** @SuppressWarnings("PHPMD.NumberOfChildren") */
 class BaseAdminPage extends ResourceObject
 {
     protected AdminContextInterface $context;

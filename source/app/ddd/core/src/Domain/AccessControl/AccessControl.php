@@ -41,7 +41,7 @@ class AccessControl implements AccessControlInterface
         return $clone;
     }
 
-    /** @SuppressWarnings(PHPMD.UnusedPrivateMethod) */
+    /** @SuppressWarnings("PHPMD.UnusedPrivateMethod") */
     private function setRule(string $resourceName, Access $access, Permission $permission): void
     {
         if (! isset($this->resources[$resourceName])) {

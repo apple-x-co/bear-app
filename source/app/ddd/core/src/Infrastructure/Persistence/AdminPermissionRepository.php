@@ -17,7 +17,7 @@ use function array_values;
 
 readonly class AdminPermissionRepository implements AdminPermissionRepositoryInterface
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private AdminPermissionCommandInterface $adminPermissionCommand,
         private AdminPermissionQueryInterface $adminPermissionQuery,
@@ -27,7 +27,7 @@ readonly class AdminPermissionRepository implements AdminPermissionRepositoryInt
     /**
      * {@inheritDoc}
      *
-     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings("PHPMD.LongVariable")
      */
     public function findByAdminId(int $adminId): array
     {
@@ -43,7 +43,7 @@ readonly class AdminPermissionRepository implements AdminPermissionRepositoryInt
         );
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     private function entityToModel(AdminPermissionEntity $entity): AdminPermission
     {
         return AdminPermission::reconstruct(
@@ -71,7 +71,7 @@ readonly class AdminPermissionRepository implements AdminPermissionRepositoryInt
         );
     }
 
-    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
+    /** @SuppressWarnings("PHPMD.UnusedFormalParameter") */
     public function update(AdminPermission $adminPermission): void
     {
         // void

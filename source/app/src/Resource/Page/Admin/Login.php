@@ -30,7 +30,7 @@ class Login extends BaseAdminPage
     }
 
     /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      * @FormValidation()
      */
     #[CloudflareTurnstile]
@@ -52,7 +52,7 @@ class Login extends BaseAdminPage
     /**
      * Callback from AdminAuthentication
      *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      */
     public function onPostAuthenticationFailed(AuthenticationException $authException): static
     {
@@ -64,13 +64,12 @@ class Login extends BaseAdminPage
     /**
      * Callback from CloudflareTurnstileVerification
      *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      */
     public function onCfTurnstileFailed(
         LoginUserInput $input,
         CaptchaException $captchaException,
-    ): static
-    {
+    ): static {
         $this->body['captchaError'] = true;
 
         return $this;

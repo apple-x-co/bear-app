@@ -38,7 +38,7 @@ use function call_user_func;
 /**
  * User認証
  *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
 readonly class UserAuthentication implements MethodInterceptor
 {

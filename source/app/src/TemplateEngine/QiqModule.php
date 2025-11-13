@@ -17,7 +17,7 @@ use Qiq\Template;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 class QiqModule extends AbstractModule
 {
     /**

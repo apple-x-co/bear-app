@@ -19,7 +19,7 @@ final readonly class AdminContext implements AdminContextInterface
      * @param ProviderInterface<AdminAuthenticatorInterface> $adminAuthenticatorProvider
      * @param ProviderInterface<SessionInterface>            $sessionProvider
      *
-     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings("PHPMD.LongVariable")
      */
     public function __construct(
         #[Set(AdminAuthenticatorInterface::class)]
@@ -40,7 +40,7 @@ final readonly class AdminContext implements AdminContextInterface
         return $this->sessionProvider->get();
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     public function isAllowed(string $resourceName, string $permission): bool
     {
         $requirePermission = Permission::from($permission);

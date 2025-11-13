@@ -24,12 +24,12 @@ use Throwable;
 use function array_reduce;
 use function array_values;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 final readonly class SendEmailFromEmailQueueUseCase
 {
     private const int INACTIVE = 0;
 
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private EmailQueueCommandInterface $emailQueueCommand,
         private EmailQueueRecipientCommandInterface $emailQueueRecipientCommand,
@@ -43,8 +43,8 @@ final readonly class SendEmailFromEmailQueueUseCase
     }
 
     /**
-     * @SuppressWarnings(PHPMD.LongVariable)
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings("PHPMD.LongVariable")
+     * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function execute(): void
     {
@@ -101,7 +101,7 @@ final readonly class SendEmailFromEmailQueueUseCase
     /**
      * @return array{0: list<EmailQueueEntity>, 1: array<positive-int, list<EmailQueueRecipientEntity>>}
      *
-     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings("PHPMD.LongVariable")
      */
     private function getSendableEmailQueue(): array
     {
@@ -145,8 +145,8 @@ final readonly class SendEmailFromEmailQueueUseCase
     /**
      * @param list<EmailQueueRecipientEntity> $emailQueueRecipientList
      *
-     * @SuppressWarnings(PHPMD.LongVariable)
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings("PHPMD.LongVariable")
+     * @SuppressWarnings("PHPMD.StaticAccess")
      */
     private function makeEmailWithQueue(EmailQueueEntity $emailQueue, array $emailQueueRecipientList): Email
     {

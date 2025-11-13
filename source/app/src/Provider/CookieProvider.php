@@ -12,7 +12,7 @@ readonly class CookieProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      *
-     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings("PHPMD.Superglobals")
      */
     public function get()
     {

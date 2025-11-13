@@ -9,7 +9,7 @@ use AppCore\Infrastructure\Query\VerificationCodeQueryInterface;
 
 class GetVerificationCodeUseCase
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private readonly VerificationCodeQueryInterface $verificationCodeQuery,
     ) {

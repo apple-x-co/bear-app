@@ -14,7 +14,7 @@ final class EmailQueueEntityFactory
      * @param non-negative-int $attempts
      * @param non-negative-int $maxAttempts
      *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
      */
     public static function factory(
         int $id,

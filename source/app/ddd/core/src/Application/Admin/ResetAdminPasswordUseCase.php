@@ -16,10 +16,10 @@ use AppCore\Infrastructure\Query\AdminQueryInterface;
 use DateTimeImmutable;
 use Ray\Di\Di\Named;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 readonly class ResetAdminPasswordUseCase
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         #[Named('admin')]
         private AddressInterface $adminAddress,

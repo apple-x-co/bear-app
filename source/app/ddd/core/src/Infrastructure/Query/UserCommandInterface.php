@@ -12,7 +12,7 @@ interface UserCommandInterface
     /**
      * @return array{id: positive-int}
      *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
      */
     #[DbQuery('users/user_add', type: 'row')]
     public function add(

@@ -25,7 +25,7 @@ use function assert;
 
 class SignUp extends BaseAdminPage
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private readonly CreateAdminUseCase $createAdminUseCase,
         private readonly GetJoinedAdminUseCase $getJoinedAdminUseCase,

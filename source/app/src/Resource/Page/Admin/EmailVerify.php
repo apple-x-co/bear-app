@@ -19,7 +19,7 @@ use Ray\InputQuery\Attribute\Input;
 
 class EmailVerify extends BaseAdminPage
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
         private readonly LanguageInterface $language,
@@ -27,7 +27,7 @@ class EmailVerify extends BaseAdminPage
     ) {
     }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     #[AdminGuard]
     #[WriteConnection]
     #[Transactional]

@@ -59,7 +59,7 @@ use function getenv;
 use function parse_str;
 use function random_bytes;
 
-/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 class BaseModule extends AbstractModule
 {
     public function __construct(

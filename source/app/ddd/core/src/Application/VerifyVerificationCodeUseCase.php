@@ -11,7 +11,7 @@ use DateTimeImmutable;
 
 class VerifyVerificationCodeUseCase
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private readonly VerificationCodeCommandInterface $verificationCodeCommand,
         private readonly VerificationCodeQueryInterface $verificationCodeQuery,

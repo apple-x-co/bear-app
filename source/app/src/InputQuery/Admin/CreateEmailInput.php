@@ -10,7 +10,7 @@ readonly class CreateEmailInput
 {
     /**
      * @psalm-suppress UndefinedAttributeClass
-     * @SuppressWarnings(PHPMD.CamelCaseParameterName)
+     * @SuppressWarnings("PHPMD.CamelCaseParameterName")
      */
     public function __construct(
         #[Input]

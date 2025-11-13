@@ -14,7 +14,7 @@ use Ray\Di\ProviderInterface;
 /** @template-implements ProviderInterface<SchemeCollection> */
 readonly class CommandSchemeCollectionProvider implements ProviderInterface
 {
-    /** @SuppressWarnings(PHPMD.LongVariable) */
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         #[AppName]
         private string $appName,

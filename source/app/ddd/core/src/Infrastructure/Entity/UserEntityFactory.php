@@ -12,7 +12,7 @@ final class UserEntityFactory
      * @param positive-int $id
      * @param int<0, 1>    $active
      *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
      */
     public static function factory(
         int $id,

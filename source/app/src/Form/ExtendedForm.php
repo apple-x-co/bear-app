@@ -14,7 +14,7 @@ use function array_merge;
 use function assert;
 use function is_array;
 
-/** @SuppressWarnings(PHPMD.NumberOfChildren) */
+/** @SuppressWarnings("PHPMD.NumberOfChildren") */
 abstract class ExtendedForm extends AbstractForm implements SubmitInterface
 {
     public function setOptions(): void
@@ -73,7 +73,7 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
      * @psalm-suppress InvalidReturnType
      * @psalm-suppress InvalidReturnStatement
      *
-     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings("PHPMD.Superglobals")
      *
      * @deprecated
      */
