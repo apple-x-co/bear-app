@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Query;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use Ray\MediaQuery\Annotation\DbQuery;
 
 interface UserCommandInterface
@@ -20,12 +20,12 @@ interface UserCommandInterface
         string $username,
         string $password,
         int $active,
-        DateTimeImmutable|null $signupDate,
-        DateTimeImmutable|null $leavedDate,
-        DateTimeImmutable|null $purgeDate,
-        DateTimeImmutable|null $lastLoggedInDate,
-        DateTimeImmutable|null $createdDate = null,
-        DateTimeImmutable|null $updatedDate = null,
+        DateTimeInterface|null $signupDate,
+        DateTimeInterface|null $leavedDate,
+        DateTimeInterface|null $purgeDate,
+        DateTimeInterface|null $lastLoggedInDate,
+        DateTimeInterface|null $createdDate = null,
+        DateTimeInterface|null $updatedDate = null,
     ): array;
 
     #[DbQuery('users/user_update')]
@@ -34,11 +34,11 @@ interface UserCommandInterface
         string $username,
         string $password,
         int $active,
-        DateTimeImmutable|null $signupDate,
-        DateTimeImmutable|null $leavedDate,
-        DateTimeImmutable|null $purgeDate,
-        DateTimeImmutable|null $lastLoggedInDate,
-        DateTimeImmutable|null $updatedDate = null,
+        DateTimeInterface|null $signupDate,
+        DateTimeInterface|null $leavedDate,
+        DateTimeInterface|null $purgeDate,
+        DateTimeInterface|null $lastLoggedInDate,
+        DateTimeInterface|null $updatedDate = null,
     ): void;
 
     #[DbQuery('users/user_delete')]

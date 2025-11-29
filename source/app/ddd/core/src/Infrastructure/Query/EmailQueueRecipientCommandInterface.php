@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Query;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use Ray\MediaQuery\Annotation\DbQuery;
 
 interface EmailQueueRecipientCommandInterface
@@ -20,9 +20,9 @@ interface EmailQueueRecipientCommandInterface
         string $recipientType,
         string $recipientEmailAddress,
         string|null $recipientName = null,
-        DateTimeImmutable|null $createdDate = null,
+        DateTimeInterface|null $createdDate = null,
     ): void;
 
     #[DbQuery('email_queue_recipients/email_queue_recipient_delete_sent_older', 'row')]
-    public function deleteBySentOlder(DateTimeImmutable $sentDate): void;
+    public function deleteBySentOlder(DateTimeInterface $sentDate): void;
 }

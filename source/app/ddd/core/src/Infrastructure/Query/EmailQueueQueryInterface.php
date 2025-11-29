@@ -6,7 +6,7 @@ namespace AppCore\Infrastructure\Query;
 
 use AppCore\Infrastructure\Entity\EmailQueueEntity;
 use AppCore\Infrastructure\Entity\EmailQueueEntityFactory;
-use DateTimeImmutable;
+use DateTimeInterface;
 use Ray\MediaQuery\Annotation\DbQuery;
 
 /**
@@ -16,5 +16,5 @@ interface EmailQueueQueryInterface
 {
     /** @return list<EmailQueueEntity> */
     #[DbQuery('email_queues/email_queue_list_by_sendable', factory: EmailQueueEntityFactory::class)]
-    public function listBySendable(DateTimeImmutable $scheduleDate): array;
+    public function listBySendable(DateTimeInterface $scheduleDate): array;
 }

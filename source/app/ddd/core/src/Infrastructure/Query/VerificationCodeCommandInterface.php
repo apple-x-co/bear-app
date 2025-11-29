@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Query;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use Ray\IdentityValueModule\Uuid;
 use Ray\MediaQuery\Annotation\DbQuery;
 
@@ -16,12 +16,12 @@ interface VerificationCodeCommandInterface
         string $emailAddress,
         string $url,
         string $code,
-        DateTimeImmutable $expireDate,
+        DateTimeInterface $expireDate,
         Uuid|null $uuid = null,
-        DateTimeImmutable|null $createdDate = null,
-        DateTimeImmutable|null $updatedDate = null,
+        DateTimeInterface|null $createdDate = null,
+        DateTimeInterface|null $updatedDate = null,
     ): array;
 
     #[DbQuery('verification_codes/verification_code_verified')]
-    public function verified(int $id, DateTimeImmutable $verifiedDate): void;
+    public function verified(int $id, DateTimeInterface $verifiedDate): void;
 }

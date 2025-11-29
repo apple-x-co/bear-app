@@ -6,7 +6,7 @@ namespace AppCore\Infrastructure\Query;
 
 use AppCore\Infrastructure\Entity\UserEntity;
 use AppCore\Infrastructure\Entity\UserEntityFactory;
-use DateTimeImmutable;
+use DateTimeInterface;
 use Ray\MediaQuery\Annotation\DbQuery;
 
 interface UserQueryInterface
@@ -27,5 +27,5 @@ interface UserQueryInterface
 
     /** @return list<UserEntity> */
     #[DbQuery('users/user_list_by_expired', factory: UserEntityFactory::class)]
-    public function listByExpired(DateTimeImmutable $dateTime): array;
+    public function listByExpired(DateTimeInterface $dateTime): array;
 }

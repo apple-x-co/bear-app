@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Query;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use Ray\MediaQuery\Annotation\DbQuery;
 
 interface EmailQueueCommandInterface
@@ -28,8 +28,8 @@ interface EmailQueueCommandInterface
         int $active,
         int $attempts,
         int $maxAttempts,
-        DateTimeImmutable $scheduleDate,
-        DateTimeImmutable|null $createdDate = null,
+        DateTimeInterface $scheduleDate,
+        DateTimeInterface|null $createdDate = null,
     ): array;
 
     /**
@@ -37,7 +37,7 @@ interface EmailQueueCommandInterface
      * @param non-negative-int $attempts
      */
     #[DbQuery('email_queues/email_queue_update_sent')]
-    public function sent(int $id, int $attempts, DateTimeImmutable $sentDate): void;
+    public function sent(int $id, int $attempts, DateTimeInterface $sentDate): void;
 
     /**
      * @param positive-int     $id
@@ -54,5 +54,5 @@ interface EmailQueueCommandInterface
     public function updateActive(int $id, int $active): void;
 
     #[DbQuery('email_queues/email_queue_delete_by_sent_older', 'row')]
-    public function deleteBySentOlder(DateTimeImmutable $sentDate): void;
+    public function deleteBySentOlder(DateTimeInterface $sentDate): void;
 }

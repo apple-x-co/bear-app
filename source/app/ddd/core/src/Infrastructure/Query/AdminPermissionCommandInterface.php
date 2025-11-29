@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Query;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminPermissionCommandInterface
@@ -15,6 +15,6 @@ interface AdminPermissionCommandInterface
         string $access,
         string $resourceName,
         string $permissionName,
-        DateTimeImmutable|null $createdDate = null,
+        DateTimeInterface|null $createdDate = null,
     ): void;
 }

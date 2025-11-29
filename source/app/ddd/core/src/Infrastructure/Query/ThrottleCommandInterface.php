@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Query;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use Ray\MediaQuery\Annotation\DbQuery;
 
 interface ThrottleCommandInterface
@@ -16,9 +16,9 @@ interface ThrottleCommandInterface
         int $iterationCount,
         int $maxAttempts,
         string $interval,
-        DateTimeImmutable $expireDate,
-        DateTimeImmutable|null $createdDate = null,
-        DateTimeImmutable|null $updatedDate = null,
+        DateTimeInterface $expireDate,
+        DateTimeInterface|null $createdDate = null,
+        DateTimeInterface|null $updatedDate = null,
     ): void;
 
     #[DbQuery('throttles/throttle_update')]
@@ -26,7 +26,7 @@ interface ThrottleCommandInterface
         int $id,
         string $remoteIp,
         int $iterationCount,
-        DateTimeImmutable $expireDate,
-        DateTimeImmutable|null $updatedDate = null,
+        DateTimeInterface $expireDate,
+        DateTimeInterface|null $updatedDate = null,
     ): void;
 }

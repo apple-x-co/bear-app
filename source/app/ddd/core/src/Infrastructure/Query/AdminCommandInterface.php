@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Query;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminCommandInterface
@@ -16,8 +16,8 @@ interface AdminCommandInterface
         string $password,
         string $displayName,
         int $active,
-        DateTimeImmutable|null $createdDate = null,
-        DateTimeImmutable|null $updatedDate = null,
+        DateTimeInterface|null $createdDate = null,
+        DateTimeInterface|null $updatedDate = null,
     ): array;
 
     #[DbQuery('admins/admin_update')]
@@ -26,6 +26,6 @@ interface AdminCommandInterface
         string $username,
         string $displayName,
         int $active,
-        DateTimeImmutable|null $updatedDate = null,
+        DateTimeInterface|null $updatedDate = null,
     ): void;
 }

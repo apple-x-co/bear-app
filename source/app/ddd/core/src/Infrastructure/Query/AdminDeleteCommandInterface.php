@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Query;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use Ray\MediaQuery\Annotation\DbQuery;
 
 interface AdminDeleteCommandInterface
@@ -12,11 +12,11 @@ interface AdminDeleteCommandInterface
     #[DbQuery('admins/admin_delete_add')]
     public function add(
         int $adminId,
-        DateTimeImmutable $requestDate,
-        DateTimeImmutable $scheduleDate,
-        DateTimeImmutable|null $createdDate = null,
+        DateTimeInterface $requestDate,
+        DateTimeInterface $scheduleDate,
+        DateTimeInterface|null $createdDate = null,
     ): void;
 
     #[DbQuery('admins/admin_delete_delete')]
-    public function delete(int $adminId, DateTimeImmutable $deletedDate): void;
+    public function delete(int $adminId, DateTimeInterface $deletedDate): void;
 }
