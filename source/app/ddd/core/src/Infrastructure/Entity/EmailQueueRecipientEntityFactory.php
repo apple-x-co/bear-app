@@ -14,7 +14,7 @@ final class EmailQueueRecipientEntityFactory
      *
      * @SuppressWarnings("PHPMD.LongVariable")
      */
-    public function factory(
+    public static function factory(
         int $id,
         int $emailQueueId,
         string $recipientType,
