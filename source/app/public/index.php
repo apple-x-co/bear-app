@@ -6,6 +6,16 @@ use MyVendor\MyProject\Bootstrap;
 
 session_name('bear-app');
 
+// NOTE: Enable the following if you want to POST from external sites.
+//$PUBLIC_HOSTS = ['example.com', 'www.example.com', 'example.com'];
+//if (in_array($_SERVER['HTTP_HOST'], $PUBLIC_HOSTS, true)) {
+//    $cookieParams = session_get_cookie_params();
+//    session_set_cookie_params(array_merge($cookieParams, [
+//        'samesite' => 'None',
+//        'secure' => true,
+//    ]));
+//}
+
 require dirname(__DIR__) . '/autoload.php';
 
 $environment = getenv('APP_CONTEXT') ?: (PHP_SAPI === 'cli-server' ? 'dev' : 'prod');
