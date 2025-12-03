@@ -93,10 +93,8 @@
             const dialogId = elOpener.dataset.targetDialog;
             const elDialog = document.querySelector('dialog[data-dialog-id="' + dialogId + '"]');
             const elCloser = elDialog.querySelector('[data-dialog="closer"]');
-            if (elCloser !== null) {
-              elCloser.addEventListener('click', () => { elDialog.close(); }, { once: true });
-              elDialog.showModal();
-            }
+            elCloser?.addEventListener('click', () => { elDialog.close(); }, { once: true });
+            elDialog.showModal();
           });
         });
       }
