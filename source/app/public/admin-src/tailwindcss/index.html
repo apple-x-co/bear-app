@@ -19,6 +19,7 @@
       document.addEventListener('DOMContentLoaded', () => {
         setupMenu();
         setupSearch();
+        setupDialog();
       });
 
       function setupMenu () {
@@ -81,6 +82,21 @@
             search.classList.remove('opacity-100');
 
             setTimeout(() => searchBg.classList.add('hidden'), 200);
+          });
+        });
+      }
+
+      function setupDialog () {
+        document.querySelectorAll('[data-dialog="opener"]').forEach(el => {
+          el.addEventListener('click', (ev) => {
+            const elOpener = ev.currentTarget;
+            const dialogId = elOpener.dataset.targetDialog;
+            const elDialog = document.querySelector('dialog[data-dialog-id="' + dialogId + '"]');
+            const elCloser = elDialog.querySelector('[data-dialog="closer"]');
+            if (elCloser !== null) {
+              elCloser.addEventListener('click', () => { elDialog.close(); }, { once: true });
+              elDialog.showModal();
+            }
           });
         });
       }
@@ -1046,6 +1062,64 @@
                             </div>
                         </div>
                     </div>
+                </section>
+
+                <section class="mt-10">
+                    <h3 class="font-bold border-b pb-2 mb-2">折りたたみ</h3>
+
+                    <details class="open:border-2 open:border-indigo-500 open:bg-indigo-100 open:rounded-xl open:p-3">
+                        <summary class="text-sm leading-6 text-gray-900 select-none">INFO</summary>
+                        <div class="text-sm leading-6 text-gray-600">
+                            <p>MESSAGE</p>
+                        </div>
+                    </details>
+
+                    <details class="open:border-2 open:border-rose-500 open:bg-rose-100 open:rounded-xl open:p-3">
+                        <summary class="text-sm leading-6 text-gray-900 select-none">ERROR</summary>
+                        <div class="text-sm leading-6 text-gray-600">
+                            <p>MESSAGE</p>
+                        </div>
+                    </details>
+
+                    <details class="open:border-2 open:border-slate-300 open:bg-slate-50 open:rounded-xl open:p-3">
+                        <summary class="text-sm leading-6 text-gray-900 select-none">METADATA</summary>
+                        <div class="mt-3 text-sm leading-6 text-gray-600">
+                            <div class="flex flex-wrap gap-2">
+                                <div class="px-3 py-2 text-xs tracking-wider rounded-lg border bg-slate-100 text-slate-700 border-slate-100">
+                                    <p><span class="text-slate-600 font-bold">GMO-PG</span></p>
+                                </div>
+                                <div class="px-3 py-2 text-xs tracking-wider rounded-lg border bg-slate-100 text-slate-700 border-slate-100">
+                                    <p><span class="text-slate-600 font-bold mr-1">accessId</span>586faa8e079d449f8173c432876c8df9</p>
+                                </div>
+                                <div class="px-3 py-2 text-xs tracking-wider rounded-lg border bg-slate-100 text-slate-700 border-slate-100">
+                                    <p><span class="text-slate-600 font-bold mr-1">accessPass</span>cf9531ebe6fbea1da3487d94fa596538</p>
+                                </div>
+                                <div class="px-3 py-2 text-xs tracking-wider rounded-lg border bg-slate-100 text-slate-700 border-slate-100">
+                                    <p><span class="text-slate-600 font-bold mr-1">acs</span>0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </section>
+
+                <section class="mt-10">
+                    <h3 class="font-bold border-b pb-2 mb-2">モーダル</h3>
+
+                    <button data-dialog="opener" data-target-dialog="dialog-1">モーダルを開く</button>
+                    <dialog class="bg-white border-4 border-indigo-500 outline-none rounded-lg shadow-xl" data-dialog-id="dialog-1">
+                        <div class="min-w-[320px] lg:min-w-96 p-3 ">
+                            <p>Dialog1</p>
+                            <button class="outline-none" data-dialog="closer">閉じる</button>
+                        </div>
+                    </dialog>
+
+                    <button data-dialog="opener" data-target-dialog="dialog-2">モーダルを開く</button>
+                    <dialog class="bg-white border-4 border-indigo-500 outline-none rounded-lg shadow-xl" data-dialog-id="dialog-2">
+                        <div class="min-w-[320px] lg:min-w-96 p-3 ">
+                            <p>Dialog2</p>
+                            <button class="outline-none" data-dialog="closer">閉じる</button>
+                        </div>
+                    </dialog>
                 </section>
             </main>
         </div>
