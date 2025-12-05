@@ -981,6 +981,10 @@ select {
   display: flex;
 }
 
+.inline-flex {
+  display: inline-flex;
+}
+
 .table {
   display: table;
 }
@@ -1019,6 +1023,18 @@ select {
 
 .h-6 {
   height: 1.5rem;
+}
+
+.h-7 {
+  height: 1.75rem;
+}
+
+.h-8 {
+  height: 2rem;
+}
+
+.h-9 {
+  height: 2.25rem;
 }
 
 .h-\[100svh\] {
@@ -1081,6 +1097,18 @@ select {
 
 .w-6 {
   width: 1.5rem;
+}
+
+.w-7 {
+  width: 1.75rem;
+}
+
+.w-8 {
+  width: 2rem;
+}
+
+.w-9 {
+  width: 2.25rem;
 }
 
 .w-96 {
@@ -1161,6 +1189,10 @@ select {
 
 .origin-bottom-right {
   transform-origin: bottom right;
+}
+
+.origin-center {
+  transform-origin: center;
 }
 
 .origin-top-right {
@@ -1322,6 +1354,10 @@ select {
 
 .whitespace-normal {
   white-space: normal;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
 }
 
 .break-words {
@@ -1574,6 +1610,10 @@ select {
 
 .stroke-\[2\.5px\] {
   stroke-width: 2.5px;
+}
+
+.stroke-\[3px\] {
+  stroke-width: 3px;
 }
 
 .p-2 {
@@ -2408,6 +2448,42 @@ select {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.group:hover .group-hover\:animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.group:hover .group-hover\:animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.group:hover .group-hover\:animate-spin {
+  animation: spin 1s linear infinite;
+}
+
 .group:hover .group-hover\:rounded-xl {
   border-radius: 0.75rem;
 }
@@ -2415,6 +2491,10 @@ select {
 .group:hover .group-hover\:bg-indigo-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(238 242 255 / var(--tw-bg-opacity, 1));
+}
+
+.group:hover .group-hover\:stroke-yellow-400 {
+  stroke: #facc15;
 }
 
 .group:hover .group-hover\:outline {
