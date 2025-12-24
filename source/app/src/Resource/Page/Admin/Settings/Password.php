@@ -15,6 +15,7 @@ use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminGuard;
+use MyVendor\MyProject\Annotation\AdminPasswordProtect;
 use MyVendor\MyProject\Annotation\RequiredPermission;
 use MyVendor\MyProject\InputQuery\Admin\UpdatePasswordInput;
 use MyVendor\MyProject\Resource\Page\BaseAdminPage;
@@ -39,6 +40,7 @@ class Password extends BaseAdminPage
     }
 
     #[AdminGuard]
+    #[AdminPasswordProtect]
     #[RequiredPermission('settings', Permission::Read)]
     public function onGet(): static
     {
@@ -47,6 +49,7 @@ class Password extends BaseAdminPage
 
     /** @FormValidation() */
     #[AdminGuard]
+    #[AdminPasswordProtect]
     public function onPost(
         #[Input]
         UpdatePasswordInput $input,

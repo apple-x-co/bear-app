@@ -66,7 +66,7 @@ readonly class AdminPasswordProtector implements MethodInterceptor
         }
 
         if ($uri->method === 'get') {
-            $path = empty($uri->query) ? '' : '?' . http_build_query($uri->query);
+            $path .= empty($uri->query) ? '' : '?' . http_build_query($uri->query);
         }
 
         $this->session->set('admin:protect:continue', $path);

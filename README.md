@@ -35,19 +35,19 @@ http://localhost/admin/login
 
 ```mermaid
 graph TD;
-  Login-->Index;
-  Index-->Settings/Index;
-  Settings/Index-->Settings/Emails;
-  Settings/Emails-->EmailVerify;
-  Settings/Index-->Settings/Password;
-  Login-->ForgotPassword;
-  ForgotPassword-->CodeVerify;
-  CodeVerify-->ResetPassword;
-  Login-->Join;
-  Join-->CodeVerify;
-  CodeVerify-->SignUp;
-  Index-->PasswordLock;
-  PasswordLock-->Markup;
+    Login --> Index;
+    Index --> Settings/Index;
+    Settings/Index --> Settings/Emails;
+    Settings/Emails --> EmailVerify;
+    Login --> ForgotPassword;
+    ForgotPassword --> CodeVerify;
+    CodeVerify --> ResetPassword;
+    Login --> Join;
+    Join --> CodeVerify;
+    CodeVerify --> SignUp;
+    Index --> PasswordProtect;
+    Index --> Settings/Password;
+    PasswordProtect --> Settings/Password;
 ```
 
 ### Features
