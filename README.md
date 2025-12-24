@@ -20,7 +20,7 @@ DDD（Domain-Driven Design）と CQRS（Command Query Responsibility Segregation
 ### 技術要件
 
 * PHP 8.3 以上
-* MySQL 8.0 以上（本番）
+* MySQL 8.0 以上
 * Composer
 * Node.js & npm（フロントエンドビルド用）
 
@@ -271,7 +271,7 @@ Ray.Di を使用したコンストラクタインジェクション。
 
 ### サポート DBMS
 
-* **本番環境**: MySQL 8.0 以上
+MySQL 8.0 以上
 
 ### 主要テーブル
 
