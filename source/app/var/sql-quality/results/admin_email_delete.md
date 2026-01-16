@@ -1,18 +1,16 @@
 # SQL Performance Analysis
-- **SQL File:** `admins/admin_email_by_admin_id.sql`
-- **Cost:** 0.35
+- **SQL File:** `admins/admin_email_delete.sql`
+- **Cost:** N/A
 
 ## SQL
 ```sql
-/* admin_email_by_admin_id */
-SELECT `id`, `admin_id`, `email_address`, `verified_date`, `created_date`, `updated_date`
-  FROM `admin_emails`
- WHERE `admin_id` = :adminId;
+/* admin_email_delete */
+DELETE FROM `admin_emails` WHERE `id` = :id;
 
 ```
 
 ## Detected Issues
-
+- 暗黙的な型変換が検出されました。 [Learn more](https://koriym.github.io/Koriym.SqlQuality/issues/ImplicitTypeConversion)
 
 ## Explain Tree
 ```
@@ -21,6 +19,7 @@ Table scan
    table           admin_emails
    rows            1
    filtered        100.00
+   condition       (`sql_quality_db`.`admin_emails`.`id` = 1)
 ```
 ## Analysis Detail
 
@@ -28,10 +27,10 @@ Table scan
 {"admin_emails":{"columns":[{"COLUMN_NAME":"id","DATA_TYPE":"int","COLUMN_TYPE":"int unsigned","IS_NULLABLE":"NO","COLUMN_KEY":"PRI","COLUMN_DEFAULT":null,"EXTRA":"auto_increment"},{"COLUMN_NAME":"admin_id","DATA_TYPE":"int","COLUMN_TYPE":"int unsigned","IS_NULLABLE":"NO","COLUMN_KEY":"MUL","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"email_address","DATA_TYPE":"varchar","COLUMN_TYPE":"varchar(100)","IS_NULLABLE":"NO","COLUMN_KEY":"UNI","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"verified_date","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"YES","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"created_date","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"updated_date","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""}],"indexes":[{"INDEX_NAME":"fk_admin_emails_1","COLUMN_NAME":"admin_id","NON_UNIQUE":1,"SEQ_IN_INDEX":1,"CARDINALITY":999},{"INDEX_NAME":"idx_admin_emails_1","COLUMN_NAME":"email_address","NON_UNIQUE":0,"SEQ_IN_INDEX":1,"CARDINALITY":999},{"INDEX_NAME":"PRIMARY","COLUMN_NAME":"id","NON_UNIQUE":0,"SEQ_IN_INDEX":1,"CARDINALITY":999}],"status":{"table_rows":1000,"data_length":98304,"index_length":81920,"auto_increment":1001,"create_time":"2026-01-16 11:46:03","update_time":"2026-01-16 11:46:41"}}}
 
 ### EXPLAIN JSON
-{"select_id":1,"cost_info":{"query_cost":"0.35"},"table":{"table_name":"admin_emails","access_type":"ref","possible_keys":["fk_admin_emails_1"],"key":"fk_admin_emails_1","used_key_parts":["admin_id"],"key_length":"4","ref":["const"],"rows_examined_per_scan":1,"rows_produced_per_join":1,"filtered":"100.00","cost_info":{"read_cost":"0.25","eval_cost":"0.10","prefix_cost":"0.35","data_read_per_join":"432"},"used_columns":["id","admin_id","email_address","verified_date","created_date","updated_date"]}}
+{"select_id":1,"table":{"delete":true,"table_name":"admin_emails","access_type":"range","possible_keys":["PRIMARY"],"key":"PRIMARY","used_key_parts":["id"],"key_length":"4","ref":["const"],"rows_examined_per_scan":1,"filtered":"100.00","attached_condition":"(`sql_quality_db`.`admin_emails`.`id` = 1)"}}
 
 ### EXPLAIN ANALYZE
--> Index lookup on admin_emails using fk_admin_emails_1 (admin_id=1)  (cost=0.35 rows=1) (actual time=0.00196..0.00196 rows=0 loops=1)
+<not executable by iterator executor>
 
 ### SHOW WARNINGS
 N/A

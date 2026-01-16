@@ -12,7 +12,7 @@ $pdo = new PDO('mysql:host=sql-quality;dbname=sql_quality_db', 'sql_quality', 'p
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 ]);
 
-$sqlParams = require 'params.php';
+$sqlParams = require 'params/sql_params.php';
 
 $analyzer = new SqlFileAnalyzer(
     $pdo,

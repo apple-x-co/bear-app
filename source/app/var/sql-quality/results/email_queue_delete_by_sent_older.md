@@ -1,28 +1,13 @@
 # SQL Performance Analysis
-- **SQL File:** `email_queues/email_queue_list_by_sendable.sql`
-- **Cost:** 0.70
+- **SQL File:** `email_queues/email_queue_delete_by_sent_older.sql`
+- **Cost:** N/A
 
 ## SQL
 ```sql
-/* email_queue_list_by_sendable */
-SELECT `id`
-     , `sender_email_address`
-     , `sender_name`
-     , `subject`
-     , `text`
-     , `html`
-     , `active`
-     , `attempts`
-     , `max_attempts`
-     , `schedule_date`
-     , `sent_date`
-     , `created_date`
+/* email_queue_delete_by_sent_older */
+DELETE
 FROM `email_queues`
-WHERE `sent_date` IS NULL
-  AND `schedule_date` <= :scheduleDate
-  AND `active` = 1
-  AND `max_attempts` > `attempts`
-ORDER BY `id` DESC;
+WHERE `sent_date` <= :sentDate;
 
 ```
 
@@ -31,13 +16,12 @@ ORDER BY `id` DESC;
 
 ## Explain Tree
 ```
-Sort
-+- Table scan
-   +- Table
-      table           email_queues
-      rows            2
-      filtered        2.50
-      condition       ((`sql_quality_db`.`email_queues`.`active` = 1) and (`sql_quality_db`.`email_queues`.`sent_date` is null) and (`sql_quality_db`.`email_queues`.`schedule_date` <= TIMESTAMP'2024-01-01 12:00:00') and (`sql_quality_db`.`email_queues`.`max_attempts` > `sql_quality_db`.`email_queues`.`attempts`))
+Table scan
++- Table
+   table           email_queues
+   rows            1
+   filtered        100.00
+   condition       (`sql_quality_db`.`email_queues`.`sent_date` <= TIMESTAMP'2024-01-01 12:00:00')
 ```
 ## Analysis Detail
 
@@ -45,11 +29,10 @@ Sort
 {"email_queues":{"columns":[{"COLUMN_NAME":"id","DATA_TYPE":"bigint","COLUMN_TYPE":"bigint unsigned","IS_NULLABLE":"NO","COLUMN_KEY":"PRI","COLUMN_DEFAULT":null,"EXTRA":"auto_increment"},{"COLUMN_NAME":"sender_email_address","DATA_TYPE":"varchar","COLUMN_TYPE":"varchar(100)","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"sender_name","DATA_TYPE":"varchar","COLUMN_TYPE":"varchar(100)","IS_NULLABLE":"YES","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"subject","DATA_TYPE":"varchar","COLUMN_TYPE":"varchar(100)","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"text","DATA_TYPE":"text","COLUMN_TYPE":"text","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"html","DATA_TYPE":"text","COLUMN_TYPE":"text","IS_NULLABLE":"YES","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"active","DATA_TYPE":"smallint","COLUMN_TYPE":"smallint unsigned","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"attempts","DATA_TYPE":"smallint","COLUMN_TYPE":"smallint unsigned","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"max_attempts","DATA_TYPE":"smallint","COLUMN_TYPE":"smallint unsigned","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"schedule_date","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"sent_date","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"YES","COLUMN_KEY":"MUL","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"created_date","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""}],"indexes":[{"INDEX_NAME":"idx_email_queues_1","COLUMN_NAME":"sent_date","NON_UNIQUE":1,"SEQ_IN_INDEX":1,"CARDINALITY":542},{"INDEX_NAME":"PRIMARY","COLUMN_NAME":"id","NON_UNIQUE":0,"SEQ_IN_INDEX":1,"CARDINALITY":1000}],"status":{"table_rows":1000,"data_length":163840,"index_length":49152,"auto_increment":1001,"create_time":"2026-01-16 11:46:03","update_time":"2026-01-16 11:46:43"}}}
 
 ### EXPLAIN JSON
-{"select_id":1,"cost_info":{"query_cost":"0.70"},"ordering_operation":{"using_filesort":false,"table":{"table_name":"email_queues","access_type":"ref","possible_keys":["idx_email_queues_1"],"key":"idx_email_queues_1","used_key_parts":["sent_date"],"key_length":"6","ref":["const"],"rows_examined_per_scan":2,"rows_produced_per_join":0,"filtered":"2.50","backward_index_scan":true,"cost_info":{"read_cost":"0.50","eval_cost":"0.01","prefix_cost":"0.70","data_read_per_join":"63"},"used_columns":["id","sender_email_address","sender_name","subject","text","html","active","attempts","max_attempts","schedule_date","sent_date","created_date"],"attached_condition":"((`sql_quality_db`.`email_queues`.`active` = 1) and (`sql_quality_db`.`email_queues`.`sent_date` is null) and (`sql_quality_db`.`email_queues`.`schedule_date` <= TIMESTAMP'2024-01-01 12:00:00') and (`sql_quality_db`.`email_queues`.`max_attempts` > `sql_quality_db`.`email_queues`.`attempts`))"}}}
+{"select_id":1,"table":{"delete":true,"table_name":"email_queues","access_type":"range","possible_keys":["idx_email_queues_1"],"key":"idx_email_queues_1","used_key_parts":["sent_date"],"key_length":"6","ref":["const"],"rows_examined_per_scan":1,"filtered":"100.00","attached_condition":"(`sql_quality_db`.`email_queues`.`sent_date` <= TIMESTAMP'2024-01-01 12:00:00')"}}
 
 ### EXPLAIN ANALYZE
--> Filter: ((email_queues.`active` = 1) and (email_queues.sent_date is null) and (email_queues.schedule_date <= TIMESTAMP'2024-01-01 12:00:00') and (email_queues.max_attempts > email_queues.attempts))  (cost=0.505 rows=0.05) (actual time=0.00871..0.00871 rows=0 loops=1)
-    -> Index lookup on email_queues using idx_email_queues_1 (sent_date=NULL) (reverse)  (cost=0.505 rows=2) (actual time=0.00492..0.00767 rows=2 loops=1)
+<not executable by iterator executor>
 
 ### SHOW WARNINGS
 N/A
