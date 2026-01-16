@@ -1,10 +1,10 @@
 # SQL Performance Analysis
-- **SQL File:** `bad_password_item.sql`
+- **SQL File:** `bad_passwords/bad_password_item.sql`
 - **Cost:** N/A
 
 ## SQL
 ```sql
-SELECT `password`, `created_at`
+SELECT `password`, `created_date`
   FROM `bad_passwords`
  WHERE `password` = :password;
 
@@ -21,13 +21,13 @@ info            no matching row in const table
 ## Analysis Detail
 
 ### Schema
-{"bad_passwords":{"columns":[{"COLUMN_NAME":"password","DATA_TYPE":"varchar","COLUMN_TYPE":"varchar(255)","IS_NULLABLE":"NO","COLUMN_KEY":"PRI","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"created_at","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""}],"indexes":[{"INDEX_NAME":"PRIMARY","COLUMN_NAME":"password","NON_UNIQUE":0,"SEQ_IN_INDEX":1,"CARDINALITY":1000}],"status":{"table_rows":1000,"data_length":65536,"index_length":0,"auto_increment":null,"create_time":"2025-01-23 09:55:20","update_time":null}}}
+{"bad_passwords":{"columns":[{"COLUMN_NAME":"password","DATA_TYPE":"varchar","COLUMN_TYPE":"varchar(255)","IS_NULLABLE":"NO","COLUMN_KEY":"PRI","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"created_date","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""}],"indexes":[{"INDEX_NAME":"PRIMARY","COLUMN_NAME":"password","NON_UNIQUE":0,"SEQ_IN_INDEX":1,"CARDINALITY":1000}],"status":{"table_rows":1000,"data_length":65536,"index_length":0,"auto_increment":null,"create_time":"2026-01-16 10:40:51","update_time":"2026-01-16 10:40:53"}}}
 
 ### EXPLAIN JSON
 {"select_id":1,"message":"no matching row in const table"}
 
 ### EXPLAIN ANALYZE
--> Zero rows (no matching row in const table)  (cost=0..0 rows=0) (actual time=0..0 rows=0 loops=1)
+-> Zero rows (no matching row in const table)  (cost=0..0 rows=0) (actual time=82e-6..82e-6 rows=0 loops=1)
 
 ### SHOW WARNINGS
 N/A
