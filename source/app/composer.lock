@@ -6186,16 +6186,16 @@
         },
         {
             "name": "koriym/sql-quality",
-            "version": "0.1.7",
+            "version": "0.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/koriym/Koriym.SqlQuality.git",
-                "reference": "2dd457e05674bfc970ad54c559c7385f88162bd0"
+                "reference": "349fee8c869d3bac48f6cbbe956ad9f43bf777db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/Koriym.SqlQuality/zipball/2dd457e05674bfc970ad54c559c7385f88162bd0",
-                "reference": "2dd457e05674bfc970ad54c559c7385f88162bd0",
+                "url": "https://api.github.com/repos/koriym/Koriym.SqlQuality/zipball/349fee8c869d3bac48f6cbbe956ad9f43bf777db",
+                "reference": "349fee8c869d3bac48f6cbbe956ad9f43bf777db",
                 "shasum": ""
             },
             "require": {
@@ -6205,8 +6205,12 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8",
                 "phpunit/phpunit": "^9.5",
-                "rector/rector": "^2.0"
+                "rector/rector": "^2.0",
+                "symfony/polyfill-php83": "^1.33"
             },
+            "bin": [
+                "bin/sql-quality"
+            ],
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -6225,9 +6229,9 @@
             ],
             "support": {
                 "issues": "https://github.com/koriym/Koriym.SqlQuality/issues",
-                "source": "https://github.com/koriym/Koriym.SqlQuality/tree/0.1.7"
+                "source": "https://github.com/koriym/Koriym.SqlQuality/tree/0.1.8"
             },
-            "time": "2025-04-01T14:03:56+00:00"
+            "time": "2026-01-15T02:43:01+00:00"
         },
         {
             "name": "michelf/php-markdown",
