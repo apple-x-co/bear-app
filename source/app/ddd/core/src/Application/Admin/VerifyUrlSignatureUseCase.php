@@ -8,7 +8,7 @@ use AppCore\Domain\UrlSignature\ExpiredSignatureException;
 use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
 use DateTimeImmutable;
 
-readonly class GetJoinedAdminUseCase
+readonly class VerifyUrlSignatureUseCase
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
@@ -16,7 +16,7 @@ readonly class GetJoinedAdminUseCase
     ) {
     }
 
-    public function execute(GetJoinedAdminInputData $inputData): void
+    public function execute(VerifyUrlSignatureInputData $inputData): void
     {
         $urlSignature = $this->urlSignatureEncrypter->decrypt($inputData->signature);
 

@@ -174,12 +174,11 @@ class BaseModule extends AbstractModule
         $this->bind(AdminUseCase\DeleteAdminUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\ForgotAdminPasswordUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\GetAdminUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(AdminUseCase\GetForgotAdminPasswordUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(AdminUseCase\GetJoinedAdminUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\JoinAdminUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\ResetAdminPasswordUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\UpdateAdminPasswordUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\VerifyAdminEmailUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\VerifyUrlSignatureUseCase::class)->in(Scope::SINGLETON);
 
         $this->bind(CommandUseCase\ImportBadPasswordUseCase::class)->in(Scope::SINGLETON);
         $this->bind(CommandUseCase\SendEmailFromEmailQueueUseCase::class)->in(Scope::SINGLETON);

@@ -6,8 +6,8 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use AppCore\Application\Admin\CreateAdminInputData;
 use AppCore\Application\Admin\CreateAdminUseCase;
-use AppCore\Application\Admin\GetJoinedAdminInputData;
-use AppCore\Application\Admin\GetJoinedAdminUseCase;
+use AppCore\Application\Admin\VerifyUrlSignatureInputData;
+use AppCore\Application\Admin\VerifyUrlSignatureUseCase;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -28,7 +28,7 @@ class SignUp extends BaseAdminPage
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private readonly CreateAdminUseCase $createAdminUseCase,
-        private readonly GetJoinedAdminUseCase $getJoinedAdminUseCase,
+        private readonly VerifyUrlSignatureUseCase $verifyUrlSignatureUseCase,
         #[Named('admin_sign_up_form')]
         protected readonly FormInterface $form,
     ) {
@@ -40,8 +40,8 @@ class SignUp extends BaseAdminPage
         string $signature,
     ): static {
         try {
-            $this->getJoinedAdminUseCase->execute(
-                new GetJoinedAdminInputData($signature),
+            $this->verifyUrlSignatureUseCase->execute(
+                new VerifyUrlSignatureInputData($signature),
             );
         } catch (Throwable) {
             $this->context->setSessionValue('error:message', 'message:admin:sign_up:decrypt_error');

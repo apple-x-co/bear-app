@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
-use AppCore\Application\Admin\GetForgotAdminPasswordInputData;
-use AppCore\Application\Admin\GetForgotAdminPasswordUseCase;
+use AppCore\Application\Admin\VerifyUrlSignatureInputData;
+use AppCore\Application\Admin\VerifyUrlSignatureUseCase;
 use AppCore\Application\Admin\ResetAdminPasswordInputData;
 use AppCore\Application\Admin\ResetAdminPasswordUseCase;
 use BEAR\Resource\NullRenderer;
@@ -29,7 +29,7 @@ class ResetPassword extends BaseAdminPage
     public function __construct(
         #[Named('admin_password_reset_form')]
         protected readonly FormInterface $form,
-        private readonly GetForgotAdminPasswordUseCase $getForgotAdminPasswordUseCase,
+        private readonly VerifyUrlSignatureUseCase $verifyUrlSignatureUseCase,
         private readonly ResetAdminPasswordUseCase $resetAdminPasswordUseCase,
     ) {
         $this->body['form'] = $this->form;
@@ -41,8 +41,8 @@ class ResetPassword extends BaseAdminPage
         string $signature,
     ): static {
         try {
-            $this->getForgotAdminPasswordUseCase->execute(
-                new GetForgotAdminPasswordInputData($signature),
+            $this->verifyUrlSignatureUseCase->execute(
+                new VerifyUrlSignatureInputData($signature),
             );
         } catch (Throwable) {
             $this->context->setSessionValue('error:message', 'message:admin:reset_password:decrypt_error');
