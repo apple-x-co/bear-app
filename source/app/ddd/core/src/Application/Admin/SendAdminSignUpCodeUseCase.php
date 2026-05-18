@@ -19,7 +19,7 @@ use DateTimeImmutable;
 use Ray\Di\Di\Named;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-readonly class JoinAdminUseCase
+readonly class SendAdminSignUpCodeUseCase
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
@@ -37,7 +37,7 @@ readonly class JoinAdminUseCase
     ) {
     }
 
-    public function execute(JoinAdminInputData $inputData): JoinAdminOutputData
+    public function execute(SendAdminSignUpCodeInputData $inputData): SendAdminSignUpCodeOutputData
     {
         $expiresAt = (new DateTimeImmutable())->modify('+10 minutes');
         $code = $this->secureRandom->randomNumbers(12);
@@ -69,6 +69,6 @@ readonly class JoinAdminUseCase
             $expiresAt,
         );
 
-        return new JoinAdminOutputData((string) $this->router->generate('/admin/code-verify', ['uuid' => $array['uuid']]));
+        return new SendAdminSignUpCodeOutputData((string) $this->router->generate('/admin/code-verify', ['uuid' => $array['uuid']]));
     }
 }

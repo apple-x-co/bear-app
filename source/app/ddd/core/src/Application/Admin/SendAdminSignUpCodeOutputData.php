@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Application\Admin;
 
-readonly class JoinAdminOutputData
+readonly class SendAdminSignUpCodeOutputData
 {
     public function __construct(
         public string $redirectUrl,

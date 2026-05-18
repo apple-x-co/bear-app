@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
-use AppCore\Application\Admin\JoinAdminInputData;
-use AppCore\Application\Admin\JoinAdminUseCase;
+use AppCore\Application\Admin\SendAdminSignUpCodeInputData;
+use AppCore\Application\Admin\SendAdminSignUpCodeUseCase;
 use AppCore\Domain\Captcha\CaptchaException;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
@@ -24,7 +24,7 @@ class Join extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
-        protected readonly JoinAdminUseCase $createAdminUseCase,
+        protected readonly SendAdminSignUpCodeUseCase $sendAdminSignUpCodeUseCase,
         #[Named('admin_join_form')]
         protected readonly FormInterface $form,
     ) {
@@ -43,8 +43,8 @@ class Join extends BaseAdminPage
         #[Input]
         JoinInput $input,
     ): static {
-        $outputData = $this->createAdminUseCase->execute(
-            new JoinAdminInputData(
+        $outputData = $this->sendAdminSignUpCodeUseCase->execute(
+            new SendAdminSignUpCodeInputData(
                 $input->emailAddress,
             ),
         );
