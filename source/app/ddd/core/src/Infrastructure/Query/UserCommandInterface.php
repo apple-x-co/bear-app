@@ -29,6 +29,7 @@ interface UserCommandInterface
         DateTimeInterface|null $updatedDate = null,
     ): array;
 
+    /** @SuppressWarnings("PHPMD.ExcessiveParameterList") */
     #[DbQuery('users/user_update')]
     public function update(
         int $id,
