@@ -168,7 +168,7 @@ class BaseModule extends AbstractModule
 
     private function usecase(): void
     {
-        $this->bind(AdminUseCase\CreateAdminEmailUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\AddAdminEmailUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\CreateAdminUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\DeleteAdminEmailUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\DeleteAdminUseCase::class)->in(Scope::SINGLETON);

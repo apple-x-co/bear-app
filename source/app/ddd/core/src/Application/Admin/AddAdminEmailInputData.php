@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Application\Admin;
 
-readonly class CreateAdminEmailInputData
+readonly class AddAdminEmailInputData
 {
     /** @param positive-int $adminId */
     public function __construct(

@@ -23,7 +23,7 @@ use function array_reduce;
 use function array_values;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-readonly class CreateAdminEmailUseCase
+readonly class AddAdminEmailUseCase
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
@@ -41,7 +41,7 @@ readonly class CreateAdminEmailUseCase
     ) {
     }
 
-    public function execute(CreateAdminEmailInputData $inputData): void
+    public function execute(AddAdminEmailInputData $inputData): void
     {
         $admin = $this->adminRepository->findById($inputData->adminId);
 

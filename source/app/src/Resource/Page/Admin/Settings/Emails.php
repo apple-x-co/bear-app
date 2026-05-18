@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin\Settings;
 
-use AppCore\Application\Admin\CreateAdminEmailInputData;
-use AppCore\Application\Admin\CreateAdminEmailUseCase;
+use AppCore\Application\Admin\AddAdminEmailInputData;
+use AppCore\Application\Admin\AddAdminEmailUseCase;
 use AppCore\Application\Admin\GetAdminInputData;
 use AppCore\Application\Admin\GetAdminUseCase;
 use AppCore\Domain\AccessControl\Permission;
@@ -28,8 +28,8 @@ class Emails extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
+        private readonly AddAdminEmailUseCase $addAdminEmailUseCase,
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
-        private readonly CreateAdminEmailUseCase $createAdminEmailUseCase,
         private readonly GetAdminUseCase $getAdminUseCase,
         #[Named('admin_email_create_form')]
         protected readonly FormInterface $form,
@@ -68,8 +68,8 @@ class Emails extends BaseAdminPage
             return $this;
         }
 
-        $this->createAdminEmailUseCase->execute(
-            new CreateAdminEmailInputData(
+        $this->addAdminEmailUseCase->execute(
+            new AddAdminEmailInputData(
                 $adminId,
                 $input->emailAddress,
             ),
