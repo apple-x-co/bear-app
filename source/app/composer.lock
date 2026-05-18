@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7bf487e846b2d2b817d46884ac3d86fd",
+    "content-hash": "e1ea51a400161183fe6d17e9b99ca95f",
     "packages": [
         {
             "name": "aura/auth",
@@ -4707,29 +4707,38 @@
         },
         {
             "name": "ray/web-form-module",
-            "version": "0.6.0",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.WebFormModule.git",
-                "reference": "4b6d33adb4a5c285278a068f3e7a5afdc4e680d9"
+                "reference": "70b8ad5e64d37b2327c338b6debfdd38158e24d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.WebFormModule/zipball/4b6d33adb4a5c285278a068f3e7a5afdc4e680d9",
-                "reference": "4b6d33adb4a5c285278a068f3e7a5afdc4e680d9",
+                "url": "https://api.github.com/repos/ray-di/Ray.WebFormModule/zipball/70b8ad5e64d37b2327c338b6debfdd38158e24d7",
+                "reference": "70b8ad5e64d37b2327c338b6debfdd38158e24d7",
                 "shasum": ""
             },
             "require": {
                 "aura/filter": "^2.3|3.x-dev",
                 "aura/html": "^2.5",
                 "aura/input": "^1.2",
-                "php": ">=7.0.0",
+                "aura/session": "^2.1 || ^4.0",
+                "php": ">=8.0.0",
+                "ray/aop": "^2.14",
                 "ray/aura-session-module": "^1.1",
-                "ray/di": "^2.7"
+                "ray/di": "^2.16"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7.13"
+                "doctrine/coding-standard": "^14.0",
+                "maglnet/composer-require-checker": "^4.0",
+                "phpmd/phpmd": "^2.13",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^4.0",
+                "vimeo/psalm": "^5.0 || ^6.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -4749,7 +4758,7 @@
                 "issues": "https://github.com/ray-di/Ray.WebFormModule/issues",
                 "source": "https://github.com/ray-di/Ray.WebFormModule/tree/1.x"
             },
-            "time": "2018-05-27T17:34:13+00:00"
+            "time": "2026-05-17T09:08:37+00:00"
         },
         {
             "name": "ray/web-param-module",
@@ -9128,9 +9137,17 @@
             "time": "2025-11-13T13:44:09+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "ray/web-form-module",
+            "version": "1.9999999.9999999.9999999-dev",
+            "alias": "1.0",
+            "alias_normalized": "1.0.0.0"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "ray/web-form-module": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
