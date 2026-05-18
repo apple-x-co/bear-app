@@ -66,7 +66,8 @@ CREATE TABLE `admins`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB COMMENT '管理者アカウント';
 
-CREATE UNIQUE INDEX `idx_admins_1` ON `admins` (`username`);
+/** 一意制約違反が起きるためSQL解析では作成しない */
+/** CREATE UNIQUE INDEX `idx_admins_1` ON `admins` (`username`); */
 
 CREATE TABLE `bad_passwords`
 (
