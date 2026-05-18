@@ -17,6 +17,7 @@ final class UserEntityFactory
     public static function factory(
         int $id,
         string $uid,
+        string $displayName,
         string $username,
         string $password,
         int $active,
@@ -30,6 +31,7 @@ final class UserEntityFactory
         return new UserEntity(
             $id,
             $uid,
+            $displayName,
             $username,
             $password,
             $active === 1,

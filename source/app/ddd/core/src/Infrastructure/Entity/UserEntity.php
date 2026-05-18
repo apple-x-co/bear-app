@@ -16,6 +16,7 @@ final readonly class UserEntity
     public function __construct(
         public int $id,
         public string $uid,
+        public string $displayName,
         public string $username,
         public string $password,
         public bool $active,

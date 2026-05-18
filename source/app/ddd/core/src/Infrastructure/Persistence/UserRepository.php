@@ -81,6 +81,7 @@ final readonly class UserRepository implements UserRepositoryInterface
         return User::reconstruct(
             $userEntity->id,
             $userEntity->uid,
+            $userEntity->displayName,
             $userEntity->username,
             $userEntity->password,
             $userEntity->active,
@@ -102,6 +103,7 @@ final readonly class UserRepository implements UserRepositoryInterface
     {
         $array = $this->userCommand->add(
             $user->uid,
+            $user->displayName,
             $user->username,
             $user->password,
             $user->active ? 1 : 0,
@@ -123,6 +125,7 @@ final readonly class UserRepository implements UserRepositoryInterface
 
         $this->userCommand->update(
             $user->id,
+            $user->displayName,
             $user->username,
             $user->password,
             $user->active ? 1 : 0,

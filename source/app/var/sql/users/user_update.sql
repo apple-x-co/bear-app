@@ -1,6 +1,7 @@
 /** user_update */
 UPDATE `users`
-SET `username`            = :username
+SET `display_name`        = :displayName
+  , `username`            = :username
   , `password`            = :password
   , `active`              = :active
   , `signup_date`         = :signupDate

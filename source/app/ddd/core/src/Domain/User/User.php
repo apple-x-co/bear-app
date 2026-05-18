@@ -19,6 +19,7 @@ final class User
      */
     public function __construct(
         public readonly string $uid,
+        public readonly string $displayName,
         public readonly string $username,
         public readonly string $password,
         public readonly bool $active,
@@ -40,6 +41,7 @@ final class User
     public static function reconstruct(
         int $id,
         string $uid,
+        string $displayName,
         string $username,
         string $password,
         bool $active,
@@ -52,6 +54,7 @@ final class User
     ): self {
         return new self(
             $uid,
+            $displayName,
             $username,
             $password,
             $active,
@@ -81,6 +84,7 @@ final class User
     {
         return new self(
             $this->uid,
+            $this->displayName,
             $username,
             $this->password,
             $this->active,
@@ -98,6 +102,7 @@ final class User
     {
         return new self(
             $this->uid,
+            $this->displayName,
             $this->username,
             $password,
             $this->active,
@@ -117,6 +122,7 @@ final class User
 
         return new self(
             $this->uid,
+            $this->displayName,
             $this->username,
             $this->password,
             false,
@@ -134,6 +140,7 @@ final class User
     {
         return new self(
             $this->uid,
+            $this->displayName,
             $this->username,
             $this->password,
             $this->active,

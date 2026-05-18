@@ -1,6 +1,7 @@
 /** user_list_by_expired */
 SELECT `id`
      , `uid`
+     , `display_name`
      , `username`
      , `password`
      , `active`

@@ -17,6 +17,7 @@ interface UserCommandInterface
     #[DbQuery('users/user_add', type: 'row')]
     public function add(
         string $uid,
+        string $displayName,
         string $username,
         string $password,
         int $active,
@@ -31,6 +32,7 @@ interface UserCommandInterface
     #[DbQuery('users/user_update')]
     public function update(
         int $id,
+        string $displayName,
         string $username,
         string $password,
         int $active,

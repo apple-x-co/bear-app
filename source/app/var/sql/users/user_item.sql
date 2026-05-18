@@ -1,6 +1,7 @@
 /** user_item */
 SELECT `id`
      , `uid`
+     , `display_name`
      , `username`
      , `password`
      , `active`
