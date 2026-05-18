@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use AppCore\Application\Admin\JoinAdminInputData;
-use AppCore\Application\Admin\JoinAdminUserCase;
+use AppCore\Application\Admin\JoinAdminUseCase;
 use AppCore\Domain\Captcha\CaptchaException;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
@@ -24,7 +24,7 @@ class Join extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
-        protected readonly JoinAdminUserCase $createAdminUseCase,
+        protected readonly JoinAdminUseCase $createAdminUseCase,
         #[Named('admin_join_form')]
         protected readonly FormInterface $form,
     ) {

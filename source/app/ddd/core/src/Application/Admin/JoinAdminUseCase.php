@@ -19,7 +19,7 @@ use DateTimeImmutable;
 use Ray\Di\Di\Named;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-readonly class JoinAdminUserCase
+readonly class JoinAdminUseCase
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(

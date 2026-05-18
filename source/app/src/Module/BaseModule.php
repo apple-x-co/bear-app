@@ -176,7 +176,7 @@ class BaseModule extends AbstractModule
         $this->bind(AdminUseCase\GetAdminUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\GetForgotAdminPasswordUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\GetJoinedAdminUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(AdminUseCase\JoinAdminUserCase::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUseCase\JoinAdminUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\ResetAdminPasswordUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\UpdateAdminPasswordUseCase::class)->in(Scope::SINGLETON);
         $this->bind(AdminUseCase\VerifyAdminEmailUseCase::class)->in(Scope::SINGLETON);
