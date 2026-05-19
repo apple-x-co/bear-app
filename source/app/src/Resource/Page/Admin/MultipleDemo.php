@@ -8,6 +8,7 @@ use MyVendor\MyProject\InputQuery\Admin\MultipleDemoInput;
 use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
+use Ray\WebFormModule\Annotation\CsrfProtection;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -27,6 +28,7 @@ class MultipleDemo extends BaseAdminPage
 
     /** @SuppressWarnings("PHPMD.UnusedFormalParameter") */
     #[FormValidation]
+    #[CsrfProtection]
     public function onPost(
         #[Input]
         MultipleDemoInput $input,

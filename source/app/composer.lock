@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e1ea51a400161183fe6d17e9b99ca95f",
+    "content-hash": "2cf4ae38b340574d9be3c05c3f0d97cf",
     "packages": [
         {
             "name": "aura/auth",
@@ -4707,16 +4707,16 @@
         },
         {
             "name": "ray/web-form-module",
-            "version": "1.x-dev",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.WebFormModule.git",
-                "reference": "70b8ad5e64d37b2327c338b6debfdd38158e24d7"
+                "reference": "300ebc96f5f09f6cb8db6bc7fc0f756324eeea7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.WebFormModule/zipball/70b8ad5e64d37b2327c338b6debfdd38158e24d7",
-                "reference": "70b8ad5e64d37b2327c338b6debfdd38158e24d7",
+                "url": "https://api.github.com/repos/ray-di/Ray.WebFormModule/zipball/300ebc96f5f09f6cb8db6bc7fc0f756324eeea7f",
+                "reference": "300ebc96f5f09f6cb8db6bc7fc0f756324eeea7f",
                 "shasum": ""
             },
             "require": {
@@ -4738,7 +4738,6 @@
                 "squizlabs/php_codesniffer": "^4.0",
                 "vimeo/psalm": "^5.0 || ^6.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -4756,9 +4755,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ray-di/Ray.WebFormModule/issues",
-                "source": "https://github.com/ray-di/Ray.WebFormModule/tree/1.x"
+                "source": "https://github.com/ray-di/Ray.WebFormModule/tree/1.0.1"
             },
-            "time": "2026-05-17T09:08:37+00:00"
+            "time": "2026-05-18T15:42:18+00:00"
         },
         {
             "name": "ray/web-param-module",
@@ -9137,17 +9136,9 @@
             "time": "2025-11-13T13:44:09+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "ray/web-form-module",
-            "version": "1.9999999.9999999.9999999-dev",
-            "alias": "1.0",
-            "alias_normalized": "1.0.0.0"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ray/web-form-module": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,

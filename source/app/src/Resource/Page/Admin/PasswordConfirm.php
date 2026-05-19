@@ -11,6 +11,7 @@ use MyVendor\MyProject\InputQuery\Admin\UserPasswordInput;
 use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
+use Ray\WebFormModule\Annotation\CsrfProtection;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -31,6 +32,7 @@ class PasswordConfirm extends BaseAdminPage
 
     /** @SuppressWarnings("PHPMD.UnusedFormalParameter") */
     #[FormValidation]
+    #[CsrfProtection]
     #[AdminGuard]
     #[AdminVerifyPassword]
     public function onPost(

@@ -18,6 +18,7 @@ use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
+use Ray\WebFormModule\Annotation\CsrfProtection;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -58,6 +59,7 @@ class CodeVerify extends BaseAdminPage
     }
 
     #[FormValidation]
+    #[CsrfProtection]
     #[Transactional]
     public function onPost(
         #[Input]

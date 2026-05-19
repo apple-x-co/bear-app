@@ -10,6 +10,7 @@ use MyVendor\MyProject\InputQuery\Customer\LoginUserInput;
 use MyVendor\MyProject\Resource\Page\BaseUserPage;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
+use Ray\WebFormModule\Annotation\CsrfProtection;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -29,6 +30,7 @@ class Login extends BaseUserPage
 
     /** @SuppressWarnings("PHPMD.UnusedFormalParameter") */
     #[FormValidation]
+    #[CsrfProtection]
     #[UserLogin]
     public function onPost(
         #[Input]

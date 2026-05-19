@@ -21,6 +21,7 @@ use MyVendor\MyProject\InputQuery\Admin\UpdatePasswordInput;
 use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
+use Ray\WebFormModule\Annotation\CsrfProtection;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 use Throwable;
@@ -48,6 +49,7 @@ class Password extends BaseAdminPage
     }
 
     #[FormValidation]
+    #[CsrfProtection]
     #[AdminGuard]
     #[AdminPasswordProtect]
     public function onPost(
