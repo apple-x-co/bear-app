@@ -16,7 +16,6 @@ use MyVendor\MyProject\InputQuery\Admin\JoinInput;
 use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
-use Ray\WebFormModule\Annotation\CsrfProtection;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
@@ -38,7 +37,6 @@ class Join extends BaseAdminPage
     }
 
     #[FormValidation]
-    #[CsrfProtection]
     #[CloudflareTurnstile]
     #[RateLimiter]
     public function onPost(
