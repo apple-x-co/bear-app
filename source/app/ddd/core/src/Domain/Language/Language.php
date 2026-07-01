@@ -7,7 +7,6 @@ namespace AppCore\Domain\Language;
 use function preg_replace;
 use function str_replace;
 use function str_starts_with;
-use function var_dump;
 
 class Language implements LanguageInterface
 {
@@ -15,7 +14,6 @@ class Language implements LanguageInterface
     public function __construct(
         private readonly array $messages,
     ) {
-        var_dump(__FILE__);
     }
 
     /**

@@ -15,6 +15,6 @@ final class Language implements LanguageInterface
 
     public function get(string $key, array $params = []): string
     {
-        return $key;
+        return 'DUMMY';
     }
 }
