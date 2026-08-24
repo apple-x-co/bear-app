@@ -49,7 +49,8 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
 
         foreach ($this->inputs as $input) {
             if ($input instanceof Fieldset) {
-                $input->filter();
+                $isValid = $input->filter() && $isValid;
+
                 continue;
             }
 
@@ -60,7 +61,7 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
             $fieldsetName = $input->name;
             foreach ($this->$fieldsetName as $fieldset) {
                 assert($fieldset instanceof Fieldset);
-                $fieldset->filter();
+                $isValid = $fieldset->filter() && $isValid;
             }
         }
 
