@@ -21,6 +21,7 @@ use AppCore\Domain\Encrypter\EncrypterInterface;
 use AppCore\Domain\Hasher\PasswordHasher;
 use AppCore\Domain\Hasher\PasswordHasherInterface;
 use AppCore\Domain\Language\LanguageInterface;
+use AppCore\Domain\Locale\Locale;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
@@ -51,7 +52,10 @@ use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
 use MyVendor\MyProject\Provider\LanguageProvider;
 use MyVendor\MyProject\Provider\PhpMailerProvider;
+use MyVendor\MyProject\Provider\RequestLocaleProvider;
+use MyVendor\MyProject\Provider\ServerRequestProvider;
 use PHPMailer\PHPMailer\PHPMailer;
+use Psr\Http\Message\ServerRequestInterface;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
@@ -194,5 +198,8 @@ class BaseModule extends AbstractModule
             HttpClient::class,
             ['config' => 'http_client_config'],
         );
+
+        $this->bind(ServerRequestInterface::class)->toProvider(ServerRequestProvider::class);
+        $this->bind(Locale::class)->toProvider(RequestLocaleProvider::class);
     }
 }

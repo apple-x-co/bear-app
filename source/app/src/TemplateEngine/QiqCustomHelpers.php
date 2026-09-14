@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\TemplateEngine;
 
+use AppCore\Domain\Locale\Locale;
 use Aura\Html\Helper\Input\AbstractInput;
 use BEAR\Sunday\Extension\Router\RouterInterface;
 use MyVendor\MyProject\Form\ExtendedFieldset;
@@ -21,8 +22,10 @@ use function sprintf;
 class QiqCustomHelpers extends HtmlHelpers
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
-    public function __construct(private readonly RouterInterface $router)
-    {
+    public function __construct(
+        private readonly Locale $requestLocale,
+        private readonly RouterInterface $router,
+    ) {
         parent::__construct(null);
     }
 
@@ -286,8 +289,12 @@ class QiqCustomHelpers extends HtmlHelpers
     }
 
     /** @param array<string, string> $attribs */
-    public function managerFormError(ExtendedForm $form, string $input, string $tag = 'span', array $attribs = []): string
-    {
+    public function managerFormError(
+        ExtendedForm $form,
+        string $input,
+        string $tag = 'span',
+        array $attribs = [],
+    ): string {
         $message = $form->error($input);
         if ($message === '') {
             return '';
@@ -395,6 +402,11 @@ class QiqCustomHelpers extends HtmlHelpers
         ];
 
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    public function requestLocale(): Locale
+    {
+        return $this->requestLocale;
     }
 
     public function csrfTokenField(ExtendedForm $form): AbstractInput
