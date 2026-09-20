@@ -44,7 +44,7 @@
                     {{= adminText(form: $form, input: 'password') }}
                     {{= adminFormError(form: $form, input: 'password') }}
                 </label>
-                <p class="text-sm text-right mt-1"><a href="{{= url('/admin/forgot-password') }}">Forgot password?</a></p>
+                <p class="text-sm text-right mt-1"><a href="{{a adminUri('/forgot-password') }}">Forgot password?</a></p>
                 <label class="block mt-5">
                     <span class="block top-2 left-3 text-sm font-normal text-slate-700 tracking-wide select-none">Remember</span>
                     {{= adminCheckBox(form: $form, input: 'remember') }}
@@ -61,6 +61,6 @@
         </form>
         <div class="absolute top-full right-0 w-full h-px rounded-full max-w-sm bg-gradient-to-r from-transparent from-10% via-purple-500 to-transparent drop-shadow-xl"></div>
     </div>
-    <p class="text-sm text-center mt-2"><a href="{{= url('/admin/join') }}">Create an account</a></p>
+    <p class="text-sm text-center mt-2"><a href="{{a adminUri('/join') }}">Create an account</a></p>
 </div>
 {{ endBlock () }}

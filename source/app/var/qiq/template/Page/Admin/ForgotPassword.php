@@ -45,6 +45,6 @@
         </form>
         <div class="absolute top-full right-0 w-full h-px rounded-full max-w-sm bg-gradient-to-r from-transparent from-10% via-purple-500 to-transparent drop-shadow-xl"></div>
     </div>
-    <p class="text-sm text-center mt-2"><a href="{{= url('/admin/login') }}">Already have an account?</a></p>
+    <p class="text-sm text-center mt-2"><a href="{{a adminUri('/login') }}">Already have an account?</a></p>
 </div>
 {{ endBlock () }}

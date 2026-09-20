@@ -9,12 +9,15 @@ use AppCore\Application\Command as CommandUseCase;
 use AppCore\Application\GetVerificationCodeUseCase;
 use AppCore\Application\VerifyVerificationCodeUseCase;
 use AppCore\Attribute\AdminBaseUrl;
+use AppCore\Attribute\AdminStaticBaseUrl;
 use AppCore\Attribute\EmailDir;
 use AppCore\Attribute\EncryptPass;
 use AppCore\Attribute\HashSalt;
 use AppCore\Attribute\Japanese;
 use AppCore\Attribute\LangDir;
 use AppCore\Attribute\LangOverrideDir;
+use AppCore\Attribute\PublicBaseUrl;
+use AppCore\Attribute\PublicStaticBaseUrl;
 use AppCore\Attribute\ServiceName;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\AdminPermission\AdminPermissionRepositoryInterface;
@@ -36,6 +39,10 @@ use AppCore\Domain\Mail\TemplateRendererInterface;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
 use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
+use AppCore\Domain\Uri\AdminStaticUriBuilderInterface;
+use AppCore\Domain\Uri\AdminUriBuilderInterface;
+use AppCore\Domain\Uri\PublicStaticUriBuilderInterface;
+use AppCore\Domain\Uri\PublicUriBuilderInterface;
 use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
 use AppCore\Domain\User\UserRepositoryInterface;
 use AppCore\Infrastructure\Persistence\AdminPermissionRepository;
@@ -55,6 +62,10 @@ use AppCore\Infrastructure\Shared\SecureRandom;
 use AppCore\Infrastructure\Shared\SmtpMail;
 use AppCore\Infrastructure\Shared\UrlSignatureEncrypter;
 use AppCore\Infrastructure\Shared\UserLogger;
+use AppCore\Presentation\Uri\AdminStaticUriBuilder;
+use AppCore\Presentation\Uri\AdminUriBuilder;
+use AppCore\Presentation\Uri\PublicStaticUriBuilder;
+use AppCore\Presentation\Uri\PublicUriBuilder;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
 use MyVendor\MyProject\Provider\JapaneseProvider;
@@ -139,7 +150,15 @@ class BaseModule extends AbstractModule
 
     private function url(): void
     {
+        $this->bind()->annotatedWith(AdminStaticBaseUrl::class)->toInstance(getenv('ADMIN_STATIC_BASE_URL'));
         $this->bind()->annotatedWith(AdminBaseUrl::class)->toInstance(getenv('ADMIN_BASE_URL'));
+        $this->bind()->annotatedWith(PublicStaticBaseUrl::class)->toInstance(getenv('PUBLIC_STATIC_BASE_URL'));
+        $this->bind()->annotatedWith(PublicBaseUrl::class)->toInstance(getenv('PUBLIC_BASE_URL'));
+
+        $this->bind(AdminStaticUriBuilderInterface::class)->to(AdminStaticUriBuilder::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUriBuilderInterface::class)->to(AdminUriBuilder::class)->in(Scope::SINGLETON);
+        $this->bind(PublicStaticUriBuilderInterface::class)->to(PublicStaticUriBuilder::class)->in(Scope::SINGLETON);
+        $this->bind(PublicUriBuilderInterface::class)->to(PublicUriBuilder::class)->in(Scope::SINGLETON);
     }
 
     private function email(): void

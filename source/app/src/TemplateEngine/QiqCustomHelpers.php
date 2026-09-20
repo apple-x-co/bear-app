@@ -7,15 +7,23 @@ namespace MyVendor\MyProject\TemplateEngine;
 use AppCore\Domain\Document\DocumentReaderInterface;
 use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\Locale\Locale;
+use AppCore\Domain\Uri\AdminStaticUriBuilderInterface;
+use AppCore\Domain\Uri\AdminUriBuilderInterface;
+use AppCore\Domain\Uri\PublicStaticUriBuilderInterface;
+use AppCore\Domain\Uri\PublicUriBuilderInterface;
 use Aura\Html\Helper\Input\AbstractInput;
-use BEAR\Sunday\Extension\Router\RouterInterface;
 use MyVendor\MyProject\Form\ExtendedFieldset;
 use MyVendor\MyProject\Form\ExtendedForm;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UriInterface;
 use Qiq\Helper\Html\HtmlHelpers;
 
 use function array_merge;
+use function implode;
 use function is_string;
 use function sprintf;
+
+use const PHP_EOL;
 
 /**
  * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
@@ -26,10 +34,14 @@ class QiqCustomHelpers extends HtmlHelpers
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
-        private readonly RouterInterface $router,
+        private readonly AdminStaticUriBuilderInterface $adminStaticUriBuilder,
+        private readonly AdminUriBuilderInterface $adminUriBuilder,
         private readonly DocumentReaderInterface $documentReader,
         private readonly LanguageInterface $language,
+        private readonly PublicStaticUriBuilderInterface $publicStaticUriBuilder,
+        private readonly PublicUriBuilderInterface $publicUriBuilder,
         private readonly Locale $requestLocale,
+        private readonly ServerRequestInterface $serverRequest,
     ) {
         parent::__construct(null);
     }
@@ -420,14 +432,66 @@ class QiqCustomHelpers extends HtmlHelpers
     }
 
     /** @param array<string, mixed> $params */
-    public function url(string $routePath, array $params = []): string
+    public function adminStaticUri(string $path, array $params = []): UriInterface
     {
-        $path = $this->router->generate($routePath, $params);
-        if (is_string($path)) {
-            return $path;
+        return $this->adminStaticUriBuilder->build($path, $params);
+    }
+
+    /**
+     * @param array<string, mixed> $params
+     *
+     * @SuppressWarnings("PHPMD.StaticAccess")
+     */
+    public function adminUri(string $path, array $params = []): UriInterface
+    {
+        return $this->adminUriBuilder->build(
+            $path,
+            $params,
+        );
+    }
+
+    /** @param array<string, mixed> $params */
+    public function publicStaticUri(string $path, array $params = []): UriInterface
+    {
+        return $this->publicStaticUriBuilder->build($path, $params);
+    }
+
+    /**
+     * @param array<string, mixed> $params
+     *
+     * @SuppressWarnings("PHPMD.StaticAccess")
+     */
+    public function publicUri(string $path, array $params = [], string|null $locale = null): UriInterface
+    {
+        return $this->publicUriBuilder->build(
+            $path,
+            $params,
+            $locale === null ? $this->requestLocale : Locale::from($locale),
+        );
+    }
+
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
+    public function hreflangLinks(): string
+    {
+        $uri = $this->serverRequest->getUri();
+
+        $origin = $uri->getScheme() . '://' . $uri->getHost();
+        $search = $uri->getQuery() === '' ? '' : '?' . $uri->getQuery();
+
+        $uriPath = Locale::stripPrefixFromPath($uri->getPath());
+
+        $tagList = [];
+        $supportedLocaleList = Locale::cases();
+        foreach ($supportedLocaleList as $supportedLocale) {
+            $link = $origin . '/' . $supportedLocale->value . $uriPath . $search;
+            $tagList[] = sprintf(
+                '<link rel="alternate" hreflang="%s" href="%s">',
+                $supportedLocale->value,
+                $link,
+            );
         }
 
-        return $routePath;
+        return implode(PHP_EOL, $tagList);
     }
 
     /**

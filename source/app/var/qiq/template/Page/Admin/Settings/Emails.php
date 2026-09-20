@@ -19,7 +19,7 @@
                 {{ endif }}
             </div>
             <div class="flex-none text-right">
-                <form method="post" action="{{= url('/admin/settings/emails/delete', ['id' => $adminEmail->id]) }}">
+                <form method="post" action="{{a adminUri('/settings/emails/delete', ['id' => $adminEmail->id]) }}">
                     <button type="submit" value="削除" class="text-rose-500 focus:outline-none">
                         {{= render('partials/Admin/InlineIcon', ['name' => 'trash']) }}
                     </button>
