@@ -36,7 +36,7 @@ readonly class AdminAuthGuardian implements MethodInterceptor
         $uri = $ro->uri;
         if ($uri->method === 'get') {
             $path = $this->router->generate($uri->path, $uri->query);
-            $this->session->set('admin:continue', $path === false ? '' : $path);
+            $this->session->set('admin_continue', $path === false ? '' : $path);
         }
 
         $ro->setRenderer(new NullRenderer());

@@ -51,8 +51,8 @@ readonly class AdminPasswordProtector implements MethodInterceptor
     {
         $now = (new DateTimeImmutable())->getTimestamp();
 
-        $locking = $this->session->get('admin:protect:locking', AdminPasswordLocking::Locked->name);
-        $expire = $this->session->get('admin:protect:expire', '0');
+        $locking = $this->session->get('admin_protect:locking', AdminPasswordLocking::Locked->name);
+        $expire = $this->session->get('admin_protect:expire', '0');
         if ($locking === AdminPasswordLocking::Unlocked->name && $now < (int) $expire) {
             return $invocation->proceed();
         }
@@ -69,7 +69,7 @@ readonly class AdminPasswordProtector implements MethodInterceptor
             $path .= empty($uri->query) ? '' : '?' . http_build_query($uri->query);
         }
 
-        $this->session->set('admin:protect:continue', $path);
+        $this->session->set('admin_protect:continue', $path);
 
         $ro->setRenderer(new NullRenderer());
         $ro->code = StatusCode::FOUND;
@@ -83,9 +83,9 @@ readonly class AdminPasswordProtector implements MethodInterceptor
     /** @param MethodInvocation<ResourceObject> $invocation */
     private function lock(MethodInvocation $invocation): mixed
     {
-        $this->session->set('admin:protect:locking', AdminPasswordLocking::Locked->name);
-        $this->session->set('admin:protect:continue', '');
-        $this->session->set('admin:protect:expire', '0');
+        $this->session->set('admin_protect:locking', AdminPasswordLocking::Locked->name);
+        $this->session->set('admin_protect:continue', '');
+        $this->session->set('admin_protect:expire', '0');
 
         return $invocation->proceed();
     }

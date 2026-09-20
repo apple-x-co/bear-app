@@ -59,12 +59,7 @@ class AppModule extends AbstractAppModule
             ),
         );
 
-        $this->install(
-            new BaseModule(
-                $this->appMeta->appDir . '/var/email',
-                $this->appMeta->appDir . '/var/lang',
-            ),
-        );
+        $this->install(new BaseModule($this->appMeta->appDir));
 
         $this->install(new PackageModule());
 

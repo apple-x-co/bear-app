@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\TemplateEngine;
 
+use AppCore\Domain\Document\DocumentReaderInterface;
+use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\Locale\Locale;
 use Aura\Html\Helper\Input\AbstractInput;
 use BEAR\Sunday\Extension\Router\RouterInterface;
@@ -23,8 +25,10 @@ class QiqCustomHelpers extends HtmlHelpers
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
-        private readonly Locale $requestLocale,
         private readonly RouterInterface $router,
+        private readonly DocumentReaderInterface $documentReader,
+        private readonly LanguageInterface $language,
+        private readonly Locale $requestLocale,
     ) {
         parent::__construct(null);
     }
@@ -423,5 +427,20 @@ class QiqCustomHelpers extends HtmlHelpers
         }
 
         return $routePath;
+    }
+
+    /**
+     * @param array<string, mixed> $params
+     *
+     * @SuppressWarnings("PHPMD.ShortMethodName")
+     */
+    public function t(string $key, array $params = []): string
+    {
+        return $this->language->get($key, $params);
+    }
+
+    public function doc(string $name): string
+    {
+        return $this->documentReader->read($name, $this->requestLocale);
     }
 }
