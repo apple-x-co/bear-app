@@ -17,6 +17,7 @@ final readonly class LanguageFactory implements LanguageFactoryInterface
 {
     private const string FILE_EXT = '.php';
 
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         #[LangDir]
         private string $langDir,
@@ -35,6 +36,7 @@ final readonly class LanguageFactory implements LanguageFactoryInterface
     /** @return array<string, string> */
     private function load(Locale $locale): array
     {
+        /** @psalm-suppress UnresolvableInclude */
         $texts = require $this->langDir . '/' . $locale->value . self::FILE_EXT;
         if (! is_array($texts)) {
             return [];
@@ -45,6 +47,7 @@ final readonly class LanguageFactory implements LanguageFactoryInterface
             return $texts;
         }
 
+        /** @psalm-suppress UnresolvableInclude */
         $overrideTexts = require $path;
         if (! is_array($overrideTexts)) {
             return $texts;

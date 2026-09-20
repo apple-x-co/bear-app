@@ -19,6 +19,7 @@ use function sprintf;
 
 /**
  * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
+ * @SuppressWarnings("PHPMD.TooManyMethods")
  * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
 class QiqCustomHelpers extends HtmlHelpers

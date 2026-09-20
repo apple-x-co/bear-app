@@ -17,6 +17,7 @@ final readonly class DocumentReader implements DocumentReaderInterface
     private const string DOCUMENT_DEFAULT = '';
     private const string FILE_EXT = '.html';
 
+    /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         #[LangDir]
         private string $langDir,
