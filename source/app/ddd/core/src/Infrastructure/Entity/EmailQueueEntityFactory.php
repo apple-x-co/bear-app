@@ -18,11 +18,12 @@ final class EmailQueueEntityFactory
      */
     public static function factory(
         int $id,
-        string $senderMailAddress,
+        string $senderEmailAddress,
         string|null $senderName,
         string $subject,
         string $text,
         string|null $html,
+        string $priority,
         int $active,
         int $attempts,
         int $maxAttempts,
@@ -32,11 +33,12 @@ final class EmailQueueEntityFactory
     ): EmailQueueEntity {
         return new EmailQueueEntity(
             $id,
-            $senderMailAddress,
+            $senderEmailAddress,
             $senderName,
             $subject,
             $text,
             $html,
+            $priority,
             $active,
             $attempts,
             $maxAttempts,

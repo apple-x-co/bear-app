@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject;
 
+use AppCore\Domain\Locale\Locale;
 use BEAR\Resource\ResourceObject;
+use BEAR\Resource\Uri;
 use BEAR\Sunday\Extension\Application\AppInterface;
 use BEAR\Sunday\Extension\Router\RouterInterface;
 use MyVendor\MyProject\Module\App;
@@ -23,6 +25,8 @@ final class Bootstrap
      * @param Server  $server
      *
      * @return 0|1
+     *
+     * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function __invoke(string $context, array $globals, array $server): int
     {
@@ -36,7 +40,13 @@ final class Bootstrap
 
         $request = $app->router->match($globals, $server);
         try {
-            $response = $app->resource->{$request->method}->uri($request->path)($request->query);
+            // BEAR\Resource\Uri でリソース URI をパースし、スキームとホストを動的に取得する
+            // 例: http://localhost/ja/topics/detail → page://self/ja/topics/detail
+            //     $uri->scheme = 'page', $uri->host = 'self', $uri->path = '/ja/topics/detail'
+            $uri = new Uri($request->path);
+            $uriPath = Locale::stripPrefixFromPath($uri->path);
+
+            $response = $app->resource->{$request->method}->uri("{$uri->scheme}://{$uri->host}{$uriPath}")($request->query);
             assert($response instanceof ResourceObject);
             $response->transfer($app->responder, $server);
 

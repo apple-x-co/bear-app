@@ -5,6 +5,7 @@ SELECT `id`
      , `subject`
      , `text`
      , `html`
+     , `priority`
      , `active`
      , `attempts`
      , `max_attempts`
@@ -16,4 +17,8 @@ WHERE `sent_date` IS NULL
   AND `schedule_date` <= :scheduleDate
   AND `active` = 1
   AND `max_attempts` > `attempts`
-ORDER BY `id` DESC;
+ORDER BY CASE `priority`
+             WHEN 'high' THEN 0
+             WHEN 'normal' THEN 1
+             ELSE 2
+         END, `schedule_date`;

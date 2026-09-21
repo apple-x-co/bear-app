@@ -4,26 +4,169 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\TemplateEngine;
 
+use AppCore\Domain\Document\DocumentReaderInterface;
+use AppCore\Domain\Language\LanguageInterface;
+use AppCore\Domain\Locale\Locale;
+use AppCore\Domain\Uri\AdminStaticUriBuilderInterface;
+use AppCore\Domain\Uri\AdminUriBuilderInterface;
+use AppCore\Domain\Uri\PublicStaticUriBuilderInterface;
+use AppCore\Domain\Uri\PublicUriBuilderInterface;
 use Aura\Html\Helper\Input\AbstractInput;
-use BEAR\Sunday\Extension\Router\RouterInterface;
 use MyVendor\MyProject\Form\ExtendedFieldset;
 use MyVendor\MyProject\Form\ExtendedForm;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UriInterface;
 use Qiq\Helper\Html\HtmlHelpers;
 
 use function array_merge;
+use function implode;
 use function is_string;
 use function sprintf;
 
+use const PHP_EOL;
+
 /**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
+ * @SuppressWarnings("PHPMD.TooManyMethods")
  * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
 class QiqCustomHelpers extends HtmlHelpers
 {
+    private const string CSRF_TOKEN_NAME = '__csrf_token';
+    private const array TRANSLATABLE_ATTRIBS = ['title', 'placeholder', 'value'];
+
     /** @SuppressWarnings("PHPMD.LongVariable") */
-    public function __construct(private readonly RouterInterface $router)
-    {
+    public function __construct(
+        private readonly AdminStaticUriBuilderInterface $adminStaticUriBuilder,
+        private readonly AdminUriBuilderInterface $adminUriBuilder,
+        private readonly DocumentReaderInterface $documentReader,
+        private readonly LanguageInterface $language,
+        private readonly PublicStaticUriBuilderInterface $publicStaticUriBuilder,
+        private readonly PublicUriBuilderInterface $publicUriBuilder,
+        private readonly Locale $requestLocale,
+        private readonly ServerRequestInterface $serverRequest,
+    ) {
         parent::__construct(null);
+    }
+
+    public function requestLocale(): Locale
+    {
+        return $this->requestLocale;
+    }
+
+    public function csrfTokenField(ExtendedForm $form): AbstractInput
+    {
+        return $form->widget($form->get(self::CSRF_TOKEN_NAME));
+    }
+
+    public function formValue(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+    ): mixed {
+        $obj = $fieldset === null ? $form->getInput($input) : $fieldset->getInput($input);
+
+        return $obj->getValue();
+    }
+
+    /** @param array<string, mixed> $attribs */
+    public function formWidget(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+        foreach (self::TRANSLATABLE_ATTRIBS as $attribName) {
+            if (
+                ! isset($spec['attribs'][$attribName]) ||
+                $spec['attribs'][$attribName] === ''
+            ) {
+                continue;
+            }
+
+            $spec['attribs'][$attribName] = $this->t($spec['attribs'][$attribName]);
+        }
+
+        return $form->widget($spec, $attribs);
+    }
+
+    /** @param array<string, string> $attribs */
+    public function formHidden(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+        $spec['type'] = 'hidden';
+
+        $defaultAttribs = [];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function formError(
+        ExtendedForm $form,
+        string $input,
+        string $tag = 'p',
+        array $attribs = [],
+    ): string {
+        $message = $form->error($input);
+        if ($message === '') {
+            return '';
+        }
+
+        $defaultAttribs = [];
+
+        return sprintf(
+            '<%s %s>%s</%s>',
+            $tag,
+            $this->a(array_merge($defaultAttribs, $attribs)),
+            $this->h($this->t($message)),
+            $tag,
+        );
+    }
+
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
+    public function hreflangLinks(): string
+    {
+        $uri = $this->serverRequest->getUri();
+
+        $origin = $uri->getScheme() . '://' . $uri->getHost();
+        $search = $uri->getQuery() === '' ? '' : '?' . $uri->getQuery();
+
+        $uriPath = Locale::stripPrefixFromPath($uri->getPath());
+
+        $tagList = [];
+        $supportedLocaleList = Locale::cases();
+        foreach ($supportedLocaleList as $supportedLocale) {
+            $link = $origin . '/' . $supportedLocale->value . $uriPath . $search;
+            $tagList[] = sprintf(
+                '<link rel="alternate" hreflang="%s" href="%s">',
+                $supportedLocale->value,
+                $link,
+            );
+        }
+
+        return implode(PHP_EOL, $tagList);
+    }
+
+    /**
+     * @param array<string, mixed> $params
+     *
+     * @SuppressWarnings("PHPMD.ShortMethodName")
+     */
+    public function t(string $key, array $params = []): string
+    {
+        return $this->language->get($key, $params);
+    }
+
+    public function doc(string $name): string
+    {
+        return $this->documentReader->read($name, $this->requestLocale);
     }
 
     /**
@@ -234,182 +377,42 @@ class QiqCustomHelpers extends HtmlHelpers
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
     }
 
-    /** @param array<string, string> $attribs */
-    public function managerCheckBox(
-        ExtendedForm $form,
-        string $input,
-        ExtendedFieldset|null $fieldset = null,
-        array $attribs = [],
-    ): AbstractInput {
-        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
-
-        $defaultAttribs = ['class' => ''];
-
-        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
-    }
-
-    /** @param array<string, string> $attribs */
-    public function managerFieldsetError(
-        ExtendedFieldset $fieldset,
-        string $input,
-        string $tag = 'span',
-        array $attribs = [],
-    ): string {
-        $errorMessages = $fieldset->error($input);
-        if (empty($errorMessages)) {
-            return '';
-        }
-
-        $defaultAttribs = ['class' => 'block text-sm text-rose-500 italic'];
-
-        return sprintf(
-            '<%s %s>%s</%s>',
-            $tag,
-            $this->a(array_merge($defaultAttribs, $attribs)),
-            $this->h($errorMessages[0]),
-            $tag,
-        );
-    }
-
-    /** @param array<string, string> $attribs */
-    public function managerFile(
-        ExtendedForm $form,
-        string $input,
-        ExtendedFieldset|null $fieldset = null,
-        array $attribs = [],
-    ): AbstractInput {
-        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
-
-        $defaultAttribs = ['class' => 'rounded w-full p-3 bg-white border border-[#6b7280] placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
-
-        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
-    }
-
-    /** @param array<string, string> $attribs */
-    public function managerFormError(ExtendedForm $form, string $input, string $tag = 'span', array $attribs = []): string
+    /** @param array<string, mixed> $params */
+    public function adminStaticUri(string $path, array $params = []): UriInterface
     {
-        $message = $form->error($input);
-        if ($message === '') {
-            return '';
-        }
-
-        $defaultAttribs = ['class' => 'block text-sm text-rose-500 italic'];
-
-        return sprintf(
-            '<%s %s>%s</%s>',
-            $tag,
-            $this->a(array_merge($defaultAttribs, $attribs)),
-            $this->h($message),
-            $tag,
-        );
+        return $this->adminStaticUriBuilder->build($path, $params);
     }
 
-    /** @param array<string, string> $attribs */
-    public function managerHidden(
-        ExtendedForm $form,
-        string $input,
-        ExtendedFieldset|null $fieldset = null,
-        array $attribs = [],
-    ): AbstractInput {
-        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
-        $spec['type'] = 'hidden';
-
-        $defaultAttribs = [];
-
-        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
-    }
-
-    /** @param array<string, string> $attribs */
-    public function managerRadio(
-        ExtendedForm $form,
-        string $input,
-        ExtendedFieldset|null $fieldset = null,
-        array $attribs = [],
-    ): AbstractInput {
-        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
-
-        $defaultAttribs = ['class' => ''];
-
-        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
-    }
-
-    /** @param array<string, string> $attribs */
-    public function managerSelect(
-        ExtendedForm $form,
-        string $input,
-        ExtendedFieldset|null $fieldset = null,
-        array $attribs = [],
-    ): AbstractInput {
-        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
-
-        $defaultAttribs = ['class' => 'rounded transition duration-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
-
-        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
-    }
-
-    /** @param array<string, string> $attribs */
-    public function managerText(
-        ExtendedForm $form,
-        string $input,
-        ExtendedFieldset|null $fieldset = null,
-        array $attribs = [],
-    ): AbstractInput {
-        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
-
-        $defaultAttribs = ['class' => 'rounded w-full placeholder:text-slate-500 placeholder:font-thin transition duration-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
-
-        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
-    }
-
-    /** @param array<string, string> $attribs */
-    public function managerTextArea(
-        ExtendedForm $form,
-        string $input,
-        ExtendedFieldset|null $fieldset = null,
-        array $attribs = [],
-    ): AbstractInput {
-        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
-
-        $defaultAttribs = ['class' => 'rounded w-full placeholder:text-slate-500 placeholder:font-thin transition duration-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 leading-6 h-40'];
-
-        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
-    }
-
-    /** @param array<string, string> $attribs */
-    public function managerSubmit(
-        ExtendedForm $form,
-        string $input,
-        ExtendedFieldset|null $fieldset = null,
-        array $attribs = [],
-    ): AbstractInput {
-        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
-
-        if (isset($attribs['value'])) {
-            $spec['value'] = $attribs['value'];
-            unset($attribs['value']);
-        }
-
-        $defaultAttribs = [
-            'value' => 'Submit',
-            'class' => 'py-2 px-4 bg-indigo-500 text-white text-sm font-sans font-bold tracking-wider rounded-full shadow-lg shadow-indigo-500/50 focus:outline-none hover:bg-indigo-600 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:text-white disabled:bg-slate-200 disabled:shadow-none',
-        ];
-
-        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
-    }
-
-    public function csrfTokenField(ExtendedForm $form): AbstractInput
+    /**
+     * @param array<string, mixed> $params
+     *
+     * @SuppressWarnings("PHPMD.StaticAccess")
+     */
+    public function adminUri(string $path, array $params = []): UriInterface
     {
-        return $form->widget($form->get('__csrf_token'));
+        return $this->adminUriBuilder->build(
+            $path,
+            $params,
+        );
     }
 
     /** @param array<string, mixed> $params */
-    public function url(string $routePath, array $params = []): string
+    public function publicStaticUri(string $path, array $params = []): UriInterface
     {
-        $path = $this->router->generate($routePath, $params);
-        if (is_string($path)) {
-            return $path;
-        }
+        return $this->publicStaticUriBuilder->build($path, $params);
+    }
 
-        return $routePath;
+    /**
+     * @param array<string, mixed> $params
+     *
+     * @SuppressWarnings("PHPMD.StaticAccess")
+     */
+    public function publicUri(string $path, array $params = [], string|null $locale = null): UriInterface
+    {
+        return $this->publicUriBuilder->build(
+            $path,
+            $params,
+            $locale === null ? $this->requestLocale : Locale::from($locale),
+        );
     }
 }

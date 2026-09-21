@@ -19,25 +19,25 @@ class UserLoginForm extends ExtendedForm
              ->setAttribs([
                  'autofocus' => '',
                  'autocomplete' => 'username',
-                 'placeholder' => '',
+                 'placeholder' => 'public.login.username',
                  'required' => 'required',
-                 'title' => '有効なユーザー名を入力してください',
+                 'title' => 'public.login.invalid_username',
              ]);
         $this->filter->validate('username')->is('alnum');
-        $this->filter->useFieldMessage('username', '有効なユーザー名を入力してください');
+        $this->filter->useFieldMessage('username', 'public.login.invalid_username');
 
         /** @psalm-suppress UndefinedMethod */
         $this->setField('password', 'password')
              ->setAttribs([
                  'autocomplete' => 'current-password',
-                 'placeholder' => '',
+                 'placeholder' => 'public.login.password',
                  'required' => 'required',
-                 'title' => '有効なパスワードを入力してください',
+                 'title' => 'public.login.invalid_password',
              ]);
         $this->filter->validate('password')->is('string');
         /** @psalm-suppress TooManyArguments */
         $this->filter->validate('password')->is('regex', '/^[A-Za-z0-9!@#$%^&*]+$/i');
-        $this->filter->useFieldMessage('password', '有効なパスワードを入力してください');
+        $this->filter->useFieldMessage('password', 'public.login.invalid_password');
 
         $this->setField('remember', 'checkbox')
              ->setAttribs([
@@ -47,6 +47,7 @@ class UserLoginForm extends ExtendedForm
              ]);
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setField('login', 'submit');
+        $this->setField('login', 'submit')
+            ->setAttribs(['value' => 'public.login.submit']);
     }
 }

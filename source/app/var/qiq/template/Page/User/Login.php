@@ -6,12 +6,12 @@ $this->setLayout('layout/base');
 
 <form method="post">
     {{ if (isset($authException)): }}
-    <p style="color: red; font-weight: bold;">Authentication error</p>
+    <p style="color: red; font-weight: bold;">{{h t('public.login.error') }}</p>
     {{ endif }}
-    {{= $form->input('username') }}
-    {{= $form->error('username') }}
-    {{= $form->input('password') }}
-    {{= $form->error('password') }}
-    {{= $form->input('login') }}
-    {{= $form->input('__csrf_token') }}
+    {{= formWidget($form, 'username') }}
+    {{= formError($form, 'username') }}
+    {{= formWidget($form, 'password') }}
+    {{= formError($form, 'password') }}
+    {{= formWidget($form, 'login') }}
+    {{= formWidget($form, '__csrf_token') }}
 </form>

@@ -8,6 +8,7 @@ use AppCore\Application\Admin\VerifyAdminEmailInputData;
 use AppCore\Application\Admin\VerifyAdminEmailUseCase;
 use AppCore\Domain\Auth\AdminAuthenticatorInterface;
 use AppCore\Domain\Language\LanguageInterface;
+use AppCore\Domain\Uri\AdminUriBuilderInterface;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -22,6 +23,7 @@ class EmailVerify extends BaseAdminPage
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
+        protected readonly AdminUriBuilderInterface $adminUriBuilder,
         private readonly LanguageInterface $language,
         private readonly VerifyAdminEmailUseCase $verifyAdminEmailUseCase,
     ) {
@@ -44,8 +46,10 @@ class EmailVerify extends BaseAdminPage
 
         $this->renderer = new NullRenderer();
         $this->code = StatusCode::SEE_OTHER;
-        $this->headers = [ResponseHeader::LOCATION => '/admin/settings/index']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
-        $this->context->setFlashMessage($this->language->get('message:admin:email_verified'));
+        $this->headers = [
+            ResponseHeader::LOCATION => (string) $this->adminUriBuilder->build('/settings/index'),
+        ]; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
+        $this->context->setFlashMessage($this->language->get('admin.email.verified'));
 
         return $this;
     }

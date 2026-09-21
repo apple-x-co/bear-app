@@ -8,6 +8,7 @@ use AppCore\Application\Admin\ResetAdminPasswordInputData;
 use AppCore\Application\Admin\ResetAdminPasswordUseCase;
 use AppCore\Application\Admin\VerifyUrlSignatureInputData;
 use AppCore\Application\Admin\VerifyUrlSignatureUseCase;
+use AppCore\Domain\Uri\AdminUriBuilderInterface;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -27,6 +28,7 @@ class ResetPassword extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
+        protected readonly AdminUriBuilderInterface $adminUriBuilder,
         #[Named('admin_password_reset_form')]
         protected readonly FormInterface $form,
         private readonly VerifyUrlSignatureUseCase $verifyUrlSignatureUseCase,
@@ -45,12 +47,17 @@ class ResetPassword extends BaseAdminPage
                 new VerifyUrlSignatureInputData($signature),
             );
         } catch (Throwable) {
-            $this->context->setSessionValue('error:message', 'message:admin:reset_password:decrypt_error');
+            $this->context->setSessionValue('error:message', 'admin.reset_password.decrypt_error');
             $this->context->setSessionValue('error:returnName', 'Forgot password');
-            $this->context->setSessionValue('error:returnUrl', '/admin/forgot-password');
+            $this->context->setSessionValue(
+                'error:returnUrl',
+                (string) $this->adminUriBuilder->build('/forgot-password'),
+            );
             $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
-            $this->headers = [ResponseHeader::LOCATION => '/admin/error'];
+            $this->headers = [
+                ResponseHeader::LOCATION => (string) $this->adminUriBuilder->build('/error'),
+            ];
 
             return $this;
         }
@@ -77,7 +84,9 @@ class ResetPassword extends BaseAdminPage
 
         $this->renderer = new NullRenderer();
         $this->code = StatusCode::SEE_OTHER;
-        $this->headers = [ResponseHeader::LOCATION => '/admin/login']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
+        $this->headers = [
+            ResponseHeader::LOCATION => (string) $this->adminUriBuilder->build('/login'),
+        ]; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
 
         return $this;
     }

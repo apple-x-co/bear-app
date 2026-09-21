@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Mail;
 
+use AppCore\Domain\Language\LanguageInterface;
 use DateTimeImmutable;
 
 class Email
@@ -30,6 +31,8 @@ class Email
     private array $templateVars = [];
     private Format $emailFormat = Format::Both;
     private DateTimeImmutable|null $scheduleDate = null;
+    private Priority $priority = Priority::Normal;
+    private LanguageInterface|null $language = null;
 
     public function getFrom(): AddressInterface|null
     {
@@ -94,6 +97,16 @@ class Email
     public function getScheduleDate(): DateTimeImmutable|null
     {
         return $this->scheduleDate;
+    }
+
+    public function getPriority(): Priority
+    {
+        return $this->priority;
+    }
+
+    public function getLanguage(): LanguageInterface|null
+    {
+        return $this->language;
     }
 
     public function setFrom(AddressInterface|null $from): self
@@ -225,6 +238,22 @@ class Email
     {
         $clone = clone $this;
         $clone->scheduleDate = $scheduleDate;
+
+        return $clone;
+    }
+
+    public function setPriority(Priority $priority): self
+    {
+        $clone = clone $this;
+        $clone->priority = $priority;
+
+        return $clone;
+    }
+
+    public function setLanguage(LanguageInterface|null $language): self
+    {
+        $clone = clone $this;
+        $clone->language = $language;
 
         return $clone;
     }

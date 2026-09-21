@@ -25,7 +25,7 @@ use function array_reduce;
 use function array_values;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-final readonly class SendEmailFromEmailQueueUseCase
+final readonly class SendEmailQueueUseCase
 {
     private const int INACTIVE = 0;
 
@@ -46,14 +46,16 @@ final readonly class SendEmailFromEmailQueueUseCase
      * @SuppressWarnings("PHPMD.LongVariable")
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
-    public function execute(): void
+    public function execute(): SendEmailQueueOutputData
     {
         $this->deleteOldQueue();
 
         [$emailQueueList, $emailQueueRecipientMap] = $this->getSendableEmailQueue();
         if (empty($emailQueueList) || empty($emailQueueRecipientMap)) {
-            return;
+            return new SendEmailQueueOutputData([]);
         }
+
+        $emailQueueItemList = [];
 
         foreach ($emailQueueList as $emailQueue) {
             if (! isset($emailQueueRecipientMap[$emailQueue->id])) {
@@ -68,6 +70,8 @@ final readonly class SendEmailFromEmailQueueUseCase
                 $this->transport->send($email);
                 $this->emailQueueCommand->sent($emailQueue->id, $attempts, new DateTimeImmutable());
 
+                $emailQueueItemList[] = ['emailQueueId' => $emailQueue->id];
+
                 continue;
             } catch (Throwable $throwable) {
                 $this->logger->log((string) $throwable);
@@ -81,6 +85,8 @@ final readonly class SendEmailFromEmailQueueUseCase
 
             $this->emailQueueCommand->updateActive($emailQueue->id, self::INACTIVE);
         }
+
+        return new SendEmailQueueOutputData($emailQueueItemList);
     }
 
     private function deleteOldQueue(): void
@@ -151,7 +157,7 @@ final readonly class SendEmailFromEmailQueueUseCase
     private function makeEmailWithQueue(EmailQueueEntity $emailQueue, array $emailQueueRecipientList): Email
     {
         $email = (new Email())
-            ->setFrom(new Address($emailQueue->senderMailAddress, $emailQueue->senderName))
+            ->setFrom(new Address($emailQueue->senderEmailAddress, $emailQueue->senderName))
             ->setSubject($emailQueue->subject)
             ->setText($emailQueue->text)
             ->setHtml($emailQueue->html)

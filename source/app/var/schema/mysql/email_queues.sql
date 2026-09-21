@@ -6,6 +6,7 @@ CREATE TABLE `email_queues`
     `subject`              VARCHAR(100)                   NOT NULL COMMENT '件名',
     `text`                 TEXT                           NOT NULL COMMENT 'テキスト',
     `html`                 TEXT                           NULL COMMENT 'HTML',
+    `priority`             VARCHAR(10)                    NOT NULL COMMENT '優先度(normal/high)',
     `active`               SMALLINT UNSIGNED              NOT NULL COMMENT 'アクティブ',
     `attempts`             SMALLINT UNSIGNED              NOT NULL COMMENT '試行回数',
     `max_attempts`         SMALLINT UNSIGNED              NOT NULL COMMENT '最大試行回数',
@@ -17,4 +18,4 @@ CREATE TABLE `email_queues`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci COMMENT 'Eメールキュー';
 
-CREATE INDEX `idx_email_queues_1` ON `email_queues` (`sent_date`);
+CREATE INDEX `idx_email_queues_1` ON `email_queues` (`sent_date`, `schedule_date`, `active`);

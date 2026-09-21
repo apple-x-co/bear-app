@@ -8,6 +8,7 @@ use AppCore\Application\GetVerificationCodeInputData;
 use AppCore\Application\GetVerificationCodeUseCase;
 use AppCore\Application\VerifyVerificationCodeInputData;
 use AppCore\Application\VerifyVerificationCodeUseCase;
+use AppCore\Domain\Uri\AdminUriBuilderInterface;
 use AppCore\Domain\VerificationCode\VerificationCodeNotFoundException;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
@@ -27,6 +28,7 @@ class CodeVerify extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
+        protected readonly AdminUriBuilderInterface $adminUriBuilder,
         #[Named('admin_code_verify_form')]
         protected readonly FormInterface $form,
         protected readonly GetVerificationCodeUseCase $getAdminVerificationCodeUseCase,
@@ -46,7 +48,9 @@ class CodeVerify extends BaseAdminPage
         } catch (VerificationCodeNotFoundException) {
             $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
-            $this->headers = [ResponseHeader::LOCATION => '/admin/login']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
+            $this->headers = [
+                ResponseHeader::LOCATION => (string) $this->adminUriBuilder->build('/login'),
+            ]; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
 
             return $this;
         }
@@ -76,7 +80,9 @@ class CodeVerify extends BaseAdminPage
         } catch (VerificationCodeNotFoundException) {
             $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
-            $this->headers = [ResponseHeader::LOCATION => '/admin/login']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
+            $this->headers = [
+                ResponseHeader::LOCATION => (string) $this->adminUriBuilder->build('/login'),
+            ]; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
 
             return $this;
         }

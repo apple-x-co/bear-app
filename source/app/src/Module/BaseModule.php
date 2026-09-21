@@ -9,18 +9,26 @@ use AppCore\Application\Command as CommandUseCase;
 use AppCore\Application\GetVerificationCodeUseCase;
 use AppCore\Application\VerifyVerificationCodeUseCase;
 use AppCore\Attribute\AdminBaseUrl;
+use AppCore\Attribute\AdminStaticBaseUrl;
 use AppCore\Attribute\EmailDir;
 use AppCore\Attribute\EncryptPass;
 use AppCore\Attribute\HashSalt;
+use AppCore\Attribute\Japanese;
 use AppCore\Attribute\LangDir;
+use AppCore\Attribute\LangOverrideDir;
+use AppCore\Attribute\PublicBaseUrl;
+use AppCore\Attribute\PublicStaticBaseUrl;
 use AppCore\Attribute\ServiceName;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\AdminPermission\AdminPermissionRepositoryInterface;
 use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
+use AppCore\Domain\Document\DocumentReaderInterface;
 use AppCore\Domain\Encrypter\EncrypterInterface;
 use AppCore\Domain\Hasher\PasswordHasher;
 use AppCore\Domain\Hasher\PasswordHasherInterface;
+use AppCore\Domain\Language\LanguageFactoryInterface;
 use AppCore\Domain\Language\LanguageInterface;
+use AppCore\Domain\Locale\Locale;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\AddressInterface;
@@ -31,6 +39,10 @@ use AppCore\Domain\Mail\TemplateRendererInterface;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
 use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
+use AppCore\Domain\Uri\AdminStaticUriBuilderInterface;
+use AppCore\Domain\Uri\AdminUriBuilderInterface;
+use AppCore\Domain\Uri\PublicStaticUriBuilderInterface;
+use AppCore\Domain\Uri\PublicUriBuilderInterface;
 use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
 use AppCore\Domain\User\UserRepositoryInterface;
 use AppCore\Infrastructure\Persistence\AdminPermissionRepository;
@@ -41,17 +53,28 @@ use AppCore\Infrastructure\Persistence\UserRepository;
 use AppCore\Infrastructure\Shared\AdminLogger;
 use AppCore\Infrastructure\Shared\CommandLogger;
 use AppCore\Infrastructure\Shared\CompactEncrypter;
+use AppCore\Infrastructure\Shared\DocumentReader;
 use AppCore\Infrastructure\Shared\Encrypter;
+use AppCore\Infrastructure\Shared\LangOverridePathResolver;
+use AppCore\Infrastructure\Shared\LanguageFactory;
 use AppCore\Infrastructure\Shared\QueueMail;
 use AppCore\Infrastructure\Shared\SecureRandom;
 use AppCore\Infrastructure\Shared\SmtpMail;
 use AppCore\Infrastructure\Shared\UrlSignatureEncrypter;
 use AppCore\Infrastructure\Shared\UserLogger;
+use AppCore\Presentation\Uri\AdminStaticUriBuilder;
+use AppCore\Presentation\Uri\AdminUriBuilder;
+use AppCore\Presentation\Uri\PublicStaticUriBuilder;
+use AppCore\Presentation\Uri\PublicUriBuilder;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
-use MyVendor\MyProject\Provider\LanguageProvider;
+use MyVendor\MyProject\Provider\JapaneseProvider;
 use MyVendor\MyProject\Provider\PhpMailerProvider;
+use MyVendor\MyProject\Provider\RequestLanguageProvider;
+use MyVendor\MyProject\Provider\RequestLocaleProvider;
+use MyVendor\MyProject\Provider\ServerRequestProvider;
 use PHPMailer\PHPMailer\PHPMailer;
+use Psr\Http\Message\ServerRequestInterface;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
@@ -63,8 +86,7 @@ use function random_bytes;
 class BaseModule extends AbstractModule
 {
     public function __construct(
-        private readonly string $emailDir,
-        private readonly string $langDir,
+        private readonly string $appDir,
         AbstractModule|null $module = null,
     ) {
         parent::__construct($module);
@@ -103,8 +125,20 @@ class BaseModule extends AbstractModule
 
     public function language(): void
     {
-        $this->bind()->annotatedWith(LangDir::class)->toInstance($this->langDir);
-        $this->bind(LanguageInterface::class)->toProvider(LanguageProvider::class)->in(Scope::SINGLETON);
+        $this->bind()->annotatedWith(LangDir::class)->toInstance($this->appDir . '/var/lang');
+
+        $langOverrideDir = (string) getenv('LANG_OVERRIDE_DIR');
+        $this->bind()->annotatedWith(LangOverrideDir::class)->toInstance(
+            $langOverrideDir === '' ? '' : $this->appDir . '/var/lang/' . $langOverrideDir,
+        );
+
+        $this->bind(LangOverridePathResolver::class)->in(Scope::SINGLETON);
+
+        $this->bind(LanguageInterface::class)->annotatedWith(Japanese::class)->toProvider(JapaneseProvider::class)->in(Scope::SINGLETON);
+        $this->bind(LanguageInterface::class)->toProvider(RequestLanguageProvider::class);
+        $this->bind(LanguageFactoryInterface::class)->to(LanguageFactory::class)->in(Scope::SINGLETON);
+
+        $this->bind(DocumentReaderInterface::class)->to(DocumentReader::class)->in(Scope::SINGLETON);
     }
 
     private function logger(): void
@@ -116,7 +150,15 @@ class BaseModule extends AbstractModule
 
     private function url(): void
     {
+        $this->bind()->annotatedWith(AdminStaticBaseUrl::class)->toInstance(getenv('ADMIN_STATIC_BASE_URL'));
         $this->bind()->annotatedWith(AdminBaseUrl::class)->toInstance(getenv('ADMIN_BASE_URL'));
+        $this->bind()->annotatedWith(PublicStaticBaseUrl::class)->toInstance(getenv('PUBLIC_STATIC_BASE_URL'));
+        $this->bind()->annotatedWith(PublicBaseUrl::class)->toInstance(getenv('PUBLIC_BASE_URL'));
+
+        $this->bind(AdminStaticUriBuilderInterface::class)->to(AdminStaticUriBuilder::class)->in(Scope::SINGLETON);
+        $this->bind(AdminUriBuilderInterface::class)->to(AdminUriBuilder::class)->in(Scope::SINGLETON);
+        $this->bind(PublicStaticUriBuilderInterface::class)->to(PublicStaticUriBuilder::class)->in(Scope::SINGLETON);
+        $this->bind(PublicUriBuilderInterface::class)->to(PublicUriBuilder::class)->in(Scope::SINGLETON);
     }
 
     private function email(): void
@@ -150,7 +192,7 @@ class BaseModule extends AbstractModule
              ->in(Scope::SINGLETON);
         $this->bind(PHPMailer::class)->toProvider(PhpMailerProvider::class)->in(Scope::SINGLETON);
 
-        $this->bind()->annotatedWith(EmailDir::class)->toInstance($this->emailDir);
+        $this->bind()->annotatedWith(EmailDir::class)->toInstance($this->appDir . '/var/email');
         $this->bind(TransportInterface::class)->annotatedWith('SMTP')->to(SmtpMail::class)->in(Scope::SINGLETON);
         $this->bind(TransportInterface::class)->annotatedWith('queue')->to(QueueMail::class)->in(Scope::SINGLETON);
 
@@ -181,7 +223,7 @@ class BaseModule extends AbstractModule
         $this->bind(AdminUseCase\VerifyUrlSignatureUseCase::class)->in(Scope::SINGLETON);
 
         $this->bind(CommandUseCase\ImportBadPasswordUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(CommandUseCase\SendEmailFromEmailQueueUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(CommandUseCase\SendEmailQueueUseCase::class)->in(Scope::SINGLETON);
 
         $this->bind(GetVerificationCodeUseCase::class)->in(Scope::SINGLETON);
         $this->bind(VerifyVerificationCodeUseCase::class)->in(Scope::SINGLETON);
@@ -194,5 +236,8 @@ class BaseModule extends AbstractModule
             HttpClient::class,
             ['config' => 'http_client_config'],
         );
+
+        $this->bind(ServerRequestInterface::class)->toProvider(ServerRequestProvider::class);
+        $this->bind(Locale::class)->toProvider(RequestLocaleProvider::class);
     }
 }

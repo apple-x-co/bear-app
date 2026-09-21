@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja" class="scroll-smooth">
+<html lang="{{= requestLocale()->value }}" class="scroll-smooth">
 <head>
     <title>{{ setBlock ('title') }}BearApp{{= getBlock () ~}}</title>
     <meta charset="UTF-8">
