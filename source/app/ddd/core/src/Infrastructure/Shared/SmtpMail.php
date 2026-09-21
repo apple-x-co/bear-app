@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AppCore\Infrastructure\Shared;
 
 use AppCore\Attribute\EmailDir;
+use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TemplateNotFoundException;
@@ -19,6 +20,7 @@ use const DIRECTORY_SEPARATOR;
 readonly class SmtpMail implements TransportInterface
 {
     public function __construct(
+        private LanguageInterface $defaultLanguage, // リクエストスコープの既定言語
         #[EmailDir]
         private string $emailDir,
         private PHPMailer $mailer,
@@ -63,18 +65,10 @@ readonly class SmtpMail implements TransportInterface
 
         $templateId = $email->getTemplateId();
         if ($templateId !== null) {
-            $subject = $this->renderTemplate(
-                $subjectDir . $templateId . '.txt',
-                $email->getTemplateVars(),
-            );
-            $text = $this->renderTemplate(
-                $textDir . $templateId . '.txt',
-                $email->getTemplateVars(),
-            );
-            $html = $format->isHtml() ? $this->renderTemplate(
-                $htmlDir . $templateId . '.html',
-                $email->getTemplateVars(),
-            ) : null;
+            $subject = $this->renderTemplate($subjectDir . $templateId . '.txt', $email);
+            $text = $this->renderTemplate($textDir . $templateId . '.txt', $email);
+            $html = $format->isHtml() ?
+                $this->renderTemplate($htmlDir . $templateId . '.html', $email) : null;
         }
 
         if ($format->isHtml()) {
@@ -94,12 +88,15 @@ readonly class SmtpMail implements TransportInterface
         $mailer->send();
     }
 
-    /** @param array<string, mixed> $vars */
-    private function renderTemplate(string $filePath, array $vars = []): string
+    private function renderTemplate(string $filePath, Email $email): string
     {
         if (! is_readable($filePath)) {
             throw new TemplateNotFoundException($filePath);
         }
+
+        $language = $email->getLanguage() ?? $this->defaultLanguage;
+        $t = static fn (string $key, array $params = []): string => $language->get($key, $params);
+        $vars = ['t' => $t] + $email->getTemplateVars();
 
         return ($this->templateRenderer)($filePath, $vars); // phpcs:ignore
     }

@@ -18,6 +18,7 @@ use function ob_end_clean;
 use function ob_get_clean;
 use function ob_start;
 use function realpath;
+use function trim;
 
 use const EXTR_SKIP;
 
@@ -46,7 +47,7 @@ readonly class PhpTemplateRenderer implements TemplateRendererInterface
         }
 
         $defaultVars = [
-            'now' => new DateTimeImmutable(),
+            'now' => static fn (): DateTimeImmutable => new DateTimeImmutable(),
             'serviceName' => $this->serviceName,
         ];
 
@@ -57,7 +58,7 @@ readonly class PhpTemplateRenderer implements TemplateRendererInterface
             extract($vars, EXTR_SKIP); // phpcs:ignore
             include $path;
 
-            return (string) ob_get_clean();
+            return trim((string) ob_get_clean());
         } catch (Throwable $throwable) {
             ob_end_clean();
 

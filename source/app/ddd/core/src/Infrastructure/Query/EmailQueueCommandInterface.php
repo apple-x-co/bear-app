@@ -25,6 +25,7 @@ interface EmailQueueCommandInterface
         string $subject,
         string $text,
         string|null $html,
+        string $priority,
         int $active,
         int $attempts,
         int $maxAttempts,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AppCore\Infrastructure\Shared;
 
 use AppCore\Attribute\EmailDir;
+use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\InvalidArgumentException;
 use AppCore\Domain\Mail\RecipientType;
@@ -32,6 +33,7 @@ readonly class QueueMail implements TransportInterface
 
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
+        private LanguageInterface $defaultLanguage, // リクエストスコープの既定言語
         private EmailQueueCommandInterface $emailQueueCommand,
         #[EmailDir]
         private string $emailDir,
@@ -62,19 +64,12 @@ readonly class QueueMail implements TransportInterface
         $textDir = $this->emailDir . DIRECTORY_SEPARATOR . self::TEXT_DIR_NAME . DIRECTORY_SEPARATOR;
         $htmlDir = $this->emailDir . DIRECTORY_SEPARATOR . self::HTML_DIR_NAME . DIRECTORY_SEPARATOR;
 
-        $subject = $this->renderTemplate(
-            $subjectDir . $templateId . self::PLAIN_TEXT_EXT,
-            $email->getTemplateVars(),
-        );
-        $text = $this->renderTemplate(
-            $textDir . $templateId . self::PLAIN_TEXT_EXT,
-            $email->getTemplateVars(),
-        );
+        $subject = $this->renderTemplate($subjectDir . $templateId . self::PLAIN_TEXT_EXT, $email);
+        $text = $this->renderTemplate($textDir . $templateId . self::PLAIN_TEXT_EXT, $email);
         $format = $email->getEmailFormat();
-        $html = $format->isHtml() ? $this->renderTemplate(
-            $htmlDir . $templateId . self::HTML_EXT,
-            $email->getTemplateVars(),
-        ) : null;
+        $html = $format->isHtml() ?
+            $this->renderTemplate($htmlDir . $templateId . self::HTML_EXT, $email) :
+            null;
 
         $array = $this->emailQueueCommand->add(
             $from->getEmail(),
@@ -82,6 +77,7 @@ readonly class QueueMail implements TransportInterface
             $subject,
             $text,
             $html,
+            $email->getPriority()->value,
             self::ACTIVE,
             self::DEFAULT_INIT_ATTEMPTS,
             self::DEFAULT_MAX_ATTEMPTS,
@@ -126,12 +122,15 @@ readonly class QueueMail implements TransportInterface
         }
     }
 
-    /** @param array<string, mixed> $vars */
-    private function renderTemplate(string $filePath, array $vars = []): string
+    private function renderTemplate(string $filePath, Email $email): string
     {
         if (! is_readable($filePath)) {
             throw new TemplateNotFoundException($filePath);
         }
+
+        $language = $email->getLanguage() ?? $this->defaultLanguage;
+        $t = static fn (string $key, array $params = []): string => $language->get($key, $params);
+        $vars = ['t' => $t] + $email->getTemplateVars();
 
         return ($this->templateRenderer)($filePath, $vars); // phpcs:ignore
     }

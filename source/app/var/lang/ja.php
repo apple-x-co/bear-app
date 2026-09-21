@@ -2,14 +2,20 @@
 
 declare(strict_types=1);
 
+// 翻訳キー ... {コンテキスト}.{画面/機能}.{項目}
+// サフィックスは同一対象に複数の文言が必要な場合のみ付与する
+// 例: .email と .email_placeholder が共存する場合に .email_placeholder を追加
+
 return [
-    // admin
+    // ◆◆◆ admin ◆◆◆
     'admin_email_created' => 'Eメールアドレス宛てにメールを送信しました',
     'admin_email_verified' => 'Eメールアドレスを確認しました',
     'admin_email_deleted' => 'Eメールアドレスを削除しました',
     'admin_password_updated' => 'パスワードを更新しました',
     'admin_reset_password:decrypt_error' => 'パスワードリセット時にエラーが発生しました',
     'admin_sign_up:decrypt_error' => 'アカウント作成時にエラーが発生しました',
-    // common
+    // ◆◆◆ common ◆◆◆
     'common_app_name' => 'bear-app (ja)',
+    // ◆◆◆ email ◆◆◆
+    // ◆◆◆ public ◆◆◆
 ];

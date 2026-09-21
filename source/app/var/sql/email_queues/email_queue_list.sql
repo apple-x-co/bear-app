@@ -1,4 +1,4 @@
-/* email_queue_list_by_sendable */
+/* email_queue_list */
 SELECT `id`
      , `sender_email_address`
      , `sender_name`
@@ -13,12 +13,8 @@ SELECT `id`
      , `sent_date`
      , `created_date`
 FROM `email_queues`
-WHERE `sent_date` IS NULL
-  AND `schedule_date` <= :scheduleDate
-  AND `active` = 1
-  AND `max_attempts` > `attempts`
 ORDER BY CASE `priority`
              WHEN 'high' THEN 0
              WHEN 'normal' THEN 1
              ELSE 2
-         END, `schedule_date`;
+         END, `schedule_date` DESC, `sent_date` DESC;
