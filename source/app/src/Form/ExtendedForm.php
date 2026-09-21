@@ -17,11 +17,6 @@ use function is_array;
 /** @SuppressWarnings("PHPMD.NumberOfChildren") */
 abstract class ExtendedForm extends AbstractForm implements SubmitInterface
 {
-    public function setOptions(): void
-    {
-        // NOTE: This method is child class override.
-    }
-
     /** @return array<string, mixed> */
     public function getData(): array
     {

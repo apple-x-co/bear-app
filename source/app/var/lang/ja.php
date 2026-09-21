@@ -18,4 +18,10 @@ return [
     'common_app_name' => 'bear-app (ja)',
     // ◆◆◆ email ◆◆◆
     // ◆◆◆ public ◆◆◆
+    'public.login.error' => '認証エラー',
+    'public.login.invalid_password' => '有効なパスワードを入力してください',
+    'public.login.invalid_username' => '有効なユーザー名を入力してください',
+    'public.login.password' => 'パスワード',
+    'public.login.submit' => 'ログイン',
+    'public.login.username' => 'ユーザー名',
 ];
