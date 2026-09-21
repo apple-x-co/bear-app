@@ -223,7 +223,7 @@ class BaseModule extends AbstractModule
         $this->bind(AdminUseCase\VerifyUrlSignatureUseCase::class)->in(Scope::SINGLETON);
 
         $this->bind(CommandUseCase\ImportBadPasswordUseCase::class)->in(Scope::SINGLETON);
-        $this->bind(CommandUseCase\SendEmailFromEmailQueueUseCase::class)->in(Scope::SINGLETON);
+        $this->bind(CommandUseCase\SendEmailQueueUseCase::class)->in(Scope::SINGLETON);
 
         $this->bind(GetVerificationCodeUseCase::class)->in(Scope::SINGLETON);
         $this->bind(VerifyVerificationCodeUseCase::class)->in(Scope::SINGLETON);
