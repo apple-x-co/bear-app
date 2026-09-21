@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AppCore\Presentation\Uri;
 
 use AppCore\Attribute\AdminBaseUrl;
-use AppCore\Domain\Locale\Locale;
 use AppCore\Domain\Uri\AdminUriBuilderInterface;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\UriInterface;
