@@ -13,7 +13,8 @@ DDD（Domain-Driven Design）と CQRS（Command Query Responsibility Segregation
 * **DDD + CQRS アーキテクチャ**: 190個以上の PHP ファイルによる本格的な DDD 実装
 * **高度なセキュリティ**: Cloudflare Turnstile、レート制限、パスワード保護、アカウントロック
 * **完全な認証・認可システム**: リソース単位の権限管理、パスワード再確認機能
-* **メール管理機能**: キュー、スケジュール送信、テンプレートエンジン連携
+* **メール管理機能**: キュー、スケジュール送信、優先度制御、テンプレートエンジン連携
+* **多言語対応（i18n）**: リクエストパス・Accept-Language からの言語自動判定、翻訳ファイル・ロケール別ドキュメントによる i18n
 * **REST API 対応**: HAL+JSON フォーマットサポート
 * **AOP による横断的関心事の分離**: アトリビュートベースのインターセプター
 
@@ -100,6 +101,7 @@ graph TD;
 ### メール機能
 
 * **メール送信キュー**: 即時送信・スケジュール送信対応
+* **優先度制御**: 優先度（normal/high）に応じた送信順序の制御
 * **リトライ機能**: 送信失敗時の自動再試行
 * **テンプレートエンジン連携**: HTML/テキスト形式のメールテンプレート
 * **実装済みメールテンプレート**:
@@ -110,6 +112,13 @@ graph TD;
   - アカウント削除通知メール
 * **複数メールアドレス管理**: 管理者ごとに複数のメールアドレスを登録可能
 * **メールアドレス検証**: 確認メールによる所有権確認
+
+### 多言語対応（i18n）
+
+* **言語自動判定**: リクエストパスのロケール接頭辞（`/ja`, `/en`）と `Accept-Language` ヘッダーから表示言語を自動検出
+* **翻訳ファイルベースの i18n**: `var/lang/{locale}.php` による翻訳定義、未定義キーは日本語にフォールバック
+* **ロケール別ドキュメント**: 利用規約などのロケール別 HTML ドキュメント読み込み（`DocumentReader`）
+* **ドメイン単位のオーバーライド**: `LANG_OVERRIDE_DIR` による翻訳・ドキュメントのドメイン別上書き
 
 ### セキュリティ機能
 
@@ -183,14 +192,17 @@ graph TD;
 - AdminToken（トークン）
 - Auth（認証）
 - Captcha（キャプチャ）
+- Document（ロケール別ドキュメント）
 - Encrypter（暗号化）
 - FlashMessenger（フラッシュメッセージ）
 - Hasher（ハッシュ）
 - Language（多言語）
+- Locale（ロケール判定）
 - Mail（メール）
 - SecureRandom（安全な乱数）
 - Session（セッション）
 - Throttle（レート制限）
+- Uri（URIビルダー）
 - UrlSignature（URL署名）
 - User（ユーザー）
 - VerificationCode（検証コード）
@@ -254,8 +266,6 @@ Ray.Aop を使用したアトリビュートベースのインターセプター
 - AdminAuthorization（権限チェック）
 - CloudflareTurnstileVerification（ボット対策）
 - Throttling（レート制限）
-- FormValidation（フォーム検証）
-- TransactionalInterceptor（トランザクション管理）
 - など
 
 ### DI（Dependency Injection）
@@ -277,39 +287,40 @@ MySQL 8.0 以上
 
 #### 管理者関連
 
-| テーブル名               | 説明                 |
-|---------------------|--------------------|
-| `admins`            | 管理者アカウント           |
+| テーブル名          | 説明                                 |
+|---------------------|--------------------------------------|
+| `admins`            | 管理者アカウント                     |
 | `admin_emails`      | 管理者メールアドレス（複数登録可能） |
-| `admin_permissions` | 管理者権限（リソース・権限レベル）  |
-| `admin_tokens`      | Remember me トークン   |
-| `admin_deletes`     | 削除済み管理者（論理削除）      |
+| `admin_permissions` | 管理者権限（リソース・権限レベル）   |
+| `admin_tokens`      | Remember me トークン                 |
+| `admin_deletes`     | 削除済み管理者（論理削除）           |
 
 #### ユーザー関連
 
-| テーブル名   | 説明        |
-|---------|-----------|
-| `users` | ユーザーアカウント |
+| テーブル名 | 説明               |
+|------------|--------------------|
+| `users`    | ユーザーアカウント |
 
 #### メール関連
 
-| テーブル名                    | 説明       |
-|--------------------------|----------|
+| テーブル名               | 説明             |
+|--------------------------|------------------|
 | `email_queues`           | メール送信キュー |
-| `email_queue_recipients` | メール受信者   |
+| `email_queue_recipients` | メール受信者     |
 
 #### セキュリティ関連
 
-| テーブル名                | 説明                |
-|----------------------|-------------------|
+| テーブル名           | 説明                       |
+|----------------------|----------------------------|
 | `throttles`          | レート制限記録（IP + URI） |
-| `verification_codes` | 検証コード（メール確認用）     |
-| `bad_passwords`      | 危険なパスワードリスト       |
+| `verification_codes` | 検証コード（メール確認用） |
+| `bad_passwords`      | 危険なパスワードリスト     |
 
 ### スキーマ管理
 
 * **スキーマファイル**: `source/app/var/schema/mysql/`
 * **SQL ファイル**: `source/app/var/sql/`
+* **参照整合性**: 主要な外部キー制約に `ON UPDATE CASCADE ON DELETE RESTRICT` を設定
 
 ## Directory Structure
 
@@ -337,14 +348,14 @@ source/app/
 │   ├── Form/                    # フォーム定義
 │   ├── InputQuery/              # 入力バリデーション
 │   ├── Module/                  # DI モジュール設定
-│   ├── Provider/                # プロバイダー（8個）
+│   ├── Provider/                # プロバイダー（10個）
 │   └── TemplateEngine/          # Qiq テンプレート設定
 ├── var/
 │   ├── schema/                  # DB スキーマ（MySQL）
 │   ├── sql/                     # SQL 定義ファイル
 │   ├── qiq/template/           # Qiq テンプレート
 │   ├── email/                   # メールテンプレート
-│   └── lang/ja/                # 日本語言語ファイル
+│   └── lang/                    # 多言語ファイル（ja.php/en.php、ロケール別ドキュメント、ドメイン別オーバーライド）
 └── public/                       # ドキュメントルート
     ├── index.php                # エントリーポイント
     └── admin-src/               # フロントエンドソース（Tailwind CSS）
