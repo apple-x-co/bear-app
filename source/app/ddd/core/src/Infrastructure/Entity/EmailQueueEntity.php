@@ -18,11 +18,12 @@ final readonly class EmailQueueEntity
      */
     public function __construct(
         public int $id,
-        public string $senderMailAddress,
+        public string $senderEmailAddress,
         public string|null $senderName,
         public string $subject,
         public string $text,
         public string|null $html,
+        public string $priority,
         public int $active,
         public int $attempts,
         public int $maxAttempts,
