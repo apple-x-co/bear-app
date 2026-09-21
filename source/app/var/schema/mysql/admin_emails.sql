@@ -7,7 +7,7 @@ CREATE TABLE `admin_emails`
     `created_date`  DATETIME     NOT NULL COMMENT '作成日時',
     `updated_date`  DATETIME     NOT NULL COMMENT '更新日時',
     PRIMARY KEY (`id`),
-    CONSTRAINT `fk_admin_emails_1` FOREIGN KEY (`admin_id`) REFERENCES `admins` (`id`)
+    CONSTRAINT `fk_admin_emails_1` FOREIGN KEY (`admin_id`) REFERENCES `admins` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE = InnoDB COMMENT '管理者Eメール';
 
 CREATE UNIQUE INDEX `idx_admin_emails_1` ON `admin_emails` (`email_address`);

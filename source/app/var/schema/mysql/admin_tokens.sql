@@ -6,7 +6,7 @@ CREATE TABLE `admin_tokens`
     `expire_date`  DATETIME     NOT NULL COMMENT '有効期限日時',
     `created_date` DATETIME     NOT NULL COMMENT '作成日時',
     PRIMARY KEY (`id`),
-    CONSTRAINT `fk_admin_tokens_1` FOREIGN KEY (`admin_id`) REFERENCES `admins` (`id`)
+    CONSTRAINT `fk_admin_tokens_1` FOREIGN KEY (`admin_id`) REFERENCES `admins` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE = InnoDB COMMENT '管理者永続ログイントークン';
 
 CREATE UNIQUE INDEX `idx_admin_tokens_1` ON `admin_tokens` (`token`);
