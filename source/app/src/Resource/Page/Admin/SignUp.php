@@ -8,6 +8,7 @@ use AppCore\Application\Admin\CreateAdminInputData;
 use AppCore\Application\Admin\CreateAdminUseCase;
 use AppCore\Application\Admin\VerifyUrlSignatureInputData;
 use AppCore\Application\Admin\VerifyUrlSignatureUseCase;
+use AppCore\Domain\Uri\AdminUriBuilderInterface;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -27,6 +28,7 @@ class SignUp extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
+        protected readonly AdminUriBuilderInterface $adminUriBuilder,
         private readonly CreateAdminUseCase $createAdminUseCase,
         private readonly VerifyUrlSignatureUseCase $verifyUrlSignatureUseCase,
         #[Named('admin_sign_up_form')]
@@ -46,10 +48,15 @@ class SignUp extends BaseAdminPage
         } catch (Throwable) {
             $this->context->setSessionValue('error:message', 'admin.sign_up.decrypt_error');
             $this->context->setSessionValue('error:returnName', 'Join');
-            $this->context->setSessionValue('error:returnUrl', '/admin/join');
+            $this->context->setSessionValue(
+                'error:returnUrl',
+                (string) $this->adminUriBuilder->build('/join'),
+            );
             $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
-            $this->headers = [ResponseHeader::LOCATION => '/admin/error'];
+            $this->headers = [
+                ResponseHeader::LOCATION => (string) $this->adminUriBuilder->build('/error'),
+            ];
 
             return $this;
         }
@@ -77,7 +84,9 @@ class SignUp extends BaseAdminPage
 
         $this->renderer = new NullRenderer();
         $this->code = StatusCode::SEE_OTHER;
-        $this->headers = [ResponseHeader::LOCATION => '/admin/login']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
+        $this->headers = [
+            ResponseHeader::LOCATION => (string) $this->adminUriBuilder->build('/login'),
+        ]; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
 
         return $this;
     }

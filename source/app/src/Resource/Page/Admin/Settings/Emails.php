@@ -11,6 +11,7 @@ use AppCore\Application\Admin\GetAdminUseCase;
 use AppCore\Domain\AccessControl\Permission;
 use AppCore\Domain\Auth\AdminAuthenticatorInterface;
 use AppCore\Domain\Language\LanguageInterface;
+use AppCore\Domain\Uri\AdminUriBuilderInterface;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -30,6 +31,7 @@ class Emails extends BaseAdminPage
     public function __construct(
         private readonly AddAdminEmailUseCase $addAdminEmailUseCase,
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
+        protected readonly AdminUriBuilderInterface $adminUriBuilder,
         private readonly GetAdminUseCase $getAdminUseCase,
         #[Named('admin_email_create_form')]
         protected readonly FormInterface $form,
@@ -77,7 +79,9 @@ class Emails extends BaseAdminPage
 
         $this->renderer = new NullRenderer();
         $this->code = StatusCode::SEE_OTHER;
-        $this->headers = [ResponseHeader::LOCATION => '/admin/settings/index']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
+        $this->headers = [
+            ResponseHeader::LOCATION => (string) $this->adminUriBuilder->build('/settings/index'),
+        ]; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
         $this->context->setFlashMessage($this->language->get('admin.email.created'));
 
         return $this;

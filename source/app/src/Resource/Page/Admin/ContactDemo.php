@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
+use AppCore\Domain\Uri\AdminUriBuilderInterface;
+use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Form\Admin\AdminContactDemoForm;
 use MyVendor\MyProject\Form\FormStep;
@@ -19,6 +21,7 @@ use function assert;
 class ContactDemo extends BaseAdminPage
 {
     public function __construct(
+        protected readonly AdminUriBuilderInterface $adminUriBuilder,
         #[Named('admin_contact_demo_form')]
         protected readonly FormInterface $form,
     ) {
@@ -41,7 +44,9 @@ class ContactDemo extends BaseAdminPage
     ): static {
         if ($input->mode === FormStep::Complete->name) {
             $this->code = StatusCode::SEE_OTHER;
-            $this->headers = ['Location' => '/admin/contact-complete-demo'];
+            $this->headers = [
+                ResponseHeader::LOCATION => (string) $this->adminUriBuilder->build('/contact-complete-demo'),
+            ];
 
             return $this;
         }

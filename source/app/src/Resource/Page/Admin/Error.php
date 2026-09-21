@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use AppCore\Domain\Language\LanguageInterface;
+use AppCore\Domain\Uri\AdminUriBuilderInterface;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -13,6 +14,7 @@ use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 class Error extends BaseAdminPage
 {
     public function __construct(
+        protected readonly AdminUriBuilderInterface $adminUriBuilder,
         private readonly LanguageInterface $language,
     ) {
     }
@@ -30,7 +32,9 @@ class Error extends BaseAdminPage
         if ($message === null) {
             $this->renderer = new NullRenderer();
             $this->code = StatusCode::SEE_OTHER;
-            $this->headers = [ResponseHeader::LOCATION => '/admin/index'];
+            $this->headers = [
+                ResponseHeader::LOCATION => (string) $this->adminUriBuilder->build('/index'),
+            ];
 
             return $this;
         }

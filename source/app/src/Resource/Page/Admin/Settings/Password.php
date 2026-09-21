@@ -11,6 +11,7 @@ use AppCore\Domain\Auth\AdminAuthenticatorInterface;
 use AppCore\Domain\Auth\AuthenticationException;
 use AppCore\Domain\Auth\PasswordIncorrect;
 use AppCore\Domain\Language\LanguageInterface;
+use AppCore\Domain\Uri\AdminUriBuilderInterface;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -31,6 +32,7 @@ class Password extends BaseAdminPage
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
         private readonly AdminAuthenticatorInterface $adminAuthenticator,
+        protected readonly AdminUriBuilderInterface $adminUriBuilder,
         #[Named('admin_password_update_form')]
         protected readonly FormInterface $form,
         private readonly LanguageInterface $language,
@@ -85,7 +87,9 @@ class Password extends BaseAdminPage
 
         $this->renderer = new NullRenderer();
         $this->code = StatusCode::SEE_OTHER;
-        $this->headers = [ResponseHeader::LOCATION => '/admin/settings/index']; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
+        $this->headers = [
+            ResponseHeader::LOCATION => (string) $this->adminUriBuilder->build('/settings/index'),
+        ]; // 注意：フォームがある画面に戻るとフラッシュメッセージが表示されない
         $this->context->setFlashMessage($this->language->get('admin.password.updated'));
 
         return $this;
