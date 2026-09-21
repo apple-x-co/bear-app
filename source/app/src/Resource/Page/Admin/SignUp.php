@@ -44,7 +44,7 @@ class SignUp extends BaseAdminPage
                 new VerifyUrlSignatureInputData($signature),
             );
         } catch (Throwable) {
-            $this->context->setSessionValue('error:message', 'message:admin:sign_up:decrypt_error');
+            $this->context->setSessionValue('error:message', 'admin.sign_up.decrypt_error');
             $this->context->setSessionValue('error:returnName', 'Join');
             $this->context->setSessionValue('error:returnUrl', '/admin/join');
             $this->renderer = new NullRenderer();

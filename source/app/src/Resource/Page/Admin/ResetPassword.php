@@ -45,7 +45,7 @@ class ResetPassword extends BaseAdminPage
                 new VerifyUrlSignatureInputData($signature),
             );
         } catch (Throwable) {
-            $this->context->setSessionValue('error:message', 'message:admin:reset_password:decrypt_error');
+            $this->context->setSessionValue('error:message', 'admin.reset_password.decrypt_error');
             $this->context->setSessionValue('error:returnName', 'Forgot password');
             $this->context->setSessionValue('error:returnUrl', '/admin/forgot-password');
             $this->renderer = new NullRenderer();
