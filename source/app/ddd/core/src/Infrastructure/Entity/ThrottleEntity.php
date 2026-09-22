@@ -5,22 +5,19 @@ declare(strict_types=1);
 namespace AppCore\Infrastructure\Entity;
 
 use DateTimeImmutable;
-use Ray\MediaQuery\CamelCaseTrait;
 
-class ThrottleEntity
+final readonly class ThrottleEntity
 {
-    use CamelCaseTrait;
-
     public function __construct(
-        public readonly int $id,
-        public readonly string $throttleKey,
-        public readonly string $remoteIp,
-        public readonly int $iterationCount,
-        public readonly int $maxAttempts,
-        public readonly string $interval,
-        public readonly DateTimeImmutable $expireDate,
-        public readonly DateTimeImmutable $createdDate,
-        public readonly DateTimeImmutable $updatedDate,
+        public int $id,
+        public string $throttleKey,
+        public string $remoteIp,
+        public int $iterationCount,
+        public int $maxAttempts,
+        public string $interval,
+        public DateTimeImmutable $expireDate,
+        public DateTimeImmutable $createdDate,
+        public DateTimeImmutable $updatedDate,
     ) {
     }
 }

@@ -5,21 +5,18 @@ declare(strict_types=1);
 namespace AppCore\Infrastructure\Entity;
 
 use DateTimeImmutable;
-use Ray\MediaQuery\CamelCaseTrait;
 
-class AdminEntity
+final readonly class AdminEntity
 {
-    use CamelCaseTrait;
-
     /** @param positive-int $id */
     public function __construct(
-        public readonly int $id,
-        public readonly string $username,
-        public readonly string $password,
-        public readonly string $displayName,
-        public readonly int $active,
-        public readonly DateTimeImmutable $createdDate,
-        public readonly DateTimeImmutable $updatedDate,
+        public int $id,
+        public string $username,
+        public string $password,
+        public string $displayName,
+        public int $active,
+        public DateTimeImmutable $createdDate,
+        public DateTimeImmutable $updatedDate,
     ) {
     }
 }
