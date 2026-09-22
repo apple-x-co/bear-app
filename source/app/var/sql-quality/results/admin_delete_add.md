@@ -1,13 +1,12 @@
 # SQL Performance Analysis
-- **SQL File:** `email_queue_recipients/email_queue_recipient_add.sql`
+- **SQL File:** `admins/admin_delete_add.sql`
 - **Cost:** N/A
 
 ## SQL
 ```sql
-/* email_queue_recipient_add */
-INSERT INTO `email_queue_recipients` (`email_queue_id`, `recipient_type`, `recipient_email_address`, `recipient_name`,
-                                      `created_date`)
-VALUES (:emailQueueId, :recipientType, :recipientEmailAddress, :recipientName, :createdDate);
+/* admin_delete_add */
+INSERT INTO `admin_deletes` (`admin_id`, `request_date`, `schedule_date`, `deleted_date`, `created_date`)
+VALUES (:adminId, :requestDate, :scheduleDate, NULL, :createdDate);
 
 ```
 
@@ -18,7 +17,7 @@ VALUES (:emailQueueId, :recipientType, :recipientEmailAddress, :recipientName, :
 ```
 Table scan
 +- Table
-   table           email_queue_recipients
+   table           admin_deletes
    rows            
    filtered        
 ```
@@ -28,12 +27,12 @@ Table scan
 N/A
 
 ### EXPLAIN JSON
-{"select_id":1,"table":{"insert":true,"table_name":"email_queue_recipients","access_type":"ALL"}}
+{"select_id":1,"table":{"insert":true,"table_name":"admin_deletes","access_type":"ALL"}}
 
 ### EXPLAIN ANALYZE
 N/A (EXPLAIN ANALYZE skipped: statement is not a read-only SELECT)
 ### SHOW WARNINGS
-[{"Level":"Note","Code":1003,"Message":"insert into `sql_quality_db`.`email_queue_recipients` (`sql_quality_db`.`email_queue_recipients`.`email_queue_id`,`sql_quality_db`.`email_queue_recipients`.`recipient_type`,`sql_quality_db`.`email_queue_recipients`.`recipient_email_address`,`sql_quality_db`.`email_queue_recipients`.`recipient_name`,`sql_quality_db`.`email_queue_recipients`.`created_date`) values (1,'127.0.0.1','test@example.com','Test Name','2024-01-01 12:00:00')"}]
+[{"Level":"Note","Code":1003,"Message":"insert into `sql_quality_db`.`admin_deletes` (`sql_quality_db`.`admin_deletes`.`admin_id`,`sql_quality_db`.`admin_deletes`.`request_date`,`sql_quality_db`.`admin_deletes`.`schedule_date`,`sql_quality_db`.`admin_deletes`.`deleted_date`,`sql_quality_db`.`admin_deletes`.`created_date`) values (1,'2024-01-01 12:00:00','2024-01-01 12:00:00',NULL,'2024-01-01 12:00:00')"}]
 
 ## Analysis Instructions
 Create a SQL performance analysis report for this query. Begin with a table of key metrics showing current values and their impact. Then describe the detected issues, focusing on the root causes. Follow with specific improvement recommendations, including SQL examples and their expected impact. End with implementation priorities and any important considerations. Keep the analysis focused on actionable insights that will lead to significant performance gains.

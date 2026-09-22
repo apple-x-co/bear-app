@@ -98,6 +98,7 @@ CREATE TABLE `email_queues`
     `subject`              VARCHAR(100)                   NOT NULL COMMENT '件名',
     `text`                 TEXT                           NOT NULL COMMENT 'テキスト',
     `html`                 TEXT                           NULL COMMENT 'HTML',
+    `priority`             VARCHAR(10)                    NOT NULL COMMENT '優先度(normal/high)',
     `active`               SMALLINT UNSIGNED              NOT NULL COMMENT 'アクティブ',
     `attempts`             SMALLINT UNSIGNED              NOT NULL COMMENT '試行回数',
     `max_attempts`         SMALLINT UNSIGNED              NOT NULL COMMENT '最大試行回数',

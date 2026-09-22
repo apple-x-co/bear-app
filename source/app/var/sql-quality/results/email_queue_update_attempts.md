@@ -32,10 +32,9 @@ N/A
 {"select_id":1,"table":{"update":true,"table_name":"email_queues","access_type":"range","possible_keys":["PRIMARY"],"key":"PRIMARY","used_key_parts":["id"],"key_length":"8","ref":["const"],"rows_examined_per_scan":1,"filtered":"100.00","attached_condition":"(`sql_quality_db`.`email_queues`.`id` = 1)"}}
 
 ### EXPLAIN ANALYZE
-<not executable by iterator executor>
-
+N/A (EXPLAIN ANALYZE skipped: statement is not a read-only SELECT)
 ### SHOW WARNINGS
-N/A
+[{"Level":"Note","Code":1003,"Message":"update `sql_quality_db`.`email_queues` set `sql_quality_db`.`email_queues`.`attempts` = 10 where (`sql_quality_db`.`email_queues`.`id` = 1)"}]
 
 ## Analysis Instructions
 Create a SQL performance analysis report for this query. Begin with a table of key metrics showing current values and their impact. Then describe the detected issues, focusing on the root causes. Follow with specific improvement recommendations, including SQL examples and their expected impact. End with implementation priorities and any important considerations. Keep the analysis focused on actionable insights that will lead to significant performance gains.

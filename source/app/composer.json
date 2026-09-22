@@ -26,7 +26,7 @@
         "bamarni/composer-bin-plugin": "^1.4",
         "bear/api-doc": "^1.1",
         "bear/devtools": "^1.0",
-        "koriym/sql-quality": "^0.1.7",
+        "koriym/sql-quality": "1.x-dev",
         "phpunit/phpunit": "^10.0",
         "rector/rector": "^2.2",
         "roave/security-advisories": "dev-latest"

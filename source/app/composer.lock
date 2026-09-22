@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2cf4ae38b340574d9be3c05c3f0d97cf",
+    "content-hash": "021ce9d86df76e64f1938bb4d1bf9dc2",
     "packages": [
         {
             "name": "aura/auth",
@@ -6194,20 +6194,21 @@
         },
         {
             "name": "koriym/sql-quality",
-            "version": "0.1.8",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/koriym/Koriym.SqlQuality.git",
-                "reference": "349fee8c869d3bac48f6cbbe956ad9f43bf777db"
+                "reference": "0a91bc497d87ed3118cc10a30765a9a73e96d9a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/Koriym.SqlQuality/zipball/349fee8c869d3bac48f6cbbe956ad9f43bf777db",
-                "reference": "349fee8c869d3bac48f6cbbe956ad9f43bf777db",
+                "url": "https://api.github.com/repos/koriym/Koriym.SqlQuality/zipball/0a91bc497d87ed3118cc10a30765a9a73e96d9a4",
+                "reference": "0a91bc497d87ed3118cc10a30765a9a73e96d9a4",
                 "shasum": ""
             },
             "require": {
                 "ext-pdo": "*",
+                "ext-pdo_mysql": "*",
                 "php": "^8.1"
             },
             "require-dev": {
@@ -6216,6 +6217,7 @@
                 "rector/rector": "^2.0",
                 "symfony/polyfill-php83": "^1.33"
             },
+            "default-branch": true,
             "bin": [
                 "bin/sql-quality"
             ],
@@ -6237,9 +6239,9 @@
             ],
             "support": {
                 "issues": "https://github.com/koriym/Koriym.SqlQuality/issues",
-                "source": "https://github.com/koriym/Koriym.SqlQuality/tree/0.1.8"
+                "source": "https://github.com/koriym/Koriym.SqlQuality/tree/1.x"
             },
-            "time": "2026-01-15T02:43:01+00:00"
+            "time": "2026-06-08T23:19:07+00:00"
         },
         {
             "name": "michelf/php-markdown",
@@ -9139,6 +9141,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "koriym/sql-quality": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
