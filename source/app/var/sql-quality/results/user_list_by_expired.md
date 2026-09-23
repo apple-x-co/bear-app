@@ -45,8 +45,8 @@ Table scan
 {"select_id":1,"cost_info":{"query_cost":"0.71"},"table":{"table_name":"users","access_type":"range","possible_keys":["idx_users_2"],"key":"idx_users_2","used_key_parts":["purge_date"],"key_length":"6","rows_examined_per_scan":1,"rows_produced_per_join":0,"filtered":"5.00","index_condition":"(`sql_quality_db`.`users`.`purge_date` < TIMESTAMP'2100-01-01 00:00:00')","cost_info":{"read_cost":"0.70","eval_cost":"0.01","prefix_cost":"0.71","data_read_per_join":"131"},"used_columns":["id","uid","display_name","username","password","active","signup_date","leaved_date","purge_date","last_logged_in_date","created_date","updated_date"],"attached_condition":"((`sql_quality_db`.`users`.`active` = 0) and (`sql_quality_db`.`users`.`leaved_date` < TIMESTAMP'2100-01-01 00:00:00'))"}}
 
 ### EXPLAIN ANALYZE
--> Filter: ((users.`active` = 0) and (users.leaved_date < TIMESTAMP'2100-01-01 00:00:00'))  (cost=0.71 rows=0.05) (actual time=0.00696..0.00696 rows=0 loops=1)
-    -> Index range scan on users using idx_users_2 over (NULL < purge_date < '2100-01-01 00:00:00'), with index condition: (users.purge_date < TIMESTAMP'2100-01-01 00:00:00')  (cost=0.71 rows=1) (actual time=0.0065..0.0065 rows=0 loops=1)
+-> Filter: ((users.`active` = 0) and (users.leaved_date < TIMESTAMP'2100-01-01 00:00:00'))  (cost=0.71 rows=0.05) (actual time=0.00225..0.00225 rows=0 loops=1)
+    -> Index range scan on users using idx_users_2 over (NULL < purge_date < '2100-01-01 00:00:00'), with index condition: (users.purge_date < TIMESTAMP'2100-01-01 00:00:00')  (cost=0.71 rows=1) (actual time=0.00188..0.00188 rows=0 loops=1)
 
 ### SHOW WARNINGS
 N/A

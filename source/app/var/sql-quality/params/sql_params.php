@@ -106,7 +106,7 @@ return [
         'sentDate' => '2024-01-01 12:00:00',
     ],
     'email_queue_recipients/email_queue_recipient_list_by_email_queue_ids.sql' => [
-        'emailQueueIds' => 'test@example.com',
+        'emailQueueIds' => [1],
     ],
     'email_queues/email_queue_add.sql' => [
         'senderEmailAddress' => 'test@example.com',
@@ -114,6 +114,7 @@ return [
         'subject' => 'test value',
         'text' => 'test value',
         'html' => 'test value',
+        'priority' => 'normal',
         'active' => 100,
         'attempts' => 10,
         'maxAttempts' => 10,
@@ -188,7 +189,7 @@ return [
         'dateTime' => '2100-01-01 00:00:00',
     ],
     'users/user_list_by_ids.sql' => [
-        'ids' => 'test value',
+        'ids' => [1],
     ],
     'users/user_update.sql' => [
         'displayName' => 'Test Name',

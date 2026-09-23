@@ -13,7 +13,7 @@ ORDER BY `id` DESC;
 ```
 
 ## Detected Issues
-- 暗黙的な型変換が検出されました。 [Learn more](https://koriym.github.io/Koriym.SqlQuality/issues/ImplicitTypeConversion)
+
 
 ## Explain Tree
 ```
@@ -23,7 +23,6 @@ Sort
       table           email_queue_recipients
       rows            1
       filtered        100.00
-      condition       (`sql_quality_db`.`email_queue_recipients`.`email_queue_id` = 0)
 ```
 ## Analysis Detail
 
@@ -31,14 +30,13 @@ Sort
 {"email_queue_recipients":{"columns":[{"COLUMN_NAME":"id","DATA_TYPE":"bigint","COLUMN_TYPE":"bigint unsigned","IS_NULLABLE":"NO","COLUMN_KEY":"PRI","COLUMN_DEFAULT":null,"EXTRA":"auto_increment"},{"COLUMN_NAME":"email_queue_id","DATA_TYPE":"bigint","COLUMN_TYPE":"bigint unsigned","IS_NULLABLE":"NO","COLUMN_KEY":"MUL","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"recipient_type","DATA_TYPE":"varchar","COLUMN_TYPE":"varchar(10)","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"recipient_email_address","DATA_TYPE":"varchar","COLUMN_TYPE":"varchar(100)","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"recipient_name","DATA_TYPE":"varchar","COLUMN_TYPE":"varchar(100)","IS_NULLABLE":"YES","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""},{"COLUMN_NAME":"created_date","DATA_TYPE":"datetime","COLUMN_TYPE":"datetime","IS_NULLABLE":"NO","COLUMN_KEY":"","COLUMN_DEFAULT":null,"EXTRA":""}],"indexes":[{"INDEX_NAME":"fk_email_queue_recipients_1","COLUMN_NAME":"email_queue_id","NON_UNIQUE":1,"SEQ_IN_INDEX":1,"CARDINALITY":1000},{"INDEX_NAME":"PRIMARY","COLUMN_NAME":"id","NON_UNIQUE":0,"SEQ_IN_INDEX":1,"CARDINALITY":1000}],"status":{"table_rows":1000,"data_length":114688,"index_length":49152,"auto_increment":1001,"create_time":"2026-09-22 16:39:48","update_time":"2026-09-22 16:40:38"}}}
 
 ### EXPLAIN JSON
-{"select_id":1,"cost_info":{"query_cost":"0.35"},"ordering_operation":{"using_filesort":false,"table":{"table_name":"email_queue_recipients","access_type":"ref","possible_keys":["fk_email_queue_recipients_1"],"key":"fk_email_queue_recipients_1","used_key_parts":["email_queue_id"],"key_length":"8","ref":["const"],"rows_examined_per_scan":1,"rows_produced_per_join":1,"filtered":"100.00","backward_index_scan":true,"cost_info":{"read_cost":"0.25","eval_cost":"0.10","prefix_cost":"0.35","data_read_per_join":"872"},"used_columns":["id","email_queue_id","recipient_type","recipient_email_address","recipient_name","created_date"],"attached_condition":"(`sql_quality_db`.`email_queue_recipients`.`email_queue_id` = 0)"}}}
+{"select_id":1,"cost_info":{"query_cost":"0.35"},"ordering_operation":{"using_filesort":false,"table":{"table_name":"email_queue_recipients","access_type":"ref","possible_keys":["fk_email_queue_recipients_1"],"key":"fk_email_queue_recipients_1","used_key_parts":["email_queue_id"],"key_length":"8","ref":["const"],"rows_examined_per_scan":1,"rows_produced_per_join":1,"filtered":"100.00","backward_index_scan":true,"cost_info":{"read_cost":"0.25","eval_cost":"0.10","prefix_cost":"0.35","data_read_per_join":"872"},"used_columns":["id","email_queue_id","recipient_type","recipient_email_address","recipient_name","created_date"]}}}
 
 ### EXPLAIN ANALYZE
--> Filter: (email_queue_recipients.email_queue_id = 0)  (cost=0.35 rows=1) (actual time=0.00442..0.00442 rows=0 loops=1)
-    -> Index lookup on email_queue_recipients using fk_email_queue_recipients_1 (email_queue_id=0) (reverse)  (cost=0.35 rows=1) (actual time=0.00392..0.00392 rows=0 loops=1)
+-> Index lookup on email_queue_recipients using fk_email_queue_recipients_1 (email_queue_id=1) (reverse)  (cost=0.35 rows=1) (actual time=0.00296..0.00358 rows=1 loops=1)
 
 ### SHOW WARNINGS
-[{"Level":"Warning","Code":1292,"Message":"Truncated incorrect DOUBLE value: 'test@example.com'"}]
+N/A
 
 ## Analysis Instructions
 Create a SQL performance analysis report for this query. Begin with a table of key metrics showing current values and their impact. Then describe the detected issues, focusing on the root causes. Follow with specific improvement recommendations, including SQL examples and their expected impact. End with implementation priorities and any important considerations. Keep the analysis focused on actionable insights that will lead to significant performance gains.
