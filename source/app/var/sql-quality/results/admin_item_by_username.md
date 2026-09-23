@@ -31,7 +31,7 @@ Table scan
 {"select_id":1,"cost_info":{"query_cost":"0.35"},"table":{"table_name":"admins","access_type":"ref","possible_keys":["idx_admins_1"],"key":"idx_admins_1","used_key_parts":["username"],"key_length":"402","ref":["const"],"rows_examined_per_scan":1,"rows_produced_per_join":1,"filtered":"100.00","cost_info":{"read_cost":"0.25","eval_cost":"0.10","prefix_cost":"0.35","data_read_per_join":"1K"},"used_columns":["id","username","password","display_name","active","created_date","updated_date"]}}
 
 ### EXPLAIN ANALYZE
--> Index lookup on admins using idx_admins_1 (username='Test Name')  (cost=0.35 rows=1) (actual time=0.00175..0.00175 rows=0 loops=1)
+-> Index lookup on admins using idx_admins_1 (username='Test Name')  (cost=0.35 rows=1) (actual time=0.00138..0.00138 rows=0 loops=1)
 
 ### SHOW WARNINGS
 N/A

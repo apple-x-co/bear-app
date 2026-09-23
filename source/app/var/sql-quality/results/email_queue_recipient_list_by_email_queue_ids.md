@@ -33,7 +33,7 @@ Sort
 {"select_id":1,"cost_info":{"query_cost":"0.35"},"ordering_operation":{"using_filesort":false,"table":{"table_name":"email_queue_recipients","access_type":"ref","possible_keys":["fk_email_queue_recipients_1"],"key":"fk_email_queue_recipients_1","used_key_parts":["email_queue_id"],"key_length":"8","ref":["const"],"rows_examined_per_scan":1,"rows_produced_per_join":1,"filtered":"100.00","backward_index_scan":true,"cost_info":{"read_cost":"0.25","eval_cost":"0.10","prefix_cost":"0.35","data_read_per_join":"872"},"used_columns":["id","email_queue_id","recipient_type","recipient_email_address","recipient_name","created_date"]}}}
 
 ### EXPLAIN ANALYZE
--> Index lookup on email_queue_recipients using fk_email_queue_recipients_1 (email_queue_id=1) (reverse)  (cost=0.35 rows=1) (actual time=0.00296..0.00358 rows=1 loops=1)
+-> Index lookup on email_queue_recipients using fk_email_queue_recipients_1 (email_queue_id=1) (reverse)  (cost=0.35 rows=1) (actual time=0.002..0.00237 rows=1 loops=1)
 
 ### SHOW WARNINGS
 N/A

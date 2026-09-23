@@ -123,6 +123,17 @@ BEGIN
         SET i = i + 1;
     END WHILE;
 
+    -- Insert an unexpired test-key throttle for throttle_item_by_key.sql / throttle_remove_by_key.sql
+    INSERT INTO `throttles` (`throttle_key`, `remote_ip`, `iteration_count`, `max_attempts`, `interval`, `expire_date`, `created_date`, `updated_date`)
+    VALUES ('test-key',
+            '127.0.0.1',
+            3,
+            10,
+            '30 minutes',
+            NOW() + INTERVAL 30 MINUTE,
+            NOW(),
+            NOW());
+
     -- Insert 1000 users
     SET i = 1;
     WHILE i <= 1000 DO

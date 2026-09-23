@@ -33,8 +33,8 @@ Table scan
 {"select_id":1,"cost_info":{"query_cost":"0.35"},"table":{"table_name":"throttles","access_type":"ref","possible_keys":["idx_throttles_1"],"key":"idx_throttles_1","used_key_parts":["throttle_key"],"key_length":"402","ref":["const"],"rows_examined_per_scan":1,"rows_produced_per_join":0,"filtered":"33.33","cost_info":{"read_cost":"0.25","eval_cost":"0.03","prefix_cost":"0.35","data_read_per_join":"306"},"used_columns":["id","throttle_key","remote_ip","iteration_count","max_attempts","interval","expire_date","created_date","updated_date"],"attached_condition":"(`sql_quality_db`.`throttles`.`expire_date` >= <cache>(now()))"}}
 
 ### EXPLAIN ANALYZE
--> Filter: (throttles.expire_date >= <cache>(now()))  (cost=0.283 rows=0.333) (actual time=0.0025..0.0025 rows=0 loops=1)
-    -> Index lookup on throttles using idx_throttles_1 (throttle_key='test-key')  (cost=0.283 rows=1) (actual time=0.00225..0.00225 rows=0 loops=1)
+-> Filter: (throttles.expire_date >= <cache>(now()))  (cost=0.283 rows=0.333) (actual time=0.00254..0.00283 rows=1 loops=1)
+    -> Index lookup on throttles using idx_throttles_1 (throttle_key='test-key')  (cost=0.283 rows=1) (actual time=0.00229..0.00254 rows=1 loops=1)
 
 ### SHOW WARNINGS
 N/A

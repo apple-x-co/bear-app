@@ -33,8 +33,8 @@ Table scan
 {"select_id":1,"cost_info":{"query_cost":"0.35"},"table":{"table_name":"admin_deletes","access_type":"ref","possible_keys":["idx_admin_deletes_2"],"key":"idx_admin_deletes_2","used_key_parts":["deleted_date"],"key_length":"6","ref":["const"],"rows_examined_per_scan":1,"rows_produced_per_join":0,"filtered":"33.33","index_condition":"(`sql_quality_db`.`admin_deletes`.`deleted_date` is null)","cost_info":{"read_cost":"0.25","eval_cost":"0.03","prefix_cost":"0.35","data_read_per_join":"10"},"used_columns":["admin_id","request_date","schedule_date","deleted_date","created_date"],"attached_condition":"(`sql_quality_db`.`admin_deletes`.`schedule_date` <= <cache>(now()))"}}
 
 ### EXPLAIN ANALYZE
--> Filter: (admin_deletes.schedule_date <= <cache>(now()))  (cost=0.283 rows=0.333) (actual time=0.00396..0.00396 rows=0 loops=1)
-    -> Index lookup on admin_deletes using idx_admin_deletes_2 (deleted_date=NULL), with index condition: (admin_deletes.deleted_date is null)  (cost=0.283 rows=1) (actual time=0.0035..0.0035 rows=0 loops=1)
+-> Filter: (admin_deletes.schedule_date <= <cache>(now()))  (cost=0.283 rows=0.333) (actual time=0.00483..0.00483 rows=0 loops=1)
+    -> Index lookup on admin_deletes using idx_admin_deletes_2 (deleted_date=NULL), with index condition: (admin_deletes.deleted_date is null)  (cost=0.283 rows=1) (actual time=0.00246..0.00246 rows=0 loops=1)
 
 ### SHOW WARNINGS
 N/A

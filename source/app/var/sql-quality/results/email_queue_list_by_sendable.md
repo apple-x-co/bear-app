@@ -53,8 +53,8 @@ Sort (using filesort)
 {"select_id":1,"cost_info":{"query_cost":"0.35"},"ordering_operation":{"using_filesort":true,"table":{"table_name":"email_queues","access_type":"ref","possible_keys":["idx_email_queues_1"],"key":"idx_email_queues_1","used_key_parts":["sent_date"],"key_length":"6","ref":["const"],"rows_examined_per_scan":1,"rows_produced_per_join":0,"filtered":"5.00","index_condition":"(`sql_quality_db`.`email_queues`.`sent_date` is null)","cost_info":{"read_cost":"0.25","eval_cost":"0.01","prefix_cost":"0.35","data_read_per_join":"65"},"used_columns":["id","sender_email_address","sender_name","subject","text","html","priority","active","attempts","max_attempts","schedule_date","sent_date","created_date"],"attached_condition":"((`sql_quality_db`.`email_queues`.`active` = 1) and (`sql_quality_db`.`email_queues`.`schedule_date` <= TIMESTAMP'2024-01-01 12:00:00') and (`sql_quality_db`.`email_queues`.`max_attempts` > `sql_quality_db`.`email_queues`.`attempts`))"}}}
 
 ### EXPLAIN ANALYZE
--> Sort: (case email_queues.priority when 'high' then 0 when 'normal' then 1 else 2 end), email_queues.schedule_date  (cost=0.255 rows=1) (actual time=0.00317..0.00317 rows=0 loops=1)
-    -> Filter: ((email_queues.`active` = 1) and (email_queues.schedule_date <= TIMESTAMP'2024-01-01 12:00:00') and (email_queues.max_attempts > email_queues.attempts))  (cost=0.255 rows=1) (actual time=0.002..0.002 rows=0 loops=1)
+-> Sort: (case email_queues.priority when 'high' then 0 when 'normal' then 1 else 2 end), email_queues.schedule_date  (cost=0.255 rows=1) (actual time=0.0025..0.0025 rows=0 loops=1)
+    -> Filter: ((email_queues.`active` = 1) and (email_queues.schedule_date <= TIMESTAMP'2024-01-01 12:00:00') and (email_queues.max_attempts > email_queues.attempts))  (cost=0.255 rows=1) (actual time=0.00171..0.00171 rows=0 loops=1)
         -> Index lookup on email_queues using idx_email_queues_1 (sent_date=NULL), with index condition: (email_queues.sent_date is null)  (cost=0.255 rows=1) (actual time=0.00158..0.00158 rows=0 loops=1)
 
 ### SHOW WARNINGS
