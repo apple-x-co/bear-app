@@ -11,9 +11,7 @@ use BEAR\Resource\Module\JsonSchemaModule;
 use Koriym\EnvJson\EnvJson;
 use Ray\AuraSqlModule\AuraSqlModule;
 use Ray\IdentityValueModule\IdentityValueModule;
-use Ray\MediaQuery\DbQueryConfig;
-use Ray\MediaQuery\MediaQueryModule;
-use Ray\MediaQuery\Queries;
+use Ray\MediaQuery\MediaQuerySqlModule;
 
 use function dirname;
 use function getenv;
@@ -44,9 +42,9 @@ class AppModule extends AbstractAppModule
         );
 
         $this->install(
-            new MediaQueryModule(
-                Queries::fromDir($this->appMeta->appDir . '/ddd/core/src/Infrastructure/Query'),
-                [new DbQueryConfig($this->appMeta->appDir . '/var/sql')],
+            new MediaQuerySqlModule(
+                $this->appMeta->appDir . '/ddd/core/src/Infrastructure/Query',
+                $this->appMeta->appDir . '/var/sql',
             ),
         );
 

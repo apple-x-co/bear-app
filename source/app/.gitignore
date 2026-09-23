@@ -4,6 +4,8 @@
 /.idea/
 /vendor/
 /build/
+/var/build/*
+!var/build/.gitkeep
 /var/log/*
 !var/log/.gitkeep
 /var/tmp/*
@@ -15,6 +17,9 @@
 !var/tmp/di/.gitkeep
 /tests/Http/log/*
 !/tests/Http/log/.gitkeep
+/prod-*.autoload.php
+/prod-*.preload.php
+/autoload.php.dev
 phpunit.xml
 /docs/api/
 /.phpcs.xml

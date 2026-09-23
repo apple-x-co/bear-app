@@ -66,8 +66,9 @@ CREATE TABLE `admins`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB COMMENT '管理者アカウント';
 
-/** 一意制約違反が起きるためSQL解析では作成しない */
+/** 一意制約違反が起きるためSQL解析ではユニークインデックスを作成しない */
 /** CREATE UNIQUE INDEX `idx_admins_1` ON `admins` (`username`); */
+CREATE INDEX `idx_admins_1` ON `admins` (`username`);
 
 CREATE TABLE `bad_passwords`
 (
@@ -98,6 +99,7 @@ CREATE TABLE `email_queues`
     `subject`              VARCHAR(100)                   NOT NULL COMMENT '件名',
     `text`                 TEXT                           NOT NULL COMMENT 'テキスト',
     `html`                 TEXT                           NULL COMMENT 'HTML',
+    `priority`             VARCHAR(10)                    NOT NULL COMMENT '優先度(normal/high)',
     `active`               SMALLINT UNSIGNED              NOT NULL COMMENT 'アクティブ',
     `attempts`             SMALLINT UNSIGNED              NOT NULL COMMENT '試行回数',
     `max_attempts`         SMALLINT UNSIGNED              NOT NULL COMMENT '最大試行回数',
