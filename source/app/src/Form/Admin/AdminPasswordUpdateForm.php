@@ -74,7 +74,7 @@ class AdminPasswordUpdateForm extends ExtendedForm
             ->is('callback', function (stdClass $subject, string $field) {
                 return $this->badPasswordQuery->item($subject->$field) === null;
             });
-        $this->filter->useFieldMessage('password', '新しいパスワードは8文字以上20文字以下の英数字記号(!@#$%^&*)で入力してください');
+        $this->filter->useFieldMessage('password', '新しいパスワードは8文字以上20文字以下の英数字記号(!@#$%^&*)で入力してください'); // @security-ignore
 
         /** @psalm-suppress UndefinedMethod */
         $this->setField('passwordConfirmation', 'password')
