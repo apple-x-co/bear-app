@@ -20,13 +20,13 @@ jobs:
         with:
           php-version: '8.3'
 
-      - run: composer install --no-interaction
+#      - run: composer install --no-interaction
 
       - name: Security Scan
         run: |
           composer require --dev bear/security
-          vendor/bin/bear.security-scan src --format=sarif > results-bear.sarif
-          vendor/bin/bear.security-scan ddd/core/src --format=sarif > results-ddd.sarif
+          vendor/bin/bear.security-scan src --format sarif > results-bear.sarif
+          vendor/bin/bear.security-scan ddd/core/src --format sarif > results-ddd.sarif
 
       - name: Upload to GitHub Security
         uses: github/codeql-action/upload-sarif@v3
