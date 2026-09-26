@@ -1,0 +1,35 @@
+name: Security
+
+on: [push, pull_request]
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - run: composer install --no-interaction
+
+      - name: Security Scan
+        run: |
+          composer require --dev bear/security
+          vendor/bin/bear.security-scan src --format=sarif > results-bear.sarif
+          vendor/bin/bear.security-scan ddd/core/src --format=sarif > results-ddd.sarif
+
+      - name: Upload to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          category: bear
+          sarif_file: results-bear.sarif
+
+      - name: Upload to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          category: ddd
+          sarif_file: results-ddd.sarif

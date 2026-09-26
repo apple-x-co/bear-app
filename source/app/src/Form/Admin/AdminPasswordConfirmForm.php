@@ -26,7 +26,7 @@ class AdminPasswordConfirmForm extends ExtendedForm
         $this->filter->validate('password')->is('string');
         /** @psalm-suppress TooManyArguments */
         $this->filter->validate('password')->is('regex', '/^[A-Za-z0-9!@#$%^&*]+$/i');
-        $this->filter->useFieldMessage('password', '有効なパスワードを入力してください');
+        $this->filter->useFieldMessage('password', '有効なパスワードを入力してください'); // @security-ignore
 
         /** @psalm-suppress UndefinedMethod */
         $this->setField('continue', 'submit');

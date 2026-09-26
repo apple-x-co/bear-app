@@ -186,7 +186,7 @@ class BaseModule extends AbstractModule
                  'hostname' => 'smtp_hostname',
                  'port' => 'smtp_port',
                  'username' => 'smtp_username',
-                 'password' => 'smtp_password',
+                 'password' => 'smtp_password', // @security-ignore
                  'options' => 'smtp_options',
              ])
              ->in(Scope::SINGLETON);
