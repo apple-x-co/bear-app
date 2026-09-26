@@ -5,8 +5,14 @@ on: [push, pull_request]
 jobs:
   security:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./source/app
+
     permissions:
       security-events: write
+
     steps:
       - uses: actions/checkout@v4
 
