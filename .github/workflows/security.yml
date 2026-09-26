@@ -32,10 +32,10 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           category: bear
-          sarif_file: results-bear.sarif
+          sarif_file: ./source/app/results-bear.sarif
 
       - name: Upload to GitHub Security
         uses: github/codeql-action/upload-sarif@v3
         with:
           category: ddd
-          sarif_file: results-ddd.sarif
+          sarif_file: ./source/app/results-ddd.sarif
