@@ -37,7 +37,7 @@ class UserLoginForm extends ExtendedForm
         $this->filter->validate('password')->is('string');
         /** @psalm-suppress TooManyArguments */
         $this->filter->validate('password')->is('regex', '/^[A-Za-z0-9!@#$%^&*]+$/i');
-        $this->filter->useFieldMessage('password', 'public.login.invalid_password');
+        $this->filter->useFieldMessage('password', 'public.login.invalid_password'); // @security-ignore
 
         $this->setField('remember', 'checkbox')
              ->setAttribs([

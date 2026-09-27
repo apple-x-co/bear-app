@@ -269,6 +269,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
                 'expires' => $expireAt->getTimestamp(),
                 'path' => '/',
                 'httponly' => true,
+                'samesite' => 'Strict',
             ],
         );
     }
@@ -284,6 +285,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
                 'expires' => time() - 1,
                 'path' => '/',
                 'httponly' => true,
+                'samesite' => 'Strict',
             ],
         );
     }

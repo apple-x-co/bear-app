@@ -20,8 +20,8 @@ use Aura\Auth\Session\Session;
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
+use function hash;
 use function ini_get;
-use function sha1;
 
 /**
  * Admin認証基盤を提供
@@ -74,7 +74,7 @@ readonly class AdminAuthenticatorProvider implements ProviderInterface
         $authSegment = new Segment(self::SEGMENT_NAME);
         $authFactory = new AuthFactory($this->cookie, $authSession, $authSegment);
 
-        $rememberCookieName = $this->sessionName . ':admin:remember_' . sha1(static::class);
+        $rememberCookieName = $this->sessionName . '_admin_remember_' . hash('sha3-256', static::class);
 
         return new AdminAuthenticator(
             $this->adminPermissionRepository,

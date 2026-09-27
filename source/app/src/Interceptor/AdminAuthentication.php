@@ -39,8 +39,8 @@ use function array_filter;
 use function array_shift;
 use function assert;
 use function call_user_func;
+use function hash;
 use function is_string;
-use function sha1;
 
 /**
  * Admin認証
@@ -112,7 +112,7 @@ readonly class AdminAuthentication implements MethodInterceptor
         $input = array_shift($array);
 
         if ($input->isValid()) {
-            $throttleKey = sha1($input->username);
+            $throttleKey = hash('sha3-256', $input->username);
 
             if ($this->throttlingHandler->isExceeded($throttleKey)) {
                 return call_user_func(
