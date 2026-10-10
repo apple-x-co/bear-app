@@ -12,7 +12,7 @@ use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
 use function assert;
-use function sha1;
+use function hash;
 
 readonly class Throttling implements MethodInterceptor
 {
@@ -34,9 +34,9 @@ readonly class Throttling implements MethodInterceptor
 
         $remoteIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
         $uri = "{$ro->uri->scheme}://{$ro->uri->host}{$ro->uri->path}";
-        $key = sha1($uri . '|' . $remoteIp);
+        $throttleKey = hash('sha3-256', $uri . '|' . $remoteIp);
 
-        if ($this->throttle->isExceeded($key)) {
+        if ($this->throttle->isExceeded($throttleKey)) {
             $ro->view = '';
             $ro->body = [];
             $ro->code = self::TOO_MANY_REQUESTS;
@@ -45,7 +45,7 @@ readonly class Throttling implements MethodInterceptor
             throw new BadRequestException('Too many requests', self::TOO_MANY_REQUESTS, null);
         }
 
-        $this->throttle->countUp($key, $remoteIp, $rateLimiter->interval, $rateLimiter->limit);
+        $this->throttle->countUp($throttleKey, $remoteIp, $rateLimiter->interval, $rateLimiter->limit);
 
         return $invocation->proceed();
     }
