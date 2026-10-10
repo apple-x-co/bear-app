@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use MyVendor\MyProject\Form\ExtendedForm;
 use MyVendor\MyProject\InputQuery\Admin\FieldsetDemoInput;
 use MyVendor\MyProject\Resource\Page\BaseAdminPage;
@@ -14,6 +15,7 @@ use Ray\WebFormModule\FormInterface;
 
 use function assert;
 
+#[NoHttpCache]
 class FieldsetDemo extends BaseAdminPage
 {
     public function __construct(

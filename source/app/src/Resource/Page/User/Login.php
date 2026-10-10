@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page\User;
 
 use AppCore\Domain\Auth\AuthenticationException;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use MyVendor\MyProject\Annotation\UserLogin;
 use MyVendor\MyProject\InputQuery\Customer\LoginUserInput;
 use MyVendor\MyProject\Resource\Page\BaseUserPage;
@@ -13,6 +14,7 @@ use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
+#[NoHttpCache]
 class Login extends BaseUserPage
 {
     public function __construct(

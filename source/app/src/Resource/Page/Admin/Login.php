@@ -6,6 +6,7 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use AppCore\Domain\Auth\AuthenticationException;
 use AppCore\Domain\Captcha\CaptchaException;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use MyVendor\MyProject\Annotation\AdminLogin;
 use MyVendor\MyProject\Annotation\CloudflareTurnstile;
 use MyVendor\MyProject\InputQuery\Admin\LoginUserInput;
@@ -15,6 +16,7 @@ use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
+#[NoHttpCache]
 class Login extends BaseAdminPage
 {
     public function __construct(

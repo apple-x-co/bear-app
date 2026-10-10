@@ -12,6 +12,7 @@ use AppCore\Domain\AccessControl\Permission;
 use AppCore\Domain\Auth\AdminAuthenticatorInterface;
 use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\Uri\AdminUriBuilderInterface;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -25,6 +26,7 @@ use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
+#[NoHttpCache]
 class Emails extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */

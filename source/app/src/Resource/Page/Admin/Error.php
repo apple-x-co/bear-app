@@ -6,11 +6,13 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\Uri\AdminUriBuilderInterface;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 
+#[NoHttpCache]
 class Error extends BaseAdminPage
 {
     public function __construct(

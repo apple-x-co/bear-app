@@ -9,6 +9,7 @@ use AppCore\Application\Admin\ResetAdminPasswordUseCase;
 use AppCore\Application\Admin\VerifyUrlSignatureInputData;
 use AppCore\Application\Admin\VerifyUrlSignatureUseCase;
 use AppCore\Domain\Uri\AdminUriBuilderInterface;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -24,6 +25,7 @@ use Throwable;
 
 use function assert;
 
+#[NoHttpCache]
 class ResetPassword extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */

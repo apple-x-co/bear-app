@@ -12,6 +12,7 @@ use AppCore\Domain\Auth\AuthenticationException;
 use AppCore\Domain\Auth\PasswordIncorrect;
 use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\Uri\AdminUriBuilderInterface;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -27,6 +28,7 @@ use Ray\WebFormModule\FormInterface;
 use Throwable;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
+#[NoHttpCache]
 class Password extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */

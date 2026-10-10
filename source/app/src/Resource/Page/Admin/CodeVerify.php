@@ -10,6 +10,7 @@ use AppCore\Application\VerifyVerificationCodeInputData;
 use AppCore\Application\VerifyVerificationCodeUseCase;
 use AppCore\Domain\Uri\AdminUriBuilderInterface;
 use AppCore\Domain\VerificationCode\VerificationCodeNotFoundException;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -24,6 +25,7 @@ use Ray\WebFormModule\FormInterface;
 
 use function assert;
 
+#[NoHttpCache]
 class CodeVerify extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */

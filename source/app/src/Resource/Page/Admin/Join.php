@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 use AppCore\Application\Admin\SendAdminSignUpCodeInputData;
 use AppCore\Application\Admin\SendAdminSignUpCodeUseCase;
 use AppCore\Domain\Captcha\CaptchaException;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -20,6 +21,7 @@ use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
+#[NoHttpCache]
 class Join extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */

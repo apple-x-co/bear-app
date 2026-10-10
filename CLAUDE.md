@@ -60,6 +60,7 @@ bear-app は BEAR.Sunday フレームワークをベースにした DDD + CQRS �
 - `#[RequiredPermission]`: 権限チェック
 - `#[RateLimiter]`: レート制限
 - `@FormValidation`: フォーム検証
+- `#[Cacheable]` / `#[NoHttpCache]` など: キャッシュ制御（詳細は「8. キャッシュの設定」）
 
 ## 開発時の注意点
 
@@ -193,6 +194,52 @@ source/app/var/email/
 ```php
 $this->transport->send($email);
 ```
+
+### 8. キャッシュの設定
+
+BEAR.Sunday のキャッシュ機構（`bear/query-repository`）を使います。`PackageModule` が `QueryRepositoryModule` を自動でインストールするので、リソースにアトリビュートを付けるだけで有効になります（Module の追加は不要）。
+
+#### 使い分け
+
+| 用途 | アトリビュート | 備考 |
+|---|---|---|
+| ユーザー非依存の GET を一定時間キャッシュ | `#[Cacheable(expirySecond: N)]` | サーバー側キャッシュ ＋ ETag ＋ `Cache-Control: max-age` を自動付与。`$headers` に `Cache-Control` を手書きしない |
+| 指定した日時までキャッシュ | `#[Cacheable(expiryAt: 'key')]` | body の `key` に `strtotime()` で解釈できる日時を入れる。キーが無いと `ExpireAtKeyNotExists` |
+| ヘッダーだけ付ける（サーバー側キャッシュなし） | `#[HttpCache(maxAge: N, sMaxAge: N)]` | |
+| キャッシュさせない | `#[NoHttpCache]` | `Cache-Control: private, no-store, no-cache, must-revalidate` |
+| 書き込みで別リソースのキャッシュを破棄 | `#[Purge(uri: '...?id={id}')]` | 次の GET で作り直される |
+| 書き込みで別リソースのキャッシュを再生成 | `#[Refresh(uri: '...?id={id}')]` | その場で GET し直して保存する |
+| 全体キャッシュ（TTL なし・イベント駆動） | `#[CacheableResponse]` | 書き込み（`onPut` など）で更新。埋め込み（`#[Embed]`）の変更にも追従する |
+| 部分キャッシュ（ドーナツ） | `#[DonutCache]` ＋ `#[RefreshCache]` | 全体は ETag なし。キャッシュされるのはドーナツ部分だけ |
+
+#### ルール
+
+* **ユーザー固有の状態に依存する Page は `#[NoHttpCache]` を付ける。** `Page/Admin`・`Page/User` 配下の `onGet` を持つクラスが対象です（`AdminContext`・フォームの CSRF トークン・セッション値に依存するため）。`#[Cacheable]` を付けると他のユーザーの情報が漏れます
+* `#[HttpCache]` / `#[NoHttpCache]` は**クラス自身に付けたものだけ**が効きます。`BaseAdminPage` などの親クラスに付けても子クラスには効きません
+* `#[HttpCache]` / `#[NoHttpCache]` が `Cache-Control` を付けるのは**レスポンスコードが 200 のときだけ**です（303 リダイレクトなどは対象外）
+* `#[Purge]` / `#[Refresh]` は **`#[Cacheable]` ではないクラス**の書き込みメソッドに付けます（`#[Cacheable]` のクラスは書き込みメソッドが自動で自分のキャッシュを更新します）
+* `#[DonutCache]` / `#[CacheableResponse]` で `#[Embed]` した穴は、`DonutRequest` として文字列化されてテンプレートに差し込まれます。**JSON（App リソース）では展開されない**ので、Qiq テンプレートを使う Page リソースで使い、テンプレートでは `{{= $穴 }}` とエスケープなしで出力します
+
+#### サンプル
+
+動作確認用のサンプルを `CacheDemo/` に置いています。各クラスの doc コメントに確認手順を書いています。
+
+| ファイル | 内容 |
+|---|---|
+| `source/app/src/Resource/App/CacheDemo/Http.php` | `#[HttpCache]` |
+| `source/app/src/Resource/App/CacheDemo/ExpiryAt.php` | `#[Cacheable(expiryAt: ...)]` |
+| `source/app/src/Resource/App/CacheDemo/Quote.php`、`QuoteCommand.php` | `#[Purge]` / `#[Refresh]`（`Quote` が無効化される側） |
+| `source/app/src/Resource/Page/CacheDemo/Donut.php`、`Clock.php` | `#[DonutCache]` ＋ `#[RefreshCache]` ＋ `#[Embed]` |
+| `source/app/src/Resource/Page/CacheDemo/Article.php`、`Comment.php` | `#[CacheableResponse]` ＋ `#[Embed]`（依存関係による無効化） |
+
+実際のキャッシュ設定の例は `Resource/App/Index.php`（`#[Cacheable]`）と `Resource/Page/Admin/Login.php`（`#[NoHttpCache]`）を参照してください。
+
+#### 動作確認の注意
+
+* **dev コンテキストではサーバー側のキャッシュは効きません**（`ResourceObjectPool` が `NullAdapter` のため）。`ETag` や `Cache-Control` のヘッダーは確認できますが、キャッシュヒットや無効化の確認は `prod-` コンテキスト（`prod-hal-api-app`、`prod-html-app` など）で行います
+* prod コンテキストは DI をコンパイルして `var/build/<context>/` に保存します。リソースを追加・変更したあとに `Unbound` エラーが出たら、`var/build/<context>/` と `var/tmp/<context>/` を削除して作り直させてください
+* ホストの PHP が 8.3 未満の場合は、`bear-web` コンテナ内（`/var/www/html`）で実行します
+* `ProdModule` の `CacheVersionModule((string) time())` により、デプロイのたびにキャッシュが無効になります。Web サーバーを複数台にする場合は、`StorageRedisDsnModule`（または `StorageMemcachedModule`）でキャッシュを共有します（現在は `// TODO`、`docker/compose.yml` に Redis・Memcached はありません）
 
 ## よく使うコマンド
 
@@ -413,6 +460,17 @@ INSERT INTO admin_permissions (admin_id, access, resource_name, permission_name)
 VALUES (1, 'allow', '*', 'privilege');
 ```
 
+### 6. キャッシュが効かない
+
+- dev コンテキストではサーバー側のキャッシュは効きません。`prod-` コンテキストで確認してください
+- リソースを追加したあとに `Unbound` エラーが出る場合は、DI のコンパイル結果が古い状態です
+
+```bash
+rm -rf var/build/<context> var/tmp/<context>
+```
+
+- `#[HttpCache]` / `#[NoHttpCache]` が効かない場合は、親クラスではなくそのクラス自身に付いているか、レスポンスコードが 200 かを確認してください
+
 ## セキュリティチェックリスト
 
 新機能を実装する際は、以下を確認してください：
@@ -432,7 +490,7 @@ VALUES (1, 'allow', '*', 'privilege');
 - [ ] N+1 問題が発生していないか
 - [ ] 不要な JOIN が含まれていないか
 - [ ] インデックスが適切に設定されているか
-- [ ] キャッシュが活用できるか
+- [ ] キャッシュが活用できるか（ユーザー非依存の GET は `#[Cacheable]`、認証・フォーム・セッションに依存する Page は `#[NoHttpCache]`）
 - [ ] 不要なデータを取得していないか
 - [ ] トランザクションが適切に使用されているか
 
