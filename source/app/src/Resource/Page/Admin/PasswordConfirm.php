@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use AppCore\Domain\Auth\AuthenticationException;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\AdminVerifyPassword;
 use MyVendor\MyProject\InputQuery\Admin\UserPasswordInput;
@@ -14,6 +15,7 @@ use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
+#[NoHttpCache]
 class PasswordConfirm extends BaseAdminPage
 {
     public function __construct(

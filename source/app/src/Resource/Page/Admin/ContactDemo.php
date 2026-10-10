@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
 use AppCore\Domain\Uri\AdminUriBuilderInterface;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Form\Admin\AdminContactDemoForm;
@@ -18,6 +19,7 @@ use Ray\WebFormModule\FormInterface;
 
 use function assert;
 
+#[NoHttpCache]
 class ContactDemo extends BaseAdminPage
 {
     public function __construct(

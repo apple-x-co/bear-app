@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\Resource\Page\Admin;
 use AppCore\Application\Admin\ForgotAdminPasswordInputData;
 use AppCore\Application\Admin\ForgotAdminPasswordUseCase;
 use AppCore\Domain\Captcha\CaptchaException;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -20,6 +21,7 @@ use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
+#[NoHttpCache]
 class ForgotPassword extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */

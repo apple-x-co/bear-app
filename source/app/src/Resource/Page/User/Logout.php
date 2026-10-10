@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\User;
 
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use BEAR\Resource\NullRenderer;
 use MyVendor\MyProject\Annotation\UserGuard;
 use MyVendor\MyProject\Annotation\UserLogout;
 use MyVendor\MyProject\Resource\Page\BaseUserPage;
 
+#[NoHttpCache]
 class Logout extends BaseUserPage
 {
     #[UserGuard]

@@ -9,6 +9,7 @@ use AppCore\Application\Admin\VerifyAdminEmailUseCase;
 use AppCore\Domain\Auth\AdminAuthenticatorInterface;
 use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\Uri\AdminUriBuilderInterface;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use BEAR\Resource\NullRenderer;
 use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
@@ -18,6 +19,7 @@ use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\AuraSqlModule\Annotation\WriteConnection;
 use Ray\InputQuery\Attribute\Input;
 
+#[NoHttpCache]
 class EmailVerify extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */

@@ -16,6 +16,7 @@ DDD（Domain-Driven Design）と CQRS（Command Query Responsibility Segregation
 * **メール管理機能**: キュー、スケジュール送信、優先度制御、テンプレートエンジン連携
 * **多言語対応（i18n）**: リクエストパス・Accept-Language からの言語自動判定、翻訳ファイル・ロケール別ドキュメントによる i18n
 * **REST API 対応**: HAL+JSON フォーマットサポート
+* **キャッシュ**: BEAR.Sunday のキャッシュ機構（`#[Cacheable]`、ドーナツキャッシュなど）によるサーバー側・HTTP キャッシュ
 * **AOP による横断的関心事の分離**: アトリビュートベースのインターセプター
 
 ### 技術要件
@@ -52,6 +53,13 @@ DDD（Domain-Driven Design）と CQRS（Command Query Responsibility Segregation
 * [Fieldset](http://localhost/admin/fieldset-demo)
 * [Multiple](http://localhost/admin/multiple-demo)
 * [Upload](http://localhost/admin/upload-demo)
+
+## Cache sample
+
+* [DonutCache](http://localhost/cache-demo/donut)
+* [CacheableResponse](http://localhost/cache-demo/article)
+
+※ サーバー側のキャッシュは `prod-` コンテキストでのみ効きます。
 
 ## Demo
 
@@ -153,6 +161,39 @@ graph TD;
 
 * **HAL+JSON 対応**: `Accept: application/json` ヘッダーで API レスポンス
 * **リソース指向**: BEAR.Sunday の RESTful アーキテクチャ
+
+### キャッシュ
+
+[BEAR.Sunday のキャッシュ機構](https://bearsunday.github.io/manuals/1.0/ja/cache.html)（`bear/query-repository`）を、アトリビュートで利用します。Module の追加は不要です。
+
+| 用途 | アトリビュート |
+|---|---|
+| 一定時間キャッシュ（サーバー側 ＋ ETag ＋ `max-age`） | `#[Cacheable(expirySecond: N)]` |
+| 指定した日時までキャッシュ | `#[Cacheable(expiryAt: 'key')]` |
+| `Cache-Control` ヘッダーだけ付ける | `#[HttpCache(maxAge: N, sMaxAge: N)]` |
+| キャッシュさせない | `#[NoHttpCache]` |
+| 書き込み時に別リソースのキャッシュを破棄 / 再生成 | `#[Purge]` / `#[Refresh]` |
+| 全体キャッシュ（イベント駆動・TTL なし） | `#[CacheableResponse]` |
+| 部分キャッシュ（ドーナツ） | `#[DonutCache]` ＋ `#[RefreshCache]` |
+
+**このプロジェクトでの適用方針**
+
+* `Resource/App` と `Resource/Page/Index` のようにユーザー非依存の GET は `#[Cacheable]` でキャッシュします
+* `Resource/Page/Admin`・`Resource/Page/User` は、ログイン状態・CSRF トークン・セッション値に依存するため `#[NoHttpCache]` でキャッシュさせません
+
+**サンプル**
+
+動作確認用のリソースを `CacheDemo/` に置いています。各クラスの doc コメントに確認手順があります。
+
+| 場所 | 内容 |
+|---|---|
+| `source/app/src/Resource/App/CacheDemo/` | `#[HttpCache]`、`#[Cacheable(expiryAt: ...)]`、`#[Purge]` / `#[Refresh]` |
+| `source/app/src/Resource/Page/CacheDemo/` | `#[DonutCache]`、`#[CacheableResponse]`（`#[Embed]` ＋ Qiq テンプレート） |
+
+**注意**
+
+* dev コンテキストでは、サーバー側のキャッシュは効きません（`ETag` や `Cache-Control` のヘッダーは確認できます）。キャッシュの動作確認は `prod-` コンテキストで行います
+* `ProdModule` の `CacheVersionModule` により、デプロイのたびにキャッシュが無効になります。Web サーバーを複数台にする場合は、Redis または Memcached（`StorageRedisDsnModule` / `StorageMemcachedModule`）でキャッシュを共有します（現在は未設定）
 
 ### コマンドラインツール
 

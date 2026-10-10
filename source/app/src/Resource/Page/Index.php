@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page;
 
+use BEAR\RepositoryModule\Annotation\Cacheable;
 use BEAR\Resource\ResourceObject;
-use Koriym\HttpConstants\CacheControl;
-use Koriym\HttpConstants\ResponseHeader;
 use MyVendor\MyProject\InputQuery\IndexInput;
 use Ray\InputQuery\Attribute\Input;
 
+#[Cacheable(expirySecond: 300)]
 class Index extends ResourceObject
 {
     /** @var array{greeting: string} */
     public $body;
-
-    /** @var array<string, string> */
-    public $headers = [ResponseHeader::CACHE_CONTROL => CacheControl::PUBLIC_ . ',max-age=300'];
 
     /** @return static */
     public function onGet(

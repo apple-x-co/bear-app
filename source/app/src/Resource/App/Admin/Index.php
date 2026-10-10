@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\App\Admin;
 
+use BEAR\RepositoryModule\Annotation\Cacheable;
 use BEAR\Resource\ResourceObject;
-use Koriym\HttpConstants\CacheControl;
-use Koriym\HttpConstants\ResponseHeader;
 
+#[Cacheable(expirySecond: 86400)]
 class Index extends ResourceObject
 {
-    /** @var array<string, string> */
-    public $headers = [ResponseHeader::CACHE_CONTROL => CacheControl::PUBLIC_ . ',max-age=86400'];
-
     public function onGet(): static
     {
         $this->body['HELLO'] = 'Admin';

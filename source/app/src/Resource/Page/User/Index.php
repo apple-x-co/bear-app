@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Resource\Page\User;
 
 use AppCore\Domain\Auth\UserAuthenticatorInterface;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use MyVendor\MyProject\Annotation\UserGuard;
 use MyVendor\MyProject\Resource\Page\BaseUserPage;
 
+#[NoHttpCache]
 class Index extends BaseUserPage
 {
     public function __construct(

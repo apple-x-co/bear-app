@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\Resource\Page\Admin;
 
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use Koriym\FileUpload\ErrorFileUpload;
 use Koriym\FileUpload\FileUpload;
 use MyVendor\MyProject\Annotation\AdminGuard;
@@ -14,6 +15,7 @@ use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
+#[NoHttpCache]
 class UploadDemo extends BaseAdminPage
 {
     public function __construct(

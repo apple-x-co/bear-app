@@ -8,6 +8,7 @@ use AppCore\Application\Admin\DeleteAdminInputData;
 use AppCore\Application\Admin\DeleteAdminUseCase;
 use AppCore\Domain\AccessControl\Permission;
 use AppCore\Domain\Auth\AdminAuthenticatorInterface;
+use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Annotation\AdminLogout;
 use MyVendor\MyProject\Annotation\AdminPasswordProtect;
@@ -21,6 +22,7 @@ use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
+#[NoHttpCache]
 class Delete extends BaseAdminPage
 {
     public function __construct(
