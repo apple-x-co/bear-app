@@ -294,6 +294,11 @@ class QiqCustomHelpers extends HtmlHelpers
         $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
         $spec['type'] = 'hidden';
 
+        if (isset($attribs['value'])) {
+            $spec['value'] = $attribs['value'];
+            unset($attribs['value']);
+        }
+
         $defaultAttribs = [];
 
         return $form->widget($spec, array_merge($defaultAttribs, $attribs));
