@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\InputQuery\Admin;
+namespace MyVendor\MyProject\InputQuery\Customer;
 
 use Ray\InputQuery\Attribute\Input;
 
@@ -18,7 +18,7 @@ readonly class ContactDemoInput
         #[Input]
         public string $__csrf_token, // phpcs:ignore
         #[Input]
-        public string|null $mode,
+        public string|null $step,
     ) {
     }
 }

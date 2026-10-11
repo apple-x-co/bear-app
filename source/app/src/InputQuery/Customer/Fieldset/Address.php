@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\InputQuery\Admin\Fieldset;
+namespace MyVendor\MyProject\InputQuery\Customer\Fieldset;
 
 use Ray\InputQuery\Attribute\Input;
 

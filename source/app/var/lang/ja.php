@@ -18,6 +18,9 @@ return [
     'common_app_name' => 'bear-app (ja)',
     // ◆◆◆ email ◆◆◆
     // ◆◆◆ public ◆◆◆
+    'public.contact_demo.back' => '戻る',
+    'public.contact_demo.complete' => '送信する',
+    'public.contact_demo.confirm' => '確認する',
     'public.login.error' => '認証エラー',
     'public.login.invalid_password' => '有効なパスワードを入力してください',
     'public.login.invalid_username' => '有効なユーザー名を入力してください',

@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Form\Admin;
+namespace MyVendor\MyProject\Form\Customer;
 
 use Aura\Input\Builder;
-use MyVendor\MyProject\Form\Admin\Fieldset\AddressFieldset;
-use MyVendor\MyProject\Form\Admin\Fieldset\AddressFilter;
+use MyVendor\MyProject\Form\Customer\Fieldset\AddressFieldset;
+use MyVendor\MyProject\Form\Customer\Fieldset\AddressFilter;
 use MyVendor\MyProject\Form\ExtendedForm;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 use stdClass;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class AdminFieldsetDemoForm extends ExtendedForm
+class UserFieldsetDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
