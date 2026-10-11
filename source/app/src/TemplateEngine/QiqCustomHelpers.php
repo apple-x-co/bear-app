@@ -415,4 +415,158 @@ class QiqCustomHelpers extends HtmlHelpers
             $locale === null ? $this->requestLocale : Locale::from($locale),
         );
     }
+
+    /** @param array<string, string> $attribs */
+    public function userCheckBox(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        $defaultAttribs = ['class' => ''];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function userFieldsetError(
+        ExtendedFieldset $fieldset,
+        string $input,
+        string $tag = 'span',
+        array $attribs = [],
+    ): string {
+        $errorMessages = $fieldset->error($input);
+        if (empty($errorMessages)) {
+            return '';
+        }
+
+        $defaultAttribs = ['class' => 'block text-sm text-rose-500 italic'];
+
+        return sprintf(
+            '<%s %s>%s</%s>',
+            $tag,
+            $this->a(array_merge($defaultAttribs, $attribs)),
+            $this->h($errorMessages[0]),
+            $tag,
+        );
+    }
+
+    /** @param array<string, string> $attribs */
+    public function userFile(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        $defaultAttribs = ['class' => 'rounded w-full p-3 bg-white border border-[#6b7280] placeholder:text-slate-500 placeholder:font-thin focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function userFormError(ExtendedForm $form, string $input, string $tag = 'span', array $attribs = []): string
+    {
+        $message = $form->error($input);
+        if ($message === '') {
+            return '';
+        }
+
+        $defaultAttribs = ['class' => 'block text-sm text-rose-500 italic'];
+
+        return sprintf(
+            '<%s %s>%s</%s>',
+            $tag,
+            $this->a(array_merge($defaultAttribs, $attribs)),
+            $this->h($message),
+            $tag,
+        );
+    }
+
+    /** @param array<string, string> $attribs */
+    public function userHidden(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+        $spec['type'] = 'hidden';
+
+        if (isset($attribs['value'])) {
+            $spec['value'] = $attribs['value'];
+            unset($attribs['value']);
+        }
+
+        $defaultAttribs = [];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function userRadio(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        $defaultAttribs = ['class' => ''];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function userSelect(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        $defaultAttribs = ['class' => 'rounded transition duration-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function userText(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        $defaultAttribs = ['class' => 'rounded w-full placeholder:text-slate-500 placeholder:font-thin transition duration-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500'];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
+
+    /** @param array<string, string> $attribs */
+    public function userSubmit(
+        ExtendedForm $form,
+        string $input,
+        ExtendedFieldset|null $fieldset = null,
+        array $attribs = [],
+    ): AbstractInput {
+        $spec = $fieldset === null ? $form->get($input) : $fieldset->get($input);
+
+        if (isset($attribs['value'])) {
+            $spec['value'] = $attribs['value'];
+            unset($attribs['value']);
+        }
+
+        $defaultAttribs = [
+            'value' => 'Submit',
+            'class' => 'py-2 px-4 bg-indigo-500 text-white text-sm font-sans font-bold tracking-wider rounded-full shadow-lg shadow-indigo-500/50 focus:outline-none hover:bg-indigo-600 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:text-white disabled:bg-slate-200 disabled:shadow-none',
+        ];
+
+        return $form->widget($spec, array_merge($defaultAttribs, $attribs));
+    }
 }
