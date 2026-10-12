@@ -60,11 +60,6 @@ class DefaultModule extends AbstractModule
         $this->bind(FormInterface::class)->annotatedWith('admin_password_reset_form')->toNull();
         $this->bind(FormInterface::class)->annotatedWith('admin_password_update_form')->toNull();
         $this->bind(FormInterface::class)->annotatedWith('admin_sign_up_form')->toNull();
-
-        $this->bind(FormInterface::class)->annotatedWith('admin_upload_demo_form')->toNull();
-        $this->bind(FormInterface::class)->annotatedWith('admin_fieldset_demo_form')->toNull();
-        $this->bind(FormInterface::class)->annotatedWith('admin_multiple_demo_form')->toNull();
-        $this->bind(FormInterface::class)->annotatedWith('admin_contact_demo_form')->toNull();
     }
 
     private function user(): void
@@ -72,5 +67,10 @@ class DefaultModule extends AbstractModule
         $this->bind(UserAuthenticatorInterface::class)->toNull();
 
         $this->bind(FormInterface::class)->annotatedWith('user_login_form')->toNull();
+
+        $this->bind(FormInterface::class)->annotatedWith('user_upload_demo_form')->toNull();
+        $this->bind(FormInterface::class)->annotatedWith('user_fieldset_demo_form')->toNull();
+        $this->bind(FormInterface::class)->annotatedWith('user_multiple_demo_form')->toNull();
+        $this->bind(FormInterface::class)->annotatedWith('user_contact_demo_form')->toNull();
     }
 }

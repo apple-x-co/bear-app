@@ -2,19 +2,20 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Form\Admin;
+namespace MyVendor\MyProject\Form\Customer;
 
 use MyVendor\MyProject\Form\ExtendedForm;
+use MyVendor\MyProject\Form\FormStep;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 
-/**
- * @property string $mode
- * @psalm-suppress PropertyNotSetInConstructor
- */
-class AdminContactDemoForm extends ExtendedForm
+use function array_column;
+
+/** @psalm-suppress PropertyNotSetInConstructor */
+class UserContactDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     public function init(): void
     {
         /** @psalm-suppress UndefinedMethod */
@@ -29,6 +30,11 @@ class AdminContactDemoForm extends ExtendedForm
         $this->filter->useFieldMessage('username', 'Name must be alphabetic only.');
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setField('mode', 'submit');
+        $this->setField('step', 'hidden');
+        /** @psalm-suppress TooManyArguments */
+        $this->filter->validate('step')->is('inValues', array_column(FormStep::cases(), 'value'));
+
+        /** @psalm-suppress UndefinedMethod */
+        $this->setField('submit', 'submit');
     }
 }

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Form\Admin;
+namespace MyVendor\MyProject\Form\Customer;
 
 use MyVendor\MyProject\Form\ExtendedForm;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class AdminUploadDemoForm extends ExtendedForm
+class UserUploadDemoForm extends ExtendedForm
 {
     public function init(): void
     {

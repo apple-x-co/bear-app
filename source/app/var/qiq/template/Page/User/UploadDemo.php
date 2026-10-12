@@ -1,14 +1,14 @@
-{{ extends ('layout/Admin/page') }}
-
-{{ setBlock ('title') }}Upload Demo | {{ parentBlock () }}{{ endBlock () }}
-
-{{ setBlock ('body_content') }}
+<?php
+/** @var Qiq\Engine&Qiq\Helper\Html\HtmlHelpers $this */
+$this->setLayout('layout/base');
+?>
+<h2>UserPage:UploadDemo</h2><br>
 <form method="post" enctype="multipart/form-data">
     <div class="mt-5">
         <label class="block">
             <span class="block text-sm font-thin text-slate-500 tracking-wide">Image file</span>
-            {{= adminFile(form: $form, input: 'file') }}
-            {{= adminFormError(form: $form, input: 'file') }}
+            {{= userFile(form: $form, input: 'file') }}
+            {{= userFormError(form: $form, input: 'file') }}
         </label>
         {{ if (isset($fileUpload)): }}
         <div class="block mt-5">
@@ -27,8 +27,7 @@
         </div>
         {{ endif }}
         <label class="block mt-5 text-center">
-            {{= adminSubmit(form: $form, input: 'submit', attribs: ['value' => 'UPLOAD', 'data-submit-once' => '1']) }}
+            {{= userSubmit(form: $form, input: 'submit', attribs: ['value' => 'UPLOAD']) }}
         </label>
     </div>
 </form>
-{{ endBlock () }}

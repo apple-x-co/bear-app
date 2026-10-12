@@ -49,10 +49,10 @@ DDD（Domain-Driven Design）と CQRS（Command Query Responsibility Segregation
 
 ## Form sample
 
-* [Contact](http://localhost/admin/contact-demo)
-* [Fieldset](http://localhost/admin/fieldset-demo)
-* [Multiple](http://localhost/admin/multiple-demo)
-* [Upload](http://localhost/admin/upload-demo)
+* [Contact](http://localhost/user/contact-demo)
+* [Fieldset](http://localhost/user/fieldset-demo)
+* [Multiple](http://localhost/user/multiple-demo)
+* [Upload](http://localhost/user/upload-demo)
 
 ## Cache sample
 

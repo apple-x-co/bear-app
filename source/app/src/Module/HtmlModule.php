@@ -59,16 +59,18 @@ class HtmlModule extends AbstractAppModule
         $this->bind(FormInterface::class)->annotatedWith('admin_password_reset_form')->to(AdminForm\AdminPasswordResetForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_password_update_form')->to(AdminForm\AdminPasswordUpdateForm::class);
         $this->bind(FormInterface::class)->annotatedWith('admin_sign_up_form')->to(AdminForm\AdminSignUpForm::class);
-
-        $this->bind(FormInterface::class)->annotatedWith('admin_upload_demo_form')->to(AdminForm\AdminUploadDemoForm::class);
-        $this->bind(FormInterface::class)->annotatedWith('admin_fieldset_demo_form')->to(AdminForm\AdminFieldsetDemoForm::class);
-        $this->bind(FormInterface::class)->annotatedWith('admin_multiple_demo_form')->to(AdminForm\AdminMultipleDemoForm::class);
-        $this->bind(FormInterface::class)->annotatedWith('admin_contact_demo_form')->to(AdminForm\AdminContactDemoForm::class);
         //@formatter:on
     }
 
     private function customer(): void
     {
+        //@formatter:off
         $this->bind(FormInterface::class)->annotatedWith('user_login_form')->to(CustomerForm\UserLoginForm::class);
+
+        $this->bind(FormInterface::class)->annotatedWith('user_upload_demo_form')->to(CustomerForm\UserUploadDemoForm::class);
+        $this->bind(FormInterface::class)->annotatedWith('user_fieldset_demo_form')->to(CustomerForm\UserFieldsetDemoForm::class);
+        $this->bind(FormInterface::class)->annotatedWith('user_multiple_demo_form')->to(CustomerForm\UserMultipleDemoForm::class);
+        $this->bind(FormInterface::class)->annotatedWith('user_contact_demo_form')->to(CustomerForm\UserContactDemoForm::class);
+        //@formatter:on
     }
 }

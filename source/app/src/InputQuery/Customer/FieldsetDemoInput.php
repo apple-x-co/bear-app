@@ -2,33 +2,32 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\InputQuery\Admin;
+namespace MyVendor\MyProject\InputQuery\Customer;
 
+use MyVendor\MyProject\InputQuery\Customer\Fieldset\Address;
 use Ray\InputQuery\Attribute\Input;
 
-readonly class MultipleDemoInput
+readonly class FieldsetDemoInput
 {
     /**
-     * @param list<string> $fruits
-     * @param list<string> $languages
-     * @param list<string> $programmingLanguages
+     * @param list<Address>|null $deliveries
      *
      * @psalm-suppress UndefinedAttributeClass
      * @SuppressWarnings("PHPMD.CamelCaseParameterName")
      */
     public function __construct(
         #[Input]
-        public string $primaryLanguage,
+        public string $note,
+        #[Input]
+        public string $agree,
         #[Input]
         public string $__csrf_token, // phpcs:ignore
         #[Input]
         public string|null $submit,
         #[Input]
-        public array $fruits = [],
-        #[Input]
-        public array $languages = [],
-        #[Input]
-        public array $programmingLanguages = [],
+        public Address|null $home = null,
+        #[Input(item: Address::class)]
+        public array|null $deliveries = [],
     ) {
     }
 }

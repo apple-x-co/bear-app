@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Form\Admin\Fieldset;
+namespace MyVendor\MyProject\Form\Customer\Fieldset;
 
 use Aura\Input\Filter;
 

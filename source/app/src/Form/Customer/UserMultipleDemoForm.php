@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Form\Admin;
+namespace MyVendor\MyProject\Form\Customer;
 
 use MyVendor\MyProject\Form\ExtendedForm;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class AdminMultipleDemoForm extends ExtendedForm
+class UserMultipleDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 

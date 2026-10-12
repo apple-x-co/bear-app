@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace MyVendor\MyProject\Resource\Page\Admin;
+namespace MyVendor\MyProject\Resource\Page\User;
 
 use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use MyVendor\MyProject\Form\ExtendedForm;
-use MyVendor\MyProject\InputQuery\Admin\FieldsetDemoInput;
-use MyVendor\MyProject\Resource\Page\BaseAdminPage;
+use MyVendor\MyProject\InputQuery\Customer\FieldsetDemoInput;
+use MyVendor\MyProject\Resource\Page\BaseUserPage;
 use Ray\Di\Di\Named;
 use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
@@ -16,10 +16,10 @@ use Ray\WebFormModule\FormInterface;
 use function assert;
 
 #[NoHttpCache]
-class FieldsetDemo extends BaseAdminPage
+class FieldsetDemo extends BaseUserPage
 {
     public function __construct(
-        #[Named('admin_fieldset_demo_form')]
+        #[Named('user_fieldset_demo_form')]
         protected readonly FormInterface $form,
     ) {
         $this->body['form'] = $this->form;
