@@ -8,6 +8,7 @@ use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Mail\Address;
 use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\Format;
+use AppCore\Domain\Mail\Priority;
 use AppCore\Domain\Mail\RecipientType;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Infrastructure\Entity\EmailQueueEntity;
@@ -161,6 +162,7 @@ final readonly class SendEmailQueueUseCase
             ->setSubject($emailQueue->subject)
             ->setText($emailQueue->text)
             ->setHtml($emailQueue->html)
+            ->setPriority(Priority::from($emailQueue->priority))
             ->setEmailFormat($emailQueue->html === null ? Format::Text : Format::Both);
 
         foreach ($emailQueueRecipientList as $emailQueueRecipient) {
