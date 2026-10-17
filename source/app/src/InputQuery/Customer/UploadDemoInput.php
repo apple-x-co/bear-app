@@ -24,7 +24,7 @@ readonly class UploadDemoInput
         )]
         public FileUpload|ErrorFileUpload|null $file = null,
         #[Input]
-        public string|null $submit = null,
+        public string|null $continue = null,
     ) {
     }
 }

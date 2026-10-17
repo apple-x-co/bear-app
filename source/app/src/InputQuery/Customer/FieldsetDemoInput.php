@@ -23,7 +23,7 @@ readonly class FieldsetDemoInput
         #[Input]
         public string $__csrf_token, // phpcs:ignore
         #[Input]
-        public string|null $submit,
+        public string|null $continue,
         #[Input]
         public Address|null $home = null,
         #[Input(item: Address::class)]

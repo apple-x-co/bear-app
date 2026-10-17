@@ -22,7 +22,7 @@ readonly class MultipleDemoInput
         #[Input]
         public string $__csrf_token, // phpcs:ignore
         #[Input]
-        public string|null $submit,
+        public string|null $continue,
         #[Input]
         public array $fruits = [],
         #[Input]
