@@ -157,4 +157,5 @@ $form->widget('deliveries[0][zip]');
 - **孫の Fieldset**: Fieldset の中の Fieldset に配列以外が来ると、Aura.Input 標準の `Fieldset::fill()` で TypeError になります。守られているのは、フォーム直下と Collection の行の中までです。
 - **Collection の件数制約**: 最小件数などの専用の仕組みはありません。必要なら、トップレベルのフィルタで件数を検証してください。
 - **`submit()`**: `$_POST` を返します。ファイルアップロード（`$_FILES`）は含みません。
+- **`getData()` の廃止**: 旧 `ExtendedForm` にあった `getData()` はありません（呼び出し元もありませんでした）。フォームの値は、Aura.Input 標準の `getValue()` で取得してください。
 - **`ExtendedFieldset` のエラーのキャッシュ**: 最初に `error()` を呼んだときのメッセージを覚えます。検証の後に描画する通常の流れでは問題になりません。
