@@ -48,6 +48,6 @@ class UserMultipleDemoForm extends ExtendedForm
              ]);
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setField('submit', 'submit');
+        $this->setField('continue', 'submit');
     }
 }

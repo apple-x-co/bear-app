@@ -35,6 +35,6 @@ class UserContactDemoForm extends ExtendedForm
         $this->filter->validate('step')->is('inValues', array_column(FormStep::cases(), 'value'));
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setField('submit', 'submit');
+        $this->setField('continue', 'submit');
     }
 }

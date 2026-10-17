@@ -27,7 +27,7 @@ $this->setLayout('layout/base');
         </div>
         {{ endif }}
         <label class="block mt-5 text-center">
-            {{= userSubmit(form: $form, input: 'submit', attribs: ['value' => 'UPLOAD']) }}
+            {{= userSubmit(form: $form, input: 'continue', attribs: ['value' => 'UPLOAD']) }}
         </label>
     </div>
 </form>

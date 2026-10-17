@@ -7,75 +7,73 @@ $this->setLayout('layout/base');
     <div class="mt-5">
         <div class="mt-5">
             <h2 class="inline-block text-xl sm:text-2xl font-extrabold text-slate-800 tracking-tight">Home</h2>
-            {{= userFormError(form: $form, input: 'home') }}
-            {{ $home = $form->home }}
+            {{ $addressFieldset = $form->home }}
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">Zip</span>
-                {{= userText(form: $form, input: 'zip', fieldset: $home) }}
-                {{= userFieldsetError(fieldset: $home, input: 'zip') }}
+                {{= userText(form: $form, input: 'zip', fieldset: $addressFieldset) }}
+                {{= userFieldsetError(fieldset: $addressFieldset, input: 'zip') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">State</span>
-                {{= userText(form: $form, input: 'state', fieldset: $home) }}
-                {{= userFieldsetError(fieldset: $home, input: 'state') }}
+                {{= userText(form: $form, input: 'state', fieldset: $addressFieldset) }}
+                {{= userFieldsetError(fieldset: $addressFieldset, input: 'state') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">City</span>
-                {{= userText(form: $form, input: 'city', fieldset: $home) }}
-                {{= userFieldsetError(fieldset: $home, input: 'city') }}
+                {{= userText(form: $form, input: 'city', fieldset: $addressFieldset) }}
+                {{= userFieldsetError(fieldset: $addressFieldset, input: 'city') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">Street</span>
-                {{= userText(form: $form, input: 'street', fieldset: $home) }}
-                {{= userFieldsetError(fieldset: $home, input: 'street') }}
+                {{= userText(form: $form, input: 'street', fieldset: $addressFieldset) }}
+                {{= userFieldsetError(fieldset: $addressFieldset, input: 'street') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">House type</span>
-                {{= userRadio(form: $form, input: 'houseType', fieldset: $home) }}
-                {{= userFieldsetError(fieldset: $home, input: 'houseType') }}
+                {{= userRadio(form: $form, input: 'houseType', fieldset: $addressFieldset) }}
+                {{= userFieldsetError(fieldset: $addressFieldset, input: 'houseType') }}
             </label>
             <label class="block mt-5">
                 <span class="block text-sm font-sans font-normal text-slate-700">Smartphone you own</span>
-                {{= userRadio(form: $form, input: 'smartphones', fieldset: $home) }}
-                {{= userFieldsetError(fieldset: $home, input: 'smartphones') }}
+                {{= userRadio(form: $form, input: 'smartphones', fieldset: $addressFieldset) }}
+                {{= userFieldsetError(fieldset: $addressFieldset, input: 'smartphones') }}
             </label>
         </div>
 
         <div class="mt-5">
             <h2 class="inline-block text-xl sm:text-2xl font-extrabold text-slate-800 tracking-tight">Deliveries</h2>
-            {{= userFormError(form: $form, input: 'deliveries') }}
-            {{ foreach ($form->deliveries as $index => $delivery):  }}
+            {{ foreach ($form->deliveries as $index => $addressFieldset):  }}
             <div class="mt-5">
                 <h2 class="inline-block text-xl sm:text-2xl font-extrabold text-slate-800 tracking-tight">delivery{{= $index + 1 }}</h2>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">Zip</span>
-                    {{= userText(form: $form, input: 'zip', fieldset: $delivery) }}
-                    {{= userFieldsetError(fieldset: $delivery, input: 'zip') }}
+                    {{= userText(form: $form, input: 'zip', fieldset: $addressFieldset) }}
+                    {{= userFieldsetError(fieldset: $addressFieldset, input: 'zip') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">State</span>
-                    {{= userText(form: $form, input: 'state', fieldset: $delivery) }}
-                    {{= userFieldsetError(fieldset: $delivery, input: 'state') }}
+                    {{= userText(form: $form, input: 'state', fieldset: $addressFieldset) }}
+                    {{= userFieldsetError(fieldset: $addressFieldset, input: 'state') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">City</span>
-                    {{= userText(form: $form, input: 'city', fieldset: $delivery) }}
-                    {{= userFieldsetError(fieldset: $delivery, input: 'city') }}
+                    {{= userText(form: $form, input: 'city', fieldset: $addressFieldset) }}
+                    {{= userFieldsetError(fieldset: $addressFieldset, input: 'city') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">Street</span>
-                    {{= userText(form: $form, input: 'street', fieldset: $delivery) }}
-                    {{= userFieldsetError(fieldset: $delivery, input: 'street') }}
+                    {{= userText(form: $form, input: 'street', fieldset: $addressFieldset) }}
+                    {{= userFieldsetError(fieldset: $addressFieldset, input: 'street') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">House type</span>
-                    {{= userRadio(form: $form, input: 'houseType', fieldset: $delivery) }}
-                    {{= userFieldsetError(fieldset: $delivery, input: 'houseType') }}
+                    {{= userRadio(form: $form, input: 'houseType', fieldset: $addressFieldset) }}
+                    {{= userFieldsetError(fieldset: $addressFieldset, input: 'houseType') }}
                 </label>
                 <label class="block mt-5">
                     <span class="block text-sm font-sans font-normal text-slate-700">Smartphone you own</span>
-                    {{= userRadio(form: $form, input: 'smartphones', fieldset: $delivery) }}
-                    {{= userFieldsetError(fieldset: $delivery, input: 'smartphones') }}
+                    {{= userRadio(form: $form, input: 'smartphones', fieldset: $addressFieldset) }}
+                    {{= userFieldsetError(fieldset: $addressFieldset, input: 'smartphones') }}
                 </label>
             </div>
             {{ endforeach }}
@@ -92,7 +90,7 @@ $this->setLayout('layout/base');
             {{= userFormError(form: $form, input: 'agree') }}
         </label>
         <label class="block mt-5 text-center">
-            {{= userSubmit(form: $form, input: 'submit', attribs: ['value' => 'SEND']) }}
+            {{= userSubmit(form: $form, input: 'continue', attribs: ['value' => 'SEND']) }}
             {{= csrfTokenField(form: $form) }}
         </label>
     </div>

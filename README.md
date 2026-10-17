@@ -16,6 +16,7 @@ DDD（Domain-Driven Design）と CQRS（Command Query Responsibility Segregation
 * **メール管理機能**: キュー、スケジュール送信、優先度制御、テンプレートエンジン連携
 * **多言語対応（i18n）**: リクエストパス・Accept-Language からの言語自動判定、翻訳ファイル・ロケール別ドキュメントによる i18n
 * **REST API 対応**: HAL+JSON フォーマットサポート
+* **フォーム**: Aura.Input / Aura.Filter ベースで、Fieldset・Collection の入れ子に対応（[FORM.md](FORM.md)）
 * **キャッシュ**: BEAR.Sunday のキャッシュ機構（`#[Cacheable]`、ドーナツキャッシュなど）によるサーバー側・HTTP キャッシュ
 * **AOP による横断的関心事の分離**: アトリビュートベースのインターセプター
 
@@ -161,6 +162,13 @@ graph TD;
 
 * **HAL+JSON 対応**: `Accept: application/json` ヘッダーで API レスポンス
 * **リソース指向**: BEAR.Sunday の RESTful アーキテクチャ
+
+### フォーム
+
+基底クラス `ExtendedForm` が、Aura.Input の `Fieldset`（1 つの入れ子）と `Collection`（入れ子の繰り返し）に対応しています。
+入れ子の検証、エラー取得（`home[zip]`、`deliveries[1][zip]` のようなパス表記）、描画を扱えます。
+
+サンプルは [Fieldset](http://localhost/user/fieldset-demo) です。作り方や注意点は [FORM.md](FORM.md) を参照してください。
 
 ### キャッシュ
 

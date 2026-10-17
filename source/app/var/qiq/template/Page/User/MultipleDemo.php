@@ -26,7 +26,7 @@ $this->setLayout('layout/base');
             {{= userFormError(form: $form, input: 'programmingLanguages') }}
         </label>
         <label class="block mt-5 text-center">
-            {{= userSubmit(form: $form, input: 'submit', attribs: ['value' => 'SEND']) }}
+            {{= userSubmit(form: $form, input: 'continue', attribs: ['value' => 'SEND']) }}
             {{= csrfTokenField(form: $form) }}
         </label>
     </div>
