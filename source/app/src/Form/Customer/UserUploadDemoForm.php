@@ -18,6 +18,6 @@ class UserUploadDemoForm extends ExtendedForm
         // NOTE: $_POSTS[] にアップロードファイルは含まれないのでここでは検証しない
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setField('submit', 'submit');
+        $this->setField('continue', 'submit');
     }
 }

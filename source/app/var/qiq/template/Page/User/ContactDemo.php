@@ -14,13 +14,13 @@ $formStep = \MyVendor\MyProject\Form\FormStep::class;
         <form method="post">
             {{= userHidden(form: $form, input: 'username') }}
             {{= userHidden(form: $form, input: 'step', attribs: ['value' => $formStep::Input->value]) }}
-            {{= userSubmit(form: $form, input: 'submit', attribs: ['value' => t('public.contact_demo.back')]) }}
+            {{= userSubmit(form: $form, input: 'continue', attribs: ['value' => t('public.contact_demo.back')]) }}
             {{= csrfTokenField(form: $form) }}
         </form>
         <form method="post">
             {{= userHidden(form: $form, input: 'username') }}
             {{= userHidden(form: $form, input: 'step', attribs: ['value' => $formStep::Complete->value]) }}
-            {{= userSubmit(form: $form, input: 'submit', attribs: ['value' => t('public.contact_demo.complete')]) }}
+            {{= userSubmit(form: $form, input: 'continue', attribs: ['value' => t('public.contact_demo.complete')]) }}
             {{= csrfTokenField(form: $form) }}
         </form>
     </div>
@@ -35,7 +35,7 @@ $formStep = \MyVendor\MyProject\Form\FormStep::class;
         </label>
         <label class="block mt-5 text-center">
             {{= userHidden(form: $form, input: 'step', attribs: ['value' => $formStep::Confirm->value]) }}
-            {{= userSubmit(form: $form, input: 'submit', attribs: ['value' => t('public.contact_demo.confirm')]) }}
+            {{= userSubmit(form: $form, input: 'continue', attribs: ['value' => t('public.contact_demo.confirm')]) }}
             {{= csrfTokenField(form: $form) }}
         </label>
     </div>

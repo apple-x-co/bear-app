@@ -40,6 +40,6 @@ class UserFieldsetDemoForm extends ExtendedForm
              ]);
 
         /** @psalm-suppress UndefinedMethod */
-        $this->setField('submit', 'submit');
+        $this->setField('continue', 'submit');
     }
 }
