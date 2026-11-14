@@ -26,6 +26,7 @@ use AppCore\Domain\Document\DocumentReaderInterface;
 use AppCore\Domain\Encrypter\EncrypterInterface;
 use AppCore\Domain\Hasher\PasswordHasher;
 use AppCore\Domain\Hasher\PasswordHasherInterface;
+use AppCore\Domain\Http\ClientIpResolverInterface;
 use AppCore\Domain\Language\LanguageFactoryInterface;
 use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\Locale\Locale;
@@ -51,6 +52,7 @@ use AppCore\Infrastructure\Persistence\AdminTokenRepository;
 use AppCore\Infrastructure\Persistence\ThrottleRepository;
 use AppCore\Infrastructure\Persistence\UserRepository;
 use AppCore\Infrastructure\Shared\AdminLogger;
+use AppCore\Infrastructure\Shared\ClientIpResolver;
 use AppCore\Infrastructure\Shared\CommandLogger;
 use AppCore\Infrastructure\Shared\CompactEncrypter;
 use AppCore\Infrastructure\Shared\DocumentReader;
@@ -239,5 +241,6 @@ class BaseModule extends AbstractModule
 
         $this->bind(ServerRequestInterface::class)->toProvider(ServerRequestProvider::class);
         $this->bind(Locale::class)->toProvider(RequestLocaleProvider::class);
+        $this->bind(ClientIpResolverInterface::class)->to(ClientIpResolver::class)->in(Scope::SINGLETON);
     }
 }

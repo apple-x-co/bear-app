@@ -8,6 +8,7 @@ use AppCore\Attribute\CloudflareTurnstileSecretKey;
 use AppCore\Domain\Captcha\CaptchaTokenMissing;
 use AppCore\Domain\Captcha\CaptchaVerifyError;
 use AppCore\Domain\Captcha\CloudflareTurnstileVerificationHandlerInterface;
+use AppCore\Domain\Http\ClientIpResolverInterface;
 
 use function curl_close;
 use function curl_exec;
@@ -33,6 +34,7 @@ final class CloudflareTurnstileVerificationHandler implements CloudflareTurnstil
     private const VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
     public function __construct(
+        private readonly ClientIpResolverInterface $clientIpResolver,
         #[CloudflareTurnstileSecretKey]
         private readonly string $secretKey,
     ) {
@@ -52,7 +54,7 @@ final class CloudflareTurnstileVerificationHandler implements CloudflareTurnstil
         $data = [
             'secret' => $this->secretKey,
             'response' => $cfToken,
-            'remoteip' => $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? null,
+            'remoteip' => $this->clientIpResolver->resolve(),
         ];
 
         $options = [

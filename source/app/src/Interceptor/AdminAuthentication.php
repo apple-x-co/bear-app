@@ -13,6 +13,7 @@ use AppCore\Domain\Auth\PasswordIncorrect;
 use AppCore\Domain\Auth\PasswordMissing;
 use AppCore\Domain\Auth\UsernameMissing;
 use AppCore\Domain\Auth\UsernameNotFound;
+use AppCore\Domain\Http\ClientIpResolverInterface;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Session\SessionInterface;
 use AppCore\Domain\Throttle\ThrottlingHandlerInterface;
@@ -53,6 +54,7 @@ readonly class AdminAuthentication implements MethodInterceptor
         #[Named('admin_auth_attempt_interval')]
         private string $attemptInterval,
         private AdminAuthenticatorInterface $authenticator,
+        private ClientIpResolverInterface $clientIpResolver,
         #[Named('admin')]
         private LoggerInterface $logger,
         #[Named('admin_auth_max_attempts')]
@@ -93,7 +95,6 @@ readonly class AdminAuthentication implements MethodInterceptor
      *
      * @psalm-suppress ArgumentTypeCoercion
      * @SuppressWarnings("PHPMD.ElseExpression")
-     * @SuppressWarnings("PHPMD.Superglobals")
      */
     private function login(MethodInvocation $invocation, string $onFailure): mixed
     {
@@ -113,8 +114,10 @@ readonly class AdminAuthentication implements MethodInterceptor
 
         if ($input->isValid()) {
             $throttleKey = hash('sha3-256', $input->username);
+            $clientIp = $this->clientIpResolver->resolve() ?? '';
 
-            if ($this->throttlingHandler->isExceeded($throttleKey)) {
+            // ログインを試す前に数え、成功したら clear() で戻す（先に判定すると、同時に来た試行がすべて判定をすり抜ける）
+            if ($this->throttlingHandler->countUp($throttleKey, $clientIp, $this->attemptInterval, $this->maxAttempts)) {
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],
                     new MaxAttemptsExceeded(),
@@ -140,9 +143,6 @@ readonly class AdminAuthentication implements MethodInterceptor
                 if ($class === null) {
                     throw $throwable;
                 }
-
-                $remoteIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
-                $this->throttlingHandler->countUp($throttleKey, $remoteIp, $this->attemptInterval, $this->maxAttempts);
 
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],

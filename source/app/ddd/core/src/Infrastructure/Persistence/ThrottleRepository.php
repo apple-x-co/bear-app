@@ -9,6 +9,10 @@ use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
 use AppCore\Infrastructure\Entity\ThrottleEntity;
 use AppCore\Infrastructure\Query\ThrottleCommandInterface;
 use AppCore\Infrastructure\Query\ThrottleQueryInterface;
+use DateTimeImmutable;
+use Ray\AuraSqlModule\Annotation\Transactional;
+
+use function assert;
 
 class ThrottleRepository implements ThrottleRepositoryInterface
 {
@@ -16,16 +20,6 @@ class ThrottleRepository implements ThrottleRepositoryInterface
         private readonly ThrottleCommandInterface $command,
         private readonly ThrottleQueryInterface $query,
     ) {
-    }
-
-    public function findByThrottleKey(string $throttleKey): Throttle|null
-    {
-        $entity = $this->query->itemByKey($throttleKey);
-        if ($entity === null) {
-            return null;
-        }
-
-        return $this->entityToModel($entity);
     }
 
     /** @SuppressWarnings("PHPMD.StaticAccess") */
@@ -44,26 +38,24 @@ class ThrottleRepository implements ThrottleRepositoryInterface
         );
     }
 
-    public function store(Throttle $throttle): void
-    {
-        if ($throttle->id === null) {
-            $this->command->add(
-                $throttle->throttleKey,
-                $throttle->remoteIp,
-                $throttle->iterationCount,
-                $throttle->maxAttempts,
-                $throttle->interval,
-                $throttle->expireDate,
-            );
+    /**
+     * UPSERT と読み直しを同じトランザクションで行う。UPSERT の行ロックがコミットまで続くので、
+     * ほかのリクエストの加算や clear() に割り込まれず、自分が数えた回数をそのまま読める
+     */
+    #[Transactional]
+    public function increment(
+        string $throttleKey,
+        string $remoteIp,
+        int $maxAttempts,
+        string $interval,
+        DateTimeImmutable $expireDate,
+    ): Throttle {
+        $this->command->increment($throttleKey, $remoteIp, $maxAttempts, $interval, $expireDate);
 
-            return;
-        }
+        // UPSERT と読み直しのあいだに期限が切れても行を取れるよう、期限で絞り込まない
+        $entity = $this->query->itemByKeyIncludingExpired($throttleKey);
+        assert($entity instanceof ThrottleEntity);
 
-        $this->command->update(
-            $throttle->id,
-            $throttle->remoteIp,
-            $throttle->iterationCount,
-            $throttle->expireDate,
-        );
+        return $this->entityToModel($entity);
     }
 }
