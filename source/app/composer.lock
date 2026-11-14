@@ -1927,16 +1927,16 @@
         },
         {
             "name": "koriym/file-upload",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/koriym/Koriym.FileUpload.git",
-                "reference": "a26c70fcfcfe82ec672f5f3c7814bf88bbc8f4dc"
+                "reference": "8adf58634d696ea6e390cf9a2b7628f726fea2c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/Koriym.FileUpload/zipball/a26c70fcfcfe82ec672f5f3c7814bf88bbc8f4dc",
-                "reference": "a26c70fcfcfe82ec672f5f3c7814bf88bbc8f4dc",
+                "url": "https://api.github.com/repos/koriym/Koriym.FileUpload/zipball/8adf58634d696ea6e390cf9a2b7628f726fea2c5",
+                "reference": "8adf58634d696ea6e390cf9a2b7628f726fea2c5",
                 "shasum": ""
             },
             "require": {
@@ -1966,9 +1966,9 @@
             "description": "Type-safe file upload handling with immutable value objects",
             "support": {
                 "issues": "https://github.com/koriym/Koriym.FileUpload/issues",
-                "source": "https://github.com/koriym/Koriym.FileUpload/tree/1.0.0"
+                "source": "https://github.com/koriym/Koriym.FileUpload/tree/1.0.1"
             },
-            "time": "2025-11-07T00:35:36+00:00"
+            "time": "2026-11-12T19:14:59+00:00"
         },
         {
             "name": "koriym/hal",
