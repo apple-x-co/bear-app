@@ -10,6 +10,6 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface ThrottleQueryInterface
 {
-    #[DbQuery('throttles/throttle_item_by_key', type: 'row', factory: ThrottleEntityFactory::class)]
-    public function itemByKey(string $throttleKey): ThrottleEntity|null;
+    #[DbQuery('throttles/throttle_item_by_key_including_expired', type: 'row', factory: ThrottleEntityFactory::class)]
+    public function itemByKeyIncludingExpired(string $throttleKey): ThrottleEntity|null;
 }

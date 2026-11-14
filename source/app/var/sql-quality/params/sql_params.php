@@ -149,7 +149,7 @@ return [
         'createdDate' => '2024-01-01 12:00:00',
         'updatedDate' => '2024-01-01 12:00:00',
     ],
-    'throttles/throttle_item_by_key.sql' => [
+    'throttles/throttle_item_by_key_including_expired.sql' => [
         'throttleKey' => 'test-key',
     ],
     'throttles/throttle_remove_by_key.sql' => [

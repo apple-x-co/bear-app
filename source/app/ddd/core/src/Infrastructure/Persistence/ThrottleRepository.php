@@ -22,16 +22,6 @@ class ThrottleRepository implements ThrottleRepositoryInterface
     ) {
     }
 
-    public function findByThrottleKey(string $throttleKey): Throttle|null
-    {
-        $entity = $this->query->itemByKey($throttleKey);
-        if ($entity === null) {
-            return null;
-        }
-
-        return $this->entityToModel($entity);
-    }
-
     /** @SuppressWarnings("PHPMD.StaticAccess") */
     private function entityToModel(ThrottleEntity $entity): Throttle
     {
@@ -62,9 +52,10 @@ class ThrottleRepository implements ThrottleRepositoryInterface
     ): Throttle {
         $this->command->increment($throttleKey, $remoteIp, $maxAttempts, $interval, $expireDate);
 
-        $throttle = $this->findByThrottleKey($throttleKey);
-        assert($throttle instanceof Throttle);
+        // UPSERT と読み直しのあいだに期限が切れても行を取れるよう、期限で絞り込まない
+        $entity = $this->query->itemByKeyIncludingExpired($throttleKey);
+        assert($entity instanceof ThrottleEntity);
 
-        return $throttle;
+        return $this->entityToModel($entity);
     }
 }
