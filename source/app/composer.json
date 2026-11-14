@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^8.3",
         "koriym/env-json": "^1.0",
         "koriym/file-upload": "^1.0",
-        "phpmailer/phpmailer": "^6.12",
+        "phpmailer/phpmailer": "^7.2",
         "qiq/qiq": "^3.0",
         "ray/aop": "^2.20",
         "ray/aura-session-module": "^1.3",
