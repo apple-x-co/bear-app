@@ -8,6 +8,7 @@ use AppCore\Attribute\CloudflareTurnstileSecretKey;
 use AppCore\Domain\Captcha\CaptchaTokenMissing;
 use AppCore\Domain\Captcha\CaptchaVerifyError;
 use AppCore\Domain\Captcha\CloudflareTurnstileVerificationHandlerInterface;
+use AppCore\Domain\Http\ClientIpResolverInterface;
 
 use function curl_close;
 use function curl_exec;
@@ -16,9 +17,6 @@ use function curl_init;
 use function curl_setopt_array;
 use function http_build_query;
 use function json_decode;
-use function strrchr;
-use function substr;
-use function trim;
 
 use const CURLINFO_HTTP_CODE;
 use const CURLOPT_POST;
@@ -36,6 +34,7 @@ final class CloudflareTurnstileVerificationHandler implements CloudflareTurnstil
     private const VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
     public function __construct(
+        private readonly ClientIpResolverInterface $clientIpResolver,
         #[CloudflareTurnstileSecretKey]
         private readonly string $secretKey,
     ) {
@@ -55,7 +54,7 @@ final class CloudflareTurnstileVerificationHandler implements CloudflareTurnstil
         $data = [
             'secret' => $this->secretKey,
             'response' => $cfToken,
-            'remoteip' => $this->getClientIp(),
+            'remoteip' => $this->clientIpResolver->resolve(),
         ];
 
         $options = [
@@ -86,22 +85,5 @@ final class CloudflareTurnstileVerificationHandler implements CloudflareTurnstil
         }
 
         throw new CaptchaVerifyError();
-    }
-
-    /**
-     * X-Forwarded-For は、クライアントが付けた値の後ろに、ALB が本当のクライアントの IP を足す。
-     * クライアントが偽造できる先頭ではなく、ALB が足した最後の 1 つを使う
-     * （ALB の前に CloudFront などを置くときは、最後の 1 つが変わるので見直す）
-     *
-     * @SuppressWarnings("PHPMD.Superglobals")
-     */
-    private function getClientIp(): string|null
-    {
-        $forwardedFor = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? null;
-        if ($forwardedFor === null) {
-            return $_SERVER['REMOTE_ADDR'] ?? null;
-        }
-
-        return trim(substr(strrchr(',' . $forwardedFor, ','), 1));
     }
 }

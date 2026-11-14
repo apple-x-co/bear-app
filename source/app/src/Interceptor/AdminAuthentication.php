@@ -13,6 +13,7 @@ use AppCore\Domain\Auth\PasswordIncorrect;
 use AppCore\Domain\Auth\PasswordMissing;
 use AppCore\Domain\Auth\UsernameMissing;
 use AppCore\Domain\Auth\UsernameNotFound;
+use AppCore\Domain\Http\ClientIpResolverInterface;
 use AppCore\Domain\LoggerInterface;
 use AppCore\Domain\Session\SessionInterface;
 use AppCore\Domain\Throttle\ThrottlingHandlerInterface;
@@ -41,9 +42,6 @@ use function assert;
 use function call_user_func;
 use function hash;
 use function is_string;
-use function strrchr;
-use function substr;
-use function trim;
 
 /**
  * Admin認証
@@ -56,6 +54,7 @@ readonly class AdminAuthentication implements MethodInterceptor
         #[Named('admin_auth_attempt_interval')]
         private string $attemptInterval,
         private AdminAuthenticatorInterface $authenticator,
+        private ClientIpResolverInterface $clientIpResolver,
         #[Named('admin')]
         private LoggerInterface $logger,
         #[Named('admin_auth_max_attempts')]
@@ -96,7 +95,6 @@ readonly class AdminAuthentication implements MethodInterceptor
      *
      * @psalm-suppress ArgumentTypeCoercion
      * @SuppressWarnings("PHPMD.ElseExpression")
-     * @SuppressWarnings("PHPMD.Superglobals")
      */
     private function login(MethodInvocation $invocation, string $onFailure): mixed
     {
@@ -116,7 +114,7 @@ readonly class AdminAuthentication implements MethodInterceptor
 
         if ($input->isValid()) {
             $throttleKey = hash('sha3-256', $input->username);
-            $clientIp = $this->getClientIp();
+            $clientIp = $this->clientIpResolver->resolve() ?? '';
 
             // ログインを試す前に数え、成功したら clear() で戻す（先に判定すると、同時に来た試行がすべて判定をすり抜ける）
             if ($this->throttlingHandler->countUp($throttleKey, $clientIp, $this->attemptInterval, $this->maxAttempts)) {
@@ -290,22 +288,5 @@ readonly class AdminAuthentication implements MethodInterceptor
             [$invocation->getThis(), $onFailure],
             new PasswordIncorrect(),
         );
-    }
-
-    /**
-     * X-Forwarded-For は、クライアントが付けた値の後ろに、ALB が本当のクライアントの IP を足す。
-     * クライアントが偽造できる先頭ではなく、ALB が足した最後の 1 つを使う
-     * （ALB の前に CloudFront などを置くときは、最後の 1 つが変わるので見直す）
-     *
-     * @SuppressWarnings("PHPMD.Superglobals")
-     */
-    private function getClientIp(): string
-    {
-        $forwardedFor = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? null;
-        if ($forwardedFor === null) {
-            return $_SERVER['REMOTE_ADDR'] ?? '';
-        }
-
-        return trim(substr(strrchr(',' . $forwardedFor, ','), 1));
     }
 }
