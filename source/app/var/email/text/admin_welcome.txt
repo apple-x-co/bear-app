@@ -2,4 +2,4 @@
 
 ようこそ!
 
-<?= $serviceName ?>
+<?= $__SERVICE_NAME__ ?>
