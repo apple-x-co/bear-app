@@ -13,7 +13,9 @@ use Throwable;
 use function array_merge;
 use function extract;
 use function file_exists;
+use function htmlspecialchars;
 use function is_readable;
+use function nl2br;
 use function ob_end_clean;
 use function ob_get_clean;
 use function ob_start;
@@ -47,8 +49,8 @@ readonly class PhpTemplateRenderer implements TemplateRendererInterface
         }
 
         $defaultVars = [
-            'now' => static fn (): DateTimeImmutable => new DateTimeImmutable(),
-            'serviceName' => $this->serviceName,
+            '__NOW__' => static fn (): DateTimeImmutable => new DateTimeImmutable(),
+            '__SERVICE_NAME__' => $this->serviceName,
         ];
 
         $vars = array_merge($defaultVars, $vars);
@@ -68,5 +70,17 @@ readonly class PhpTemplateRenderer implements TemplateRendererInterface
                 $throwable,
             );
         }
+    }
+
+    /** テンプレートから `$this->h()` で呼び出す HTML エスケープ */
+    private function h(string|null $value): string
+    {
+        return htmlspecialchars($value ?? '');
+    }
+
+    /** テンプレートから `$this->nl2br()` で呼び出す 改行コードを br タグ変換 */
+    private function nl2br(string|null $value): string
+    {
+        return nl2br($value ?? '');
     }
 }
