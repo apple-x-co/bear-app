@@ -41,6 +41,9 @@ use function assert;
 use function call_user_func;
 use function hash;
 use function is_string;
+use function strrchr;
+use function substr;
+use function trim;
 
 /**
  * Admin認証
@@ -113,8 +116,10 @@ readonly class AdminAuthentication implements MethodInterceptor
 
         if ($input->isValid()) {
             $throttleKey = hash('sha3-256', $input->username);
+            $clientIp = $this->getClientIp();
 
-            if ($this->throttlingHandler->isExceeded($throttleKey)) {
+            // ログインを試す前に数え、成功したら clear() で戻す（先に判定すると、同時に来た試行がすべて判定をすり抜ける）
+            if ($this->throttlingHandler->countUp($throttleKey, $clientIp, $this->attemptInterval, $this->maxAttempts)) {
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],
                     new MaxAttemptsExceeded(),
@@ -140,9 +145,6 @@ readonly class AdminAuthentication implements MethodInterceptor
                 if ($class === null) {
                     throw $throwable;
                 }
-
-                $remoteIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
-                $this->throttlingHandler->countUp($throttleKey, $remoteIp, $this->attemptInterval, $this->maxAttempts);
 
                 return call_user_func(
                     [$invocation->getThis(), $onFailure],
@@ -288,5 +290,22 @@ readonly class AdminAuthentication implements MethodInterceptor
             [$invocation->getThis(), $onFailure],
             new PasswordIncorrect(),
         );
+    }
+
+    /**
+     * X-Forwarded-For は、クライアントが付けた値の後ろに、ALB が本当のクライアントの IP を足す。
+     * クライアントが偽造できる先頭ではなく、ALB が足した最後の 1 つを使う
+     * （ALB の前に CloudFront などを置くときは、最後の 1 つが変わるので見直す）
+     *
+     * @SuppressWarnings("PHPMD.Superglobals")
+     */
+    private function getClientIp(): string
+    {
+        $forwardedFor = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? null;
+        if ($forwardedFor === null) {
+            return $_SERVER['REMOTE_ADDR'] ?? '';
+        }
+
+        return trim(substr(strrchr(',' . $forwardedFor, ','), 1));
     }
 }

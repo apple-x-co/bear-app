@@ -9,24 +9,14 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface ThrottleCommandInterface
 {
-    #[DbQuery('throttles/throttle_add')]
-    public function add(
+    #[DbQuery('throttles/throttle_increment')]
+    public function increment(
         string $throttleKey,
         string $remoteIp,
-        int $iterationCount,
         int $maxAttempts,
         string $interval,
         DateTimeInterface $expireDate,
         DateTimeInterface|null $createdDate = null,
-        DateTimeInterface|null $updatedDate = null,
-    ): void;
-
-    #[DbQuery('throttles/throttle_update')]
-    public function update(
-        int $id,
-        string $remoteIp,
-        int $iterationCount,
-        DateTimeInterface $expireDate,
         DateTimeInterface|null $updatedDate = null,
     ): void;
 }

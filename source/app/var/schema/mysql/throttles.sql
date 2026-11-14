@@ -12,4 +12,4 @@ CREATE TABLE `throttles`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB COMMENT 'スロットリング';
 
-CREATE INDEX `idx_throttles_1` ON `throttles` (`throttle_key`);
+CREATE UNIQUE INDEX `idx_throttles_1` ON `throttles` (`throttle_key`);

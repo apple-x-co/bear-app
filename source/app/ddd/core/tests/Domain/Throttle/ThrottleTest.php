@@ -64,18 +64,4 @@ class ThrottleTest extends TestCase
 
         $this->assertTrue($throttle->isExpired());
     }
-
-    public function testCountUp(): void
-    {
-        $throttle = (new Throttle(
-            'example',
-            '127.0.0.1',
-            0,
-            10,
-            '30 minutes',
-            (new DateTimeImmutable())->modify('-1 seconds'),
-        ))->countUp('127.0.0.1');
-
-        $this->assertSame(1, $throttle->iterationCount);
-    }
 }

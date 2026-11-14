@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Throttle;
 
-use DateInterval;
 use DateTimeImmutable;
 
 readonly class Throttle
@@ -56,21 +55,5 @@ readonly class Throttle
         $now = new DateTimeImmutable();
 
         return $this->expireDate < $now;
-    }
-
-    /** @SuppressWarnings("PHPMD.StaticAccess") */
-    public function countUp(string $remoteIp): self
-    {
-        return new self(
-            $this->throttleKey,
-            $remoteIp,
-            $this->iterationCount + 1,
-            $this->maxAttempts,
-            $this->interval,
-            (new DateTimeImmutable())->add(DateInterval::createFromDateString($this->interval)),
-            $this->createdDate,
-            $this->updatedDate,
-            $this->id,
-        );
     }
 }

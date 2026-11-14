@@ -38,7 +38,8 @@ readonly class Throttling implements MethodInterceptor
         $uri = "{$ro->uri->scheme}://{$ro->uri->host}{$ro->uri->path}";
         $throttleKey = hash('sha3-256', $uri . '|' . $clientIp);
 
-        if ($this->throttle->isExceeded($throttleKey)) {
+        // 判定の前に数える（先に判定すると、同時に来たリクエストがすべて判定をすり抜ける）
+        if ($this->throttle->countUp($throttleKey, $clientIp, $rateLimiter->interval, $rateLimiter->limit)) {
             $ro->view = '';
             $ro->body = [];
             $ro->code = self::TOO_MANY_REQUESTS;
@@ -46,8 +47,6 @@ readonly class Throttling implements MethodInterceptor
 
             throw new BadRequestException('Too many requests', self::TOO_MANY_REQUESTS, null);
         }
-
-        $this->throttle->countUp($throttleKey, $clientIp, $rateLimiter->interval, $rateLimiter->limit);
 
         return $invocation->proceed();
     }

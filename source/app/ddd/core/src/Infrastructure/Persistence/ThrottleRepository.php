@@ -9,6 +9,9 @@ use AppCore\Domain\Throttle\ThrottleRepositoryInterface;
 use AppCore\Infrastructure\Entity\ThrottleEntity;
 use AppCore\Infrastructure\Query\ThrottleCommandInterface;
 use AppCore\Infrastructure\Query\ThrottleQueryInterface;
+use DateTimeImmutable;
+
+use function assert;
 
 class ThrottleRepository implements ThrottleRepositoryInterface
 {
@@ -44,26 +47,18 @@ class ThrottleRepository implements ThrottleRepositoryInterface
         );
     }
 
-    public function store(Throttle $throttle): void
-    {
-        if ($throttle->id === null) {
-            $this->command->add(
-                $throttle->throttleKey,
-                $throttle->remoteIp,
-                $throttle->iterationCount,
-                $throttle->maxAttempts,
-                $throttle->interval,
-                $throttle->expireDate,
-            );
+    public function increment(
+        string $throttleKey,
+        string $remoteIp,
+        int $maxAttempts,
+        string $interval,
+        DateTimeImmutable $expireDate,
+    ): Throttle {
+        $this->command->increment($throttleKey, $remoteIp, $maxAttempts, $interval, $expireDate);
 
-            return;
-        }
+        $throttle = $this->findByThrottleKey($throttleKey);
+        assert($throttle instanceof Throttle);
 
-        $this->command->update(
-            $throttle->id,
-            $throttle->remoteIp,
-            $throttle->iterationCount,
-            $throttle->expireDate,
-        );
+        return $throttle;
     }
 }

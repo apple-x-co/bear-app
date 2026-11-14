@@ -140,10 +140,9 @@ return [
         'attempts' => 10,
         'id' => 1,
     ],
-    'throttles/throttle_add.sql' => [
+    'throttles/throttle_increment.sql' => [
         'throttleKey' => 'test-key',
         'remoteIp' => '127.0.0.1',
-        'iterationCount' => 100,
         'maxAttempts' => 10,
         'interval' => '30 minutes',
         'expireDate' => '2024-01-01 12:00:00',
@@ -155,13 +154,6 @@ return [
     ],
     'throttles/throttle_remove_by_key.sql' => [
         'throttleKey' => 'test-key',
-    ],
-    'throttles/throttle_update.sql' => [
-        'remoteIp' => '127.0.0.1',
-        'iterationCount' => 100,
-        'expireDate' => '2024-01-01 12:00:00',
-        'updatedDate' => '2024-01-01 12:00:00',
-        'id' => 1,
     ],
     'users/user_add.sql' => [
         'uid' => '550e8400-e29b-41d4-a716-446655440000',
