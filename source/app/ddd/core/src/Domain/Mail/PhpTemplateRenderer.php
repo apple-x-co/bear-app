@@ -72,13 +72,24 @@ readonly class PhpTemplateRenderer implements TemplateRendererInterface
         }
     }
 
-    /** テンプレートから `$this->h()` で呼び出す HTML エスケープ */
+    /**
+     * テンプレートから `$this->h()` で呼び出す HTML エスケープ
+     *
+     * @SuppressWarnings("PHPMD.UnusedPrivateMethod")
+     * @SuppressWarnings("PHPMD.ShortMethodName")
+     * @phpstan-ignore method.unused (テンプレートから呼び出すため静的解析では検出できない)
+     */
     private function h(string|null $value): string
     {
         return htmlspecialchars($value ?? '');
     }
 
-    /** テンプレートから `$this->nl2br()` で呼び出す 改行コードを br タグ変換 */
+    /**
+     * テンプレートから `$this->nl2br()` で呼び出す 改行コードを br タグ変換
+     *
+     * @SuppressWarnings("PHPMD.UnusedPrivateMethod")
+     * @phpstan-ignore method.unused (テンプレートから呼び出すため静的解析では検出できない)
+     */
     private function nl2br(string|null $value): string
     {
         return nl2br($value ?? '');
