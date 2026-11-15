@@ -10,7 +10,7 @@ DDD（Domain-Driven Design）と CQRS（Command Query Responsibility Segregation
 
 ### 主な特徴
 
-* **DDD + CQRS アーキテクチャ**: 190個以上の PHP ファイルによる本格的な DDD 実装
+* **DDD + CQRS アーキテクチャ**: 340個以上の PHP ファイルによる本格的な DDD 実装
 * **高度なセキュリティ**: Cloudflare Turnstile、レート制限、パスワード保護、アカウントロック
 * **完全な認証・認可システム**: リソース単位の権限管理、パスワード再確認機能
 * **メール管理機能**: キュー、スケジュール送信、優先度制御、テンプレートエンジン連携
@@ -22,7 +22,7 @@ DDD（Domain-Driven Design）と CQRS（Command Query Responsibility Segregation
 
 ### 技術要件
 
-* PHP 8.3 以上
+* PHP 8.4 以上
 * MySQL 8.0 以上
 * Composer
 * Node.js & npm（フロントエンドビルド用）
@@ -472,7 +472,7 @@ http://localhost/admin/login
 ### コーディング規約
 
 * PSR-12 準拠
-* PHPStan Level 8
+* PHPStan Level 6
 
 ### テスト実行
 
