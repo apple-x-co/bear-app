@@ -94,7 +94,6 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
         return $this->resume()->isExpired();
     }
 
-    /** @phpstan-ignore return.unusedType (Aura.Auth の @return string は誤りで、未ログインでは null を返す) */
     #[Override]
     public function getUserName(): string|null
     {
