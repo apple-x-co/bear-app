@@ -19,11 +19,6 @@
     </projectFiles>
     <!-- suppress -->
     <issueHandlers>
-        <MissingConstructor>
-            <errorLevel type="suppress">
-                <directory name="src/Resource"/>
-            </errorLevel>
-        </MissingConstructor>
         <NonInvariantDocblockPropertyType>
             <errorLevel type="suppress">
                 <directory name="src/Resource"/>

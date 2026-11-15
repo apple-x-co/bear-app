@@ -41,6 +41,7 @@ class Encrypter implements EncrypterInterface
     public function encrypt(string $text): string
     {
         $ivLen = openssl_cipher_iv_length(self::CIPHER_ALGO);
+        /** @psalm-suppress PossiblyFalseArgument CIPHER_ALGO は固定の有効な方式なので false にならない */
         $iv = openssl_random_pseudo_bytes($ivLen, $strong);
         if ($strong === false) {
             throw new EncrypterException();

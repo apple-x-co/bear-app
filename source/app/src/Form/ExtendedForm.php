@@ -124,6 +124,7 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
         $spec = is_array($nameOrSpec) ? $nameOrSpec : $this->resolveField($nameOrSpec);
         $spec['attribs'] = array_merge($spec['attribs'] ?? [], $attribs);
 
+        /** @psalm-suppress UndefinedMagicMethod HelperLocator は __call でヘルパーを呼び出す */
         return $this->helper->input($spec); // @phpstan-ignore-line
     }
 

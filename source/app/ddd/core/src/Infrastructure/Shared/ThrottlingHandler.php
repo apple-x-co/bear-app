@@ -19,7 +19,11 @@ readonly class ThrottlingHandler implements ThrottlingHandlerInterface
     ) {
     }
 
-    /** @SuppressWarnings("PHPMD.StaticAccess") */
+    /**
+     * @SuppressWarnings("PHPMD.StaticAccess")
+     * @psalm-suppress PossiblyFalseArgument PHP 8.3 以降の createFromDateString() は失敗すると例外を投げ、false は返さない
+     */
+    #[Override]
     public function countUp(string $key, string $remoteIp, string $attemptInterval, int $maxAttempts): bool
     {
         $throttle = $this->throttleRepository->increment(

@@ -7,8 +7,8 @@ namespace AppCore\Infrastructure\Shared;
 use AppCore\Domain\Http\ClientIpResolverInterface;
 use Override;
 
-use function strrchr;
-use function substr;
+use function end;
+use function explode;
 use function trim;
 
 final class ClientIpResolver implements ClientIpResolverInterface
@@ -28,6 +28,8 @@ final class ClientIpResolver implements ClientIpResolverInterface
             return $_SERVER['REMOTE_ADDR'] ?? null;
         }
 
-        return trim(substr(strrchr(',' . $forwardedFor, ','), 1));
+        $ips = explode(',', $forwardedFor);
+
+        return trim(end($ips));
     }
 }

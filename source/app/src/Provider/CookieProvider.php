@@ -18,6 +18,9 @@ readonly class CookieProvider implements ProviderInterface
     #[Override]
     public function get()
     {
-        return $_COOKIE;
+        /** @var array<string, string> $cookies */
+        $cookies = $_COOKIE;
+
+        return $cookies;
     }
 }

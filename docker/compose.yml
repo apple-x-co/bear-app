@@ -1,6 +1,6 @@
 services:
   web:
-    image: ghcr.io/buddying-inc/webserver-ubuntu2404:apache24-php84
+    image: ghcr.io/buddying-inc/webserver-almalinux10:apache24-php85
     container_name: bear-web
     working_dir: /var/www/html
     volumes:
@@ -11,7 +11,7 @@ services:
         consistency: delegated
       - type: bind
         source: localhost.conf
-        target: /etc/apache2/sites-enabled/000-default.conf
+        target: /etc/httpd/conf.d/localhost.conf
         read_only: true
     ports:
       - "80:80"
