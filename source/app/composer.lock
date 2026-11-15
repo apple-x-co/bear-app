@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b01a6141385693119f575dae399c79a1",
+    "content-hash": "7a8ef3f6eb52b390195f643f109e3d83",
     "packages": [
         {
             "name": "aura/auth",
