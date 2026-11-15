@@ -8,7 +8,7 @@ use Override;
 
 use function array_reduce;
 
-class AccessControl implements AccessControlInterface
+final class AccessControl implements AccessControlInterface
 {
     /** @var array<string, bool> */
     private array $resources = [];

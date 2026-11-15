@@ -20,7 +20,7 @@ use Ray\Aop\MethodInvocation;
 
 use function http_build_query;
 
-readonly class AdminPasswordProtector implements MethodInterceptor
+final readonly class AdminPasswordProtector implements MethodInterceptor
 {
     public function __construct(
         private AdminAuthenticatorInterface $authenticator,

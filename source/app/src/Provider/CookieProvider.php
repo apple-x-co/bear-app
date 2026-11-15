@@ -8,7 +8,7 @@ use Override;
 use Ray\Di\ProviderInterface;
 
 /** @template-implements ProviderInterface<array<string, string>> */
-readonly class CookieProvider implements ProviderInterface
+final readonly class CookieProvider implements ProviderInterface
 {
     /**
      * {@inheritdoc}

@@ -20,7 +20,7 @@ use function ini_get;
  *
  * @template-implements ProviderInterface<UserAuthenticator>
  */
-class UserAuthenticatorProvider implements ProviderInterface
+final class UserAuthenticatorProvider implements ProviderInterface
 {
     private const string SEGMENT_NAME = 'Bebo\User';
 

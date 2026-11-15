@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Auth;
 
-class UnauthorizedException extends AuthenticationException
+final class UnauthorizedException extends AuthenticationException
 {
 }

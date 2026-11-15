@@ -8,7 +8,7 @@ use Override;
 
 use function str_replace;
 
-readonly class Language implements LanguageInterface
+final readonly class Language implements LanguageInterface
 {
     /**
      * @param array<string, string> $texts

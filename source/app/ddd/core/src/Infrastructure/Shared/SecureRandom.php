@@ -20,7 +20,7 @@ use function str_repeat;
 use function strlen;
 use function strtr;
 
-readonly class SecureRandom implements SecureRandomInterface
+final readonly class SecureRandom implements SecureRandomInterface
 {
     private const string ALPHA_NUM_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     private const string LOCK_TOKEN_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

@@ -40,7 +40,7 @@ use function time;
  *
  * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
-class AdminAuthenticator implements AdminAuthenticatorInterface
+final class AdminAuthenticator implements AdminAuthenticatorInterface
 {
     private const string REMEMBER_SEPARATOR = ':';
 
@@ -211,6 +211,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         return $this->resume()->isExpired();
     }
 
+    /** @phpstan-ignore return.unusedType (Aura.Auth の @return string は誤りで、未ログインでは null を返す) */
     #[Override]
     public function getUserName(): string|null
     {

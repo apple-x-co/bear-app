@@ -10,7 +10,7 @@ use Override;
 use function serialize;
 use function unserialize;
 
-readonly class UrlSignature implements UrlSignatureInterface
+final readonly class UrlSignature implements UrlSignatureInterface
 {
     public function __construct(
         public DateTimeImmutable $expiresDate,

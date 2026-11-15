@@ -7,7 +7,7 @@ namespace MyVendor\MyProject\Form;
 use Aura\Input\Builder;
 
 /** @SuppressWarnings("PHPMD.CamelCasePropertyName") */
-class ExtendedBuilder extends Builder
+final class ExtendedBuilder extends Builder
 {
     /**
      * Aura\Input\Builder 側で決まっているプロパティ名

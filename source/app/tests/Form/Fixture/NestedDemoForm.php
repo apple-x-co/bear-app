@@ -9,7 +9,7 @@ use MyVendor\MyProject\Form\ExtendedForm;
 use Override;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class NestedDemoForm extends ExtendedForm
+final class NestedDemoForm extends ExtendedForm
 {
     #[Override]
     public function init(): void

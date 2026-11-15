@@ -9,6 +9,6 @@ use Ray\Di\Di\Qualifier;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
 #[Qualifier]
-class Cookie
+final class Cookie
 {
 }

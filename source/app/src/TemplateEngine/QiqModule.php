@@ -19,7 +19,7 @@ use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-class QiqModule extends AbstractModule
+final class QiqModule extends AbstractModule
 {
     /**
      * @param list<string>         $paths

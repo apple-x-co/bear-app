@@ -39,7 +39,7 @@ use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-class SessionAuthModule extends AbstractModule
+final class SessionAuthModule extends AbstractModule
 {
     #[Override]
     protected function configure(): void

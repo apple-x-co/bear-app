@@ -7,7 +7,7 @@ namespace MyVendor\MyProject\InputQuery\Admin;
 use Ray\InputQuery\Attribute\Input;
 use SensitiveParameter;
 
-readonly class ResetPasswordInput
+final readonly class ResetPasswordInput
 {
     /**
      * @psalm-suppress UndefinedAttributeClass

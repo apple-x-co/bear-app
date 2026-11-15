@@ -7,7 +7,7 @@ namespace MyVendor\MyProject\Annotation;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_METHOD)]
-class RateLimiter
+final class RateLimiter
 {
     /** @see https://www.php.net/datetime.formats.relative */
     public function __construct(

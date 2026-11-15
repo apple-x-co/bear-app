@@ -6,7 +6,7 @@ namespace AppCore\Infrastructure\Entity;
 
 use DateTimeImmutable;
 
-class ThrottleEntityFactory
+final class ThrottleEntityFactory
 {
     public static function factory(
         int $id,

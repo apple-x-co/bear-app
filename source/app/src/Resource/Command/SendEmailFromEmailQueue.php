@@ -9,6 +9,7 @@ use BEAR\Resource\ResourceObject;
 
 use function array_map;
 
+/** @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない */
 class SendEmailFromEmailQueue extends ResourceObject
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */

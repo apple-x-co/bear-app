@@ -13,7 +13,7 @@ use function error_log;
 
 use const PHP_EOL;
 
-readonly class AdminLogger implements LoggerInterface
+final readonly class AdminLogger implements LoggerInterface
 {
     public function __construct(
         private AbstractAppMeta $appMeta,

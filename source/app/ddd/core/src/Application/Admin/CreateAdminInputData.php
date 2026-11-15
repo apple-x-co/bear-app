@@ -6,7 +6,7 @@ namespace AppCore\Application\Admin;
 
 use SensitiveParameter;
 
-readonly class CreateAdminInputData
+final readonly class CreateAdminInputData
 {
     public function __construct(
         public string $username,

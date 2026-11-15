@@ -8,7 +8,7 @@ use BEAR\Dev\Http\HttpResource;
 use MyVendor\MyProject\Hypermedia\WorkflowTest as Workflow;
 use Override;
 
-class WorkflowTest extends Workflow
+final class WorkflowTest extends Workflow
 {
     /** @psalm-suppress MissingParentCall 親の setUp() が作る $resource を HTTP 経由のものに差し替えるため、呼ばない */
     #[Override]

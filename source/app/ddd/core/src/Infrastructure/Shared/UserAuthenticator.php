@@ -22,7 +22,7 @@ use function is_string;
 use const PASSWORD_BCRYPT;
 
 /** User認証基盤 */
-readonly class UserAuthenticator implements UserAuthenticatorInterface
+final readonly class UserAuthenticator implements UserAuthenticatorInterface
 {
     public function __construct(
         private AuthFactory $authFactory,
@@ -94,6 +94,7 @@ readonly class UserAuthenticator implements UserAuthenticatorInterface
         return $this->resume()->isExpired();
     }
 
+    /** @phpstan-ignore return.unusedType (Aura.Auth の @return string は誤りで、未ログインでは null を返す) */
     #[Override]
     public function getUserName(): string|null
     {

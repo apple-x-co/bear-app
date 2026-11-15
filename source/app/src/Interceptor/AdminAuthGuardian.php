@@ -16,7 +16,7 @@ use Ray\Aop\MethodInvocation;
 
 use function assert;
 
-readonly class AdminAuthGuardian implements MethodInterceptor
+final readonly class AdminAuthGuardian implements MethodInterceptor
 {
     public function __construct(
         private AdminAuthenticatorInterface $authenticator,

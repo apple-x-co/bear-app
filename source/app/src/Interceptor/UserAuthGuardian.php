@@ -16,7 +16,7 @@ use Ray\Aop\MethodInvocation;
 
 use function assert;
 
-readonly class UserAuthGuardian implements MethodInterceptor
+final readonly class UserAuthGuardian implements MethodInterceptor
 {
     public function __construct(
         private RouterInterface $router,

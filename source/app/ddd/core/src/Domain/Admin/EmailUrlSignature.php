@@ -12,7 +12,7 @@ use Override;
 use function serialize;
 use function unserialize;
 
-class EmailUrlSignature implements UrlSignatureInterface
+final class EmailUrlSignature implements UrlSignatureInterface
 {
     public function __construct(
         public readonly int $adminId,

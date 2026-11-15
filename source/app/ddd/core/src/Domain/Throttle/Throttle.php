@@ -6,7 +6,7 @@ namespace AppCore\Domain\Throttle;
 
 use DateTimeImmutable;
 
-readonly class Throttle
+final readonly class Throttle
 {
     public function __construct(
         public string $throttleKey,

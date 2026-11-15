@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Auth;
 
-class MaxAttemptsExceeded extends AuthenticationException
+final class MaxAttemptsExceeded extends AuthenticationException
 {
 }

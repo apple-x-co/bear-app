@@ -15,7 +15,7 @@ use DateTimeImmutable;
 use Ray\Di\Di\Named;
 use Throwable;
 
-readonly class DeleteAdminUseCase
+final readonly class DeleteAdminUseCase
 {
     public function __construct(
         #[Named('admin')]

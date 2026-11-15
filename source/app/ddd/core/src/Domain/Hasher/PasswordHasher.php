@@ -11,7 +11,7 @@ use function password_verify;
 
 use const PASSWORD_BCRYPT;
 
-class PasswordHasher implements PasswordHasherInterface
+final class PasswordHasher implements PasswordHasherInterface
 {
     #[Override]
     public function hashType(): string

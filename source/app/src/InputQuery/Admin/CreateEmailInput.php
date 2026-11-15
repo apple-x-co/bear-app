@@ -6,7 +6,7 @@ namespace MyVendor\MyProject\InputQuery\Admin;
 
 use Ray\InputQuery\Attribute\Input;
 
-readonly class CreateEmailInput
+final readonly class CreateEmailInput
 {
     /**
      * @psalm-suppress UndefinedAttributeClass

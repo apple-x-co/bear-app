@@ -7,7 +7,7 @@ namespace AppCore\Domain\Mail;
 use AppCore\Domain\Language\LanguageInterface;
 use DateTimeImmutable;
 
-class Email
+final class Email
 {
     private AddressInterface|null $from = null;
 

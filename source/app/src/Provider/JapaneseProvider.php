@@ -11,7 +11,7 @@ use Override;
 use Ray\Di\ProviderInterface;
 
 /** @template-implements ProviderInterface<LanguageInterface> */
-readonly class JapaneseProvider implements ProviderInterface
+final readonly class JapaneseProvider implements ProviderInterface
 {
     public function __construct(
         private LanguageFactoryInterface $languageFactory,

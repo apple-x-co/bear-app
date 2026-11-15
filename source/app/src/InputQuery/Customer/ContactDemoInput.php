@@ -6,7 +6,7 @@ namespace MyVendor\MyProject\InputQuery\Customer;
 
 use Ray\InputQuery\Attribute\Input;
 
-readonly class ContactDemoInput
+final readonly class ContactDemoInput
 {
     /**
      * @psalm-suppress UndefinedAttributeClass

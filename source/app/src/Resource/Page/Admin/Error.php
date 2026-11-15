@@ -12,6 +12,7 @@ use Koriym\HttpConstants\ResponseHeader;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 
+/** @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない */
 #[NoHttpCache]
 class Error extends BaseAdminPage
 {

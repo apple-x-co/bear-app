@@ -8,7 +8,7 @@ use BEAR\Resource\Code;
 use BEAR\Resource\Exception\BadRequestException;
 use Throwable;
 
-class ForbiddenException extends BadRequestException
+final class ForbiddenException extends BadRequestException
 {
     public function __construct(string $message = '', int $code = Code::FORBIDDEN, Throwable|null $previous = null)
     {

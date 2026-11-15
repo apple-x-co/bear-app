@@ -13,7 +13,7 @@ use Override;
 
 use function time;
 
-class ProdModule extends AbstractAppModule
+final class ProdModule extends AbstractAppModule
 {
     #[Override]
     protected function configure(): void

@@ -6,7 +6,7 @@ namespace AppCore\Infrastructure\Entity;
 
 use DateTimeImmutable;
 
-class AdminEmailEntityFactory
+final class AdminEmailEntityFactory
 {
     public static function factory(
         int $id,

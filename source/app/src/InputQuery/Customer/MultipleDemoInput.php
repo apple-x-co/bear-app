@@ -6,7 +6,7 @@ namespace MyVendor\MyProject\InputQuery\Customer;
 
 use Ray\InputQuery\Attribute\Input;
 
-readonly class MultipleDemoInput
+final readonly class MultipleDemoInput
 {
     /**
      * @param list<string> $fruits

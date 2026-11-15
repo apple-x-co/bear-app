@@ -21,7 +21,7 @@ use function is_string;
 
 use const DIRECTORY_SEPARATOR;
 
-readonly class QueueMail implements TransportInterface
+final readonly class QueueMail implements TransportInterface
 {
     private const string SUBJECT_DIR_NAME = 'subject';
     private const string TEXT_DIR_NAME = 'text';

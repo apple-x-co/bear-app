@@ -49,7 +49,7 @@ use function is_string;
  *
  * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
-readonly class AdminAuthentication implements MethodInterceptor
+final readonly class AdminAuthentication implements MethodInterceptor
 {
     public function __construct(
         #[Named('admin_auth_attempt_interval')]

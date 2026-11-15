@@ -27,7 +27,10 @@ use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 use Throwable;
 
-/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
+/**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ * @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない
+ */
 #[NoHttpCache]
 class Password extends BaseAdminPage
 {

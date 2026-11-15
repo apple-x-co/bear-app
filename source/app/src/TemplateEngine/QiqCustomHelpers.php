@@ -31,7 +31,7 @@ use const PHP_EOL;
  * @SuppressWarnings("PHPMD.TooManyMethods")
  * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
-class QiqCustomHelpers extends HtmlHelpers
+final class QiqCustomHelpers extends HtmlHelpers
 {
     private const string CSRF_TOKEN_NAME = '__csrf_token';
     private const array TRANSLATABLE_ATTRIBS = ['title', 'placeholder', 'value'];

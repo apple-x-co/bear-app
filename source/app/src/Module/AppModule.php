@@ -18,7 +18,7 @@ use function dirname;
 use function getenv;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-class AppModule extends AbstractAppModule
+final class AppModule extends AbstractAppModule
 {
     /** @SuppressWarnings("PHPMD.StaticAccess") */
     #[Override]

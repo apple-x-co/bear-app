@@ -6,7 +6,7 @@ namespace AppCore\Infrastructure\Entity;
 
 use DateTimeImmutable;
 
-class AdminPermissionEntityFactory
+final class AdminPermissionEntityFactory
 {
     public static function factory(
         int $id,

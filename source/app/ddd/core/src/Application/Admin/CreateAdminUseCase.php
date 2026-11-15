@@ -24,7 +24,7 @@ use Ray\Di\Di\Named;
 use function is_int;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-readonly class CreateAdminUseCase
+final readonly class CreateAdminUseCase
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(

@@ -11,7 +11,7 @@ use MyVendor\MyProject\Provider\CommandSchemeCollectionProvider;
 use Override;
 use Ray\Di\AbstractModule;
 
-class CommandModule extends AbstractModule
+final class CommandModule extends AbstractModule
 {
     #[Override]
     protected function configure(): void

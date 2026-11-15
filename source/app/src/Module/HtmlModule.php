@@ -21,7 +21,7 @@ use function getenv;
 use function time;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-class HtmlModule extends AbstractAppModule
+final class HtmlModule extends AbstractAppModule
 {
     #[Override]
     protected function configure(): void

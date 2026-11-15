@@ -455,10 +455,13 @@ npm run build
 // admin_permissions テーブルを確認
 SELECT * FROM admin_permissions WHERE admin_id = ?;
 
-// 権限を追加（全権限）
-INSERT INTO admin_permissions (admin_id, access, resource_name, permission_name)
-VALUES (1, 'allow', '*', 'privilege');
+// 権限を追加（settings リソースの全権限）
+INSERT INTO admin_permissions (admin_id, access, resource_name, permission_name, created_date)
+VALUES (1, 'allow', 'settings', 'privilege', NOW());
 ```
+
+- `resource_name` は `#[RequiredPermission]` の第 1 引数と同じ名前にします。`'*'` のようなワイルドカードはなく、リソースごとに 1 行ずつ追加します
+- `permission_name` に `privilege` を指定すると、そのリソースの `read` / `write` もすべて許可されます
 
 ### 6. キャッシュが効かない
 

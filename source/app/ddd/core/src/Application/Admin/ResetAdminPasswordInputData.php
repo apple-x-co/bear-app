@@ -6,7 +6,7 @@ namespace AppCore\Application\Admin;
 
 use SensitiveParameter;
 
-readonly class ResetAdminPasswordInputData
+final readonly class ResetAdminPasswordInputData
 {
     public function __construct(
         #[SensitiveParameter]

@@ -29,7 +29,7 @@ use function ini_get;
  *
  * @template-implements ProviderInterface<AdminAuthenticator>
  */
-readonly class AdminAuthenticatorProvider implements ProviderInterface
+final readonly class AdminAuthenticatorProvider implements ProviderInterface
 {
     private const string SEGMENT_NAME = 'Bebo\Admin';
 

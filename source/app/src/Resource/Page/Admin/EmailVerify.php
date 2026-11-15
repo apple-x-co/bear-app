@@ -19,6 +19,7 @@ use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\AuraSqlModule\Annotation\WriteConnection;
 use Ray\InputQuery\Attribute\Input;
 
+/** @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない */
 #[NoHttpCache]
 class EmailVerify extends BaseAdminPage
 {

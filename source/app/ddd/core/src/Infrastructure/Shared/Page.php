@@ -8,7 +8,7 @@ use Override;
 use Ray\AuraSqlModule\Pagerfanta\Page as PagerfantaPage;
 use Stringable;
 
-readonly class Page implements Stringable
+final readonly class Page implements Stringable
 {
     public function __construct(
         private PagerfantaPage $page,

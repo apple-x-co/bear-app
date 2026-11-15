@@ -15,7 +15,7 @@ use function assert;
 use function method_exists;
 use function str_replace;
 
-readonly class UrlSignatureEncrypter implements UrlSignatureEncrypterInterface
+final readonly class UrlSignatureEncrypter implements UrlSignatureEncrypterInterface
 {
     public function __construct(
         private EncrypterInterface $encrypter,

@@ -41,7 +41,7 @@ use function call_user_func;
  *
  * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
-readonly class UserAuthentication implements MethodInterceptor
+final readonly class UserAuthentication implements MethodInterceptor
 {
     public function __construct(
         private UserAuthenticatorInterface $authenticator,

@@ -12,7 +12,7 @@ use Ray\WebFormModule\SetAntiCsrfTrait;
 use stdClass;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class AdminJoinForm extends ExtendedForm
+final class AdminJoinForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 

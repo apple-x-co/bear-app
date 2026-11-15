@@ -26,7 +26,7 @@ use function strlen;
 
 use const JSON_UNESCAPED_SLASHES;
 
-class Encrypter implements EncrypterInterface
+final class Encrypter implements EncrypterInterface
 {
     private const string CIPHER_ALGO = 'aes-128-cbc';
     private const int CIPHER_OPTION = 0;

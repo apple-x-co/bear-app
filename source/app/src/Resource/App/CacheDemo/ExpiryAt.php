@@ -18,6 +18,8 @@ use DateTimeImmutable;
  * 確認方法（prod コンテキスト）:
  *   GET /cache-demo/expiry-at を繰り返す → expires_at までは generated_at が変わらない
  *   expires_at を過ぎたあとの GET     → 作り直されて generated_at と expires_at が新しくなる
+ *
+ * @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない
  */
 #[Cacheable(expiryAt: 'expires_at')]
 class ExpiryAt extends ResourceObject

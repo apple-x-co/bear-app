@@ -15,7 +15,7 @@ use AppCore\Infrastructure\Query\AdminPasswordUpdateInterface;
 use Ray\Di\Di\Named;
 use Throwable;
 
-readonly class UpdateAdminPasswordUseCase
+final readonly class UpdateAdminPasswordUseCase
 {
     public function __construct(
         #[Named('admin')]

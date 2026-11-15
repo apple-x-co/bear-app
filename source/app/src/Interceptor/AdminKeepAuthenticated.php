@@ -12,7 +12,7 @@ use Ray\Aop\MethodInvocation;
 
 use function is_string;
 
-readonly class AdminKeepAuthenticated implements MethodInterceptor
+final readonly class AdminKeepAuthenticated implements MethodInterceptor
 {
     /** @param array<array-key, mixed> $cookie */
     public function __construct(

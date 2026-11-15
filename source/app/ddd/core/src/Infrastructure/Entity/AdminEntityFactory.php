@@ -6,7 +6,7 @@ namespace AppCore\Infrastructure\Entity;
 
 use DateTimeImmutable;
 
-class AdminEntityFactory
+final class AdminEntityFactory
 {
     /**
      * @param positive-int $id

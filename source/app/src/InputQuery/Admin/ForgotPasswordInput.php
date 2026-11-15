@@ -6,7 +6,7 @@ namespace MyVendor\MyProject\InputQuery\Admin;
 
 use Ray\InputQuery\Attribute\Input;
 
-readonly class ForgotPasswordInput
+final readonly class ForgotPasswordInput
 {
     /**
      * @psalm-suppress UndefinedAttributeClass

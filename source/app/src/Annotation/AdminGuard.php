@@ -7,6 +7,6 @@ namespace MyVendor\MyProject\Annotation;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_METHOD)]
-class AdminGuard
+final class AdminGuard
 {
 }

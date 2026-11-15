@@ -17,7 +17,7 @@ use function is_array;
  *
  * @psalm-suppress PropertyNotSetInConstructor
  */
-class ExtendedCollection extends Collection
+final class ExtendedCollection extends Collection
 {
     /** @param array<array-key, mixed> $data */
     #[Override]

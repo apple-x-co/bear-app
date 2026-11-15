@@ -8,7 +8,7 @@ use MyVendor\MyProject\Form\ExtendedForm;
 use Override;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class UserUploadDemoForm extends ExtendedForm
+final class UserUploadDemoForm extends ExtendedForm
 {
     #[Override]
     public function init(): void

@@ -11,7 +11,7 @@ use DateInterval;
 use DateTimeImmutable;
 use Override;
 
-readonly class ThrottlingHandler implements ThrottlingHandlerInterface
+final readonly class ThrottlingHandler implements ThrottlingHandlerInterface
 {
     public function __construct(
         private ThrottleRepositoryInterface $throttleRepository,

@@ -13,7 +13,7 @@ use Override;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
-class ThrottlingModule extends AbstractModule
+final class ThrottlingModule extends AbstractModule
 {
     #[Override]
     protected function configure(): void

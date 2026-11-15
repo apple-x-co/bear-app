@@ -20,7 +20,7 @@ use function str_replace;
 use function strpos;
 use function substr;
 
-readonly class QiqRenderer implements RenderInterface
+final readonly class QiqRenderer implements RenderInterface
 {
     private const int LENGTH_OF_RESOURCE_DIR = 13;
 

@@ -7,7 +7,7 @@ namespace AppCore\Application;
 use AppCore\Domain\VerificationCode\VerificationCodeNotFoundException;
 use AppCore\Infrastructure\Query\VerificationCodeQueryInterface;
 
-class GetVerificationCodeUseCase
+final class GetVerificationCodeUseCase
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(

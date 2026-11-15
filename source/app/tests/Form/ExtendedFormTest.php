@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 
-class ExtendedFormTest extends TestCase
+final class ExtendedFormTest extends TestCase
 {
     private NestedDemoForm $form;
 

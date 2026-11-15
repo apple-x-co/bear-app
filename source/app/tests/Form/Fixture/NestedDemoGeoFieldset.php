@@ -8,7 +8,7 @@ use Aura\Input\Fieldset;
 use Override;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class NestedDemoGeoFieldset extends Fieldset
+final class NestedDemoGeoFieldset extends Fieldset
 {
     #[Override]
     public function init(): void

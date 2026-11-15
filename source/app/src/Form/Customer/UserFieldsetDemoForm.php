@@ -12,7 +12,7 @@ use Override;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class UserFieldsetDemoForm extends ExtendedForm
+final class UserFieldsetDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 

@@ -8,7 +8,7 @@ use MyVendor\MyProject\Form\ExtendedFieldset;
 use Override;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class AddressFieldset extends ExtendedFieldset
+final class AddressFieldset extends ExtendedFieldset
 {
     #[Override]
     public function init(): void

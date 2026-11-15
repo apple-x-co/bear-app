@@ -6,7 +6,7 @@ namespace MyVendor\MyProject\InputQuery\Admin;
 
 use Ray\InputQuery\Attribute\Input;
 
-readonly class CodeVerifyInput
+final readonly class CodeVerifyInput
 {
     /**
      * @psalm-suppress UndefinedAttributeClass

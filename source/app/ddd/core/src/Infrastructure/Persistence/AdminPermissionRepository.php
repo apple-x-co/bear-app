@@ -16,7 +16,7 @@ use Override;
 use function array_map;
 use function array_values;
 
-readonly class AdminPermissionRepository implements AdminPermissionRepositoryInterface
+final readonly class AdminPermissionRepository implements AdminPermissionRepositoryInterface
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(

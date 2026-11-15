@@ -6,6 +6,6 @@ namespace AppCore\Domain\Encrypter;
 
 use AppCore\Exception\RuntimeException;
 
-class EncrypterException extends RuntimeException
+final class EncrypterException extends RuntimeException
 {
 }

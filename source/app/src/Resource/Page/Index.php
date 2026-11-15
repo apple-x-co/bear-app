@@ -9,6 +9,7 @@ use BEAR\Resource\ResourceObject;
 use MyVendor\MyProject\InputQuery\IndexInput;
 use Ray\InputQuery\Attribute\Input;
 
+/** @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない */
 #[Cacheable(expirySecond: 300)]
 class Index extends ResourceObject
 {

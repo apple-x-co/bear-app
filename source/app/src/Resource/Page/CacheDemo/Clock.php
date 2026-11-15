@@ -11,6 +11,8 @@ use DateTimeImmutable;
  * ドーナツキャッシュの「穴」になるリソース
  *
  * キャッシュ系のアトリビュートを付けていないので、リクエストのたびに現在時刻を返す。
+ *
+ * @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない
  */
 class Clock extends ResourceObject
 {

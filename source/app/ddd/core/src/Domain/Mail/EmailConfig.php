@@ -6,7 +6,7 @@ namespace AppCore\Domain\Mail;
 
 use Override;
 
-class EmailConfig implements EmailConfigInterface
+final class EmailConfig implements EmailConfigInterface
 {
     /** @param array{ssl?: array{verify_peer: bool, verify_peer_name: bool, allow_self_signed: bool}} $options */
     public function __construct(

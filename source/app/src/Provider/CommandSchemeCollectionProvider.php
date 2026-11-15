@@ -13,7 +13,7 @@ use Ray\Di\InjectorInterface;
 use Ray\Di\ProviderInterface;
 
 /** @template-implements ProviderInterface<SchemeCollection> */
-readonly class CommandSchemeCollectionProvider implements ProviderInterface
+final readonly class CommandSchemeCollectionProvider implements ProviderInterface
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(

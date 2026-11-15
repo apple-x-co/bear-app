@@ -9,7 +9,7 @@ use DateTimeImmutable;
 use function array_reduce;
 use function array_values;
 
-class Admin
+final class Admin
 {
     /** @var positive-int|null */
     private int|null $newId = null;

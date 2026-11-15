@@ -8,7 +8,7 @@ use AppCore\Domain\AccessControl\Permission;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_METHOD)]
-class RequiredPermission
+final class RequiredPermission
 {
     public function __construct(
         public readonly string $resourceName,

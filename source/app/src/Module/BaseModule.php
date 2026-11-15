@@ -86,7 +86,7 @@ use function parse_str;
 use function random_bytes;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-class BaseModule extends AbstractModule
+final class BaseModule extends AbstractModule
 {
     public function __construct(
         private readonly string $appDir,

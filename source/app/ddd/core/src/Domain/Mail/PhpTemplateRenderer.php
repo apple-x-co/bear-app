@@ -25,7 +25,7 @@ use function trim;
 
 use const EXTR_SKIP;
 
-readonly class PhpTemplateRenderer implements TemplateRendererInterface
+final readonly class PhpTemplateRenderer implements TemplateRendererInterface
 {
     public function __construct(
         #[ServiceName]

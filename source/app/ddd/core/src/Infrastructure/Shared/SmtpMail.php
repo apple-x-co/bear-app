@@ -18,7 +18,7 @@ use function is_readable;
 
 use const DIRECTORY_SEPARATOR;
 
-readonly class SmtpMail implements TransportInterface
+final readonly class SmtpMail implements TransportInterface
 {
     public function __construct(
         private LanguageInterface $defaultLanguage, // リクエストスコープの既定言語

@@ -15,6 +15,7 @@ use Ray\AuraSqlModule\Annotation\Transactional;
 
 use function assert;
 
+/** @psalm-suppress ClassMustBeFinal #[Transactional] の AOP が継承して織り込むため final にしない */
 class ThrottleRepository implements ThrottleRepositoryInterface
 {
     public function __construct(

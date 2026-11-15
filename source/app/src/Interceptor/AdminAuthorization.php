@@ -11,7 +11,7 @@ use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
-readonly class AdminAuthorization implements MethodInterceptor
+final readonly class AdminAuthorization implements MethodInterceptor
 {
     public function __construct(
         private AdminAuthenticatorInterface $authenticator,

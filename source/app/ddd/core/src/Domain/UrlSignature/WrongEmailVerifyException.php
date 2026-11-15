@@ -6,6 +6,6 @@ namespace AppCore\Domain\UrlSignature;
 
 use AppCore\Exception\RuntimeException;
 
-class WrongEmailVerifyException extends RuntimeException
+final class WrongEmailVerifyException extends RuntimeException
 {
 }

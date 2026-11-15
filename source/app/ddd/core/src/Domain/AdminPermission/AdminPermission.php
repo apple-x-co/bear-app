@@ -8,7 +8,7 @@ use AppCore\Domain\AccessControl\Access;
 use AppCore\Domain\AccessControl\Permission;
 use DateTimeImmutable;
 
-class AdminPermission
+final class AdminPermission
 {
     public const array DEFAULT_RESOURCE_NAMES = ['settings'];
 

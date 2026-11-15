@@ -6,6 +6,6 @@ namespace AppCore\Domain\User;
 
 use AppCore\Exception\RuntimeException;
 
-class UserNotFoundException extends RuntimeException
+final class UserNotFoundException extends RuntimeException
 {
 }

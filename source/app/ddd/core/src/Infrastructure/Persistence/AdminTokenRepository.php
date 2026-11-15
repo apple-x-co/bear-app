@@ -11,7 +11,7 @@ use AppCore\Infrastructure\Query\AdminTokenCommandInterface;
 use AppCore\Infrastructure\Query\AdminTokenQueryInterface;
 use Override;
 
-class AdminTokenRepository implements AdminTokenRepositoryInterface
+final class AdminTokenRepository implements AdminTokenRepositoryInterface
 {
     public function __construct(
         private readonly AdminTokenCommandInterface $command,

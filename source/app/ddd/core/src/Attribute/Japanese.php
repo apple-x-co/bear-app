@@ -9,6 +9,6 @@ use Ray\Di\Di\Qualifier;
 
 #[Attribute(Attribute::TARGET_PARAMETER | Attribute::TARGET_METHOD)]
 #[Qualifier]
-class Japanese
+final class Japanese
 {
 }

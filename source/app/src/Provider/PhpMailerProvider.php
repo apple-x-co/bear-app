@@ -11,7 +11,7 @@ use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
 /** @template-implements ProviderInterface<PHPMailer> */
-readonly class PhpMailerProvider implements ProviderInterface
+final readonly class PhpMailerProvider implements ProviderInterface
 {
     public function __construct(
         #[Named('default')]

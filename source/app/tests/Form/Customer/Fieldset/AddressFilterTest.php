@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 
-class AddressFilterTest extends TestCase
+final class AddressFilterTest extends TestCase
 {
     private AddressFieldset $fieldset;
 

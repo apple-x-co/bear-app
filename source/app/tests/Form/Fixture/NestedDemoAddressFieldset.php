@@ -9,7 +9,7 @@ use Aura\Input\Fieldset;
 use Override;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class NestedDemoAddressFieldset extends Fieldset
+final class NestedDemoAddressFieldset extends Fieldset
 {
     #[Override]
     public function init(): void

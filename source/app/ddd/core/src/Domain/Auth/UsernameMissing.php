@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Auth;
 
-class UsernameMissing extends AuthenticationException
+final class UsernameMissing extends AuthenticationException
 {
 }

@@ -8,7 +8,7 @@ use AppCore\Domain\Session\SessionInterface;
 use Aura\Session\Segment;
 use Override;
 
-readonly class Session implements SessionInterface
+final readonly class Session implements SessionInterface
 {
     public function __construct(
         private Segment $segment,

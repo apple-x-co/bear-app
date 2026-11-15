@@ -12,7 +12,7 @@ use Ray\WebFormModule\SetAntiCsrfTrait;
 use stdClass;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class AdminForgotPasswordForm extends ExtendedForm
+final class AdminForgotPasswordForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 

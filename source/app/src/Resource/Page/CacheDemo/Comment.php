@@ -13,6 +13,8 @@ use DateTimeImmutable;
  *
  * クラスに付けると、onGet の結果が全体キャッシュされて ETag が付く。
  * 有効期限（TTL）はなく、onPut / onPatch / onDelete / onPost が実行されたときにキャッシュが更新される。
+ *
+ * @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない
  */
 #[CacheableResponse]
 class Comment extends ResourceObject

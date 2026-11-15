@@ -7,7 +7,7 @@ namespace AppCore\Domain\Admin;
 use AppCore\Domain\RemovalTrait;
 use DateTimeImmutable;
 
-class AdminEmail
+final class AdminEmail
 {
     use RemovalTrait;
 

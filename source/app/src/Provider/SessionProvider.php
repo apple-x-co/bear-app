@@ -10,7 +10,7 @@ use Override;
 use Ray\Di\ProviderInterface;
 
 /** @template-implements ProviderInterface<Session> */
-readonly class SessionProvider implements ProviderInterface
+final readonly class SessionProvider implements ProviderInterface
 {
     private const string SEGMENT_NAME = 'Bebo\Common';
 

@@ -19,6 +19,7 @@ use MyVendor\MyProject\InputQuery\Admin\DeleteEmailInput;
 use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use Ray\InputQuery\Attribute\Input;
 
+/** @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない */
 class Delete extends BaseAdminPage
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */

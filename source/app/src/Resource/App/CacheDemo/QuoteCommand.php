@@ -18,6 +18,8 @@ use BEAR\Resource\ResourceObject;
  *   GET    /cache-demo/quote?id=1        → キャッシュされる（generated_at は変わらない）
  *   DELETE /cache-demo/quote-command?id=1 → #[Purge]: キャッシュを破棄。次の GET で作り直される
  *   PUT    /cache-demo/quote-command?id=1 → #[Refresh]: キャッシュを破棄して、その場で GET し直して保存する
+ *
+ * @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない
  */
 class QuoteCommand extends ResourceObject
 {

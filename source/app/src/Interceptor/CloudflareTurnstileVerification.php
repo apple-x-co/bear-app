@@ -14,7 +14,7 @@ use Ray\Aop\MethodInvocation;
 use function assert;
 use function call_user_func_array;
 
-readonly class CloudflareTurnstileVerification implements MethodInterceptor
+final readonly class CloudflareTurnstileVerification implements MethodInterceptor
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(

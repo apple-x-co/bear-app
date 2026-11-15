@@ -20,7 +20,7 @@ use Override;
 use function array_reduce;
 use function array_values;
 
-readonly class AdminRepository implements AdminRepositoryInterface
+final readonly class AdminRepository implements AdminRepositoryInterface
 {
     public function __construct(
         private AdminCommandInterface $adminCommand,

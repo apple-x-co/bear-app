@@ -9,7 +9,7 @@ use Override;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class AdminPasswordConfirmForm extends ExtendedForm
+final class AdminPasswordConfirmForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 

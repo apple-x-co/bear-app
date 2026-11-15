@@ -9,7 +9,7 @@ use Qiq\Compiler;
 use Qiq\Compiler\QiqCompiler;
 use Ray\Di\AbstractModule;
 
-class QiqProdModule extends AbstractModule
+final class QiqProdModule extends AbstractModule
 {
     public function __construct(
         private readonly string $cachePath,

@@ -16,7 +16,7 @@ use Ray\Aop\MethodInvocation;
 use function assert;
 use function hash;
 
-readonly class Throttling implements MethodInterceptor
+final readonly class Throttling implements MethodInterceptor
 {
     private const int TOO_MANY_REQUESTS = 429;
 

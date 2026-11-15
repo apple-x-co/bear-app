@@ -6,7 +6,7 @@ namespace AppCore\Domain\Mail;
 
 use Override;
 
-class Address implements AddressInterface
+final class Address implements AddressInterface
 {
     public function __construct(
         protected readonly string $email,

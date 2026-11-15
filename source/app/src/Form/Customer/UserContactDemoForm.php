@@ -12,7 +12,7 @@ use Ray\WebFormModule\SetAntiCsrfTrait;
 use function array_column;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class UserContactDemoForm extends ExtendedForm
+final class UserContactDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 

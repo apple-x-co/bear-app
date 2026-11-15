@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Auth;
 
-readonly class ManagerIdentity
+final readonly class ManagerIdentity
 {
     public function __construct(
         public int $id,

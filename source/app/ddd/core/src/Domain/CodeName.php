@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Domain;
 
-class CodeName
+final class CodeName
 {
     public function __invoke(): string
     {

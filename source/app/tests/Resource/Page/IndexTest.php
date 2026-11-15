@@ -9,7 +9,7 @@ use MyVendor\MyProject\Injector;
 use Override;
 use PHPUnit\Framework\TestCase;
 
-class IndexTest extends TestCase
+final class IndexTest extends TestCase
 {
     private ResourceInterface $resource;
 
