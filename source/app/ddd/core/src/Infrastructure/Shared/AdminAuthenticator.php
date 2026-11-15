@@ -10,6 +10,7 @@ use AppCore\Domain\AdminPermission\AdminPermission;
 use AppCore\Domain\AdminPermission\AdminPermissionRepositoryInterface;
 use AppCore\Domain\Auth\AdminAuthenticatorInterface;
 use AppCore\Domain\Auth\AdminIdentity;
+use AppCore\Domain\Auth\AuthStorageException;
 use AppCore\Domain\Auth\UnauthorizedException;
 use AppCore\Domain\Hasher\PasswordHasherInterface;
 use Aura\Auth\Adapter\PdoAdapter;
@@ -20,6 +21,7 @@ use Aura\Auth\Status;
 use Aura\Auth\Verifier\PasswordVerifier;
 use Override;
 use PDO;
+use PDOException;
 use SensitiveParameter;
 
 use function array_reduce;
@@ -123,12 +125,16 @@ final class AdminAuthenticator implements AdminAuthenticatorInterface
         #[SensitiveParameter]
         string $password,
     ): void {
-        $pdo = $this->getPdo();
-        $auth = $this->authFactory->newInstance();
-        $rememberService = $this->getRememberService($pdo);
-        $loginService = $this->authFactory->newLoginService($this->getAdapter($pdo), $rememberService);
-        $loginService->login($auth, ['username' => $username, 'password' => $password]);
-        $rememberService->forget($auth);
+        try {
+            $pdo = $this->getPdo();
+            $auth = $this->authFactory->newInstance();
+            $rememberService = $this->getRememberService($pdo);
+            $loginService = $this->authFactory->newLoginService($this->getAdapter($pdo), $rememberService);
+            $loginService->login($auth, ['username' => $username, 'password' => $password]);
+            $rememberService->forget($auth);
+        } catch (PDOException $e) {
+            throw new AuthStorageException('Failed to access the authentication storage', 0, $e);
+        }
     }
 
     /**
@@ -141,28 +147,40 @@ final class AdminAuthenticator implements AdminAuthenticatorInterface
         #[SensitiveParameter]
         string $password,
     ): void {
-        $pdo = $this->getPdo();
-        $auth = $this->authFactory->newInstance();
-        $rememberService = $this->getRememberService($pdo);
-        $loginService = $this->authFactory->newLoginService($this->getAdapter($pdo), $rememberService);
-        $loginService->login($auth, ['username' => $username, 'password' => $password]);
-        $rememberService->remember($auth);
+        try {
+            $pdo = $this->getPdo();
+            $auth = $this->authFactory->newInstance();
+            $rememberService = $this->getRememberService($pdo);
+            $loginService = $this->authFactory->newLoginService($this->getAdapter($pdo), $rememberService);
+            $loginService->login($auth, ['username' => $username, 'password' => $password]);
+            $rememberService->remember($auth);
+        } catch (PDOException $e) {
+            throw new AuthStorageException('Failed to access the authentication storage', 0, $e);
+        }
     }
 
     #[Override]
     public function verifyPassword(string $username, string $password): void
     {
-        $pdoAdapter = $this->getAdapter($this->getPdo());
-        $pdoAdapter->login(['username' => $username, 'password' => $password]);
+        try {
+            $pdoAdapter = $this->getAdapter($this->getPdo());
+            $pdoAdapter->login(['username' => $username, 'password' => $password]);
+        } catch (PDOException $e) {
+            throw new AuthStorageException('Failed to access the authentication storage', 0, $e);
+        }
     }
 
     #[Override]
     public function logout(): void
     {
-        $pdo = $this->getPdo();
-        $auth = $this->authFactory->newInstance();
-        $logoutService = $this->authFactory->newLogoutService($this->getAdapter($pdo), $this->getRememberService($pdo));
-        $logoutService->forceLogout($auth);
+        try {
+            $pdo = $this->getPdo();
+            $auth = $this->authFactory->newInstance();
+            $logoutService = $this->authFactory->newLogoutService($this->getAdapter($pdo), $this->getRememberService($pdo));
+            $logoutService->forceLogout($auth);
+        } catch (PDOException $e) {
+            throw new AuthStorageException('Failed to access the authentication storage', 0, $e);
+        }
     }
 
     /**
@@ -172,6 +190,15 @@ final class AdminAuthenticator implements AdminAuthenticatorInterface
      * タイムアウト後も復帰できるよう、いったん ANON に戻して復帰を試し、できなければ元の状態に戻す
      */
     private function resume(): Auth
+    {
+        try {
+            return $this->resumeWithRemember();
+        } catch (PDOException $e) {
+            throw new AuthStorageException('Failed to access the authentication storage', 0, $e);
+        }
+    }
+
+    private function resumeWithRemember(): Auth
     {
         $pdo = $this->getPdo();
         $auth = $this->authFactory->newInstance();

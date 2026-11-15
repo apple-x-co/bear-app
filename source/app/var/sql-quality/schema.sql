@@ -41,19 +41,6 @@ CREATE TABLE `admin_permissions`
     CONSTRAINT `fk_admin_permissions_1` FOREIGN KEY (`admin_id`) REFERENCES `admins` (`id`)
 ) ENGINE = InnoDB COMMENT '管理者パーミッション';
 
-CREATE TABLE `admin_remembers`
-(
-    `selector`         VARCHAR(32)  NOT NULL COMMENT 'セレクター（Cookie の公開部分）',
-    `hashed_validator` VARCHAR(64)  NOT NULL COMMENT 'バリデーターの SHA-256 ハッシュ',
-    `username`         VARCHAR(100) NOT NULL COMMENT 'ユーザー名',
-    `userdata`         TEXT         NULL COMMENT 'ユーザーデータ（JSON）',
-    `expires`          INT          NOT NULL COMMENT '有効期限（UNIX タイムスタンプ）',
-    PRIMARY KEY (`selector`),
-    CONSTRAINT `fk_admin_remembers_1` FOREIGN KEY (`username`) REFERENCES `admins` (`username`)
-) ENGINE = InnoDB COMMENT '管理者の Remember me トークン（Aura.Auth の PdoRememberStorage）';
-
-CREATE INDEX `idx_admin_remembers_1` ON `admin_remembers` (`username`);
-
 CREATE TABLE `admins`
 (
     `id`           INTEGER UNSIGNED AUTO_INCREMENT NOT NULL,
@@ -69,6 +56,19 @@ CREATE TABLE `admins`
 /** 一意制約違反が起きるためSQL解析ではユニークインデックスを作成しない */
 /** CREATE UNIQUE INDEX `idx_admins_1` ON `admins` (`username`); */
 CREATE INDEX `idx_admins_1` ON `admins` (`username`);
+
+CREATE TABLE `admin_remembers`
+(
+    `selector`         VARCHAR(32)  NOT NULL COMMENT 'セレクター（Cookie の公開部分）',
+    `hashed_validator` VARCHAR(64)  NOT NULL COMMENT 'バリデーターの SHA-256 ハッシュ',
+    `username`         VARCHAR(100) NOT NULL COMMENT 'ユーザー名',
+    `userdata`         TEXT         NULL COMMENT 'ユーザーデータ（JSON）',
+    `expires`          INT          NOT NULL COMMENT '有効期限（UNIX タイムスタンプ）',
+    PRIMARY KEY (`selector`),
+    CONSTRAINT `fk_admin_remembers_1` FOREIGN KEY (`username`) REFERENCES `admins` (`username`)
+) ENGINE = InnoDB COMMENT '管理者の Remember me トークン（Aura.Auth の PdoRememberStorage）';
+
+CREATE INDEX `idx_admin_remembers_1` ON `admin_remembers` (`username`);
 
 CREATE TABLE `bad_passwords`
 (
