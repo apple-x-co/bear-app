@@ -23,7 +23,7 @@ use function array_reduce;
 use function array_values;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-readonly class AddAdminEmailUseCase
+final readonly class AddAdminEmailUseCase
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(

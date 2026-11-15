@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Form\Customer;
 
 use MyVendor\MyProject\Form\ExtendedForm;
+use Override;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class UserMultipleDemoForm extends ExtendedForm
+final class UserMultipleDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
+    #[Override]
     public function init(): void
     {
         $this->setField('fruits', 'checkbox')

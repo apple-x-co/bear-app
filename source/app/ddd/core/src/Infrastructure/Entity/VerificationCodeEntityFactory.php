@@ -6,7 +6,7 @@ namespace AppCore\Infrastructure\Entity;
 
 use DateTimeImmutable;
 
-class VerificationCodeEntityFactory
+final class VerificationCodeEntityFactory
 {
     public static function factory(
         int $id,

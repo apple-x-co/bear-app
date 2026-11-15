@@ -7,6 +7,7 @@ namespace AppCore\Infrastructure\Shared;
 use AppCore\Attribute\EncryptPass;
 use AppCore\Domain\Encrypter\EncrypterException;
 use AppCore\Domain\Encrypter\EncrypterInterface;
+use Override;
 
 use function base64_decode;
 use function base64_encode;
@@ -25,7 +26,7 @@ use function strlen;
 
 use const JSON_UNESCAPED_SLASHES;
 
-class Encrypter implements EncrypterInterface
+final class Encrypter implements EncrypterInterface
 {
     private const string CIPHER_ALGO = 'aes-128-cbc';
     private const int CIPHER_OPTION = 0;
@@ -36,9 +37,11 @@ class Encrypter implements EncrypterInterface
     ) {
     }
 
+    #[Override]
     public function encrypt(string $text): string
     {
         $ivLen = openssl_cipher_iv_length(self::CIPHER_ALGO);
+        /** @psalm-suppress PossiblyFalseArgument CIPHER_ALGO は固定の有効な方式なので false にならない */
         $iv = openssl_random_pseudo_bytes($ivLen, $strong);
         if ($strong === false) {
             throw new EncrypterException();
@@ -68,6 +71,7 @@ class Encrypter implements EncrypterInterface
         return base64_encode($json);
     }
 
+    #[Override]
     public function decrypt(string $payload): string
     {
         $json = json_decode(base64_decode($payload), true);

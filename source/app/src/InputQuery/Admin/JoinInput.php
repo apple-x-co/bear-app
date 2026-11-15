@@ -6,7 +6,7 @@ namespace MyVendor\MyProject\InputQuery\Admin;
 
 use Ray\InputQuery\Attribute\Input;
 
-readonly class JoinInput
+final readonly class JoinInput
 {
     /**
      * @psalm-suppress UndefinedAttributeClass

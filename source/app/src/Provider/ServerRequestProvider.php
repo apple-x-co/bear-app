@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Provider;
 
 use GuzzleHttp\Psr7\ServerRequest;
+use Override;
 use Psr\Http\Message\ServerRequestInterface;
 use Ray\Di\ProviderInterface;
 
@@ -27,6 +28,7 @@ final class ServerRequestProvider implements ProviderInterface
      * 行わないため実害はないが、CLI コマンドがリクエスト情報を参照する処理を
      * 追加する場合は要対応。
      */
+    #[Override]
     public function get(): ServerRequestInterface
     {
         return ServerRequest::fromGlobals();

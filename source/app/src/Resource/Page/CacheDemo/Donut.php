@@ -19,6 +19,8 @@ use DateTimeImmutable;
  * 確認方法（prod コンテキスト）:
  *   GET /cache-demo/donut を繰り返す → generated_at は変わらず、clock の時刻だけ変わる
  *   PUT /cache-demo/donut           → #[RefreshCache] でキャッシュが更新され、generated_at が変わる
+ *
+ * @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない
  */
 #[DonutCache]
 class Donut extends ResourceObject

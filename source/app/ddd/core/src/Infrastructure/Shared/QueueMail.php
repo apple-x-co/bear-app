@@ -14,13 +14,14 @@ use AppCore\Domain\Mail\TemplateRendererInterface;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Infrastructure\Query\EmailQueueCommandInterface;
 use AppCore\Infrastructure\Query\EmailQueueRecipientCommandInterface;
+use Override;
 
 use function is_readable;
 use function is_string;
 
 use const DIRECTORY_SEPARATOR;
 
-readonly class QueueMail implements TransportInterface
+final readonly class QueueMail implements TransportInterface
 {
     private const string SUBJECT_DIR_NAME = 'subject';
     private const string TEXT_DIR_NAME = 'text';
@@ -43,6 +44,7 @@ readonly class QueueMail implements TransportInterface
     }
 
     /** @SuppressWarnings("PHPMD.NPathComplexity") */
+    #[Override]
     public function send(Email $email): void
     {
         $templateId = $email->getTemplateId();

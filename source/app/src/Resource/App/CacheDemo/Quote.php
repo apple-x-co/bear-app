@@ -12,6 +12,8 @@ use DateTimeImmutable;
  * #[Purge] / #[Refresh] の対象になるキャッシュ（QuoteCommand から無効化される）
  *
  * id ごとに別々にキャッシュされる（URI とクエリがキャッシュキーになる）。
+ *
+ * @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない
  */
 #[Cacheable(expirySecond: 3600)]
 class Quote extends ResourceObject

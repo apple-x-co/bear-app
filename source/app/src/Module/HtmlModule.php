@@ -11,6 +11,7 @@ use MyVendor\MyProject\Form\Admin as AdminForm;
 use MyVendor\MyProject\Form\Customer as CustomerForm;
 use MyVendor\MyProject\TemplateEngine\QiqCustomHelpers;
 use MyVendor\MyProject\TemplateEngine\QiqModule;
+use Override;
 use Qiq\Helpers;
 use Ray\AuraSessionModule\AuraSessionModule;
 use Ray\WebFormModule\FormInterface;
@@ -20,8 +21,9 @@ use function getenv;
 use function time;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-class HtmlModule extends AbstractAppModule
+final class HtmlModule extends AbstractAppModule
 {
+    #[Override]
     protected function configure(): void
     {
         $this->install(new AuraSessionModule());

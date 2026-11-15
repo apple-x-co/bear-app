@@ -9,7 +9,7 @@ use Koriym\FileUpload\FileUpload;
 use Ray\InputQuery\Attribute\Input;
 use Ray\InputQuery\Attribute\InputFile;
 
-readonly class UploadDemoInput
+final readonly class UploadDemoInput
 {
     /**
      * @psalm-suppress UndefinedAttributeClass

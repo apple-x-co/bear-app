@@ -20,6 +20,8 @@ use DateTimeImmutable;
  *   GET /cache-demo/article を繰り返す → ETag も 2 つの generatedAt も変わらない
  *   PUT /cache-demo/comment           → 次の GET で ETag と comment の generatedAt が変わる（Article 側は据え置き）
  *   PUT /cache-demo/article           → 次の GET で Article の generatedAt が変わる（comment 側は据え置き）
+ *
+ * @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない
  */
 #[CacheableResponse]
 class Article extends ResourceObject

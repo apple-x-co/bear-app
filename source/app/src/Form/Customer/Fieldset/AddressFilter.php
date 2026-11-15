@@ -10,7 +10,7 @@ use function ctype_digit;
 use function is_array;
 use function is_string;
 
-class AddressFilter extends Filter
+final class AddressFilter extends Filter
 {
     public function __construct()
     {

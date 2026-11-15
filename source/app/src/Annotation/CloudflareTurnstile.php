@@ -7,7 +7,7 @@ namespace MyVendor\MyProject\Annotation;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_METHOD)]
-class CloudflareTurnstile
+final class CloudflareTurnstile
 {
     public function __construct(
         public readonly string $onFailure = 'onCfTurnstileFailed',

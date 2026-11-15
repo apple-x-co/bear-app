@@ -6,7 +6,7 @@ namespace MyVendor\MyProject\InputQuery\Admin;
 
 use Ray\InputQuery\Attribute\Input;
 
-readonly class DeleteInput
+final readonly class DeleteInput
 {
     /**
      * @psalm-suppress UndefinedAttributeClass

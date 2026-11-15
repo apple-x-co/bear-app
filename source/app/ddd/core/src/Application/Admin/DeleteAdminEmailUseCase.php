@@ -6,7 +6,7 @@ namespace AppCore\Application\Admin;
 
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 
-readonly class DeleteAdminEmailUseCase
+final readonly class DeleteAdminEmailUseCase
 {
     public function __construct(
         private AdminRepositoryInterface $adminRepository,

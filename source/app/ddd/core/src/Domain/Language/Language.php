@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Language;
 
+use Override;
+
 use function str_replace;
 
-readonly class Language implements LanguageInterface
+final readonly class Language implements LanguageInterface
 {
     /**
      * @param array<string, string> $texts
@@ -19,6 +21,7 @@ readonly class Language implements LanguageInterface
     }
 
     /** @inheritDoc */
+    #[Override]
     public function get(string $key, array $params = []): string
     {
         $text = $this->texts[$key] ?? ($this->fallbacks[$key] ?? $key);

@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Form\Admin;
 
 use MyVendor\MyProject\Form\ExtendedForm;
+use Override;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class AdminCodeVerifyForm extends ExtendedForm
+final class AdminCodeVerifyForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
+    #[Override]
     public function init(): void
     {
         $this->setField('uuid', 'hidden');

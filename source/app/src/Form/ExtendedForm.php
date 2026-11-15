@@ -9,6 +9,7 @@ use Aura\Input\AbstractInput;
 use Aura\Input\Collection;
 use Aura\Input\Exception\NoSuchInput;
 use Aura\Input\Fieldset;
+use Override;
 use Ray\WebFormModule\AbstractForm;
 use Ray\WebFormModule\SubmitInterface;
 
@@ -40,6 +41,7 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
      *
      * @SuppressWarnings("PHPMD.Superglobals")
      */
+    #[Override]
     public function submit(): array
     {
         /** @var array<string, mixed> $post */
@@ -53,6 +55,7 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
      *
      * @param array<array-key, mixed> $data
      */
+    #[Override]
     public function fill(array $data): void
     {
         foreach ($this->inputs as $key => $input) {
@@ -74,6 +77,7 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
      *
      * @param array<string, mixed> $data
      */
+    #[Override]
     public function apply(array $data): bool
     {
         $this->errorMessages = null;
@@ -85,6 +89,7 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
     }
 
     /** @return array<string, array<int, string>> */
+    #[Override]
     public function getFailureMessages(): array
     {
         $messages = parent::getFailureMessages();
@@ -93,6 +98,7 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
         return $messages;
     }
 
+    #[Override]
     public function error(string $input): string
     {
         $this->errorMessages ??= $this->getFailureMessages();
@@ -101,6 +107,7 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
     }
 
     /** @throws NoSuchInput */
+    #[Override]
     public function input(string $input): string
     {
         return (string) $this->widget($input);
@@ -117,6 +124,7 @@ abstract class ExtendedForm extends AbstractForm implements SubmitInterface
         $spec = is_array($nameOrSpec) ? $nameOrSpec : $this->resolveField($nameOrSpec);
         $spec['attribs'] = array_merge($spec['attribs'] ?? [], $attribs);
 
+        /** @psalm-suppress UndefinedMagicMethod HelperLocator は __call でヘルパーを呼び出す */
         return $this->helper->input($spec); // @phpstan-ignore-line
     }
 

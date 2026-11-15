@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Application\Admin;
 
-readonly class DeleteAdminEmailInputData
+final readonly class DeleteAdminEmailInputData
 {
     public function __construct(
         public int $adminId,

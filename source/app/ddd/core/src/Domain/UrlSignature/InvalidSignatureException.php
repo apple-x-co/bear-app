@@ -6,6 +6,6 @@ namespace AppCore\Domain\UrlSignature;
 
 use AppCore\Exception\RuntimeException;
 
-class InvalidSignatureException extends RuntimeException
+final class InvalidSignatureException extends RuntimeException
 {
 }

@@ -11,11 +11,12 @@ use AppCore\Domain\AdminPermission\AdminPermissionRepositoryInterface;
 use AppCore\Infrastructure\Entity\AdminPermissionEntity;
 use AppCore\Infrastructure\Query\AdminPermissionCommandInterface;
 use AppCore\Infrastructure\Query\AdminPermissionQueryInterface;
+use Override;
 
 use function array_map;
 use function array_values;
 
-readonly class AdminPermissionRepository implements AdminPermissionRepositoryInterface
+final readonly class AdminPermissionRepository implements AdminPermissionRepositoryInterface
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(
@@ -29,6 +30,7 @@ readonly class AdminPermissionRepository implements AdminPermissionRepositoryInt
      *
      * @SuppressWarnings("PHPMD.LongVariable")
      */
+    #[Override]
     public function findByAdminId(int $adminId): array
     {
         $adminPermissionEntities = $this->adminPermissionQuery->list($adminId);
@@ -56,6 +58,7 @@ readonly class AdminPermissionRepository implements AdminPermissionRepositoryInt
         );
     }
 
+    #[Override]
     public function store(AdminPermission $adminPermission): void
     {
         $adminPermission->id === null ? $this->insert($adminPermission) : $this->update($adminPermission);

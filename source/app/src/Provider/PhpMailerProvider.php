@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Provider;
 
 use AppCore\Domain\Mail\EmailConfigInterface;
+use Override;
 use PHPMailer\PHPMailer\PHPMailer;
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
 /** @template-implements ProviderInterface<PHPMailer> */
-readonly class PhpMailerProvider implements ProviderInterface
+final readonly class PhpMailerProvider implements ProviderInterface
 {
     public function __construct(
         #[Named('default')]
@@ -18,6 +19,7 @@ readonly class PhpMailerProvider implements ProviderInterface
     ) {
     }
 
+    #[Override]
     public function get(): PHPMailer
     {
         $phpMailer = new PHPMailer(true);

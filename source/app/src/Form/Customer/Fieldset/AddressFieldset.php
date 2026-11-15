@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Form\Customer\Fieldset;
 
 use MyVendor\MyProject\Form\ExtendedFieldset;
+use Override;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class AddressFieldset extends ExtendedFieldset
+final class AddressFieldset extends ExtendedFieldset
 {
+    #[Override]
     public function init(): void
     {
         $this->setField('zip', 'text')

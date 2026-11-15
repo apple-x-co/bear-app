@@ -9,7 +9,7 @@ use AppCore\Infrastructure\Query\VerificationCodeCommandInterface;
 use AppCore\Infrastructure\Query\VerificationCodeQueryInterface;
 use DateTimeImmutable;
 
-class VerifyVerificationCodeUseCase
+final class VerifyVerificationCodeUseCase
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(

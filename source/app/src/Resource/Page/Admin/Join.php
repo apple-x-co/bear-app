@@ -20,7 +20,10 @@ use Ray\InputQuery\Attribute\Input;
 use Ray\WebFormModule\Annotation\FormValidation;
 use Ray\WebFormModule\FormInterface;
 
-/** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
+/**
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ * @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない
+ */
 #[NoHttpCache]
 class Join extends BaseAdminPage
 {

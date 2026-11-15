@@ -8,7 +8,7 @@ use Aura\Input\Filter;
 
 use function is_string;
 
-class NestedDemoGeoFilter extends Filter
+final class NestedDemoGeoFilter extends Filter
 {
     public function __construct()
     {

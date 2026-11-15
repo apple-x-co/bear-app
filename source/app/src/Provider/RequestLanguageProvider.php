@@ -7,10 +7,11 @@ namespace MyVendor\MyProject\Provider;
 use AppCore\Domain\Language\LanguageFactoryInterface;
 use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\Locale\Locale;
+use Override;
 use Ray\Di\ProviderInterface;
 
 /** @template-implements ProviderInterface<LanguageInterface> */
-readonly class RequestLanguageProvider implements ProviderInterface
+final readonly class RequestLanguageProvider implements ProviderInterface
 {
     public function __construct(
         private LanguageFactoryInterface $languageFactory,
@@ -23,6 +24,7 @@ readonly class RequestLanguageProvider implements ProviderInterface
      *
      * @psalm-suppress UnresolvableInclude
      */
+    #[Override]
     public function get()
     {
         return $this->languageFactory->create($this->requestLocale);

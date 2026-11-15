@@ -16,6 +16,8 @@ use DateTimeImmutable;
  *
  * 確認方法:
  *   GET /cache-demo/http → Cache-Control: max-age=300, s-maxage=3600 が付く。generated_at はリクエストごとに変わる
+ *
+ * @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない
  */
 #[HttpCache(maxAge: 300, sMaxAge: 3600)]
 class Http extends ResourceObject

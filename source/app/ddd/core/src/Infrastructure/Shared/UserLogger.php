@@ -7,12 +7,13 @@ namespace AppCore\Infrastructure\Shared;
 use AppCore\Domain\LoggerInterface;
 use BEAR\AppMeta\AbstractAppMeta;
 use DateTimeInterface;
+use Override;
 
 use function error_log;
 
 use const PHP_EOL;
 
-readonly class UserLogger implements LoggerInterface
+final readonly class UserLogger implements LoggerInterface
 {
     public function __construct(
         private AbstractAppMeta $appMeta,
@@ -20,6 +21,7 @@ readonly class UserLogger implements LoggerInterface
     ) {
     }
 
+    #[Override]
     public function log(string $message): void
     {
         error_log(

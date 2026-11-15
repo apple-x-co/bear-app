@@ -9,8 +9,9 @@ use AppCore\Domain\Throttle\ThrottlingHandlerInterface;
 use AppCore\Infrastructure\Query\ThrottleRemoveByKeyInterface;
 use DateInterval;
 use DateTimeImmutable;
+use Override;
 
-readonly class ThrottlingHandler implements ThrottlingHandlerInterface
+final readonly class ThrottlingHandler implements ThrottlingHandlerInterface
 {
     public function __construct(
         private ThrottleRepositoryInterface $throttleRepository,
@@ -18,7 +19,11 @@ readonly class ThrottlingHandler implements ThrottlingHandlerInterface
     ) {
     }
 
-    /** @SuppressWarnings("PHPMD.StaticAccess") */
+    /**
+     * @SuppressWarnings("PHPMD.StaticAccess")
+     * @psalm-suppress PossiblyFalseArgument PHP 8.3 以降の createFromDateString() は失敗すると例外を投げ、false は返さない
+     */
+    #[Override]
     public function countUp(string $key, string $remoteIp, string $attemptInterval, int $maxAttempts): bool
     {
         $throttle = $this->throttleRepository->increment(
@@ -32,6 +37,7 @@ readonly class ThrottlingHandler implements ThrottlingHandlerInterface
         return $throttle->isExceeded();
     }
 
+    #[Override]
     public function clear(string $key): void
     {
         ($this->throttleRemoveByKey)($key);

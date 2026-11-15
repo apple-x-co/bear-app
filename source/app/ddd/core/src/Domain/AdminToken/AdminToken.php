@@ -6,7 +6,7 @@ namespace AppCore\Domain\AdminToken;
 
 use DateTimeImmutable;
 
-class AdminToken
+final class AdminToken
 {
     public function __construct(
         public readonly int $adminId,

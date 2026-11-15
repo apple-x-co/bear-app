@@ -6,12 +6,13 @@ namespace MyVendor\MyProject\Form\Admin;
 
 use AppCore\Infrastructure\Query\AdminQueryInterface;
 use MyVendor\MyProject\Form\ExtendedForm;
+use Override;
 use Ray\Di\Di\Inject;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 use stdClass;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class AdminForgotPasswordForm extends ExtendedForm
+final class AdminForgotPasswordForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
@@ -23,6 +24,7 @@ class AdminForgotPasswordForm extends ExtendedForm
         $this->adminQuery = $adminQuery;
     }
 
+    #[Override]
     public function init(): void
     {
         /** @psalm-suppress UndefinedMethod */

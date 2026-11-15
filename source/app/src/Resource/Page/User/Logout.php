@@ -10,6 +10,7 @@ use MyVendor\MyProject\Annotation\UserGuard;
 use MyVendor\MyProject\Annotation\UserLogout;
 use MyVendor\MyProject\Resource\Page\BaseUserPage;
 
+/** @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない */
 #[NoHttpCache]
 class Logout extends BaseUserPage
 {

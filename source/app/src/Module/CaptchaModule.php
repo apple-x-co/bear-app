@@ -11,13 +11,15 @@ use AppCore\Infrastructure\Shared\CloudflareTurnstileVerificationHandler;
 use BEAR\Resource\ResourceObject;
 use MyVendor\MyProject\Annotation\CloudflareTurnstile;
 use MyVendor\MyProject\Interceptor\CloudflareTurnstileVerification;
+use Override;
 use Ray\Di\AbstractModule;
 
 use function getenv;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-class CaptchaModule extends AbstractModule
+final class CaptchaModule extends AbstractModule
 {
+    #[Override]
     protected function configure(): void
     {
         $this->bind()->annotatedWith(CloudflareTurnstileSiteKey::class)->toInstance((string) getenv('CLOUDFLARE_TURNSTILE_SITE_KEY'));

@@ -9,11 +9,13 @@ use BEAR\Package\Context\ProdModule as PackageProdModule;
 use BEAR\QueryRepository\CacheVersionModule;
 use BEAR\Resource\Module\OptionsMethodModule;
 use MyVendor\MyProject\TemplateEngine\QiqProdModule;
+use Override;
 
 use function time;
 
-class ProdModule extends AbstractAppModule
+final class ProdModule extends AbstractAppModule
 {
+    #[Override]
     protected function configure(): void
     {
         $this->install(new QiqProdModule($this->appMeta->appDir . '/var/tmp'));

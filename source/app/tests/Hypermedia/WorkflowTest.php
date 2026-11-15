@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\Hypermedia;
 use BEAR\Resource\ResourceInterface;
 use BEAR\Resource\ResourceObject;
 use MyVendor\MyProject\Injector;
+use Override;
 use PHPUnit\Framework\TestCase;
 use Ray\Di\InjectorInterface;
 
@@ -15,6 +16,7 @@ class WorkflowTest extends TestCase
     protected ResourceInterface $resource;
     protected InjectorInterface $injector;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->injector = Injector::getInstance('app');

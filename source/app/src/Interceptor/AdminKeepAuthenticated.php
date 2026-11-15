@@ -6,12 +6,13 @@ namespace MyVendor\MyProject\Interceptor;
 
 use AppCore\Attribute\Cookie;
 use AppCore\Domain\Auth\AdminAuthenticatorInterface;
+use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
 use function is_string;
 
-readonly class AdminKeepAuthenticated implements MethodInterceptor
+final readonly class AdminKeepAuthenticated implements MethodInterceptor
 {
     /** @param array<array-key, mixed> $cookie */
     public function __construct(
@@ -21,6 +22,7 @@ readonly class AdminKeepAuthenticated implements MethodInterceptor
     ) {
     }
 
+    #[Override]
     public function invoke(MethodInvocation $invocation): mixed
     {
         if ($this->authenticator->isValid()) {

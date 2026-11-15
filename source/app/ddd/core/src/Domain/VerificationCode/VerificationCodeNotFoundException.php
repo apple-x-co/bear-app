@@ -6,6 +6,6 @@ namespace AppCore\Domain\VerificationCode;
 
 use AppCore\Exception\RuntimeException;
 
-class VerificationCodeNotFoundException extends RuntimeException
+final class VerificationCodeNotFoundException extends RuntimeException
 {
 }

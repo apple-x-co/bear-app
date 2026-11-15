@@ -9,12 +9,13 @@ use AppCore\Domain\SecureRandom\SecureRandomInterface;
 use AppCore\Domain\UrlSignature\UrlSignature;
 use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
 use AppCore\Domain\UrlSignature\UrlSignatureInterface;
+use Override;
 
 use function assert;
 use function method_exists;
 use function str_replace;
 
-readonly class UrlSignatureEncrypter implements UrlSignatureEncrypterInterface
+final readonly class UrlSignatureEncrypter implements UrlSignatureEncrypterInterface
 {
     public function __construct(
         private EncrypterInterface $encrypter,
@@ -22,6 +23,7 @@ readonly class UrlSignatureEncrypter implements UrlSignatureEncrypterInterface
     ) {
     }
 
+    #[Override]
     public function encrypt(UrlSignatureInterface $urlSignature): string
     {
         $serialized = $urlSignature->serialize($this->secureRandom->randomBytes(5));
@@ -30,6 +32,7 @@ readonly class UrlSignatureEncrypter implements UrlSignatureEncrypterInterface
         return $this->encodeUrlSafe($encrypted);
     }
 
+    #[Override]
     public function decrypt(string $string, string $className = UrlSignature::class): UrlSignatureInterface
     {
         $decrypted = $this->encrypter->decrypt($this->decodeUrlSafe($string));

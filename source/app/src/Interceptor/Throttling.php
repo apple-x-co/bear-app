@@ -9,13 +9,14 @@ use AppCore\Domain\Throttle\ThrottlingHandlerInterface;
 use BEAR\Resource\Exception\BadRequestException;
 use BEAR\Resource\ResourceObject;
 use MyVendor\MyProject\Annotation\RateLimiter;
+use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
 use function assert;
 use function hash;
 
-readonly class Throttling implements MethodInterceptor
+final readonly class Throttling implements MethodInterceptor
 {
     private const int TOO_MANY_REQUESTS = 429;
 
@@ -25,6 +26,7 @@ readonly class Throttling implements MethodInterceptor
     ) {
     }
 
+    #[Override]
     public function invoke(MethodInvocation $invocation): mixed
     {
         $rateLimiter = $invocation->getMethod()->getAnnotation(RateLimiter::class);

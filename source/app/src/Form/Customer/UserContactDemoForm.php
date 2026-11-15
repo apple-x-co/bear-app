@@ -6,16 +6,18 @@ namespace MyVendor\MyProject\Form\Customer;
 
 use MyVendor\MyProject\Form\ExtendedForm;
 use MyVendor\MyProject\Form\FormStep;
+use Override;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 
 use function array_column;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class UserContactDemoForm extends ExtendedForm
+final class UserContactDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
     /** @SuppressWarnings("PHPMD.StaticAccess") */
+    #[Override]
     public function init(): void
     {
         /** @psalm-suppress UndefinedMethod */

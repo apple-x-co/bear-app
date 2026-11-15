@@ -10,12 +10,13 @@ use BEAR\Resource\NullRenderer;
 use BEAR\Resource\ResourceObject;
 use BEAR\Sunday\Extension\Router\RouterInterface;
 use Koriym\HttpConstants\StatusCode;
+use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
 use function assert;
 
-readonly class UserAuthGuardian implements MethodInterceptor
+final readonly class UserAuthGuardian implements MethodInterceptor
 {
     public function __construct(
         private RouterInterface $router,
@@ -24,6 +25,7 @@ readonly class UserAuthGuardian implements MethodInterceptor
     ) {
     }
 
+    #[Override]
     public function invoke(MethodInvocation $invocation): mixed
     {
         if ($this->authenticator->isValid()) {

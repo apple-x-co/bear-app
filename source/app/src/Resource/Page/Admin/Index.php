@@ -8,6 +8,7 @@ use BEAR\RepositoryModule\Annotation\NoHttpCache;
 use MyVendor\MyProject\Annotation\AdminGuard;
 use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 
+/** @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない */
 #[NoHttpCache]
 class Index extends BaseAdminPage
 {

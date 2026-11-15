@@ -15,11 +15,12 @@ use AppCore\Infrastructure\Query\AdminEmailCommandInterface;
 use AppCore\Infrastructure\Query\AdminEmailQueryInterface;
 use AppCore\Infrastructure\Query\AdminQueryInterface;
 use DateTimeImmutable;
+use Override;
 
 use function array_reduce;
 use function array_values;
 
-readonly class AdminRepository implements AdminRepositoryInterface
+final readonly class AdminRepository implements AdminRepositoryInterface
 {
     public function __construct(
         private AdminCommandInterface $adminCommand,
@@ -29,6 +30,7 @@ readonly class AdminRepository implements AdminRepositoryInterface
     ) {
     }
 
+    #[Override]
     public function findById(int $id): Admin
     {
         $adminEntity = $this->adminQuery->item($id);
@@ -79,6 +81,7 @@ readonly class AdminRepository implements AdminRepositoryInterface
         );
     }
 
+    #[Override]
     public function store(Admin $admin): void
     {
         $admin->id === null ? $this->insert($admin) : $this->update($admin);

@@ -8,7 +8,7 @@ bear-app は BEAR.Sunday フレームワークをベースにした DDD + CQRS �
 
 ### 技術スタック
 
-- **PHP**: 8.3+
+- **PHP**: 8.4+
 - **フレームワーク**: BEAR.Sunday
 - **アーキテクチャ**: DDD（Domain-Driven Design）+ CQRS
 - **データベース**: MySQL 8.0+
@@ -238,7 +238,7 @@ BEAR.Sunday のキャッシュ機構（`bear/query-repository`）を使います
 
 * **dev コンテキストではサーバー側のキャッシュは効きません**（`ResourceObjectPool` が `NullAdapter` のため）。`ETag` や `Cache-Control` のヘッダーは確認できますが、キャッシュヒットや無効化の確認は `prod-` コンテキスト（`prod-hal-api-app`、`prod-html-app` など）で行います
 * prod コンテキストは DI をコンパイルして `var/build/<context>/` に保存します。リソースを追加・変更したあとに `Unbound` エラーが出たら、`var/build/<context>/` と `var/tmp/<context>/` を削除して作り直させてください
-* ホストの PHP が 8.3 未満の場合は、`bear-web` コンテナ内（`/var/www/html`）で実行します
+* ホストの PHP が 8.4 未満の場合は、`bear-web` コンテナ内（`/var/www/html`）で実行します
 * `ProdModule` の `CacheVersionModule((string) time())` により、デプロイのたびにキャッシュが無効になります。Web サーバーを複数台にする場合は、`StorageRedisDsnModule`（または `StorageMemcachedModule`）でキャッシュを共有します（現在は `// TODO`、`docker/compose.yml` に Redis・Memcached はありません）
 
 ## よく使うコマンド
@@ -455,10 +455,13 @@ npm run build
 // admin_permissions テーブルを確認
 SELECT * FROM admin_permissions WHERE admin_id = ?;
 
-// 権限を追加（全権限）
-INSERT INTO admin_permissions (admin_id, access, resource_name, permission_name)
-VALUES (1, 'allow', '*', 'privilege');
+// 権限を追加（settings リソースの全権限）
+INSERT INTO admin_permissions (admin_id, access, resource_name, permission_name, created_date)
+VALUES (1, 'allow', 'settings', 'privilege', NOW());
 ```
+
+- `resource_name` は `#[RequiredPermission]` の第 1 引数と同じ名前にします。`'*'` のようなワイルドカードはなく、リソースごとに 1 行ずつ追加します
+- `permission_name` に `privilege` を指定すると、そのリソースの `read` / `write` もすべて許可されます
 
 ### 6. キャッシュが効かない
 

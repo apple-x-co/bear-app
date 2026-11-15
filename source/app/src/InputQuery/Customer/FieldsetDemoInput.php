@@ -7,7 +7,7 @@ namespace MyVendor\MyProject\InputQuery\Customer;
 use MyVendor\MyProject\InputQuery\Customer\Fieldset\Address;
 use Ray\InputQuery\Attribute\Input;
 
-readonly class FieldsetDemoInput
+final readonly class FieldsetDemoInput
 {
     /**
      * @param list<Address>|null $deliveries

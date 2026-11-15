@@ -8,6 +8,7 @@ use AppCore\Attribute\PublicBaseUrl;
 use AppCore\Domain\Locale\Locale;
 use AppCore\Domain\Uri\PublicUriBuilderInterface;
 use GuzzleHttp\Psr7\Uri;
+use Override;
 use Psr\Http\Message\UriInterface;
 
 use function http_build_query;
@@ -21,6 +22,7 @@ final readonly class PublicUriBuilder implements PublicUriBuilderInterface
     }
 
     /** @inheritDoc */
+    #[Override]
     public function build(string $path, array $params = [], Locale|null $locale = null): UriInterface
     {
         // Aura.Router は現状必要ない

@@ -6,10 +6,12 @@ namespace MyVendor\MyProject\Form\Fixture;
 
 use Aura\Input\Builder;
 use Aura\Input\Fieldset;
+use Override;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class NestedDemoAddressFieldset extends Fieldset
+final class NestedDemoAddressFieldset extends Fieldset
 {
+    #[Override]
     public function init(): void
     {
         $this->builder = new Builder([

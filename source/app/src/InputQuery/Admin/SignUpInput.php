@@ -7,7 +7,7 @@ namespace MyVendor\MyProject\InputQuery\Admin;
 use Ray\InputQuery\Attribute\Input;
 use SensitiveParameter;
 
-readonly class SignUpInput
+final readonly class SignUpInput
 {
     /**
      * @psalm-suppress UndefinedAttributeClass

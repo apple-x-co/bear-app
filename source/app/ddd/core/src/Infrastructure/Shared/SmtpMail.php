@@ -11,13 +11,14 @@ use AppCore\Domain\Mail\Email;
 use AppCore\Domain\Mail\TemplateNotFoundException;
 use AppCore\Domain\Mail\TemplateRendererInterface;
 use AppCore\Domain\Mail\TransportInterface;
+use Override;
 use PHPMailer\PHPMailer\PHPMailer;
 
 use function is_readable;
 
 use const DIRECTORY_SEPARATOR;
 
-readonly class SmtpMail implements TransportInterface
+final readonly class SmtpMail implements TransportInterface
 {
     public function __construct(
         private LanguageInterface $defaultLanguage, // リクエストスコープの既定言語
@@ -28,6 +29,7 @@ readonly class SmtpMail implements TransportInterface
     ) {
     }
 
+    #[Override]
     public function send(Email $email): void
     {
         $subjectDir = $this->emailDir . DIRECTORY_SEPARATOR . 'subject' . DIRECTORY_SEPARATOR;

@@ -19,7 +19,7 @@ use DateTimeImmutable;
 use Ray\Di\Di\Named;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-readonly class SendAdminSignUpCodeUseCase
+final readonly class SendAdminSignUpCodeUseCase
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(

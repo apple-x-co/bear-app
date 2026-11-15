@@ -8,10 +8,12 @@ use BEAR\Resource\Module\SchemeCollectionProvider;
 use BEAR\Resource\SchemeCollectionInterface;
 use BEAR\Sunday\Annotation\DefaultSchemeHost;
 use MyVendor\MyProject\Provider\CommandSchemeCollectionProvider;
+use Override;
 use Ray\Di\AbstractModule;
 
-class CommandModule extends AbstractModule
+final class CommandModule extends AbstractModule
 {
+    #[Override]
     protected function configure(): void
     {
         $this->bind(SchemeCollectionProvider::class);

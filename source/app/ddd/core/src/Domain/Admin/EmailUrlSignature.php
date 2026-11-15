@@ -7,11 +7,12 @@ namespace AppCore\Domain\Admin;
 use AppCore\Domain\UrlSignature\InvalidSignatureException;
 use AppCore\Domain\UrlSignature\UrlSignatureInterface;
 use DateTimeImmutable;
+use Override;
 
 use function serialize;
 use function unserialize;
 
-class EmailUrlSignature implements UrlSignatureInterface
+final class EmailUrlSignature implements UrlSignatureInterface
 {
     public function __construct(
         public readonly int $adminId,
@@ -20,6 +21,7 @@ class EmailUrlSignature implements UrlSignatureInterface
     ) {
     }
 
+    #[Override]
     public function serialize(string $random): string
     {
         return serialize([
@@ -30,6 +32,7 @@ class EmailUrlSignature implements UrlSignatureInterface
         ]);
     }
 
+    #[Override]
     public static function deserialize(string $string): self
     {
         $array = unserialize($string, ['allowed_classes' => false]);

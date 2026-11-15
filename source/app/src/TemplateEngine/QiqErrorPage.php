@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\TemplateEngine;
 use BEAR\Package\Provide\Error\Status;
 use BEAR\Resource\ResourceObject;
 use BEAR\Sunday\Extension\Router\RouterMatch;
+use Override;
 use Qiq\Template;
 use Throwable;
 
@@ -36,6 +37,7 @@ final class QiqErrorPage extends ResourceObject
         ];
     }
 
+    #[Override]
     public function toString(): string
     {
         $template = clone $this->template;

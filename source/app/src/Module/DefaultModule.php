@@ -12,13 +12,15 @@ use AppCore\Domain\Auth\UserAuthenticatorInterface;
 use AppCore\Domain\FlashMessenger\FlashMessengerInterface;
 use AppCore\Domain\Session\SessionInterface;
 use AppCore\Domain\Throttle\ThrottlingHandlerInterface;
+use Override;
 use Qiq\Helpers;
 use Ray\Di\AbstractModule;
 use Ray\WebFormModule\FormInterface;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-class DefaultModule extends AbstractModule
+final class DefaultModule extends AbstractModule
 {
+    #[Override]
     protected function configure(): void
     {
         // CaptchaModule

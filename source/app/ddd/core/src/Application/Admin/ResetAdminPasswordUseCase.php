@@ -17,7 +17,7 @@ use DateTimeImmutable;
 use Ray\Di\Di\Named;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
-readonly class ResetAdminPasswordUseCase
+final readonly class ResetAdminPasswordUseCase
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(

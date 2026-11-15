@@ -7,6 +7,7 @@ namespace AppCore\Infrastructure\Shared;
 use AppCore\Attribute\EncryptPass;
 use AppCore\Domain\Encrypter\EncrypterException;
 use AppCore\Domain\Encrypter\EncrypterInterface;
+use Override;
 
 use function base64_decode;
 use function base64_encode;
@@ -33,6 +34,7 @@ final class CompactEncrypter implements EncrypterInterface
     ) {
     }
 
+    #[Override]
     public function encrypt(string $text): string
     {
         $iv = openssl_random_pseudo_bytes(12, $strong);
@@ -63,6 +65,7 @@ final class CompactEncrypter implements EncrypterInterface
         return rtrim(strtr(base64_encode($packed), '+/', '-_'), '=');
     }
 
+    #[Override]
     public function decrypt(string $payload): string
     {
         // URL-safe Base64デコード

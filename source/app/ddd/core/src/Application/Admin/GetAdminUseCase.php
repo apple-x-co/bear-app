@@ -6,7 +6,7 @@ namespace AppCore\Application\Admin;
 
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 
-readonly class GetAdminUseCase
+final readonly class GetAdminUseCase
 {
     public function __construct(
         private AdminRepositoryInterface $adminRepository,

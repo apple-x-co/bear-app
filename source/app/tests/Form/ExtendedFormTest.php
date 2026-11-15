@@ -9,14 +9,16 @@ use Aura\Html\HelperLocatorFactory;
 use Aura\Input\Builder;
 use Aura\Input\Exception\NoSuchInput;
 use MyVendor\MyProject\Form\Fixture\NestedDemoForm;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 
-class ExtendedFormTest extends TestCase
+final class ExtendedFormTest extends TestCase
 {
     private NestedDemoForm $form;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->form = new NestedDemoForm();

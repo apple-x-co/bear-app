@@ -10,6 +10,7 @@ use BEAR\Resource\ResourceObject;
 use DateTimeImmutable;
 use Ray\AuraSqlModule\Annotation\Transactional;
 
+/** @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない */
 class DeleteAdmins extends ResourceObject
 {
     public function __construct(

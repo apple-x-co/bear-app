@@ -7,6 +7,7 @@ namespace AppCore\Presentation\Uri;
 use AppCore\Attribute\AdminBaseUrl;
 use AppCore\Domain\Uri\AdminUriBuilderInterface;
 use GuzzleHttp\Psr7\Uri;
+use Override;
 use Psr\Http\Message\UriInterface;
 
 use function http_build_query;
@@ -20,6 +21,7 @@ final readonly class AdminUriBuilder implements AdminUriBuilderInterface
     }
 
     /** @inheritDoc */
+    #[Override]
     public function build(string $path, array $params = []): UriInterface
     {
         // Aura.Router は現状必要ない

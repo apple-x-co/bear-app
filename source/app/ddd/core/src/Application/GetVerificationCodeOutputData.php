@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Application;
 
-class GetVerificationCodeOutputData
+final class GetVerificationCodeOutputData
 {
     public function __construct(
         public readonly int $id,

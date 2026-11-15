@@ -9,8 +9,8 @@ use AppCore\Domain\Captcha\CaptchaTokenMissing;
 use AppCore\Domain\Captcha\CaptchaVerifyError;
 use AppCore\Domain\Captcha\CloudflareTurnstileVerificationHandlerInterface;
 use AppCore\Domain\Http\ClientIpResolverInterface;
+use Override;
 
-use function curl_close;
 use function curl_exec;
 use function curl_getinfo;
 use function curl_init;
@@ -40,6 +40,7 @@ final class CloudflareTurnstileVerificationHandler implements CloudflareTurnstil
     ) {
     }
 
+    #[Override]
     public function __invoke(): void
     {
         if ($this->secretKey === '') {
@@ -68,10 +69,13 @@ final class CloudflareTurnstileVerificationHandler implements CloudflareTurnstil
         ];
 
         $curl = curl_init();
+        if ($curl === false) {
+            throw new CaptchaTokenMissing();
+        }
+
         curl_setopt_array($curl, $options);
         $response = (string) curl_exec($curl);
         $code = (int) curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
 
         if ($code !== 200) {
             throw new CaptchaTokenMissing();

@@ -9,6 +9,7 @@ use AppCore\Infrastructure\Shared\UserAuthenticator;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Session\Segment;
 use Aura\Auth\Session\Session;
+use Override;
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
@@ -19,7 +20,7 @@ use function ini_get;
  *
  * @template-implements ProviderInterface<UserAuthenticator>
  */
-class UserAuthenticatorProvider implements ProviderInterface
+final class UserAuthenticatorProvider implements ProviderInterface
 {
     private const string SEGMENT_NAME = 'Bebo\User';
 
@@ -45,6 +46,7 @@ class UserAuthenticatorProvider implements ProviderInterface
      *
      * {@inheritDoc}
      */
+    #[Override]
     public function get()
     {
         $authSession = new Session($this->cookie);

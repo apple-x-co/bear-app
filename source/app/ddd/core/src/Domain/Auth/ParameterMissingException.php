@@ -6,6 +6,6 @@ namespace AppCore\Domain\Auth;
 
 use RuntimeException;
 
-class ParameterMissingException extends RuntimeException
+final class ParameterMissingException extends RuntimeException
 {
 }

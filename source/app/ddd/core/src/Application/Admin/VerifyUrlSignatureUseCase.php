@@ -8,7 +8,7 @@ use AppCore\Domain\UrlSignature\ExpiredSignatureException;
 use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
 use DateTimeImmutable;
 
-readonly class VerifyUrlSignatureUseCase
+final readonly class VerifyUrlSignatureUseCase
 {
     /** @SuppressWarnings("PHPMD.LongVariable") */
     public function __construct(

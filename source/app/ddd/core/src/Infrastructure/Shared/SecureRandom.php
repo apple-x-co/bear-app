@@ -6,6 +6,7 @@ namespace AppCore\Infrastructure\Shared;
 
 use AppCore\Attribute\HashSalt;
 use AppCore\Domain\SecureRandom\SecureRandomInterface;
+use Override;
 
 use function base64_encode;
 use function hash;
@@ -19,7 +20,7 @@ use function str_repeat;
 use function strlen;
 use function strtr;
 
-readonly class SecureRandom implements SecureRandomInterface
+final readonly class SecureRandom implements SecureRandomInterface
 {
     private const string ALPHA_NUM_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     private const string LOCK_TOKEN_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -30,26 +31,31 @@ readonly class SecureRandom implements SecureRandomInterface
     ) {
     }
 
+    #[Override]
     public function hash(string $data, string $algo = 'sha256'): string
     {
         return hash($algo, $data);
     }
 
+    #[Override]
     public function shortHash(string $data, string $algo = 'crc32'): string
     {
         return strtr(rtrim(base64_encode(pack('H*', hash($algo, $data))), '='), '+/', '-_');
     }
 
+    #[Override]
     public function hmac(string $data, string $algo = 'sha256'): string
     {
         return hash_hmac($algo, $data, $this->hashSalt);
     }
 
+    #[Override]
     public function randomBytes(int $length): string
     {
         return random_bytes($length);
     }
 
+    #[Override]
     public function randomNumbers(int $length): int
     {
         $min = (int) ('1' . str_repeat('0', $length - 1));
@@ -58,6 +64,7 @@ readonly class SecureRandom implements SecureRandomInterface
         return random_int($min, $max);
     }
 
+    #[Override]
     public function alphabetNumeric(int $length): string
     {
         $chars = self::ALPHA_NUM_CHARS;
@@ -72,6 +79,7 @@ readonly class SecureRandom implements SecureRandomInterface
         return implode('', $result);
     }
 
+    #[Override]
     public function lockToken(int $length = 16): string
     {
         $chars = self::LOCK_TOKEN_CHARS;

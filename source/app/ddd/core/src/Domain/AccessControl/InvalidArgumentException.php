@@ -6,6 +6,6 @@ namespace AppCore\Domain\AccessControl;
 
 use AppCore\Exception\RuntimeException;
 
-class InvalidArgumentException extends RuntimeException
+final class InvalidArgumentException extends RuntimeException
 {
 }

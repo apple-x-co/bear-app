@@ -31,6 +31,7 @@ use MyVendor\MyProject\Annotation\AdminLogout;
 use MyVendor\MyProject\Annotation\AdminVerifyPassword;
 use MyVendor\MyProject\InputQuery\Admin\LoginUserInput;
 use MyVendor\MyProject\InputQuery\Admin\UserPasswordInput;
+use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\Di\Di\Named;
@@ -48,7 +49,7 @@ use function is_string;
  *
  * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
-readonly class AdminAuthentication implements MethodInterceptor
+final readonly class AdminAuthentication implements MethodInterceptor
 {
     public function __construct(
         #[Named('admin_auth_attempt_interval')]
@@ -65,6 +66,7 @@ readonly class AdminAuthentication implements MethodInterceptor
     }
 
     /** @psalm-suppress ArgumentTypeCoercion */
+    #[Override]
     public function invoke(MethodInvocation $invocation): mixed
     {
         $method = $invocation->getMethod();

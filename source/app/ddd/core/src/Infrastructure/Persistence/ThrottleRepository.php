@@ -10,10 +10,12 @@ use AppCore\Infrastructure\Entity\ThrottleEntity;
 use AppCore\Infrastructure\Query\ThrottleCommandInterface;
 use AppCore\Infrastructure\Query\ThrottleQueryInterface;
 use DateTimeImmutable;
+use Override;
 use Ray\AuraSqlModule\Annotation\Transactional;
 
 use function assert;
 
+/** @psalm-suppress ClassMustBeFinal #[Transactional] の AOP が継承して織り込むため final にしない */
 class ThrottleRepository implements ThrottleRepositoryInterface
 {
     public function __construct(
@@ -42,6 +44,7 @@ class ThrottleRepository implements ThrottleRepositoryInterface
      * UPSERT と読み直しを同じトランザクションで行う。UPSERT の行ロックがコミットまで続くので、
      * ほかのリクエストの加算や clear() に割り込まれず、自分が数えた回数をそのまま読める
      */
+    #[Override]
     #[Transactional]
     public function increment(
         string $throttleKey,

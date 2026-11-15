@@ -6,7 +6,7 @@ namespace AppCore\Application\Admin;
 
 use AppCore\Domain\Admin\Admin;
 
-readonly class GetAdminOutputData
+final readonly class GetAdminOutputData
 {
     public function __construct(public Admin $admin)
     {

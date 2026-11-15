@@ -23,6 +23,7 @@ use Aura\Auth\Auth;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Verifier\PasswordVerifier;
 use DateTimeImmutable;
+use Override;
 use PDO;
 use SensitiveParameter;
 
@@ -39,7 +40,7 @@ use function time;
  *
  * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
-class AdminAuthenticator implements AdminAuthenticatorInterface
+final class AdminAuthenticator implements AdminAuthenticatorInterface
 {
     private const string REMEMBER_SEPARATOR = ':';
 
@@ -83,6 +84,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         );
     }
 
+    #[Override]
     public function login(
         string $username,
         #[SensitiveParameter]
@@ -103,6 +105,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         $this->clearRemember($adminId);
     }
 
+    #[Override]
     public function rememberLogin(
         string $username,
         #[SensitiveParameter]
@@ -123,11 +126,13 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         $this->setUpRemember($adminId);
     }
 
+    #[Override]
     public function getRememberCookieName(): string
     {
         return $this->rememberCookieName;
     }
 
+    #[Override]
     public function continueLogin(
         #[SensitiveParameter]
         string $payload,
@@ -165,12 +170,14 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         return true;
     }
 
+    #[Override]
     public function verifyPassword(string $username, string $password): void
     {
         $pdoAdapter = $this->getAdapter();
         $pdoAdapter->login(['username' => $username, 'password' => $password]);
     }
 
+    #[Override]
     public function logout(): void
     {
         $adminId = $this->getUserId();
@@ -192,21 +199,25 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         return $auth;
     }
 
+    #[Override]
     public function isValid(): bool
     {
         return $this->resume()->isValid();
     }
 
+    #[Override]
     public function isExpired(): bool
     {
         return $this->resume()->isExpired();
     }
 
+    #[Override]
     public function getUserName(): string|null
     {
         return $this->authFactory->newInstance()->getUserName();
     }
 
+    #[Override]
     public function getDisplayName(): string|null
     {
         $userData = $this->getUserData();
@@ -215,6 +226,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
     }
 
     /** @return positive-int|null */
+    #[Override]
     public function getUserId(): int|null
     {
         $userData = $this->getUserData();
@@ -229,21 +241,25 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
     }
 
     /** {@inheritdoc}*/
+    #[Override]
     public function getUserData(): array
     {
         return $this->authFactory->newInstance()->getUserData();
     }
 
+    #[Override]
     public function getAuthRedirect(): string
     {
         return $this->authRedirect;
     }
 
+    #[Override]
     public function getUnauthRedirect(): string
     {
         return $this->unauthRedirect;
     }
 
+    #[Override]
     public function getPasswordRedirect(): string
     {
         return $this->passwordRedirect;
@@ -290,6 +306,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         );
     }
 
+    #[Override]
     public function getIdentity(): AdminIdentity
     {
         $auth = $this->authFactory->newInstance();
@@ -307,6 +324,7 @@ class AdminAuthenticator implements AdminAuthenticatorInterface
         );
     }
 
+    #[Override]
     public function getAccessControl(): AccessControl
     {
         $identity = $this->getIdentity();

@@ -6,7 +6,7 @@ namespace AppCore\Application\Admin;
 
 use SensitiveParameter;
 
-class UpdateAdminPasswordInputData
+final class UpdateAdminPasswordInputData
 {
     public function __construct(
         public readonly int $adminId,

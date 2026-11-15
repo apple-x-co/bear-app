@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace AppCore\Infrastructure\Shared;
 
 use AppCore\Domain\Http\ClientIpResolverInterface;
+use Override;
 
-use function strrchr;
-use function substr;
+use function end;
+use function explode;
 use function trim;
 
 final class ClientIpResolver implements ClientIpResolverInterface
@@ -19,6 +20,7 @@ final class ClientIpResolver implements ClientIpResolverInterface
      *
      * @SuppressWarnings("PHPMD.Superglobals")
      */
+    #[Override]
     public function resolve(): string|null
     {
         $forwardedFor = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? null;
@@ -26,6 +28,8 @@ final class ClientIpResolver implements ClientIpResolverInterface
             return $_SERVER['REMOTE_ADDR'] ?? null;
         }
 
-        return trim(substr(strrchr(',' . $forwardedFor, ','), 1));
+        $ips = explode(',', $forwardedFor);
+
+        return trim(end($ips));
     }
 }

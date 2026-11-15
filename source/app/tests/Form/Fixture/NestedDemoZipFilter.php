@@ -9,7 +9,7 @@ use Aura\Input\Filter;
 use function ctype_digit;
 use function is_string;
 
-class NestedDemoZipFilter extends Filter
+final class NestedDemoZipFilter extends Filter
 {
     public function __construct()
     {

@@ -6,6 +6,6 @@ namespace AppCore\Domain\Mail;
 
 use AppCore\Exception\RuntimeException;
 
-class TemplateNotFoundException extends RuntimeException
+final class TemplateNotFoundException extends RuntimeException
 {
 }

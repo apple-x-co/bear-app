@@ -17,6 +17,7 @@ use AppCore\Infrastructure\Shared\AdminAuthenticator;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Session\Segment;
 use Aura\Auth\Session\Session;
+use Override;
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
@@ -28,7 +29,7 @@ use function ini_get;
  *
  * @template-implements ProviderInterface<AdminAuthenticator>
  */
-readonly class AdminAuthenticatorProvider implements ProviderInterface
+final readonly class AdminAuthenticatorProvider implements ProviderInterface
 {
     private const string SEGMENT_NAME = 'Bebo\Admin';
 
@@ -68,6 +69,7 @@ readonly class AdminAuthenticatorProvider implements ProviderInterface
      *
      * {@inheritDoc}
      */
+    #[Override]
     public function get()
     {
         $authSession = new Session($this->cookie);

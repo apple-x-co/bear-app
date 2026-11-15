@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Auth;
 
-class MultipleMatches extends AuthenticationException
+final class MultipleMatches extends AuthenticationException
 {
 }
