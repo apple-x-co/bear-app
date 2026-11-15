@@ -7,7 +7,9 @@ namespace MyVendor\MyProject\Provider;
 use Override;
 use Ray\Di\ProviderInterface;
 
-/** @template-implements ProviderInterface<array<string, string>> */
+use function is_string;
+
+/** @template-implements ProviderInterface<array<array-key, string>> */
 final readonly class CookieProvider implements ProviderInterface
 {
     /**
@@ -18,8 +20,16 @@ final readonly class CookieProvider implements ProviderInterface
     #[Override]
     public function get()
     {
-        /** @var array<string, string> $cookies */
-        $cookies = $_COOKIE;
+        // `name[key]=value` 形式の Cookie は PHP が配列にするので、文字列の値だけを返す
+        $cookies = [];
+        foreach ($_COOKIE as $name => $value) {
+            /** @psalm-suppress TypeDoesNotContainType psalm は $_COOKIE の値を常に文字列とみなすが、実際は配列も入る */
+            if (! is_string($value)) {
+                continue;
+            }
+
+            $cookies[$name] = $value;
+        }
 
         return $cookies;
     }
