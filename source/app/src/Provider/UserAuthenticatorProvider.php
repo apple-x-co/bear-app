@@ -36,6 +36,8 @@ final class UserAuthenticatorProvider implements ProviderInterface
         private readonly string $pdoUsername,
         #[Named('pdo_password')]
         private readonly string $pdoPassword,
+        #[Named('remember_cookie_secure')]
+        private readonly bool $rememberCookieSecure,
         #[SessionName]
         private readonly string $sessionName,
     ) {
@@ -61,6 +63,7 @@ final class UserAuthenticatorProvider implements ProviderInterface
 
         return new UserAuthenticator(
             $rememberCookieName,
+            $this->rememberCookieSecure,
             $authFactory,
             (int) ini_get('session.gc_maxlifetime'),
             $this->pdoDsn,

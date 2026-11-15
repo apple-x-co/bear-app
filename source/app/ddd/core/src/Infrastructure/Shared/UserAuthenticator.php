@@ -34,6 +34,7 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
 
     public function __construct(
         private string $rememberCookieName,
+        private bool $rememberCookieSecure,
         private AuthFactory $authFactory,
         private int $sessionGcMaxlifetime,
         private string $pdoDsn,
@@ -78,7 +79,7 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
             [
                 'name' => $this->rememberCookieName,
                 'ttl' => self::REMEMBER_TTL,
-                'secure' => false, // 開発環境の http://localhost でも Cookie を送れるようにする
+                'secure' => $this->rememberCookieSecure,
                 'httponly' => true,
                 'samesite' => 'Strict',
                 'path' => '/',

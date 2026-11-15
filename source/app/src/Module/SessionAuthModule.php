@@ -49,6 +49,9 @@ final class SessionAuthModule extends AbstractModule
 
         $this->bind()->annotatedWith(SessionName::class)->toInstance('bear-app');
 
+        // Remember me の Cookie の Secure 属性。開発環境の http://localhost でも送れるよう既定は false にし、ProdModule で true にする
+        $this->bind()->annotatedWith('remember_cookie_secure')->toInstance(false);
+
         $this->bind(FlashMessengerInterface::class)->to(FlashMessenger::class)->in(Scope::SINGLETON);
 
         $this->admin();

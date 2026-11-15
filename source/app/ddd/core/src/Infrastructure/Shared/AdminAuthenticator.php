@@ -48,6 +48,7 @@ final class AdminAuthenticator implements AdminAuthenticatorInterface
         private readonly AdminPermissionRepositoryInterface $adminPermissionRepository,
         private readonly PasswordHasherInterface $passwordHasher,
         private readonly string $rememberCookieName,
+        private readonly bool $rememberCookieSecure,
         private readonly AuthFactory $authFactory,
         private readonly int $sessionGcMaxlifetime,
         private readonly string $pdoDsn,
@@ -93,7 +94,7 @@ final class AdminAuthenticator implements AdminAuthenticatorInterface
             [
                 'name' => $this->rememberCookieName,
                 'ttl' => self::REMEMBER_TTL,
-                'secure' => false, // 開発環境の http://localhost でも Cookie を送れるようにする
+                'secure' => $this->rememberCookieSecure,
                 'httponly' => true,
                 'samesite' => 'Strict',
                 'path' => '/',

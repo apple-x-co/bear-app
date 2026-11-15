@@ -45,6 +45,8 @@ final readonly class AdminAuthenticatorProvider implements ProviderInterface
         private string $pdoUsername,
         #[Named('pdo_password')]
         private string $pdoPassword,
+        #[Named('remember_cookie_secure')]
+        private bool $rememberCookieSecure,
         #[SessionName]
         private string $sessionName,
     ) {
@@ -72,6 +74,7 @@ final readonly class AdminAuthenticatorProvider implements ProviderInterface
             $this->adminPermissionRepository,
             $this->passwordHasher,
             $rememberCookieName,
+            $this->rememberCookieSecure,
             $authFactory,
             (int) ini_get('session.gc_maxlifetime'),
             $this->pdoDsn,
