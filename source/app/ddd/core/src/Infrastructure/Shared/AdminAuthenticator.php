@@ -170,14 +170,18 @@ final class AdminAuthenticator implements AdminAuthenticatorInterface
         }
     }
 
+    /**
+     * Aura.Auth の LogoutService は、Remember me のトークンを消してからセッションを消す。
+     * DB の障害でトークンを消せなくてもログアウトできるよう、先にセッションを消してからトークンと Cookie を消す
+     */
     #[Override]
     public function logout(): void
     {
+        $auth = $this->authFactory->newInstance();
+        $this->authFactory->newLogoutService()->forceLogout($auth);
+
         try {
-            $pdo = $this->getPdo();
-            $auth = $this->authFactory->newInstance();
-            $logoutService = $this->authFactory->newLogoutService($this->getAdapter($pdo), $this->getRememberService($pdo));
-            $logoutService->forceLogout($auth);
+            $this->getRememberService($this->getPdo())->forget($auth);
         } catch (PDOException $e) {
             throw new AuthStorageException('Failed to access the authentication storage', 0, $e);
         }
