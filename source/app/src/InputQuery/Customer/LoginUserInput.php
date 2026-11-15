@@ -20,6 +20,8 @@ final readonly class LoginUserInput
         #[SensitiveParameter]
         public string $password,
         #[Input]
+        public string $remember,
+        #[Input]
         public string $__csrf_token, // phpcs:ignore
         #[Input]
         public string|null $login,

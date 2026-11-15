@@ -6,13 +6,8 @@ namespace MyVendor\MyProject\Provider;
 
 use AppCore\Attribute\Cookie;
 use AppCore\Attribute\SessionName;
-use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\AdminPermission\AdminPermissionRepositoryInterface;
-use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
-use AppCore\Domain\Encrypter\EncrypterInterface;
 use AppCore\Domain\Hasher\PasswordHasherInterface;
-use AppCore\Domain\SecureRandom\SecureRandomInterface;
-use AppCore\Infrastructure\Query\AdminTokenRemoveByAdminIdInterface;
 use AppCore\Infrastructure\Shared\AdminAuthenticator;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Session\Segment;
@@ -41,12 +36,7 @@ final readonly class AdminAuthenticatorProvider implements ProviderInterface
      */
     public function __construct(
         private AdminPermissionRepositoryInterface $adminPermissionRepository,
-        private AdminRepositoryInterface $adminRepository,
-        private AdminTokenRepositoryInterface $adminTokenRepository,
-        private AdminTokenRemoveByAdminIdInterface $adminTokenRemoveByAdminId,
-        private EncrypterInterface $encrypter,
         private PasswordHasherInterface $passwordHasher,
-        private SecureRandomInterface $secureRandom,
         #[Cookie]
         private array $cookie,
         #[Named('pdo_dsn')]
@@ -55,6 +45,8 @@ final readonly class AdminAuthenticatorProvider implements ProviderInterface
         private string $pdoUsername,
         #[Named('pdo_password')]
         private string $pdoPassword,
+        #[Named('remember_cookie_secure')]
+        private bool $rememberCookieSecure,
         #[SessionName]
         private string $sessionName,
     ) {
@@ -80,13 +72,9 @@ final readonly class AdminAuthenticatorProvider implements ProviderInterface
 
         return new AdminAuthenticator(
             $this->adminPermissionRepository,
-            $this->adminRepository,
-            $this->adminTokenRepository,
-            $this->adminTokenRemoveByAdminId,
-            $this->encrypter,
             $this->passwordHasher,
-            $this->secureRandom,
             $rememberCookieName,
+            $this->rememberCookieSecure,
             $authFactory,
             (int) ini_get('session.gc_maxlifetime'),
             $this->pdoDsn,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Provider;
 
 use AppCore\Attribute\Cookie;
+use AppCore\Attribute\SessionName;
 use AppCore\Infrastructure\Shared\UserAuthenticator;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Session\Segment;
@@ -13,6 +14,7 @@ use Override;
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
+use function hash;
 use function ini_get;
 
 /**
@@ -34,6 +36,10 @@ final class UserAuthenticatorProvider implements ProviderInterface
         private readonly string $pdoUsername,
         #[Named('pdo_password')]
         private readonly string $pdoPassword,
+        #[Named('remember_cookie_secure')]
+        private readonly bool $rememberCookieSecure,
+        #[SessionName]
+        private readonly string $sessionName,
     ) {
     }
 
@@ -53,7 +59,11 @@ final class UserAuthenticatorProvider implements ProviderInterface
         $authSegment = new Segment(self::SEGMENT_NAME);
         $authFactory = new AuthFactory($this->cookie, $authSession, $authSegment);
 
+        $rememberCookieName = $this->sessionName . '_user_remember_' . hash('sha3-256', static::class);
+
         return new UserAuthenticator(
+            $rememberCookieName,
+            $this->rememberCookieSecure,
             $authFactory,
             (int) ini_get('session.gc_maxlifetime'),
             $this->pdoDsn,

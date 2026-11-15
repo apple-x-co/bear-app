@@ -25,6 +25,7 @@ return [
     'public.login.invalid_password' => '有効なパスワードを入力してください',
     'public.login.invalid_username' => '有効なユーザー名を入力してください',
     'public.login.password' => 'パスワード',
+    'public.login.remember' => 'ログイン状態を保持する',
     'public.login.submit' => 'ログイン',
     'public.login.username' => 'ユーザー名',
 ];

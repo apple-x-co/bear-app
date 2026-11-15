@@ -24,6 +24,9 @@ final class ProdModule extends AbstractAppModule
         $this->override(new OptionsMethodModule());
         $this->install(new CacheVersionModule((string) time()));
 
+        // 本番では Remember me の Cookie を HTTPS でだけ送る
+        $this->bind()->annotatedWith('remember_cookie_secure')->toInstance(true);
+
         // TODO: install memcached or redis
     }
 }

@@ -57,17 +57,6 @@ BEGIN
         SET i = i + 1;
     END WHILE;
 
-    -- Insert 1000 admin_tokens
-    SET i = 1;
-    WHILE i <= 1000 DO
-        INSERT INTO `admin_tokens` (`admin_id`, `token`, `expire_date`, `created_date`)
-        VALUES (i,
-                CONCAT('token', i),
-                NOW() - INTERVAL FLOOR(RAND() * 365) DAY,
-                NOW() - INTERVAL FLOOR(RAND() * 365) DAY);
-        SET i = i + 1;
-    END WHILE;
-
     -- Insert 1000 bad_passwords
     SET i = 1;
     WHILE i <= 1000 DO

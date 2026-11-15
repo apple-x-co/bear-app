@@ -69,18 +69,6 @@ return [
     'admins/admin_permission_by_admin_id.sql' => [
         'adminId' => 1,
     ],
-    'admins/admin_token_add.sql' => [
-        'adminId' => 1,
-        'token' => 'test-token-12345',
-        'expireDate' => '2024-01-01 12:00:00',
-        'createdDate' => '2024-01-01 12:00:00',
-    ],
-    'admins/admin_token_item_by_token.sql' => [
-        'token' => 'test-token-12345',
-    ],
-    'admins/admin_token_remove_by_admin_id.sql' => [
-        'adminId' => 1,
-    ],
     'admins/admin_update.sql' => [
         'username' => 'Test Name',
         'displayName' => 'Test Name',

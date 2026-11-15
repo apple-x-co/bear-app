@@ -24,7 +24,6 @@ use MyVendor\MyProject\Annotation\UserLogout;
 use MyVendor\MyProject\Interceptor\AdminAuthentication;
 use MyVendor\MyProject\Interceptor\AdminAuthGuardian;
 use MyVendor\MyProject\Interceptor\AdminAuthorization;
-use MyVendor\MyProject\Interceptor\AdminKeepAuthenticated;
 use MyVendor\MyProject\Interceptor\AdminPasswordProtector;
 use MyVendor\MyProject\Interceptor\UserAuthentication;
 use MyVendor\MyProject\Interceptor\UserAuthGuardian;
@@ -49,6 +48,9 @@ final class SessionAuthModule extends AbstractModule
         $this->bind()->annotatedWith(Cookie::class)->toProvider(CookieProvider::class);
 
         $this->bind()->annotatedWith(SessionName::class)->toInstance('bear-app');
+
+        // Remember me の Cookie の Secure 属性。開発環境の http://localhost でも送れるよう既定は false にし、ProdModule で true にする
+        $this->bind()->annotatedWith('remember_cookie_secure')->toInstance(false);
 
         $this->bind(FlashMessengerInterface::class)->to(FlashMessenger::class)->in(Scope::SINGLETON);
 
@@ -80,12 +82,11 @@ final class SessionAuthModule extends AbstractModule
             [AdminAuthentication::class],
         );
 
-        $this->bind(AdminKeepAuthenticated::class); // 複数の Interceptor を渡すと Untargeted が発生するので事前に束縛をする
-        $this->bind(AdminAuthGuardian::class); // 複数の Interceptor を渡すと Untargeted が発生するので事前に束縛をする
+        // Remember me の Cookie からの復帰は AdminAuthenticator::isValid() の中（Aura.Auth の ResumeService）で行う
         $this->bindInterceptor(
             $this->matcher->subclassesOf(BaseAdminPage::class),
             $this->matcher->annotatedWith(AdminGuard::class),
-            [AdminKeepAuthenticated::class, AdminAuthGuardian::class],
+            [AdminAuthGuardian::class],
         );
 
         $this->bindInterceptor(
