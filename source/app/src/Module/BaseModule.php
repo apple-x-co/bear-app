@@ -21,7 +21,6 @@ use AppCore\Attribute\PublicStaticBaseUrl;
 use AppCore\Attribute\ServiceName;
 use AppCore\Domain\Admin\AdminRepositoryInterface;
 use AppCore\Domain\AdminPermission\AdminPermissionRepositoryInterface;
-use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
 use AppCore\Domain\Document\DocumentReaderInterface;
 use AppCore\Domain\Encrypter\EncrypterInterface;
 use AppCore\Domain\Hasher\PasswordHasher;
@@ -48,7 +47,6 @@ use AppCore\Domain\UrlSignature\UrlSignatureEncrypterInterface;
 use AppCore\Domain\User\UserRepositoryInterface;
 use AppCore\Infrastructure\Persistence\AdminPermissionRepository;
 use AppCore\Infrastructure\Persistence\AdminRepository;
-use AppCore\Infrastructure\Persistence\AdminTokenRepository;
 use AppCore\Infrastructure\Persistence\ThrottleRepository;
 use AppCore\Infrastructure\Persistence\UserRepository;
 use AppCore\Infrastructure\Shared\AdminLogger;
@@ -207,7 +205,6 @@ final class BaseModule extends AbstractModule
     {
         $this->bind(AdminPermissionRepositoryInterface::class)->to(AdminPermissionRepository::class)->in(Scope::SINGLETON);
         $this->bind(AdminRepositoryInterface::class)->to(AdminRepository::class)->in(Scope::SINGLETON);
-        $this->bind(AdminTokenRepositoryInterface::class)->to(AdminTokenRepository::class)->in(Scope::SINGLETON);
         $this->bind(ThrottleRepositoryInterface::class)->to(ThrottleRepository::class)->in(Scope::SINGLETON);
         $this->bind(UserRepositoryInterface::class)->to(UserRepository::class)->in(Scope::SINGLETON);
     }

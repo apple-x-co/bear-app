@@ -10,12 +10,14 @@ use AppCore\Domain\Auth\UserIdentity;
 use Aura\Auth\Adapter\PdoAdapter;
 use Aura\Auth\Auth;
 use Aura\Auth\AuthFactory;
+use Aura\Auth\Remember\RememberService;
 use Aura\Auth\Verifier\PasswordVerifier;
 use Override;
 use PDO;
 use SensitiveParameter;
 
 use function assert;
+use function is_array;
 use function is_int;
 use function is_string;
 
@@ -24,7 +26,14 @@ use const PASSWORD_BCRYPT;
 /** User認証基盤 */
 final readonly class UserAuthenticator implements UserAuthenticatorInterface
 {
+    private const string FROM = 'users';
+    private const string WHERE = 'users.active = 1';
+    private const string REMEMBER_TABLE = 'user_remembers';
+    private const int REMEMBER_TTL = 691200; // 8 日
+    private const int SESSION_EXPIRE_TTL = 86400; // Aura.Auth の ResumeService の既定値
+
     public function __construct(
+        private string $rememberCookieName,
         private AuthFactory $authFactory,
         private int $sessionGcMaxlifetime,
         private string $pdoDsn,
@@ -35,10 +44,15 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
     ) {
     }
 
-    private function getAdapter(): PdoAdapter
+    private function getPdo(): PDO
+    {
+        return new PDO($this->pdoDsn, $this->pdoUsername, $this->pdoPassword);
+    }
+
+    private function getAdapter(PDO $pdo): PdoAdapter
     {
         return $this->authFactory->newPdoAdapter(
-            new PDO($this->pdoDsn, $this->pdoUsername, $this->pdoPassword),
+            $pdo,
             new PasswordVerifier(PASSWORD_BCRYPT),
             [
                 'users.username',
@@ -46,8 +60,39 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
                 'users.id', // as UserData[0]
                 'users.display_name', // as UserData[1]
             ],
-            'users',
-            'users.active = 1',
+            self::FROM,
+            self::WHERE,
+        );
+    }
+
+    /**
+     * Remember me（Aura.Auth の RememberService）
+     *
+     * Cookie から復帰するたびに、ログインと同じ条件（有効）でユーザーを読み直す。
+     * 条件を満たさなければ null を返し、トークンを破棄させる
+     */
+    private function getRememberService(PDO $pdo): RememberService
+    {
+        return $this->authFactory->newRememberService(
+            $this->authFactory->newPdoRememberStorage($pdo, self::REMEMBER_TABLE),
+            [
+                'name' => $this->rememberCookieName,
+                'ttl' => self::REMEMBER_TTL,
+                'secure' => false, // 開発環境の http://localhost でも Cookie を送れるようにする
+                'httponly' => true,
+                'samesite' => 'Strict',
+                'path' => '/',
+                'user_loader' => static function (string $username) use ($pdo): array|null {
+                    $statement = $pdo->prepare(
+                        'SELECT users.id, users.display_name FROM ' . self::FROM .
+                        ' WHERE users.username = :username AND ' . self::WHERE,
+                    );
+                    $statement->execute(['username' => $username]);
+                    $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+                    return is_array($row) ? $row : null;
+                },
+            ],
         );
     }
 
@@ -57,26 +102,50 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
         #[SensitiveParameter]
         string $password,
     ): void {
+        $pdo = $this->getPdo();
         $auth = $this->authFactory->newInstance();
-        $loginService = $this->authFactory->newLoginService($this->getAdapter());
-        $loginService->login(
-            $auth,
-            ['username' => $username, 'password' => $password],
-        );
+        $loginService = $this->authFactory->newLoginService($this->getAdapter($pdo), $this->getRememberService($pdo));
+        $loginService->login($auth, ['username' => $username, 'password' => $password]);
+    }
+
+    /**
+     * LoginService に `remember` を渡すと、PdoAdapter が `remember` まで SQL にバインドして失敗する（aura/auth 7.0.0）。
+     * そのためログインのあとで RememberService::remember() を直接呼ぶ
+     */
+    #[Override]
+    public function rememberLogin(
+        string $username,
+        #[SensitiveParameter]
+        string $password,
+    ): void {
+        $pdo = $this->getPdo();
+        $auth = $this->authFactory->newInstance();
+        $rememberService = $this->getRememberService($pdo);
+        $loginService = $this->authFactory->newLoginService($this->getAdapter($pdo), $rememberService);
+        $loginService->login($auth, ['username' => $username, 'password' => $password]);
+        $rememberService->remember($auth);
     }
 
     #[Override]
     public function logout(): void
     {
+        $pdo = $this->getPdo();
         $auth = $this->authFactory->newInstance();
-        $logoutService = $this->authFactory->newLogoutService($this->getAdapter());
+        $logoutService = $this->authFactory->newLogoutService($this->getAdapter($pdo), $this->getRememberService($pdo));
         $logoutService->forceLogout($auth);
     }
 
+    /** セッションを再開する。未ログインなら Remember me の Cookie からの復帰も試す */
     private function resume(): Auth
     {
+        $pdo = $this->getPdo();
         $auth = $this->authFactory->newInstance();
-        $resumeService = $this->authFactory->newResumeService($this->getAdapter(), $this->sessionGcMaxlifetime);
+        $resumeService = $this->authFactory->newResumeService(
+            $this->getAdapter($pdo),
+            $this->sessionGcMaxlifetime,
+            self::SESSION_EXPIRE_TTL,
+            $this->getRememberService($pdo),
+        );
         $resumeService->resume($auth);
 
         return $auth;
@@ -85,7 +154,15 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
     #[Override]
     public function isValid(): bool
     {
-        return $this->resume()->isValid();
+        $auth = $this->resume();
+
+        return $auth->isValid() || $auth->isRemembered();
+    }
+
+    #[Override]
+    public function isRemembered(): bool
+    {
+        return $this->resume()->isRemembered();
     }
 
     #[Override]
@@ -123,7 +200,7 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
     public function getIdentity(): UserIdentity
     {
         $auth = $this->authFactory->newInstance();
-        if (! $auth->isValid()) {
+        if (! $auth->isValid() && ! $auth->isRemembered()) {
             throw new UnauthorizedException();
         }
 

@@ -12,6 +12,7 @@ $this->setLayout('layout/base');
     {{= formError($form, 'username') }}
     {{= formWidget($form, 'password') }}
     {{= formError($form, 'password') }}
+    <p>{{h t('public.login.remember') }} {{= userCheckBox(form: $form, input: 'remember') }}</p>
     {{= formWidget($form, 'login') }}
     {{= formWidget($form, '__csrf_token') }}
 </form>

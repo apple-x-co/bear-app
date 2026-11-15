@@ -90,7 +90,7 @@ final readonly class UserAuthentication implements MethodInterceptor
 
         if ($input->isValid()) {
             try {
-                $this->authenticator->login($input->username, $input->password);
+                $this->authenticate($input);
                 $this->logger->log('[logged] ' . $input->username);
             } catch (AuraUsernameMissing $usernameMissing) {
                 return call_user_func(
@@ -169,6 +169,17 @@ final readonly class UserAuthentication implements MethodInterceptor
         $ro->body = [];
 
         return $ro;
+    }
+
+    private function authenticate(LoginUserInput $input): void
+    {
+        if ($input->remember === 'yes') {
+            $this->authenticator->rememberLogin($input->username, $input->password);
+
+            return;
+        }
+
+        $this->authenticator->login($input->username, $input->password);
     }
 
     /** @param MethodInvocation<ResourceObject> $invocation */
