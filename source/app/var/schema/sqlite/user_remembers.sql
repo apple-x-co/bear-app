@@ -4,7 +4,8 @@ CREATE TABLE `user_remembers`
         `hashed_validator` TEXT NOT NULL,
         `username` TEXT NOT NULL,
         `userdata` TEXT NULL,
-        `expires` INTEGER NOT NULL
+        `expires` INTEGER NOT NULL,
+        FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON UPDATE CASCADE ON DELETE CASCADE
     )
 STRICT;
 

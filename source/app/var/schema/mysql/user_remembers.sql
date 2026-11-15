@@ -5,7 +5,10 @@ CREATE TABLE `user_remembers`
     `username`         VARCHAR(255) NOT NULL COMMENT 'ユーザー名',
     `userdata`         TEXT         NULL COMMENT 'ユーザーデータ（JSON）',
     `expires`          INT          NOT NULL COMMENT '有効期限（UNIX タイムスタンプ）',
-    PRIMARY KEY (`selector`)
-) ENGINE = InnoDB COMMENT 'ユーザーの Remember me トークン（Aura.Auth の PdoRememberStorage）';
+    PRIMARY KEY (`selector`),
+    CONSTRAINT `fk_user_remembers_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci COMMENT 'ユーザーの Remember me トークン（Aura.Auth の PdoRememberStorage）';
 
 CREATE INDEX `idx_user_remembers_1` ON `user_remembers` (`username`);

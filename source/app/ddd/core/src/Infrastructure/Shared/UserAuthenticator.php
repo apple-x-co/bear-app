@@ -11,6 +11,7 @@ use Aura\Auth\Adapter\PdoAdapter;
 use Aura\Auth\Auth;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Remember\RememberService;
+use Aura\Auth\Status;
 use Aura\Auth\Verifier\PasswordVerifier;
 use Override;
 use PDO;
@@ -71,6 +72,9 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
      *
      * Cookie から復帰するたびに、ログインと同じ条件（有効）でユーザーを読み直す。
      * 条件を満たさなければ null を返し、トークンを破棄させる
+     *
+     * user_loader は Aura.Auth に渡すコールバックで、PdoAdapter と同じ FROM・WHERE を使う必要があるため、
+     * CQRS（Ray.MediaQuery と SQL ファイル）ではなく、ここで直接 SQL を組み立てる
      */
     private function getRememberService(PDO $pdo): RememberService
     {
@@ -97,6 +101,7 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
         );
     }
 
+    /** 記憶しないログインでは、以前のログインで残った Remember me の Cookie とトークンを消す */
     #[Override]
     public function login(
         string $username,
@@ -105,8 +110,10 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
     ): void {
         $pdo = $this->getPdo();
         $auth = $this->authFactory->newInstance();
-        $loginService = $this->authFactory->newLoginService($this->getAdapter($pdo), $this->getRememberService($pdo));
+        $rememberService = $this->getRememberService($pdo);
+        $loginService = $this->authFactory->newLoginService($this->getAdapter($pdo), $rememberService);
         $loginService->login($auth, ['username' => $username, 'password' => $password]);
+        $rememberService->forget($auth);
     }
 
     /**
@@ -136,18 +143,32 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
         $logoutService->forceLogout($auth);
     }
 
-    /** セッションを再開する。未ログインなら Remember me の Cookie からの復帰も試す */
+    /**
+     * セッションを再開する。未ログインなら Remember me の Cookie からの復帰も試す
+     *
+     * Aura.Auth はセッションがタイムアウトすると状態を IDLE / EXPIRED にし、ANON のときしか Cookie から復帰しない。
+     * タイムアウト後も復帰できるよう、いったん ANON に戻して復帰を試し、できなければ元の状態に戻す
+     */
     private function resume(): Auth
     {
         $pdo = $this->getPdo();
         $auth = $this->authFactory->newInstance();
+        $rememberService = $this->getRememberService($pdo);
         $resumeService = $this->authFactory->newResumeService(
             $this->getAdapter($pdo),
             $this->sessionGcMaxlifetime,
             self::SESSION_EXPIRE_TTL,
-            $this->getRememberService($pdo),
+            $rememberService,
         );
         $resumeService->resume($auth);
+
+        if ($auth->isIdle() || $auth->isExpired()) {
+            $timeoutStatus = $auth->getStatus();
+            $auth->setStatus(Status::ANON);
+            if (! $rememberService->resume($auth)) {
+                $auth->setStatus($timeoutStatus);
+            }
+        }
 
         return $auth;
     }
