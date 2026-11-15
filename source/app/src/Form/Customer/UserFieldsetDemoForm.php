@@ -8,6 +8,7 @@ use Aura\Input\Builder;
 use MyVendor\MyProject\Form\Customer\Fieldset\AddressFieldset;
 use MyVendor\MyProject\Form\Customer\Fieldset\AddressFilter;
 use MyVendor\MyProject\Form\ExtendedForm;
+use Override;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
@@ -15,6 +16,7 @@ class UserFieldsetDemoForm extends ExtendedForm
 {
     use SetAntiCsrfTrait;
 
+    #[Override]
     public function init(): void
     {
         $this->useFieldsets([

@@ -8,6 +8,7 @@ use AppCore\Attribute\ServiceName;
 use AppCore\Exception\RuntimeException;
 use DateTimeImmutable;
 use InvalidArgumentException;
+use Override;
 use Throwable;
 
 use function array_merge;
@@ -33,6 +34,7 @@ readonly class PhpTemplateRenderer implements TemplateRendererInterface
     }
 
     /** @param array<string, mixed> $vars */
+    #[Override]
     public function __invoke(string $path, array $vars = []): string
     {
         $path = realpath($path);

@@ -7,6 +7,7 @@ namespace AppCore\Infrastructure\Shared;
 use AppCore\Attribute\EncryptPass;
 use AppCore\Domain\Encrypter\EncrypterException;
 use AppCore\Domain\Encrypter\EncrypterInterface;
+use Override;
 
 use function base64_decode;
 use function base64_encode;
@@ -36,6 +37,7 @@ class Encrypter implements EncrypterInterface
     ) {
     }
 
+    #[Override]
     public function encrypt(string $text): string
     {
         $ivLen = openssl_cipher_iv_length(self::CIPHER_ALGO);
@@ -68,6 +70,7 @@ class Encrypter implements EncrypterInterface
         return base64_encode($json);
     }
 
+    #[Override]
     public function decrypt(string $payload): string
     {
         $json = json_decode(base64_decode($payload), true);

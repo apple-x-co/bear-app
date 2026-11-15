@@ -12,6 +12,7 @@ use BEAR\Sunday\Extension\Error\ErrorInterface;
 use BEAR\Sunday\Extension\Router\RouterMatch as Request;
 use BEAR\Sunday\Extension\Transfer\TransferInterface;
 use Exception;
+use Override;
 use Ray\Di\Di\Named;
 
 final class QiqErrorHandler implements ErrorInterface
@@ -27,6 +28,7 @@ final class QiqErrorHandler implements ErrorInterface
     }
 
     /** {@inheritDoc}*/
+    #[Override]
     public function handle(Exception $e, Request $request) // phpcs:ignore SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly.ReferencedGeneralException
     {
         ($this->logger)($e, $request);
@@ -35,6 +37,7 @@ final class QiqErrorHandler implements ErrorInterface
         return $this;
     }
 
+    #[Override]
     public function transfer(): void
     {
         ($this->responder)($this->errorPage ?? new NullPage(), []);

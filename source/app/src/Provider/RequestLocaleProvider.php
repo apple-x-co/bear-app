@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\Provider;
 use AppCore\Domain\Locale\Locale;
 use Koriym\HttpConstants\RequestHeader;
 use Locale as PhpLocale;
+use Override;
 use Psr\Http\Message\ServerRequestInterface;
 use Ray\Di\ProviderInterface;
 
@@ -29,6 +30,7 @@ final readonly class RequestLocaleProvider implements ProviderInterface
      * @inheritDoc
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Override]
     public function get()
     {
         $uriPath = $this->request->getUri()->getPath();

@@ -8,6 +8,7 @@ use BEAR\Resource\Annotation\AppName;
 use BEAR\Resource\AppAdapter;
 use BEAR\Resource\Module\SchemeCollectionProvider;
 use BEAR\Resource\SchemeCollection;
+use Override;
 use Ray\Di\InjectorInterface;
 use Ray\Di\ProviderInterface;
 
@@ -23,6 +24,7 @@ readonly class CommandSchemeCollectionProvider implements ProviderInterface
     ) {
     }
 
+    #[Override]
     public function get(): SchemeCollection
     {
         $schemeCollection = $this->schemeCollectionProvider->get();

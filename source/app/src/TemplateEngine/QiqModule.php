@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\TemplateEngine;
 use BEAR\Package\Provide\Error\ErrorPageFactoryInterface;
 use BEAR\Resource\RenderInterface;
 use BEAR\Sunday\Extension\Error\ErrorInterface;
+use Override;
 use Qiq\Catalog;
 use Qiq\Compiler;
 use Qiq\Compiler\QiqCompiler;
@@ -32,6 +33,7 @@ class QiqModule extends AbstractModule
         parent::__construct($this->module);
     }
 
+    #[Override]
     protected function configure(): void
     {
         $this->bind(Template::class)->in(Scope::SINGLETON);

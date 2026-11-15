@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\TemplateEngine;
 use BEAR\Package\Provide\Error\ErrorPageFactoryInterface;
 use BEAR\Resource\ResourceObject;
 use BEAR\Sunday\Extension\Router\RouterMatch;
+use Override;
 use Qiq\Template;
 use Ray\Di\Di\Named;
 use Throwable;
@@ -20,6 +21,7 @@ final readonly class QiqErrorPageFactory implements ErrorPageFactoryInterface
     ) {
     }
 
+    #[Override]
     public function newInstance(Throwable $e, RouterMatch $request): ResourceObject
     {
         return new QiqErrorPage(

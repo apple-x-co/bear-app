@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\Mail;
 
+use Override;
+
 class Address implements AddressInterface
 {
     public function __construct(
@@ -12,11 +14,13 @@ class Address implements AddressInterface
     ) {
     }
 
+    #[Override]
     public function getEmail(): string
     {
         return $this->email;
     }
 
+    #[Override]
     public function getName(): string|null
     {
         return $this->name;

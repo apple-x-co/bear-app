@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Form;
 
 use Aura\Input\Collection;
+use Override;
 
 use function is_array;
 
@@ -19,6 +20,7 @@ use function is_array;
 class ExtendedCollection extends Collection
 {
     /** @param array<array-key, mixed> $data */
+    #[Override]
     public function fill(array $data): void
     {
         $this->fieldsets = [];

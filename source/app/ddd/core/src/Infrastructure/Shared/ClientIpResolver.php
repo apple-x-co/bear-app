@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AppCore\Infrastructure\Shared;
 
 use AppCore\Domain\Http\ClientIpResolverInterface;
+use Override;
 
 use function strrchr;
 use function substr;
@@ -19,6 +20,7 @@ final class ClientIpResolver implements ClientIpResolverInterface
      *
      * @SuppressWarnings("PHPMD.Superglobals")
      */
+    #[Override]
     public function resolve(): string|null
     {
         $forwardedFor = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? null;

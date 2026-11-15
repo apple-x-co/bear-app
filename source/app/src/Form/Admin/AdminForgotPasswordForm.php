@@ -6,6 +6,7 @@ namespace MyVendor\MyProject\Form\Admin;
 
 use AppCore\Infrastructure\Query\AdminQueryInterface;
 use MyVendor\MyProject\Form\ExtendedForm;
+use Override;
 use Ray\Di\Di\Inject;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 use stdClass;
@@ -23,6 +24,7 @@ class AdminForgotPasswordForm extends ExtendedForm
         $this->adminQuery = $adminQuery;
     }
 
+    #[Override]
     public function init(): void
     {
         /** @psalm-suppress UndefinedMethod */

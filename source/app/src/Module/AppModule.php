@@ -9,6 +9,7 @@ use BEAR\Package\PackageModule;
 use BEAR\Package\Provide\Router\AuraRouterModule;
 use BEAR\Resource\Module\JsonSchemaModule;
 use Koriym\EnvJson\EnvJson;
+use Override;
 use Ray\AuraSqlModule\AuraSqlModule;
 use Ray\IdentityValueModule\IdentityValueModule;
 use Ray\MediaQuery\MediaQuerySqlModule;
@@ -20,6 +21,7 @@ use function getenv;
 class AppModule extends AbstractAppModule
 {
     /** @SuppressWarnings("PHPMD.StaticAccess") */
+    #[Override]
     protected function configure(): void
     {
         (new EnvJson())->load(dirname(__DIR__, 2));

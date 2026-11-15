@@ -6,6 +6,7 @@ namespace MyVendor\MyProject\Http;
 
 use BEAR\Dev\Http\HttpResource;
 use MyVendor\MyProject\Hypermedia\WorkflowTest as Workflow;
+use Override;
 
 class WorkflowTest extends Workflow
 {

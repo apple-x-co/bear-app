@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AppCore\Domain\AccessControl;
 
+use Override;
+
 use function array_reduce;
 
 class AccessControl implements AccessControlInterface
@@ -17,6 +19,7 @@ class AccessControl implements AccessControlInterface
     /** @var array<string, array<Permission>> */
     private array $denyRules = [];
 
+    #[Override]
     public function addResource(string $resourceName): self
     {
         $clone = clone $this;
@@ -25,6 +28,7 @@ class AccessControl implements AccessControlInterface
         return $clone;
     }
 
+    #[Override]
     public function allow(string $resourceName, Permission $permission): self
     {
         $clone = clone $this;
@@ -33,6 +37,7 @@ class AccessControl implements AccessControlInterface
         return $clone;
     }
 
+    #[Override]
     public function deny(string $resourceName, Permission $permission): self
     {
         $clone = clone $this;
@@ -57,6 +62,7 @@ class AccessControl implements AccessControlInterface
         $this->denyRules[$resourceName][] = $permission;
     }
 
+    #[Override]
     public function isAllowed(string $resourceName, Permission $permission): bool
     {
         if (! empty($this->denyRules[$resourceName] ?? [])) {

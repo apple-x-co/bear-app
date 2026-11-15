@@ -7,6 +7,7 @@ namespace AppCore\Infrastructure\Shared;
 use AppCore\Attribute\LangDir;
 use AppCore\Domain\Document\DocumentReaderInterface;
 use AppCore\Domain\Locale\Locale;
+use Override;
 
 use function file_get_contents;
 use function is_file;
@@ -25,6 +26,7 @@ final readonly class DocumentReader implements DocumentReaderInterface
     ) {
     }
 
+    #[Override]
     public function read(string $name, Locale $locale): string
     {
         $content = $this->readForLocale($name, $locale);

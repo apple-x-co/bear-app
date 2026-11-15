@@ -14,6 +14,7 @@ use DateTimeImmutable;
 use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\AdminPasswordLock;
 use MyVendor\MyProject\Annotation\AdminPasswordProtect;
+use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
@@ -29,6 +30,7 @@ readonly class AdminPasswordProtector implements MethodInterceptor
     }
 
     /** @psalm-suppress ArgumentTypeCoercion */
+    #[Override]
     public function invoke(MethodInvocation $invocation): mixed
     {
         $protect = $invocation->getMethod()->getAnnotation(AdminPasswordProtect::class);

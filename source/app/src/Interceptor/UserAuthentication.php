@@ -26,6 +26,7 @@ use Koriym\HttpConstants\StatusCode;
 use MyVendor\MyProject\Annotation\UserLogin;
 use MyVendor\MyProject\Annotation\UserLogout;
 use MyVendor\MyProject\InputQuery\Customer\LoginUserInput;
+use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\Di\Di\Named;
@@ -52,6 +53,7 @@ readonly class UserAuthentication implements MethodInterceptor
     }
 
     /** @psalm-suppress ArgumentTypeCoercion */
+    #[Override]
     public function invoke(MethodInvocation $invocation): mixed
     {
         $login = $invocation->getMethod()->getAnnotation(UserLogin::class);

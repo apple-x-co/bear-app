@@ -9,6 +9,7 @@ use AppCore\Infrastructure\Shared\UserAuthenticator;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Session\Segment;
 use Aura\Auth\Session\Session;
+use Override;
 use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
@@ -45,6 +46,7 @@ class UserAuthenticatorProvider implements ProviderInterface
      *
      * {@inheritDoc}
      */
+    #[Override]
     public function get()
     {
         $authSession = new Session($this->cookie);

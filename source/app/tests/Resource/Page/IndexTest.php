@@ -6,12 +6,14 @@ namespace MyVendor\MyProject\Resource\Page;
 
 use BEAR\Resource\ResourceInterface;
 use MyVendor\MyProject\Injector;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 class IndexTest extends TestCase
 {
     private ResourceInterface $resource;
 
+    #[Override]
     protected function setUp(): void
     {
         $injector = Injector::getInstance('app');

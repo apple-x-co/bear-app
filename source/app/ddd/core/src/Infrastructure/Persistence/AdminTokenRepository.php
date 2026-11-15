@@ -9,6 +9,7 @@ use AppCore\Domain\AdminToken\AdminTokenRepositoryInterface;
 use AppCore\Infrastructure\Entity\AdminTokenEntity;
 use AppCore\Infrastructure\Query\AdminTokenCommandInterface;
 use AppCore\Infrastructure\Query\AdminTokenQueryInterface;
+use Override;
 
 class AdminTokenRepository implements AdminTokenRepositoryInterface
 {
@@ -18,6 +19,7 @@ class AdminTokenRepository implements AdminTokenRepositoryInterface
     ) {
     }
 
+    #[Override]
     public function findByToken(string $token): AdminToken|null
     {
         $entity = $this->query->itemByToken($token);
@@ -28,6 +30,7 @@ class AdminTokenRepository implements AdminTokenRepositoryInterface
         return $this->entityToModel($entity);
     }
 
+    #[Override]
     public function store(AdminToken $adminToken): void
     {
         $this->command->add(

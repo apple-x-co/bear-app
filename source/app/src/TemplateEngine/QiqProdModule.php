@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyVendor\MyProject\TemplateEngine;
 
+use Override;
 use Qiq\Compiler;
 use Qiq\Compiler\QiqCompiler;
 use Ray\Di\AbstractModule;
@@ -17,6 +18,7 @@ class QiqProdModule extends AbstractModule
         parent::__construct($this->module);
     }
 
+    #[Override]
     protected function configure(): void
     {
         $this->bind()->annotatedWith('qiq_cache_path')->toInstance($this->cachePath);

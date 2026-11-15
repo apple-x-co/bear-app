@@ -10,6 +10,7 @@ use BEAR\Resource\NullRenderer;
 use BEAR\Resource\ResourceObject;
 use BEAR\Sunday\Extension\Router\RouterInterface;
 use Koriym\HttpConstants\StatusCode;
+use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
@@ -24,6 +25,7 @@ readonly class AdminAuthGuardian implements MethodInterceptor
     ) {
     }
 
+    #[Override]
     public function invoke(MethodInvocation $invocation): mixed
     {
         if ($this->authenticator->isValid()) {

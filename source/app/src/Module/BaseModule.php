@@ -75,6 +75,7 @@ use MyVendor\MyProject\Provider\PhpMailerProvider;
 use MyVendor\MyProject\Provider\RequestLanguageProvider;
 use MyVendor\MyProject\Provider\RequestLocaleProvider;
 use MyVendor\MyProject\Provider\ServerRequestProvider;
+use Override;
 use PHPMailer\PHPMailer\PHPMailer;
 use Psr\Http\Message\ServerRequestInterface;
 use Ray\Di\AbstractModule;
@@ -94,6 +95,7 @@ class BaseModule extends AbstractModule
         parent::__construct($module);
     }
 
+    #[Override]
     protected function configure(): void
     {
         $this->core();

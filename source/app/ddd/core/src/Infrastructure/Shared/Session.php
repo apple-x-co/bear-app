@@ -6,6 +6,7 @@ namespace AppCore\Infrastructure\Shared;
 
 use AppCore\Domain\Session\SessionInterface;
 use Aura\Session\Segment;
+use Override;
 
 readonly class Session implements SessionInterface
 {
@@ -14,16 +15,19 @@ readonly class Session implements SessionInterface
     ) {
     }
 
+    #[Override]
     public function set(string $key, string $val): void
     {
         $this->segment->set($key, $val);
     }
 
+    #[Override]
     public function get(string $key, string|null $alt = null): mixed
     {
         return $this->segment->get($key, $alt);
     }
 
+    #[Override]
     public function reset(string $key): void
     {
         $this->segment->set($key, null);

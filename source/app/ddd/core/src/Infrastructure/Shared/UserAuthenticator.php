@@ -11,6 +11,7 @@ use Aura\Auth\Adapter\PdoAdapter;
 use Aura\Auth\Auth;
 use Aura\Auth\AuthFactory;
 use Aura\Auth\Verifier\PasswordVerifier;
+use Override;
 use PDO;
 use SensitiveParameter;
 
@@ -50,6 +51,7 @@ readonly class UserAuthenticator implements UserAuthenticatorInterface
         );
     }
 
+    #[Override]
     public function login(
         string $username,
         #[SensitiveParameter]
@@ -63,6 +65,7 @@ readonly class UserAuthenticator implements UserAuthenticatorInterface
         );
     }
 
+    #[Override]
     public function logout(): void
     {
         $auth = $this->authFactory->newInstance();
@@ -79,37 +82,44 @@ readonly class UserAuthenticator implements UserAuthenticatorInterface
         return $auth;
     }
 
+    #[Override]
     public function isValid(): bool
     {
         return $this->resume()->isValid();
     }
 
+    #[Override]
     public function isExpired(): bool
     {
         return $this->resume()->isExpired();
     }
 
+    #[Override]
     public function getUserName(): string|null
     {
         return $this->authFactory->newInstance()->getUserName();
     }
 
     /** {@inheritdoc} */
+    #[Override]
     public function getUserData(): array
     {
         return $this->authFactory->newInstance()->getUserData();
     }
 
+    #[Override]
     public function getAuthRedirect(): string
     {
         return $this->authRedirect;
     }
 
+    #[Override]
     public function getUnauthRedirect(): string
     {
         return $this->unauthRedirect;
     }
 
+    #[Override]
     public function getIdentity(): UserIdentity
     {
         $auth = $this->authFactory->newInstance();

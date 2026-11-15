@@ -7,6 +7,7 @@ namespace AppCore\Infrastructure\Shared;
 use AppCore\Domain\LoggerInterface;
 use BEAR\AppMeta\AbstractAppMeta;
 use DateTimeInterface;
+use Override;
 
 use function error_log;
 
@@ -20,6 +21,7 @@ readonly class AdminLogger implements LoggerInterface
     ) {
     }
 
+    #[Override]
     public function log(string $message): void
     {
         error_log(

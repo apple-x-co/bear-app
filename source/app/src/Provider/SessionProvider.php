@@ -6,6 +6,7 @@ namespace MyVendor\MyProject\Provider;
 
 use AppCore\Infrastructure\Shared\Session;
 use Aura\Session\Session as AuraSession;
+use Override;
 use Ray\Di\ProviderInterface;
 
 /** @template-implements ProviderInterface<Session> */
@@ -19,6 +20,7 @@ readonly class SessionProvider implements ProviderInterface
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function get()
     {
         return new Session($this->session->getSegment(self::SEGMENT_NAME));

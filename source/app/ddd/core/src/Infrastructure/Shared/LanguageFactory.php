@@ -9,6 +9,7 @@ use AppCore\Domain\Language\Language;
 use AppCore\Domain\Language\LanguageFactoryInterface;
 use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\Locale\Locale;
+use Override;
 
 use function array_merge;
 use function is_array;
@@ -25,6 +26,7 @@ final readonly class LanguageFactory implements LanguageFactoryInterface
     ) {
     }
 
+    #[Override]
     public function create(Locale $locale): LanguageInterface
     {
         $texts = $this->load($locale);

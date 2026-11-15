@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\Interceptor;
 use AppCore\Domain\Auth\AdminAuthenticatorInterface;
 use AppCore\Domain\Auth\ForbiddenException;
 use MyVendor\MyProject\Annotation\RequiredPermission;
+use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
@@ -17,6 +18,7 @@ readonly class AdminAuthorization implements MethodInterceptor
     ) {
     }
 
+    #[Override]
     public function invoke(MethodInvocation $invocation): mixed
     {
         $requiredPermission = $invocation->getMethod()->getAnnotation(RequiredPermission::class);

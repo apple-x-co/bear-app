@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\Form\Admin;
 use AppCore\Infrastructure\Query\AdminQueryInterface;
 use AppCore\Infrastructure\Query\BadPasswordQueryInterface;
 use MyVendor\MyProject\Form\ExtendedForm;
+use Override;
 use Ray\Di\Di\Inject;
 use Ray\WebFormModule\SetAntiCsrfTrait;
 use stdClass;
@@ -31,6 +32,7 @@ class AdminSignUpForm extends ExtendedForm
         $this->badPasswordQuery = $badPasswordQuery;
     }
 
+    #[Override]
     public function init(): void
     {
         /** @psalm-suppress UndefinedMethod */

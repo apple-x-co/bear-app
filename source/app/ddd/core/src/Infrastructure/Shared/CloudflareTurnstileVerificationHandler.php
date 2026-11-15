@@ -9,6 +9,7 @@ use AppCore\Domain\Captcha\CaptchaTokenMissing;
 use AppCore\Domain\Captcha\CaptchaVerifyError;
 use AppCore\Domain\Captcha\CloudflareTurnstileVerificationHandlerInterface;
 use AppCore\Domain\Http\ClientIpResolverInterface;
+use Override;
 
 use function curl_close;
 use function curl_exec;
@@ -40,6 +41,7 @@ final class CloudflareTurnstileVerificationHandler implements CloudflareTurnstil
     ) {
     }
 
+    #[Override]
     public function __invoke(): void
     {
         if ($this->secretKey === '') {

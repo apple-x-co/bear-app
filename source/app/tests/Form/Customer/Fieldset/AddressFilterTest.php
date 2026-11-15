@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyVendor\MyProject\Form\Customer\Fieldset;
 
 use Aura\Input\Builder;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
@@ -13,6 +14,7 @@ class AddressFilterTest extends TestCase
 {
     private AddressFieldset $fieldset;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->fieldset = new AddressFieldset(new Builder(), new AddressFilter());

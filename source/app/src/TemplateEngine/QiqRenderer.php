@@ -7,6 +7,7 @@ namespace MyVendor\MyProject\TemplateEngine;
 use BEAR\Resource\RenderInterface;
 use BEAR\Resource\ResourceObject;
 use Koriym\HttpConstants\ResponseHeader;
+use Override;
 use Qiq\Template;
 use Ray\Aop\WeavedInterface;
 use Ray\Di\Di\Named;
@@ -31,6 +32,7 @@ readonly class QiqRenderer implements RenderInterface
     ) {
     }
 
+    #[Override]
     public function render(ResourceObject $ro): string
     {
         if ($ro->code >= 300 && $ro->code < 400) {

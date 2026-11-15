@@ -6,6 +6,7 @@ namespace MyVendor\MyProject\Interceptor;
 
 use AppCore\Attribute\Cookie;
 use AppCore\Domain\Auth\AdminAuthenticatorInterface;
+use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 
@@ -21,6 +22,7 @@ readonly class AdminKeepAuthenticated implements MethodInterceptor
     ) {
     }
 
+    #[Override]
     public function invoke(MethodInvocation $invocation): mixed
     {
         if ($this->authenticator->isValid()) {

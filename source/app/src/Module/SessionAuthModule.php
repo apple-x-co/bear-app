@@ -34,12 +34,14 @@ use MyVendor\MyProject\Provider\SessionProvider;
 use MyVendor\MyProject\Provider\UserAuthenticatorProvider;
 use MyVendor\MyProject\Resource\Page\BaseAdminPage;
 use MyVendor\MyProject\Resource\Page\BaseUserPage;
+use Override;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
 /** @SuppressWarnings("PHPMD.CouplingBetweenObjects") */
 class SessionAuthModule extends AbstractModule
 {
+    #[Override]
     protected function configure(): void
     {
         $this->bind(SessionInterface::class)->toProvider(SessionProvider::class)->in(Scope::SINGLETON);

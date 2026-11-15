@@ -11,6 +11,7 @@ use AppCore\Infrastructure\Entity\UserEntity;
 use AppCore\Infrastructure\Query\UserCommandInterface;
 use AppCore\Infrastructure\Query\UserQueryInterface;
 use DateTimeImmutable;
+use Override;
 
 use function array_map;
 use function assert;
@@ -23,6 +24,7 @@ final readonly class UserRepository implements UserRepositoryInterface
     ) {
     }
 
+    #[Override]
     public function findById(int $id): User
     {
         $userEntity = $this->userQuery->item($id);
@@ -38,6 +40,7 @@ final readonly class UserRepository implements UserRepositoryInterface
      *
      * @return list<User>
      */
+    #[Override]
     public function findByIds(array $ids): array
     {
         $userEntityList = $this->userQuery->listByIds($ids);
@@ -51,6 +54,7 @@ final readonly class UserRepository implements UserRepositoryInterface
         );
     }
 
+    #[Override]
     public function findByUsername(string $username): User
     {
         $userEntity = $this->userQuery->itemByUsername($username);
@@ -62,6 +66,7 @@ final readonly class UserRepository implements UserRepositoryInterface
     }
 
     /** @inheritDoc */
+    #[Override]
     public function findByExpired(DateTimeImmutable $dateTime): array
     {
         $userEntityList = $this->userQuery->listByExpired($dateTime);
@@ -94,6 +99,7 @@ final readonly class UserRepository implements UserRepositoryInterface
         );
     }
 
+    #[Override]
     public function store(User $user): void
     {
         $user->id === null ? $this->insert($user) : $this->update($user);
@@ -137,6 +143,7 @@ final readonly class UserRepository implements UserRepositoryInterface
         );
     }
 
+    #[Override]
     public function delete(User $user): void
     {
         assert($user->id !== null);

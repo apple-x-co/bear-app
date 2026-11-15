@@ -14,6 +14,7 @@ use AppCore\Domain\Mail\TemplateRendererInterface;
 use AppCore\Domain\Mail\TransportInterface;
 use AppCore\Infrastructure\Query\EmailQueueCommandInterface;
 use AppCore\Infrastructure\Query\EmailQueueRecipientCommandInterface;
+use Override;
 
 use function is_readable;
 use function is_string;
@@ -43,6 +44,7 @@ readonly class QueueMail implements TransportInterface
     }
 
     /** @SuppressWarnings("PHPMD.NPathComplexity") */
+    #[Override]
     public function send(Email $email): void
     {
         $templateId = $email->getTemplateId();

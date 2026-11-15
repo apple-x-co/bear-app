@@ -9,6 +9,7 @@ use AppCore\Domain\Throttle\ThrottlingHandlerInterface;
 use AppCore\Infrastructure\Query\ThrottleRemoveByKeyInterface;
 use DateInterval;
 use DateTimeImmutable;
+use Override;
 
 readonly class ThrottlingHandler implements ThrottlingHandlerInterface
 {
@@ -32,6 +33,7 @@ readonly class ThrottlingHandler implements ThrottlingHandlerInterface
         return $throttle->isExceeded();
     }
 
+    #[Override]
     public function clear(string $key): void
     {
         ($this->throttleRemoveByKey)($key);

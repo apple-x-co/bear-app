@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AppCore\Domain\UrlSignature;
 
 use DateTimeImmutable;
+use Override;
 
 use function serialize;
 use function unserialize;
@@ -17,6 +18,7 @@ readonly class UrlSignature implements UrlSignatureInterface
     ) {
     }
 
+    #[Override]
     public function serialize(string $random): string
     {
         return serialize([
@@ -26,6 +28,7 @@ readonly class UrlSignature implements UrlSignatureInterface
         ]);
     }
 
+    #[Override]
     public static function deserialize(string $string): self
     {
         $array = unserialize($string, ['allowed_classes' => false]);

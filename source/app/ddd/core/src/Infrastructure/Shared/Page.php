@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppCore\Infrastructure\Shared;
 
+use Override;
 use Ray\AuraSqlModule\Pagerfanta\Page as PagerfantaPage;
 use Stringable;
 
@@ -39,6 +40,7 @@ readonly class Page implements Stringable
         return $this->page->hasPrevious;
     }
 
+    #[Override]
     public function __toString(): string
     {
         return (string) $this->page;

@@ -9,6 +9,7 @@ use AppCore\Attribute\SessionName;
 use AppCore\Domain\FlashMessenger\FlashMessageType;
 use AppCore\Domain\FlashMessenger\FlashMessengerInterface;
 use AppCore\Exception\RuntimeException;
+use Override;
 
 use function session_id;
 use function session_start;
@@ -26,6 +27,7 @@ final readonly class FlashMessenger implements FlashMessengerInterface
     ) {
     }
 
+    #[Override]
     public function set(FlashMessageType $type, string $text): void
     {
         $this->resume();
@@ -33,6 +35,7 @@ final readonly class FlashMessenger implements FlashMessengerInterface
         $this->commit();
     }
 
+    #[Override]
     public function get(FlashMessageType $type, string|null $alternative = null): string|null
     {
         $this->resume();
