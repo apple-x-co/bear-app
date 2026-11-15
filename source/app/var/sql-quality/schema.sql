@@ -57,6 +57,10 @@ CREATE TABLE `admins`
 /** CREATE UNIQUE INDEX `idx_admins_1` ON `admins` (`username`); */
 CREATE INDEX `idx_admins_1` ON `admins` (`username`);
 
+/**
+ * SQL解析では admins.username がユニークでないため、外部キー fk_admin_remembers_1（admins.username を参照）は作成しない
+ * （MySQL 8.4 は restrict_fk_on_non_standard_key=ON が既定で、ユニークでないキーを参照する外部キーを作成できない）
+ */
 CREATE TABLE `admin_remembers`
 (
     `selector`         VARCHAR(32)  NOT NULL COMMENT 'セレクター（Cookie の公開部分）',
@@ -64,8 +68,7 @@ CREATE TABLE `admin_remembers`
     `username`         VARCHAR(100) NOT NULL COMMENT 'ユーザー名',
     `userdata`         TEXT         NULL COMMENT 'ユーザーデータ（JSON）',
     `expires`          INT          NOT NULL COMMENT '有効期限（UNIX タイムスタンプ）',
-    PRIMARY KEY (`selector`),
-    CONSTRAINT `fk_admin_remembers_1` FOREIGN KEY (`username`) REFERENCES `admins` (`username`)
+    PRIMARY KEY (`selector`)
 ) ENGINE = InnoDB COMMENT '管理者の Remember me トークン（Aura.Auth の PdoRememberStorage）';
 
 CREATE INDEX `idx_admin_remembers_1` ON `admin_remembers` (`username`);
