@@ -21,7 +21,7 @@ services:
       - APP_CONTEXT=dev
 
   mysql:
-    image: ghcr.io/buddying-inc/mysql:80
+    image: ghcr.io/buddying-inc/mysql:84
     container_name: bear-mysql
     volumes:
       - type: bind
@@ -39,7 +39,7 @@ services:
       - TZ=Asia/Tokyo
 
   sql-quality:
-    image: ghcr.io/buddying-inc/mysql:80
+    image: ghcr.io/buddying-inc/mysql:84
     container_name: sql-quality
     volumes:
       - type: bind

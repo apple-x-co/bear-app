@@ -11,7 +11,7 @@ bear-app は BEAR.Sunday フレームワークをベースにした DDD + CQRS �
 - **PHP**: 8.4+
 - **フレームワーク**: BEAR.Sunday
 - **アーキテクチャ**: DDD（Domain-Driven Design）+ CQRS
-- **データベース**: MySQL 8.0+
+- **データベース**: MySQL 8.4
 - **テンプレート**: Qiq
 - **CSS**: Tailwind CSS
 - **AOP**: Ray.Aop
