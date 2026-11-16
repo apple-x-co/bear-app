@@ -163,9 +163,9 @@ final readonly class AdminAuthentication implements MethodInterceptor
             $continue = $this->session->get('admin_continue', '');
             $expire = (new DateTimeImmutable())->modify('+5 min')->getTimestamp();
             $this->session->set('admin_continue', '');
-            $this->session->set('admin_protect:continue', '');
-            $this->session->set('admin_protect:locking', AdminPasswordLocking::Unlocked->name);
-            $this->session->set('admin_protect:expire', (string) $expire);
+            $this->session->set('admin_protect.continue', '');
+            $this->session->set('admin_protect.locking', AdminPasswordLocking::Unlocked->name);
+            $this->session->set('admin_protect.expire', (string) $expire);
 
             $ro = $invocation->proceed();
             assert($ro instanceof ResourceObject);
@@ -202,9 +202,9 @@ final readonly class AdminAuthentication implements MethodInterceptor
     private function logout(MethodInvocation $invocation): mixed
     {
         $this->session->set('admin_continue', '');
-        $this->session->set('admin_protect:continue', '');
-        $this->session->set('admin_protect:locking', AdminPasswordLocking::Locked->name);
-        $this->session->set('admin_protect:expire', '0');
+        $this->session->set('admin_protect.continue', '');
+        $this->session->set('admin_protect.locking', AdminPasswordLocking::Locked->name);
+        $this->session->set('admin_protect.expire', '0');
 
         $ro = $invocation->proceed();
         assert($ro instanceof ResourceObject);
@@ -264,11 +264,11 @@ final readonly class AdminAuthentication implements MethodInterceptor
                 );
             }
 
-            $continue = $this->session->get('admin_protect:continue', '');
+            $continue = $this->session->get('admin_protect.continue', '');
             $expire = (new DateTimeImmutable())->modify('+5 min')->getTimestamp();
-            $this->session->set('admin_protect:continue', '');
-            $this->session->set('admin_protect:locking', AdminPasswordLocking::Unlocked->name);
-            $this->session->set('admin_protect:expire', (string) $expire);
+            $this->session->set('admin_protect.continue', '');
+            $this->session->set('admin_protect.locking', AdminPasswordLocking::Unlocked->name);
+            $this->session->set('admin_protect.expire', (string) $expire);
 
             $ro = $invocation->proceed();
             assert($ro instanceof ResourceObject);
