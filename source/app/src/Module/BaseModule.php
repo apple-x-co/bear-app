@@ -110,6 +110,7 @@ final class BaseModule extends AbstractModule
         // TODO: AWS SKD の設定などはここで行う。ステージング環境や本番環境で必要な設定は ProdModule で行う。
     }
 
+    /** @SuppressWarnings("PHPMD.StaticAccess") */
     private function core(): void
     {
         $this->bind()->annotatedWith(ServiceName::class)->toInstance((string) getenv('SERVICE_NAME'));
