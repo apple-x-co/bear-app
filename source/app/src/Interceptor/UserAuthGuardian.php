@@ -38,7 +38,7 @@ final readonly class UserAuthGuardian implements MethodInterceptor
         $uri = $ro->uri;
         if ($uri->method === 'get') {
             $path = $this->router->generate($uri->path, $uri->query);
-            $this->session->set('user:continue', $path === false ? '' : $path);
+            $this->session->set('user_continue', $path === false ? '' : $path);
         }
 
         $ro->setRenderer(new NullRenderer());

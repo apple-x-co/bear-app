@@ -143,8 +143,8 @@ final readonly class UserAuthentication implements MethodInterceptor
             $user = $user->withLoggedIn(new DateTimeImmutable());
             $this->userRepository->store($user);
 
-            $continue = $this->session->get('user:continue', '');
-            $this->session->set('user:continue', '');
+            $continue = $this->session->get('user_continue', '');
+            $this->session->set('user_continue', '');
 
             $ro = $invocation->proceed();
             assert($ro instanceof ResourceObject);
