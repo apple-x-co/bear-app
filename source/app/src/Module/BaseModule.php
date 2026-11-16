@@ -50,6 +50,7 @@ use AppCore\Infrastructure\Persistence\AdminRepository;
 use AppCore\Infrastructure\Persistence\ThrottleRepository;
 use AppCore\Infrastructure\Persistence\UserRepository;
 use AppCore\Infrastructure\Shared\AdminLogger;
+use AppCore\Infrastructure\Shared\CdnProvider;
 use AppCore\Infrastructure\Shared\ClientIpResolver;
 use AppCore\Infrastructure\Shared\CommandLogger;
 use AppCore\Infrastructure\Shared\CompactEncrypter;
@@ -123,6 +124,8 @@ final class BaseModule extends AbstractModule
         $this->bind(PasswordHasherInterface::class)->to(PasswordHasher::class)->in(Scope::SINGLETON);
 
         $this->bind(UrlSignatureEncrypterInterface::class)->to(UrlSignatureEncrypter::class)->in(Scope::SINGLETON);
+
+        $this->bind(CdnProvider::class)->toInstance(CdnProvider::from((string) getenv('CDN_PROVIDER_NAME')));
     }
 
     public function language(): void
