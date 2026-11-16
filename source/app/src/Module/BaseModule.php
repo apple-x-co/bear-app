@@ -26,6 +26,7 @@ use AppCore\Domain\Encrypter\EncrypterInterface;
 use AppCore\Domain\Hasher\PasswordHasher;
 use AppCore\Domain\Hasher\PasswordHasherInterface;
 use AppCore\Domain\Http\ClientIpResolverInterface;
+use AppCore\Domain\Http\HttpClientInterface;
 use AppCore\Domain\Language\LanguageFactoryInterface;
 use AppCore\Domain\Language\LanguageInterface;
 use AppCore\Domain\Locale\Locale;
@@ -56,6 +57,7 @@ use AppCore\Infrastructure\Shared\CommandLogger;
 use AppCore\Infrastructure\Shared\CompactEncrypter;
 use AppCore\Infrastructure\Shared\DocumentReader;
 use AppCore\Infrastructure\Shared\Encrypter;
+use AppCore\Infrastructure\Shared\HttpClient;
 use AppCore\Infrastructure\Shared\LangOverridePathResolver;
 use AppCore\Infrastructure\Shared\LanguageFactory;
 use AppCore\Infrastructure\Shared\QueueMail;
@@ -67,8 +69,8 @@ use AppCore\Presentation\Uri\AdminStaticUriBuilder;
 use AppCore\Presentation\Uri\AdminUriBuilder;
 use AppCore\Presentation\Uri\PublicStaticUriBuilder;
 use AppCore\Presentation\Uri\PublicUriBuilder;
-use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\ClientInterface as HttpClientInterface;
+use GuzzleHttp\Client as Guzzle;
+use GuzzleHttp\ClientInterface as GuzzleInterface;
 use MyVendor\MyProject\Provider\JapaneseProvider;
 use MyVendor\MyProject\Provider\PhpMailerProvider;
 use MyVendor\MyProject\Provider\RequestLanguageProvider;
@@ -237,10 +239,12 @@ final class BaseModule extends AbstractModule
     private function http(): void
     {
         $this->bind()->annotatedWith('http_client_config')->toInstance(['verify' => false]);
-        $this->bind(HttpClientInterface::class)->toConstructor(
-            HttpClient::class,
+        $this->bind(GuzzleInterface::class)->toConstructor(
+            Guzzle::class,
             ['config' => 'http_client_config'],
         );
+
+        $this->bind(HttpClientInterface::class)->to(HttpClient::class)->in(Scope::SINGLETON);
 
         $this->bind(ServerRequestInterface::class)->toProvider(ServerRequestProvider::class);
         $this->bind(Locale::class)->toProvider(RequestLocaleProvider::class);

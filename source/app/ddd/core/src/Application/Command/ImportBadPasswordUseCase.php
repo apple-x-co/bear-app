@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AppCore\Application\Command;
 
+use AppCore\Domain\Http\HttpClientInterface;
 use AppCore\Infrastructure\Query\BadPasswordCommandInterface;
-use GuzzleHttp\ClientInterface;
 use Throwable;
 
 use function array_merge;
@@ -24,7 +24,7 @@ final class ImportBadPasswordUseCase
     ];
 
     public function __construct(
-        private readonly ClientInterface $client,
+        private readonly HttpClientInterface $httpClient,
         private readonly BadPasswordCommandInterface $badPasswordCommand,
     ) {
     }
@@ -38,7 +38,7 @@ final class ImportBadPasswordUseCase
         array_walk(
             $urls,
             function (string $item) use (&$passwords): void {
-                $response = $this->client->request('GET', $item);
+                $response = $this->httpClient->request('GET', $item);
                 $content = $response->getBody()->getContents();
 
                 $array = explode(PHP_EOL, $content);
