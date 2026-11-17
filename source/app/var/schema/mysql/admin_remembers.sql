@@ -7,6 +7,8 @@ CREATE TABLE `admin_remembers`
     `expires`          INT          NOT NULL COMMENT '有効期限（UNIX タイムスタンプ）',
     PRIMARY KEY (`selector`),
     CONSTRAINT `fk_admin_remembers_1` FOREIGN KEY (`username`) REFERENCES `admins` (`username`) ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE = InnoDB COMMENT '管理者の Remember me トークン（Aura.Auth の PdoRememberStorage）';
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci COMMENT '管理者の Remember me トークン（Aura.Auth の PdoRememberStorage）';
 
 CREATE INDEX `idx_admin_remembers_1` ON `admin_remembers` (`username`);

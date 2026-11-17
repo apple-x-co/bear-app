@@ -160,7 +160,7 @@ final class AdminAuthenticator implements AdminAuthenticatorInterface
     }
 
     #[Override]
-    public function verifyPassword(string $username, string $password): void
+    public function verifyPassword(string $username, #[SensitiveParameter] string $password): void
     {
         try {
             $pdoAdapter = $this->getAdapter($this->getPdo());
