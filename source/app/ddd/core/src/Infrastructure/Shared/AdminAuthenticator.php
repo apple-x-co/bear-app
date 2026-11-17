@@ -37,8 +37,8 @@ use function is_string;
  */
 final class AdminAuthenticator implements AdminAuthenticatorInterface
 {
-    private const string FROM = 'admins LEFT JOIN admin_deletes ON admins.id = admin_deletes.admin_id';
-    private const string WHERE = 'admins.active = 1 AND admin_deletes.admin_id IS NULL';
+    private const string FROM = '`admins` LEFT JOIN `admin_deletes` ON `admins`.`id` = `admin_deletes`.`admin_id`';
+    private const string WHERE = '`admins`.`active` = 1 AND `admin_deletes`.`admin_id` IS NULL';
     private const string REMEMBER_TABLE = 'admin_remembers';
     private const int REMEMBER_TTL = 691200; // 8 日
     private const int SESSION_EXPIRE_TTL = 86400; // Aura.Auth の ResumeService の既定値
@@ -106,8 +106,8 @@ final class AdminAuthenticator implements AdminAuthenticatorInterface
                 'path' => '/',
                 'user_loader' => static function (string $username) use ($pdo): array|null {
                     $statement = $pdo->prepare(
-                        'SELECT admins.id, admins.display_name FROM ' . self::FROM .
-                        ' WHERE admins.username = :username AND ' . self::WHERE,
+                        'SELECT `admins`.`id`, `admins`.`display_name` FROM ' . self::FROM .
+                        ' WHERE `admins`.`username` = :username AND ' . self::WHERE,
                     );
                     $statement->execute(['username' => $username]);
                     $row = $statement->fetch(PDO::FETCH_ASSOC);
@@ -172,7 +172,13 @@ final class AdminAuthenticator implements AdminAuthenticatorInterface
 
     /**
      * Aura.Auth の LogoutService は、Remember me のトークンを消してからセッションを消す。
-     * DB の障害でトークンを消せなくてもログアウトできるよう、先にセッションを消してからトークンと Cookie を消す
+     * DB の障害でトークンを消せなくてもセッションは破棄されるよう、先にセッションを消してからトークンと Cookie を消す
+     *
+     * DB の障害時は、トークンも Remember me の Cookie も消えずに残り、AuthStorageException になる。
+     * RememberService::forget() は DB の行を消してから Cookie を消すため、DB で例外が出ると Cookie の削除まで進まない。
+     * そのため、DB が復旧した後に同じブラウザで管理画面を開くと、Cookie から自動でログインし直される。
+     * 共有 PC で問題になりうるが、ログアウトはエラーになるので利用者は失敗に気づけ、復旧後にログアウトし直せば消える。
+     * Cookie だけを別に消すには発行時と同じ Cookie オプションを揃える必要があり、ずれるとかえって不具合の元になるので対処していない
      */
     #[Override]
     public function logout(): void
