@@ -102,7 +102,9 @@ final class AdminAuthenticator implements AdminAuthenticatorInterface
                 'ttl' => self::REMEMBER_TTL,
                 'secure' => $this->rememberCookieSecure,
                 'httponly' => true,
-                'samesite' => 'Strict',
+                // Strict だとメールやチャットのリンクから開いたときに Cookie が送られず、Cookie から復帰できない。
+                // セッション Cookie（SameSite 未指定でブラウザの既定の Lax）と揃え、外部サイトからの POST には送らない
+                'samesite' => 'Lax',
                 'path' => '/',
                 'user_loader' => static function (string $username) use ($pdo): array|null {
                     $statement = $pdo->prepare(
