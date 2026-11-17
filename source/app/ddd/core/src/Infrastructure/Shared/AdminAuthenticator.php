@@ -37,8 +37,8 @@ use function is_string;
  */
 final class AdminAuthenticator implements AdminAuthenticatorInterface
 {
-    private const string FROM = '`admins` LEFT JOIN `admin_deletes` ON `admins`.`id` = `admin_deletes`.`admin_id`';
-    private const string WHERE = '`admins`.`active` = 1 AND `admin_deletes`.`admin_id` IS NULL';
+    private const string FROM = 'admins LEFT JOIN admin_deletes ON admins.id = admin_deletes.admin_id';
+    private const string WHERE = 'admins.active = 1 AND admin_deletes.admin_id IS NULL';
     private const string REMEMBER_TABLE = 'admin_remembers';
     private const int REMEMBER_TTL = 691200; // 8 日
     private const int SESSION_EXPIRE_TTL = 86400; // Aura.Auth の ResumeService の既定値
@@ -102,12 +102,14 @@ final class AdminAuthenticator implements AdminAuthenticatorInterface
                 'ttl' => self::REMEMBER_TTL,
                 'secure' => $this->rememberCookieSecure,
                 'httponly' => true,
-                'samesite' => 'Strict',
+                // Strict だとメールやチャットのリンクから開いたときに Cookie が送られず、Cookie から復帰できない。
+                // セッション Cookie（SameSite 未指定でブラウザの既定の Lax）と揃え、外部サイトからの POST には送らない
+                'samesite' => 'Lax',
                 'path' => '/',
                 'user_loader' => static function (string $username) use ($pdo): array|null {
                     $statement = $pdo->prepare(
-                        'SELECT `admins`.`id`, `admins`.`display_name` FROM ' . self::FROM .
-                        ' WHERE `admins`.`username` = :username AND ' . self::WHERE,
+                        'SELECT admins.id, admins.display_name FROM ' . self::FROM .
+                        ' WHERE admins.username = :username AND ' . self::WHERE,
                     );
                     $statement->execute(['username' => $username]);
                     $row = $statement->fetch(PDO::FETCH_ASSOC);
@@ -160,8 +162,11 @@ final class AdminAuthenticator implements AdminAuthenticatorInterface
     }
 
     #[Override]
-    public function verifyPassword(string $username, #[SensitiveParameter] string $password): void
-    {
+    public function verifyPassword(
+        string $username,
+        #[SensitiveParameter]
+        string $password,
+    ): void {
         try {
             $pdoAdapter = $this->getAdapter($this->getPdo());
             $pdoAdapter->login(['username' => $username, 'password' => $password]);

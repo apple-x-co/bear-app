@@ -30,7 +30,7 @@ use const PASSWORD_BCRYPT;
 final readonly class UserAuthenticator implements UserAuthenticatorInterface
 {
     private const string FROM = 'users';
-    private const string WHERE = '`users`.`active` = 1';
+    private const string WHERE = 'users.active = 1';
     private const string REMEMBER_TABLE = 'user_remembers';
     private const int REMEMBER_TTL = 691200; // 8 日
     private const int SESSION_EXPIRE_TTL = 86400; // Aura.Auth の ResumeService の既定値
@@ -87,12 +87,14 @@ final readonly class UserAuthenticator implements UserAuthenticatorInterface
                 'ttl' => self::REMEMBER_TTL,
                 'secure' => $this->rememberCookieSecure,
                 'httponly' => true,
-                'samesite' => 'Strict',
+                // Strict だとメールやチャットのリンクから開いたときに Cookie が送られず、Cookie から復帰できない。
+                // セッション Cookie（SameSite 未指定でブラウザの既定の Lax）と揃え、外部サイトからの POST には送らない
+                'samesite' => 'Lax',
                 'path' => '/',
                 'user_loader' => static function (string $username) use ($pdo): array|null {
                     $statement = $pdo->prepare(
-                        'SELECT `users`.`id`, `users`.`display_name` FROM ' . self::FROM .
-                        ' WHERE `users`.`username` = :username AND ' . self::WHERE,
+                        'SELECT users.id, users.display_name FROM ' . self::FROM .
+                        ' WHERE users.username = :username AND ' . self::WHERE,
                     );
                     $statement->execute(['username' => $username]);
                     $row = $statement->fetch(PDO::FETCH_ASSOC);
