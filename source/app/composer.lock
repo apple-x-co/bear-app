@@ -62,8 +62,7 @@
                 "issues": "https://github.com/auraphp/Aura.Auth/issues",
                 "source": "https://github.com/auraphp/Aura.Auth/tree/7.0.0"
             },
-            "time": "2026-09-29T08:59:49+00:00",
-            "published-time": "2026-09-29T09:00:27+00:00"
+            "time": "2026-09-29T08:59:49+00:00"
         },
         {
             "name": "aura/cli",
@@ -536,8 +535,7 @@
                 "issues": "https://github.com/auraphp/Aura.Session_Interface/issues",
                 "source": "https://github.com/auraphp/Aura.Session_Interface/tree/7.0.0"
             },
-            "time": "2026-09-29T07:01:47+00:00",
-            "published-time": "2026-09-29T07:02:13+00:00"
+            "time": "2026-09-29T07:01:47+00:00"
         },
         {
             "name": "aura/sql",
@@ -992,16 +990,16 @@
         },
         {
             "name": "bear/resource",
-            "version": "1.34.2",
+            "version": "1.36.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.Resource.git",
-                "reference": "7c7baceaa280f3d596d157eac3f6ca2bb9eb8942"
+                "reference": "f360bf993201e3b07e67355857416730f14670f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.Resource/zipball/7c7baceaa280f3d596d157eac3f6ca2bb9eb8942",
-                "reference": "7c7baceaa280f3d596d157eac3f6ca2bb9eb8942",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.Resource/zipball/f360bf993201e3b07e67355857416730f14670f3",
+                "reference": "f360bf993201e3b07e67355857416730f14670f3",
                 "shasum": ""
             },
             "require": {
@@ -1010,14 +1008,14 @@
                 "ext-fileinfo": "*",
                 "ext-filter": "*",
                 "justinrainbow/json-schema": "^5.3 || ^6.0",
-                "koriym/file-upload": "^1.0",
+                "koriym/file-upload": "^1.0.1",
                 "koriym/hal": "^1.1",
                 "koriym/http-constants": "^1.1",
                 "php": "^8.2",
                 "phpdocumentor/reflection-docblock": "^6.0",
                 "psr/log": "^1.1 || ^2.0 || ^3.0",
-                "ray/aop": "^2.18.0",
-                "ray/di": "^2.18.0",
+                "ray/aop": "^2.20.3",
+                "ray/di": "^2.22.1",
                 "ray/input-query": "^1.1",
                 "rize/uri-template": "^0.4.1"
             },
@@ -1027,7 +1025,7 @@
                 "koriym/json-schema-faker": "^0.3.1",
                 "koriym/php-server": "^1.0",
                 "phpunit/phpunit": "^11.0",
-                "ray/compiler": "^1.12",
+                "ray/compiler": "^1.13",
                 "webmozart/assert": "^2.0"
             },
             "type": "library",
@@ -1048,10 +1046,7 @@
                         "src-deprecated"
                     ],
                     "Ray\\WebContextParam\\": "src-web-context"
-                },
-                "exclude-from-classmap": [
-                    "/src-deprecated/"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1071,9 +1066,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.Resource/issues",
-                "source": "https://github.com/bearsunday/BEAR.Resource/tree/1.34.2"
+                "source": "https://github.com/bearsunday/BEAR.Resource/tree/1.36.1"
             },
-            "time": "2026-11-13T08:49:03+00:00"
+            "time": "2026-11-18T03:12:30+00:00"
         },
         {
             "name": "bear/streamer",
@@ -1369,25 +1364,26 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "8.3.1",
+            "version": "8.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "7d9b1f430bb65ac664e120af227bf9a795ad6333"
+                "reference": "8e893188e1ac92b457eca35ddf2b574024b66280"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/7d9b1f430bb65ac664e120af227bf9a795ad6333",
-                "reference": "7d9b1f430bb65ac664e120af227bf9a795ad6333",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/8e893188e1ac92b457eca35ddf2b574024b66280",
+                "reference": "8e893188e1ac92b457eca35ddf2b574024b66280",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/promises": "^3.1",
-                "guzzlehttp/psr7": "^3.2",
+                "guzzlehttp/psr7": "^3.4",
                 "php": "^7.4 || ^8.0",
                 "psr/http-client": "^1.0",
                 "psr/http-factory": "^1.0",
+                "symfony/deprecation-contracts": "^2.5 || ^3.0",
                 "symfony/polyfill-php80": "^1.25",
                 "symfony/polyfill-php82": "^1.27"
             },
@@ -1475,7 +1471,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/8.3.1"
+                "source": "https://github.com/guzzle/guzzle/tree/8.5.2"
             },
             "funding": [
                 {
@@ -1491,20 +1487,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-10-25T21:35:34+00:00"
+            "time": "2026-11-17T16:24:00+00:00"
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "094d0ec418eb3b1411ea271a180ec95cae6ae933"
+                "reference": "a201cc78db93065f891278f86eaeaa1c97c5a158"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/094d0ec418eb3b1411ea271a180ec95cae6ae933",
-                "reference": "094d0ec418eb3b1411ea271a180ec95cae6ae933",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/a201cc78db93065f891278f86eaeaa1c97c5a158",
+                "reference": "a201cc78db93065f891278f86eaeaa1c97c5a158",
                 "shasum": ""
             },
             "require": {
@@ -1559,7 +1555,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/3.1.0"
+                "source": "https://github.com/guzzle/promises/tree/3.2.0"
             },
             "funding": [
                 {
@@ -1575,20 +1571,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-10-18T12:48:16+00:00"
+            "time": "2026-11-21T03:48:02+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "3.4.0",
+            "version": "3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "180bd6fcebd1dc289cbec5c576135f4b6f576e02"
+                "reference": "ef2058cc884d864affa6ef7cd23a68d45e015c2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/180bd6fcebd1dc289cbec5c576135f4b6f576e02",
-                "reference": "180bd6fcebd1dc289cbec5c576135f4b6f576e02",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/ef2058cc884d864affa6ef7cd23a68d45e015c2f",
+                "reference": "ef2058cc884d864affa6ef7cd23a68d45e015c2f",
                 "shasum": ""
             },
             "require": {
@@ -1611,6 +1607,7 @@
                 "phpunit/phpunit": "^9.6.34"
             },
             "suggest": {
+                "ext-intl": "Convert internationalized hosts with Idna",
                 "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
             },
             "type": "library",
@@ -1679,7 +1676,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/3.4.0"
+                "source": "https://github.com/guzzle/psr7/tree/3.5.1"
             },
             "funding": [
                 {
@@ -1695,7 +1692,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-11-13T03:03:24+00:00"
+            "time": "2026-11-19T20:35:18+00:00"
         },
         {
             "name": "ircmaxell/random-lib",
@@ -2400,16 +2397,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "3.12.1",
+            "version": "3.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "d7059e4c691d05ea1222b5124bed0f961be46e15"
+                "reference": "1f5f55bb4a9a230ff6d8a4ceccea31d10b0142ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/d7059e4c691d05ea1222b5124bed0f961be46e15",
-                "reference": "d7059e4c691d05ea1222b5124bed0f961be46e15",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1f5f55bb4a9a230ff6d8a4ceccea31d10b0142ac",
+                "reference": "1f5f55bb4a9a230ff6d8a4ceccea31d10b0142ac",
                 "shasum": ""
             },
             "require": {
@@ -2489,7 +2486,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/3.12.1"
+                "source": "https://github.com/Seldaek/monolog/tree/3.13.0"
             },
             "funding": [
                 {
@@ -2501,7 +2498,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-29T19:21:12+00:00"
+            "time": "2026-11-16T10:43:05+00:00"
         },
         {
             "name": "nyholm/psr7",
@@ -3698,16 +3695,16 @@
         },
         {
             "name": "ray/aop",
-            "version": "2.20.2",
+            "version": "2.20.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.Aop.git",
-                "reference": "66e57e01da44689a4c6897cb5fa5f9d846af75a1"
+                "reference": "41ff3536093bccb47e20bb740e3447a07dbf2152"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.Aop/zipball/66e57e01da44689a4c6897cb5fa5f9d846af75a1",
-                "reference": "66e57e01da44689a4c6897cb5fa5f9d846af75a1",
+                "url": "https://api.github.com/repos/ray-di/Ray.Aop/zipball/41ff3536093bccb47e20bb740e3447a07dbf2152",
+                "reference": "41ff3536093bccb47e20bb740e3447a07dbf2152",
                 "shasum": ""
             },
             "require": {
@@ -3754,7 +3751,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ray-di/Ray.Aop/issues",
-                "source": "https://github.com/ray-di/Ray.Aop/tree/2.20.2"
+                "source": "https://github.com/ray-di/Ray.Aop/tree/2.20.3"
             },
             "funding": [
                 {
@@ -3766,7 +3763,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-03T01:53:18+00:00"
+            "time": "2026-11-17T12:25:45+00:00"
         },
         {
             "name": "ray/aura-session-module",
@@ -4418,33 +4415,29 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v7.4.23",
+            "version": "v8.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "bbaa2ca4a93a94532285bdd5a0caf225d34ff578"
+                "reference": "3e9c898a1c2d78661676befcc2f9dd610c56c9dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/bbaa2ca4a93a94532285bdd5a0caf225d34ff578",
-                "reference": "bbaa2ca4a93a94532285bdd5a0caf225d34ff578",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/3e9c898a1c2d78661676befcc2f9dd610c56c9dd",
+                "reference": "3e9c898a1c2d78661676befcc2f9dd610c56c9dd",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.4",
                 "psr/cache": "^2.0|^3.0",
                 "psr/log": "^1.1|^2|^3",
                 "symfony/cache-contracts": "^3.6",
-                "symfony/deprecation-contracts": "^2.5|^3",
                 "symfony/service-contracts": "^2.5|^3",
-                "symfony/var-exporter": "^6.4|^7.0|^8.0"
+                "symfony/var-exporter": "^7.4|^8.0"
             },
             "conflict": {
-                "doctrine/dbal": "<3.6",
-                "ext-relay": "<0.12.1",
-                "symfony/dependency-injection": "<6.4",
-                "symfony/http-kernel": "<6.4",
-                "symfony/var-dumper": "<6.4"
+                "ext-redis": "<6.1",
+                "ext-relay": "<0.12.1"
             },
             "provide": {
                 "psr/cache-implementation": "2.0|3.0",
@@ -4452,17 +4445,17 @@
                 "symfony/cache-implementation": "1.1|2.0|3.0"
             },
             "require-dev": {
-                "cache/integration-tests": "^1.0.3",
-                "doctrine/dbal": "^3.6|^4",
+                "cache/integration-tests": "dev-master",
+                "doctrine/dbal": "^4.3",
                 "predis/predis": "^1.1|^2.0",
                 "psr/simple-cache": "^1.0|^2.0|^3.0",
-                "symfony/clock": "^6.4|^7.0|^8.0",
-                "symfony/config": "^6.4|^7.0|^8.0",
-                "symfony/dependency-injection": "^6.4|^7.0|^8.0",
-                "symfony/filesystem": "^6.4|^7.0|^8.0",
-                "symfony/http-kernel": "^6.4|^7.0|^8.0",
-                "symfony/messenger": "^6.4|^7.0|^8.0",
-                "symfony/var-dumper": "^6.4|^7.0|^8.0"
+                "symfony/clock": "^7.4|^8.0",
+                "symfony/config": "^7.4|^8.0",
+                "symfony/dependency-injection": "^7.4|^8.0",
+                "symfony/filesystem": "^7.4|^8.0",
+                "symfony/http-kernel": "^7.4|^8.0",
+                "symfony/messenger": "^7.4|^8.0",
+                "symfony/var-dumper": "^7.4|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -4497,7 +4490,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v7.4.23"
+                "source": "https://github.com/symfony/cache/tree/v8.0.15"
             },
             "funding": [
                 {
@@ -4517,7 +4510,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-11-01T22:26:51+00:00"
+            "time": "2026-07-29T04:09:38+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -5171,26 +5164,25 @@
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v7.4.22",
+            "version": "v8.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "6c967db30708068f6eaedb6ed37973bd86de2241"
+                "reference": "ea291a085c804869b333804706b0a58231014671"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/6c967db30708068f6eaedb6ed37973bd86de2241",
-                "reference": "6c967db30708068f6eaedb6ed37973bd86de2241",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/ea291a085c804869b333804706b0a58231014671",
+                "reference": "ea291a085c804869b333804706b0a58231014671",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
-                "symfony/deprecation-contracts": "^2.5|^3"
+                "php": ">=8.4"
             },
             "require-dev": {
-                "symfony/property-access": "^6.4|^7.0|^8.0",
-                "symfony/serializer": "^6.4|^7.0|^8.0",
-                "symfony/var-dumper": "^6.4|^7.0|^8.0"
+                "symfony/property-access": "^7.4|^8.0",
+                "symfony/serializer": "^7.4|^8.0",
+                "symfony/var-dumper": "^7.4|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -5228,7 +5220,7 @@
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v7.4.22"
+                "source": "https://github.com/symfony/var-exporter/tree/v8.0.16"
             },
             "funding": [
                 {
@@ -5248,7 +5240,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-10-22T14:50:44+00:00"
+            "time": "2026-07-29T16:27:17+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -5336,16 +5328,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "2.5.0",
+            "version": "2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "8a163706bbcac613733dba03f51e13b5eb1bb819"
+                "reference": "e578132c01bd0c64108386ab20d8217cd175ddec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/8a163706bbcac613733dba03f51e13b5eb1bb819",
-                "reference": "8a163706bbcac613733dba03f51e13b5eb1bb819",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/e578132c01bd0c64108386ab20d8217cd175ddec",
+                "reference": "e578132c01bd0c64108386ab20d8217cd175ddec",
                 "shasum": ""
             },
             "require": {
@@ -5396,9 +5388,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/2.5.0"
+                "source": "https://github.com/webmozarts/assert/tree/2.5.1"
             },
-            "time": "2026-10-05T23:14:19+00:00"
+            "time": "2026-11-15T13:41:13+00:00"
         }
     ],
     "packages-dev": [
@@ -5461,16 +5453,16 @@
         },
         {
             "name": "bear/api-doc",
-            "version": "1.12.0",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.ApiDoc.git",
-                "reference": "a7e27f0bb6d984bb1cf584bf747eeb407b14d848"
+                "reference": "f1f501c3951775785514acbe91f0627f54c94f00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.ApiDoc/zipball/a7e27f0bb6d984bb1cf584bf747eeb407b14d848",
-                "reference": "a7e27f0bb6d984bb1cf584bf747eeb407b14d848",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.ApiDoc/zipball/f1f501c3951775785514acbe91f0627f54c94f00",
+                "reference": "f1f501c3951775785514acbe91f0627f54c94f00",
                 "shasum": ""
             },
             "require": {
@@ -5528,9 +5520,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.ApiDoc/issues",
-                "source": "https://github.com/bearsunday/BEAR.ApiDoc/tree/1.12.0"
+                "source": "https://github.com/bearsunday/BEAR.ApiDoc/tree/1.13.0"
             },
-            "time": "2026-08-11T06:40:34+00:00"
+            "time": "2026-11-16T09:35:43+00:00"
         },
         {
             "name": "bear/devtools",
@@ -6060,11 +6052,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.3.5",
+            "version": "2.3.7",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/645a1bd6bead15fc1b8474137467961d0fa30a79",
-                "reference": "645a1bd6bead15fc1b8474137467961d0fa30a79",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/90c91c2498849ab8cc4e873864bbf1cb2bf6ea12",
+                "reference": "90c91c2498849ab8cc4e873864bbf1cb2bf6ea12",
                 "shasum": ""
             },
             "require": {
@@ -6120,7 +6112,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-03T12:14:22+00:00"
+            "time": "2026-11-19T10:31:11+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -6538,16 +6530,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "2.8.4",
+            "version": "2.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "55acbd956d7e3907f7d21aab54edd68a310609e6"
+                "reference": "bf2982e3e2b8dfbcb43e5589fa301431cb1e479e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/55acbd956d7e3907f7d21aab54edd68a310609e6",
-                "reference": "55acbd956d7e3907f7d21aab54edd68a310609e6",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/bf2982e3e2b8dfbcb43e5589fa301431cb1e479e",
+                "reference": "bf2982e3e2b8dfbcb43e5589fa301431cb1e479e",
                 "shasum": ""
             },
             "require": {
@@ -6583,7 +6575,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/2.8.4"
+                "source": "https://github.com/rectorphp/rector/tree/2.8.5"
             },
             "funding": [
                 {
@@ -6591,7 +6583,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-03T18:48:08+00:00"
+            "time": "2026-11-14T23:24:35+00:00"
         },
         {
             "name": "roave/security-advisories",
@@ -8756,5 +8748,5 @@
         "php": "^8.4.0"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.11.0"
+    "plugin-api-version": "2.9.0"
 }
