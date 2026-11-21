@@ -1,3 +1,19 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss" source(none);
+
+@source "./**/*.{html,js}";
+
+@plugin "@tailwindcss/forms";
+
+/*
+  Tailwind CSS v4 では border の既定色が currentcolor になったため、
+  v3 と同じ見た目になるよう既定色を gray-200 に戻す。
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
