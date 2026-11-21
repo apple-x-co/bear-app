@@ -29,7 +29,7 @@
         "bear/devtools": "^1.5",
         "bear/security": "^0.4.0",
         "koriym/sql-quality": "1.x-dev",
-        "phpunit/phpunit": "^10.5.64",
+        "phpunit/phpunit": "^13.4.7",
         "rector/rector": "^2.8.4",
         "roave/security-advisories": "dev-latest"
     },
