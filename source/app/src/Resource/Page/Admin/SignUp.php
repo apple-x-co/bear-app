@@ -25,7 +25,10 @@ use Throwable;
 
 use function assert;
 
-/** @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない */
+/**
+ * @psalm-suppress ClassMustBeFinal BEAR.Sunday の AOP がリソースを継承して織り込むため final にしない
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ */
 #[NoHttpCache]
 class SignUp extends BaseAdminPage
 {
