@@ -3,7 +3,7 @@
     "description": "QA tools",
     "require-dev": {
         "doctrine/coding-standard": "^11.1",
-        "phpmd/phpmd": "^2.15",
+        "phpmd/phpmd": "^3.0",
         "phpmetrics/phpmetrics": "^2.9",
         "phpstan/phpstan": "^1.12.28",
         "psalm/plugin-phpunit": "^1.2",
